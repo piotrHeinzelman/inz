@@ -1,0 +1,149 @@
+[20.02, 15:29] Czajewski WitoldWażne!Temat i zakres pracy
+    
+ 
+
+
+Na początku pracy nad dyplomem trzeba sformułować tytuł i zakres pracy. Zwłaszcza ten drugi wymaga wstępnego zorientowania się w tematyce, czyli przekopania internetu, porozmawiania z promotorem i ustalenia jakiejś realizowalnej wersji. Rolą promotora jest doszlifowanie zakresu, który następnie zostanie zaakceptowany (lub nie) przez kierownika Zakładu (w naszym przypadku przez prof. Iwanowskiego). 
+
+Wstępny temat i zakres pracy należy umieścić w wątku o tytule "Temat i zakres pracy" na własnym kanale. W toku wstępnego rozeznania się i rozmów skrystalizuje się zakres pracy, który powinien przyjąć formę zbliżoną do poniższej.
+
+ Temat: System utrzymywania toru ruchu z wykorzystaniem głębokich sieci neuronowych i robota opartego na układzie NVIDIA Jetson Nano
+
+ Zakres:
+
+ 1. Wstęp. 
+
+2. Przegląd istniejących rozwiązań. 
+
+3. Opis platformy eksperymentalnej. 
+
+4. Implementacja wybranego rozwiązania.
+
+5. Stworzenie zbioru danych. 
+
+6. Badanie i analiza wpływu wybranych parametrów systemu na zachowanie robota. 
+
+7. Podsumowanie i wnioski. 
+
+
+
+Generalnie punkty 1, 2 i 7 powinny być zawsze. Pozostałe są zależne od rodzaju pracy i nie powinny być przepisane stąd dosłownie. Jeśli praca ma charakter mocno praktyczny i jest związana ze sprzętem, to następuje opis sprzętu (platformy badawczej), a następnie implementacji wybranego rozwiązania danego problemu oraz wyników przeprowadzonych eksperymentów. W pracy bez użycia specjalistycznego sprzętu (do takiego nie zalicza się normalnego komputera i kamery), większy nacisk będzie położony na przykład na badanie i porównywanie wybranych metod. Tak to, z grubsza, powinno wyglądać. Liczba punktów jest płynna, a ich tytuły nie muszą się potem zgadzać z tytułami rozdziałów. To ma być ogólne, w punktach, przedstawienie tego co się będzie w pracy robiło. Jeśli praca jest bardziej teoretyczna czy też tylko komputerowa (jakieś rozpoznawanie obrazów, ale bez żadnych robotów), to trzeba opisać wykorzystywane narzędzia (zamiast platformy), jeśli badania mają polegać na testowaniu różnych algorytmów (np. różnych głębokich sieci), to trzeba zrobić jakieś wprowadzenie do tych algorytmów. Ważne jest, żeby zakres pracy był na tyle ogólny, aby nie zmuszał już na początku do realizacji jakichś bardzo konkretnych zadań, bo może się później okazać, że te zadania/metody/rozwiązania zostały niezbyt dobrze na początku dobrane (co jest usprawiedliwione, wszak na początku opracowywane zagadnienia nie są bardzo dobrze znane) i nie ma sensu ich badać (bo znalazły się lepsze). Tymczasem wówczas recenzent może powiedzieć, i słusznie, że treść pracy nie odpowiada jej zakresowi. Z drugiej strony, zakres pracy nie może być tak ogólny, by pasował do każdej pracy. Jakiś złoty środek trzeba znaleźć. 
+
+Propozycję tematu i zakresu pracy należy umieścić w analogicznym wątku na własnym kanale, potem wspólnie to doszlifujemy. Gotową wersję należy wpisać do Isoda, ja wówczas to przekażę prof. Iwanowskiemu do zatwierdzania lub ewentualnej korekty.
+
+
+
+
+
+
+[20.02, 15:39] Czajewski WitoldWażne!Szablon pracy dyplomowej
+    
+ 
+
+Jak wiadomo, dokumenty sporządzone w LaTeXu wyglądają wszędzie jednakowo i bardzo profesjonalnie. Wiadomo też, że pisanie w LaTeXu nie jest trywialne. Na szczęście powstało sporo narzędzi, które to ułatwiają. Jednym z nich jest serwis Overleaf. Umożliwia on edycję i kompilowanie dokumentu z poziomu przeglądarki oraz pozwala na współdzielenie i współpracę nad dokumentem. To ostatnie jest szczególnie cenne, zarówno dla dyplomanta, jak i dla promotora, dlatego że umożliwia m.in. wprowadzanie poprawek czy komentarzy do pracy na bieżąco. W przypadku współdzielenia takiego dokumentu drobne poprawki (literówki, przecinki itp.) po prostu wprowadzę do tekstu, bo zajmie mi to tyle samo czasu co ich podkreślanie, a dyplomant nie będzie musiał już nic robić! Nie znaczy to, oczywiście, że będę pełnił rolę korektora i można mi oddać byle jak napisaną pracę, a po chwili wszystko zostanie poprawione! Jeżeli takich literówek czy błędów będzie więcej niż kilka, to skomentuję je tylko i poproszę o poprawienie w całej pracy.  
+Wszystkie prace realizowane u mnie muszą być wykonywane z wykorzystaniem poniższego szablonu:  
+https://www.overleaf.com/read/rmrshmstmnyx#9fe202
+Proszę zrobić sobie lokalną kopię w Overleafie, nazwać zgodnie ze schematem "Nazwisko Imię, rodzaj pracy skrótem - tematyka, rok rozpoczęcia współpracy" (np. Kowalski Jan, mag - detekcja samochodów, 2021" i współdzielić ją ze mną. Ze względu na ograniczenia, które wprowadził ostatnio Overleaf, trzeba uczynić mnie właścicielem dokumentu, a ja go następnie udostępnię do edycji. W ten sposób nie będzie problemów z kompilacją dłuższych prac.
+Szablon nie jest doskonały i jest nieustannie modyfikowany, zarówno od strony technicznej, jak i merytorycznej, niemniej jest wystarczający, by posłużyć się nim do pisania pracy dyplomowej. W samym szablonie znajduje się (całkiem spora) garść uwag na temat tego, co powinno się znaleźć w pracy dyplomowej i jak mniej więcej ona powinna wyglądać. Mam nadzieję, że rozwieje to większość wątpliwości, a w razie czego proszę pytać - pomoże mi to uzupełnić szablon.
+Ostatnia modyfikacja szablonu: styczeń 2024
+
+
+
+
+
+
+ [20.02, 15:40] Czajewski WitoldWniosek o przedłużenie terminu oddania pracy dyplomowej
+    
+
+
+Jeżeli ktoś nie zdąży oddać pracy w nominalnym terminie, to powinien złożyć wniosek o przedłużenie tego terminu PRZED upływem nominalnego terminu obrony. Abym taki wniosek mógł poprzeć, praca musi być zaawansowana w znacznym stopniu, a jej treść (jeszcze niekompletna) widoczna w Overleafie. 
+Osoby składające taki wniosek powinny napisać w oddzielnym wątku, że mają taką chęć, co zrobiły w ramach pracy, co jeszcze zostało do zrobienia i jaki jest planowany harmonogram prac, by zdążyć w terminie.
+
+
+
+
+
+[20.02, 15:41] Czajewski WitoldWażne!Zanim pierwsza wersja pracy trafi do promotora
+    
+
+
+Oto lista najczęściej popełnianych błędów - drobnych błędów, acz rzucających złe światło na całą pracę i dodająca mi masę niepotrzebnej roboty.
+
+Zanim pierwsza wersja całej pracy lub jej większy fragment trafi do mnie, bardzo proszę upewnić się, że:
+
+
+	
+tytuł pracy (w obu językach!) jest zgodny z tym co jest wpisane w Isodzie,
+	
+do każdej ilustracji czy tabeli w tekście jest odniesienie typu: na rys. xx pokazano coś tam, w tabeli yy umieszczono wyniki czegoś tam,
+	
+każda ilustracja powinna mieć wskazane źródło,
+	
+skróty odniesień do rysunków i tabel należy pisać generalnie od małej litery, np. na rys. 5 pokazano (nie na Rys. 5), 
+	
+opis rysunku jest pod rysunkiem, opis tablicy nad tablicą,
+	
+listy kropkowane, takie jak ta, powinny być sformatowane tak jak ta lista (wielkie litery, przecinki),
+	
+jeśli wymieniamy 3 konkretne elementy, fazy, rozwiązania, to lepiej umieścić je w liście numerowanej (o innym formatowaniu) niż w kropkowanej, która zazwyczaj służy do wymienienia iluś tam elementów, bez ich wyliczenia na początku,
+	
+skorzystaliście Państwo z narzędzia https://languagetool.org/pl, które bardzo ułatwia znalezienie błędów ortograficznych, stylistycznych, interpunkcyjnych oraz literówek i powtórzeń; należy zastosować się do zdecydowanej większości sugestii tego narzędzia, ono dobrze się integruje z Overleafem z poziomu przeglądarki,
+	
+wszystkie liczby w pracy podane są w polskim formacie czyli 3,14, a nie 3.14,
+	
+cudzysłowy są polskie, czyli w Latexu ,,coś tam'', a nie "Ala ma kota",
+	
+apostrofy nie są nadużywane (Gogol'a - źle, de Gaulle'a czy Google'a- dobrze),
+	
+odróżniacie i stosujecie Państwo w pracy procenty i punkty procentowe (jak coś zmieni się z 70% na 60%, to zmieni się o 10 p.p. lub o 14%) ,
+	
+w przypadku umieszczania wzorów, objaśnienia symboli umieszczone są po słowie ,,gdzie'', przed którym nie ma przecinka,
+	
+wyróżnienia nie są dublowane, czyli jeśli kursywa, to nie cudzysłów czy pogrubienie,
+	
+dane w tabelach są czytelne i łatwo porównywalne (czasem trudno odpowiednio sformatować tabele),
+	
+tabelom z danymi musi towarzyszyć komentarz - nie można, ot tak, wrzucić tabeli z liczbami i już - trzeba ją choć trochę zinterpretować,
+	
+w rozdziale podsumowującym wykonane prace znajduje się zdanie odsyłające do repozytorium kodu związanego z pracą na githubie - to dotyczy większości prac, choć znajdą się wyjątki,
+	
+odnośniki do literatury są przed, a nie za znakiem interpunkcyjnym, czyli NIE TAK jak na końcu tego wiersza, [x]
+	
+każda z pozycji w bibliografii jest odpowiednio opisana; w przypadku artykułów można znaleźć ich opis w formacie Bibtex w sieci, a w przypadku stron internetowych trzeba pamiętać o podaniu daty ostatniego dostępu do danego zasobu (można także skorzystać z narzędzia https://www.bibme.org/bibtex ale też trzeba je weryfikować),
+	
+słowo ilość stosowane jest do rzeczy niepoliczalnych (ilość obliczeń, czasu), a liczba do policzalnych (liczba neuronów, iteracji, obrazów),
+	
+Overleaf nie wyświetla błędów kompilacji (czerwona liczba na górze)!
+
+Jednocześnie przypominam, że kompletną pracę powinienem dostać przynajmniej na 2 tygodnie przed terminem jej złożenia (to jest absolutne minimum), gdyż tyle może zająć wprowadzenie niezbędnych poprawek, zwłaszcza w sytuacji, gdy mam więcej niż jedną pracę do korekty!
+
+
+
+
+
+[20.02, 15:44] Czajewski WitoldWażne!Pożądany termin obrony pracy
+    
+
+Proszę w analogicznym wątku na własnym kanale określić kiedy miałaby nastąpić obrona pracy. Wystarczy ogólnie - styczeń, luty, czerwiec, wrzesień, grudzień - w tych miesiącach najczęściej mamy obrony.
+Proszę określić termin pożądany, drugi termin, do kiedy jeszcze jest możliwość przesunięcia obrony oraz termin absolutnie ostateczny. Czasami ten ostateczny będzie tym najbardziej pożądanym i najczęściej (w przypadku prac inżynierskich) jest to luty, kiedy następuje rejestracja na studia drugiego stopnia. Wówczas trzeba się sprężać. Czasami obronę można spokojnie przesunąć na czerwiec czy nawet na wrzesień i nic się nie stanie. Określenie tych terminów pomoże mi w opiece nad pracą.
+Proszę pamiętać, że praca musi być gotowa 2 tygodnie przed obroną, a żeby była gotowa w tym czasie, ja muszę dostać praktycznie skończoną pracę 2 tygodnie wcześniej. Wówczas będzie czas na ostatnie poprawki. 
+Nie gwarantuję, że praca oddana mi jako gotowa na mniej 3 tygodnie przed obroną zostanie dopuszczona do obrony w preferowanym terminie! Czasami prace wymagają tylu poprawek, że nie da się ich zrobić w kilka dni.
+
+
+
+
+[20.02, 15:45] Czajewski WitoldWażne!Sprzęt do dyspozycji
+Do realizacji wielu tematów, które proponuję, często konieczne jest wykorzystanie kart graficznych Nvidii. Bardzo proszę w analogicznym wątku wpisać jaki sprzęt jest do Państwa dyspozycji - chodzi o CPU, GPU oraz system operacyjny. Ewentualnie inny kluczowy sprzęt (np. kamera RGBD, Jetson Nano itp.).
+
+
+
+
+
+[20.02, 15:46] Czajewski WitoldWażne!Wątki na kanale
+Bardzo proszę nie pisać wszystkiego w jednym długim wątku. Pogubimy się. Wyżej wymienione oraz nowe tematy należy tworzyć w oddzielnych wątkach, nadając im wyraźny tytuł ikonką po lewej:
+
+
+
+
+
+
