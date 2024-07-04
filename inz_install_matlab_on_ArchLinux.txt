@@ -1,0 +1,20 @@
+install matlab
+
+https://github.com/chriswifn/Install-Matlab-on-Arch-Linux?tab=readme-ov-file#download-the-zip-archive
+
+sudo ./install -downloadFolder /home/john/Desktop/TMP/
++MATLAB
++Paralel computing
++Deep Learning HDL Toolbox
++Deep Learning Toolbox
++GPU Coder
++MATLAB Coder
++MATLAB Compiler
++MATLAB Compiler SDK
++MATLAB Report Generator
++MATLAB testd
++Optimalization Toolbox
++Optimalization Computing Toolbox
+
+cd /usr/local/MATLAB/R2022b/bin/
+sudo ./activate_matlab.sh
