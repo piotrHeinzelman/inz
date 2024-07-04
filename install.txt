@@ -1,0 +1,58 @@
+
+
+localectl list-keymaps
+loadkeys en
+setfont ter-220b
+
+timedatectl
+fdisk -l
+
+/dev/sda1 64K 06 Fat 16 *
+/dev sda2  4G 82 Linux Swap 
+/dev/sda3 45G 83 Linux
+
+mkfs.fat /dev/sda1
+mkswap   /dev/sda2
+mkfs.ext4	/ dev/sda3
+
+swapon /dev/sda2
+mount /dev/sda3 /mnt
+
+pacstrap -K /mnt base linux linux-firmware 
+
+genfstab -U /mnt >> /mnt/etc/fstab
+arch-chroot /mnt
+
+ln -sf /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
+hwclock --systohc
+
+locale-gen
+
+# /etc/locale.conf
+	LANG=en_US.UTF-8
+
+# /etc/vconsole.conf
+	KEYMAP=pl
+
+# /etc/hostname
+	archlinux
+	
+passwd
+
+
+pacman -S grub
+grub-install --target=i386-pc /dev/sda --recheck
+
+
+
+
+
+umount /dev/sda2	
+
+
+
+
+
+
+
+
