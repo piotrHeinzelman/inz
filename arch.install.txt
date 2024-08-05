@@ -1,0 +1,144 @@
+
+
+// Keyboard
+ls /usr/share/kbd/keymaps/**/*.map.gz
+localectl list-keymaps | grep pl
+
+1) 
+loadkeys pl
+
+
+//  /etc/vconsole.conf
+//  KEYMAP=pl
+echo "KEYMAP=pl" >> /etc/vconsole.conf
+
+
+2)
+setfont ter-216b
+
+3) 
+localectl status
+
+4) 
+timedatectl 
+
+5) 
+fdisk -l
+
+6)
+fdisk /dev/sda
+
+	//
+	/dev/sda1  *(boot) 6 FAT16
+	/dev/sda2         82 Linux swap
+	/dev/sda3         83 Linux
+	//
+
+7)
+mkfs.fat  /dev/sda1
+mkswap    /dev/sda2
+swapon    /dev/sda2
+mkfs.ext4 /dev/sda3
+
+mount     /dev/sda3 /mnt
+
+8)
+pacstrap -K /mnt base base-devel linux linux-firmware nano
+
+
+9)
+genfstab -U /mnt >> /mnt/etc/fstab
+
+10)
+arch-chroot /mnt
+
+11)
+//ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
+ln -sf /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
+
+12)
+hwclock --systohc
+
+13)
+locale-gen
+
+14)
+//  /etc/locale.conf
+echo "LANG=en_US.UTF-8" >> /etc/locale.conf
+
+15)
+// /etc/vconsole.conf
+echo "KEYMAP=pl" >> /etc/vconsole.conf
+echo "FONT=ter-216b" >> /etc/vconsole.conf
+echo "FONT-MAP=8859-2" >> /etc/vconsole.conf
+
+
+
+16)
+// /etc/hostname
+//yourhostname
+echo "myarch" >> /etc/hostname
+
+17)
+// /etc/hosts
+echo "127.0.0.1	localhost" >> /etc/hosts
+echo "::1	localhost" >> /etc/hosts
+echo "127.0.1.1.	myarch" >> /etc/hosts
+
+18)
+pacman -S grub
+
+
+19)
+grub-install --target=i386-pc /dev/sda
+
+20)
+grub-mkconfig -o /boot/grub/grub.cfg
+
+21)
+useradd -mG wheel -s /bin/bash john
+
+22)
+passwd john
+New password:
+
+23)
+pacman -S sudo
+
+
+EDITOR=nano visudo
+// /etc/sudoers
+odkoment %wheel ALL=(ALL)ALL
+
+
+24)
+pacman -S xorg networkmanager
+
+systemctl enable NetworkManager.service
+
+
+25)
+exit
+umount -R /mnt
+reboot
+
+
+**********
+
+26)
+systemctl enable NetworkManager.service
+
+** pacman -S plasma sddm KDE
+** pacman -S lightdm
+** system.disable lightdm
+** systemctl.enable sddm
+
+
+
+
+
+
+
+
+
+
