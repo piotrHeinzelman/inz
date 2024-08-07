@@ -127,7 +127,7 @@ reboot
  
 
 26)
-sudo pacman -S plasma
+sudo pacman -S gnome
 * sudo systemctl enable gdm
 sudo systemctl enable sddm
 
