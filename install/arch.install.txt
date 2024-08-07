@@ -124,14 +124,45 @@ reboot
 
 
 **********
+ 
 
 26)
-systemctl enable NetworkManager.service
+sudo pacman -S plasma
+sudo systemctl enable gdm
 
+* sudo pacman -S sddm
 ** pacman -S plasma sddm KDE
 ** pacman -S lightdm
 ** system.disable lightdm
 ** systemctl.enable sddm
+
+
+
+
+
+30)
+** Matlab ** R2024a
+
+// download from matlab.mathworks.com
+
+cd ~/Downloads
+klick (extract)
+
+sudo ./install
+
++MATLAB
++Deep Learning HDL Toolbox
++DeepLearning Toolbox
++FuzzyLogic Toolbox
++GPU Coder
++MATLAB Coder
++MATLAB compiler
++Paralel Computing Toolbox
+
+
+call matlab script
+
+
 
 
 
