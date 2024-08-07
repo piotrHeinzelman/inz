@@ -128,7 +128,8 @@ reboot
 
 26)
 sudo pacman -S plasma
-sudo systemctl enable gdm
+* sudo systemctl enable gdm
+sudo systemctl enable sddm
 
 * sudo pacman -S sddm
 ** pacman -S plasma sddm KDE
