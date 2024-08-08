@@ -165,6 +165,13 @@ call matlab script
 
 
 
+NVidia:
+sudp pacman -S nvidia
+
+AMD:
+https://bbs.archlinux.org/viewtopic.php?id=236430
+https://www.amd.com/en/support/download/drivers.html
+
 
 
 
