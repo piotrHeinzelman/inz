@@ -37,3 +37,4 @@ python
 https://www.youtube.com/watch?v=x58W9A2lnQc
 
 https://www.youtube.com/watch?v=KGPz8vkq_Xs   <0 arduino c++ on Lm
+https://www.youtube.com/watch?v=UU1WVnMk4E8  LLM
