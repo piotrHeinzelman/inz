@@ -53,6 +53,7 @@ public class Main {
         layer2.setWmn( 1, 2, -1 );
 
         layer2.setX( XforL2 );
+        System.out.println( "XforL2"+XforL2 );
         layer2.nForward();
 
         System.out.println(layer2);
@@ -66,9 +67,15 @@ public class Main {
         }
         System.out.println( "e: " + Arrays.toString( e ) );
         layer2.nBackward( e );
+        //if (true) return;
+        // E ok e *. (1-z) * z
 
         System.out.println(layer2);
 
+        float[] eOut=layer2.getEout();
+        layer1.nBackward( eOut );
+
+        System.out.println( layer1 );
 
     }
 }

@@ -67,6 +67,7 @@ public class Layer {
     public void nBackward( float[] Ein ){
         for ( float f : Eout ){ f=0f; } // clear Eout
         for ( int n=0; n< neurons.length; n++ ){
+            System.out.println( "Ein[n]:"+Ein[n]  + ", "+dFofZ[n]);
             neurons[n].Backward( Ein[n] * dFofZ[n] );
         }
     }
@@ -79,9 +80,9 @@ public class Layer {
     private float F ( float y ){
         float z;
         switch (this.lType) {
-            case sigmod: { z = (float) ( 1/(1 + Math.exp( -y ))); return z; }
+            case sigmod: { z = (float) ( 1/(1 + Math.exp( -y ))); break;}
             case linear:
-                default: { z=y; }
+                default: { z=y; break; }
         }
         return z;
     }
@@ -90,9 +91,9 @@ public class Layer {
         float df;
         switch (lType) {
 
-            case sigmod: { df = z*(1-z); }
+            case sigmod: { df = z*(1-z); break; }
             case linear:
-            default: { df=1; }
+            default: { df=1; break; }
         }
         return df;
     }
@@ -118,6 +119,7 @@ public class Layer {
                 "\nX=" + Arrays.toString(X) +
                 "\nY=" + Arrays.toString(Y) +
                 "\nZ=" + Arrays.toString(Z) +
+                "\ndZ=" + Arrays.toString(dFofZ) +
                 '}';
     }
 }
