@@ -138,7 +138,7 @@ sudo systemctl enable sddm
 
 
 
-
+-- PLASMA -- SDDM  ---
 
 30)
 ** Matlab ** R2024a
