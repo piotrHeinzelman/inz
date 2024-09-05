@@ -1,0 +1,59 @@
+sudo pacman -S plasma
+sudo systemctl enable gdm
+sudo system enable sddm
+
+ls
+cd Downloads/
+
+pacman -S libzip
+sudo pacman -S libzip
+
+pacman -S p7zip
+sudo pacman -S p7zip
+
+7z x matlab_R2024a_Linux.zip 
+ls
+mc
+sudo ./install
+sudo ./install
+sudo systemctl disable sddm
+
+pacman -D plasma
+sudo pacman -D plasma
+
+
+
+sudo pacman -S gnome
+sudo systemctl enable gdm
+
+
+cd Downloads/
+sudo ./install
+ 
+matlab 
+
+git clone git@github.com:piotrHeinzelman/inz.git
+ 
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ecdsa_b521 
+ssh-add ~/.ssh/id_rsa 
+git clone git@github.com:piotrHeinzelman/inz.git
+   
+matlab ./sc 
+matlab
+sudo systemctl enable gdm
+
+
+reboot
+matlab
+
+cd Desktop/
+ls
+cd ..
+cd ~/Downloads/
+ls
+./install 
+matlab
+ 
+sudo ./install 
+matlab  

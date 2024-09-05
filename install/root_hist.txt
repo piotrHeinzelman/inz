@@ -1,0 +1,20 @@
+ln -sf /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
+hwclock --systohc
+localegen
+locale-gen
+echo "LANG=en_US.UTF-8" >> /etc/locale.conf
+echo "KEYMAP=pl" >> /etc/vconsole.conf
+echo "FONT=ter-216b" >> /etc/vconsole.conf
+echo "FONT-MAP=8859-2" >> /etc/vconsole.conf
+echo "myarch" >> /etc/hostname
+mc
+pacman -S grub
+grub-install --target=i386-pc /dev/sda
+grub-mkconfig -o /boot/grub/grub.cfg
+useradd -mG wheel -s /bin/bash john
+passwd john
+pacman -S sudo
+EDITOR=nano visudo
+pacman -S xorg networkmanager
+systemctl enable NetworkManager.service
+exit
