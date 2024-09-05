@@ -14,7 +14,7 @@ echo "KEYMAP=pl" >> /etc/vconsole.conf
 
 
 2)
-setfont ter-216b
+setfont Lat2-Terminus16
 
 3) 
 localectl status
