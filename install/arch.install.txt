@@ -6,13 +6,7 @@ localectl list-keymaps | grep pl
 
 1) 
 loadkeys pl
-
-
-//  /etc/vconsole.conf
-//  KEYMAP=pl
-echo "KEYMAP=pl" >> /etc/vconsole.conf
-
-
+ 
 2)
 setfont Lat2-Terminus16
 
