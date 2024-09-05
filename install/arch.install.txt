@@ -59,6 +59,7 @@ locale-gen
 14)
 //  /etc/locale.conf
 echo "LANG=en_US.UTF-8" >> /etc/locale.conf
+// LANG=pl_PL.UTF-8
 
 15)
 // /etc/vconsole.conf
