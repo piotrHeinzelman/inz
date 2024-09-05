@@ -28,6 +28,10 @@ fdisk /dev/sda
 	/dev/sda3         83 Linux
 	//
 
+	/dev/sda1 64K 06 Fat 16 *
+	/dev sda2  4G 82 Linux Swap 
+	/dev/sda3 45G 83 Linux
+
 7)
 mkfs.fat  /dev/sda1
 mkswap    /dev/sda2
