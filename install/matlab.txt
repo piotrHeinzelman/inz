@@ -1,3 +1,30 @@
 
 https://www.mathworks.com/help/parallel-computing/run-matlab-functions-on-a-gpu.html?searchHighlight=matlab%20run%20script%20&s_tid=srchtitle_support_results_1_matlab%20run%20script%20
 https://www.mathworks.com/help/parallel-computing/sharpen-an-image-using-the-gpu.html
+MATLAB
+
+download & unzip matlaB 2024a (version 6)
+
+
+$ ./install 
+terminate called after throwing an instance of 'std::runtime_error'
+
+$ ./bin/glnxa64/MATLABWindow 
+
+./MATLABWindow: /home/john/Downloads/matlab_R2024a_Linux/bin/glnxa64/libstdc++.so.6: version `GLIBCXX_3.4.29' not found (required by /usr/lib/libgallium-24.2.1-arch1.1.so)
+./MATLABWindow: /home/john/Downloads/matlab_R2024a_Linux/bin/glnxa64/libstdc++.so.6: version `GLIBCXX_3.4.30' not found (required by /usr/lib/libgallium-24.2.1-arch1.1.so)
+./MATLABWindow: /home/john/Downloads/matlab_R2024a_Linux/bin/glnxa64/libstdc++.so.6: version `GLIBCXX_3.4.29' not found (required by /usr/lib/libLLVM.so.18.1)
+./MATLABWindow: /home/john/Downloads/matlab_R2024a_Linux/bin/glnxa64/libstdc++.so.6: version `CXXABI_1.3.13' not found (required by /usr/lib/libLLVM.so.18.1)
+./MATLABWindow: /home/john/Downloads/matlab_R2024a_Linux/bin/glnxa64/libstdc++.so.6: version `GLIBCXX_3.4.30' not found (required by /usr/lib/libLLVM.so.18.1)
+./MATLABWindow: /home/john/Downloads/matlab_R2024a_Linux/bin/glnxa64/libstdc++.so.6: version `GLIBCXX_3.4.30' not found (required by /usr/lib/libicuuc.so.75)
+
+
+pacman -Qo /lib/libstdc++.so.6
+
+
+
+  // copy file from /lib	libstdc++*.* >> matlab/bin/glnxA64
+$ sudo cp /lib/libstdc++.* ~/Downloads/matlab_R2024a_Linux/bin/glnxa64/
+
+$ sudo pacman -S nvidia
+
