@@ -5,14 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="226d75a0-8f9f-4282-8835-2c4e42efc398" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/runme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pl/heinzelman/tasks/Task.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pl/heinzelman/tasks/Task2x3_simple_backward.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pl/heinzelman/tasks/TaskForLoop2sek.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/nweb/pl/heinzelman/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/nweb/pl/heinzelman/neu/LType.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/nweb/pl/heinzelman/neu/Layer$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/nweb/pl/heinzelman/neu/Layer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/nweb/pl/heinzelman/neu/Neuron.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pl/heinzelman/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pl/heinzelman/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +20,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -102,11 +101,12 @@
     "LombokPluginIS_LOMBOK_VERSION_CHECK_Enabled": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "last_opened_file_path": "/home/john/INZ/inz/JavaProj/nweb",
-    "settings.editor.selected.configurable": "project.propCompiler"
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.Main (2)">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="pl.heinzelman.Main" />
       <module name="nweb" />
@@ -144,9 +144,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main (2)" />
         <item itemvalue="Application.Main (1)" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
