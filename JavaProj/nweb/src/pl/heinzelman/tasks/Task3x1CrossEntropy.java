@@ -46,11 +46,11 @@ public class Task3x1CrossEntropy implements Task{
         float[] XforL2 = layer1.getZ();
         System.out.println(  Arrays.toString( XforL2 ) );
 
-        System.out.println(  "Lay1 : Z = " + layer1.getZ() );
+        System.out.println(  "Lay1 : Z = " + Arrays.toString( layer1.getZ() ) );
 
 
 
-        if ( true ) return ;
+
 
         // 3*neu / 2*weight
         Layer layer2 = new Layer( LType.crossentropy , 1 ,3  );

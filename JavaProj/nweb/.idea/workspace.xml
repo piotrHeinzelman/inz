@@ -5,12 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="226d75a0-8f9f-4282-8835-2c4e42efc398" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/pl/heinzelman/tasks/Task3x1CrossEntropy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/pl/heinzelman/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/pl/heinzelman/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/nweb/pl/heinzelman/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/nweb/pl/heinzelman/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pl/heinzelman/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pl/heinzelman/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pl/heinzelman/neu/LType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pl/heinzelman/neu/LType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/pl/heinzelman/neu/LType.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/pl/heinzelman/neu/LType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/pl/heinzelman/neu/Layer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/pl/heinzelman/neu/Layer$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/pl/heinzelman/neu/Layer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/pl/heinzelman/neu/Layer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pl/heinzelman/neu/Layer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pl/heinzelman/neu/Layer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pl/heinzelman/tasks/Task3x1CrossEntropy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pl/heinzelman/tasks/Task3x1CrossEntropy.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

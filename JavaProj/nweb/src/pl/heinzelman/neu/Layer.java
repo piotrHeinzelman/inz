@@ -81,6 +81,11 @@ public class Layer {
         float z;
         switch (this.lType) {
             case sigmod: { z = (float) ( 1/(1 + Math.exp( -y ))); break;}
+            case crossentropy: { z = (float) ( 1/(1 + Math.exp( -y ))); break;}
+                        // Activation fun = sigmod,
+                        // S=[s,1-s] // Z=[z,1-z]
+                        // Loss fun : L(S,Z)=-Sum(si*ln zi) = -(s*ln(z) +(1-s)*ln(1-z) )
+                        //
             case linear:
                 default: { z=y; break; }
         }
@@ -92,6 +97,7 @@ public class Layer {
         switch (lType) {
 
             case sigmod: { df = z*(1-z); break; }
+            case crossentropy: { df = 1; break; }
             case linear:
             default: { df=1; break; }
         }
