@@ -2,15 +2,11 @@
 javac Main.java 
 
 echo " "
-echo "--- Java ---"
-echo " "
-echo "start: "
-date +%k:%M:%S.%N
+echo "--- Java app start: ---"
 
 java Main
 
-echo "end:"
-date +%k:%M:%S.%N
+echo "--- Java app end: ---"
 
 
 

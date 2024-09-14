@@ -1,10 +1,6 @@
 echo " "
-echo "--- Python ---"
-echo " "
-echo "start: "
-date +%k:%M:%S.%N
+echo "--- Python app start: --- "
 
 python main.py
 
-echo "end:"
-date +%k:%M:%S.%N
+echo "--- Python app end: ---"

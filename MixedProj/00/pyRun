@@ -1,0 +1,10 @@
+echo " "
+echo "--- Python ---"
+echo " "
+echo "start: "
+date +%k:%M:%S.%N
+
+python main.py
+
+echo "end:"
+date +%k:%M:%S.%N

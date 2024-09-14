@@ -1,4 +1,6 @@
 
+cycles=987654;
+
 %generate data
 if (false)
     x=[ 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 ]
@@ -27,15 +29,20 @@ if (true)
 end
 
 
-start_ = datetime('now');
-for i=1:1000000
-    a = polyfit(x,y,1);  %a = robustfit (y,x);
+ST = datetime('now');
+for i = 1:cycles
+    a = polyfit(x,y,1);
 end
 
-end_ = datetime('now');
-disp( a )
-worktime=end_-start_;
-disp ( worktime )
+ED = datetime('now');
+
+D = duration( ED-ST, 'FORMAT', 'mm:ss.SSSSSS' );
+L = size( x );
+fprintf(' duration: ' );
+disp( D );
+fprintf(' X[%i] * %i', L(1), cycles );
+fprintf('\n result: ' );
+disp( a );
 
 
 

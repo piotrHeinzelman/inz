@@ -1,0 +1,16 @@
+
+javac Main.java 
+
+echo " "
+echo "--- Java ---"
+echo " "
+echo "start: "
+date +%k:%M:%S.%N
+
+java Main
+
+echo "end:"
+date +%k:%M:%S.%N
+
+
+
