@@ -1,4 +1,5 @@
-
-./matRun
-./pyRun
-./javaRun
+echo "x[65536] cycles: 10000 polyfit()" > output.txt
+./matRun >> output.txt
+./pyRun  >> output.txt
+./javaRun >> output.txt
+cat output.txt
