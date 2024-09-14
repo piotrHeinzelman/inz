@@ -27,19 +27,15 @@ if (true)
 end
 
 
-disp( 'datasize: 65535' );
-disp( 'cycles:     999');
-
 start_ = datetime('now');
-
-%for i=1:1000
-    %a = robustfit (y,x);
-%end
-polyfit(x,y,1)
+for i=1:10000
+    a = polyfit(x,y,1);  %a = robustfit (y,x);
+end
 
 end_ = datetime('now');
-disp('a');
-worktime=end_-start_
+disp( a )
+worktime=end_-start_;
+disp ( worktime )
 
 
 

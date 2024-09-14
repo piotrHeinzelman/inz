@@ -1,23 +1,25 @@
-# This is a sample Python script.
+import numpy as np
+import time 
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+#
+def readBinFile( fileName ):
+    file = open( fileName, 'rb' )
+    data = np.fromfile ( file, dtype=np.uint16 )	
+    file.close()
+    return data	
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+
+x = readBinFile('datax_uint16.bin')
+y = readBinFile('datay_uint16.bin')
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+start = time.time()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+for i in range(10000):
+    a = np.polyfit(x,y,1)
 
-x =  ' azbeest chemical substance using for izoling high temperatures etc.not ';
+end = time.time()
 
-for  i  in range(6): # for  i  in range(2,6):  # for x in range(2, 30, 3):
-    print( x , i )
-
-#def
+print ('a: ', a )
+print ( 'Py duration:' , end-start )
