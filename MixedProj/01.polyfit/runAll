@@ -1,16 +1,17 @@
 
-javac Main.java 
+
 
 echo " "
-echo "--- Java ---"
+echo "--- Matlab ---"
 echo " "
 echo "start: "
 date +%k:%M:%S.%N
 
-java Main
+/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run matlab.m'
 
 echo "end:"
 date +%k:%M:%S.%N
+
 
 
 
@@ -29,13 +30,19 @@ date +%k:%M:%S.%N
 
 
 
+
+javac Main.java 
+
 echo " "
-echo "--- Matlab ---"
+echo "--- Java ---"
 echo " "
 echo "start: "
 date +%k:%M:%S.%N
 
-/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run matlab.m'
+java Main
 
 echo "end:"
 date +%k:%M:%S.%N
+
+
+
