@@ -1,3 +1,4 @@
+from numba import jit, cuda 
 import numpy as np
 import time 
 import datetime
@@ -7,9 +8,13 @@ def readBinFile( fileName ):
     file = open( fileName, 'rb' )
     data = np.fromfile ( file, dtype=np.double )	
     file.close()
-    return data	
+    return data
 
 
+@jit(target_backend='cuda')
+def calc(x,y):
+    a = np.polyfit(x,y,1)
+    return a
 
 x = readBinFile('datax1_double.bin')
 y = readBinFile('datay1_double.bin')
@@ -18,7 +23,8 @@ cycles = 987
 start = time.time()
 
 for i in range( cycles ):
-    a = np.polyfit(x,y,1)
+    a=calc(x,y)
+
 
 end = time.time()
 
