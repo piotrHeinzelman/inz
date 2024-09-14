@@ -15,9 +15,9 @@ if __name__ == '__main__':
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
 
-#x =  ' azbeest chemical substance using for izoling high temperatures etc.not ';
+x =  ' azbeest chemical substance using for izoling high temperatures etc.not ';
 
-#for  i  in range(6): # for  i  in range(2,6):  # for x in range(2, 30, 3):
-#    print( x , i )
+for  i  in range(6): # for  i  in range(2,6):  # for x in range(2, 30, 3):
+    print( x , i )
 
-def
+#def
