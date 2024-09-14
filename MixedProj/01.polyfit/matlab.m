@@ -32,12 +32,13 @@ disp( 'cycles:     999');
 
 start_ = datetime('now');
 
-for i=1:1000
-    a = robustfit (y,x);
-end
+%for i=1:1000
+    %a = robustfit (y,x);
+%end
+polyfit(x,y,1)
 
 end_ = datetime('now');
-disp(a');
+disp('a');
 worktime=end_-start_
 
 

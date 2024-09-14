@@ -35,7 +35,7 @@ echo " "
 echo "start: "
 date +%k:%M:%S.%N
 
-matlab run matlab.m
+/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run matlab.m'
 
 echo "end:"
 date +%k:%M:%S.%N
