@@ -1,0 +1,10 @@
+echo " "
+echo "--- Matlab ---"
+echo " "
+echo "start: "
+date +%k:%M:%S.%N
+
+/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run matlab.m'
+
+echo "end:"
+date +%k:%M:%S.%N
