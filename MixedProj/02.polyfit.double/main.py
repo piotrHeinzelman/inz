@@ -13,7 +13,7 @@ def readBinFile( fileName ):
 
 x = readBinFile('datax1_double.bin')
 y = readBinFile('datay1_double.bin')
-cycles = 987
+cycles = 987654
 
 start = time.time()
 

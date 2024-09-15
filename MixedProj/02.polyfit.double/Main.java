@@ -1,19 +1,53 @@
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
-    double[] x = new double[]{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20 };
-    double[] y = new double[]{ -1.69, -0.79, 5.77, 7.80, 4.56, 14.32, 15.47, 8.88, 7.41, 17.26, 14.83, 20.47, 20.39, 27.04, 22.53, 22.36, 29.35, 22.86, 31.22, 28.13  };
+    public static float[] loadBin( String filename ) throws IOException {
+        float[] buf = null;
+        int len;
+
+        File f = new File(filename);
+        len = (int) ( 0.125 * f.length());
+        buf = new float[ len ];
+
+
+        Scanner scanner;
+        FileInputStream fis = new FileInputStream( filename );
+            int[] bB=new int[8];
+            for ( int i=0;i<len;i++ ) {
+                 bB[0] = fis.read();
+                 bB[1] = fis.read();
+                 bB[2] = fis.read();
+                 bB[3] = fis.read();
+                 bB[4] = fis.read();
+                 bB[5] = fis.read();
+                 bB[6] = fis.read();
+                 bB[7] = fis.read();
+                System.out.println( bB[0]+"."+bB[1]+"."+bB[2]+"."+bB[3]+":"+bB[4]+"."+bB[5]+"."+bB[6]+"."+bB[7] );
+
+
+            }
+        return buf;
+    }
+
+
+    public static void main(String[] args) throws IOException {
+        float[] x = loadBin("datax1_double.bin");
+        float[] y = loadBin("datay1_double.bin");
 
     double w1 = 0.0;
     double w0 = 0.0;
-    Long cycles = 987L;
+    Long cycles = 987654L;
 
     Instant start = Instant.now();
     for ( int C=0; C<cycles; C++ ) {
@@ -46,10 +80,6 @@ public class Main {
     System.out.println( " result: [" + w1 + ", " + w0 + "]" );
     }
 }
-
-
-
-
 
 
 
