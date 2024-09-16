@@ -1,52 +1,52 @@
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.Arrays;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Scanner;
 
 public class Main {
 
-    public static float[] loadBin( String filename ) throws IOException {
-        float[] buf = null;
+    public static double[] loadBin( String filename ) throws IOException {
+        double[] buf = null;
         int len;
 
         File f = new File(filename);
         len = (int) ( 0.125 * f.length());
-        buf = new float[ len ];
+        buf = new double[ len ];
 
-
-        Scanner scanner;
         FileInputStream fis = new FileInputStream( filename );
-            int[] bB=new int[8];
-            for ( int i=0;i<len;i++ ) {
-                 bB[0] = fis.read();
-                 bB[1] = fis.read();
-                 bB[2] = fis.read();
-                 bB[3] = fis.read();
-                 bB[4] = fis.read();
-                 bB[5] = fis.read();
-                 bB[6] = fis.read();
-                 bB[7] = fis.read();
-                System.out.println( bB[0]+"."+bB[1]+"."+bB[2]+"."+bB[3]+":"+bB[4]+"."+bB[5]+"."+bB[6]+"."+bB[7] );
+        byte[] bB=new byte[8];
+        byte[] bR=new byte[8];
+        double val=0;
+        for ( int i=0;i<len;i++ ) {
 
+            fis.read(bB,0,8);
+            bR[0]=bB[7];
+            bR[1]=bB[6];
+            bR[2]=bB[5];
+            bR[3]=bB[4];
+            bR[4]=bB[3];
+            bR[5]=bB[2];
+            bR[6]=bB[1];
+            bR[7]=bB[0];
+            val=ByteBuffer.wrap(bR).getDouble();
+            buf[i]=val;
 
-            }
+        }
         return buf;
     }
 
 
+
+
     public static void main(String[] args) throws IOException {
-        float[] x = loadBin("datax1_double.bin");
-        float[] y = loadBin("datay1_double.bin");
+        double[] x = loadBin("datax1_double.bin");
+        double[] y = loadBin("datay1_double.bin");
 
     double w1 = 0.0;
     double w0 = 0.0;
+
     Long cycles = 987654L;
 
     Instant start = Instant.now();
