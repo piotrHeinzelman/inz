@@ -1,13 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="11e6b347-f6f2-40cd-816c-c3468f954431" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../02.polyfit.double/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../02.polyfit.double/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../02.polyfit.double/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/out/production/02.polyfit.double/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../02.polyfit.double/out/production/02.polyfit.double/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/out/production/02.polyfit.double/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../02.polyfit.double/out/production/02.polyfit.double/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/out/production/02.polyfit.double/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../02.polyfit.double/out/production/02.polyfit.double/main.py" afterDir="false" />
+    <list default="true" id="15d595a4-7035-4aed-a400-8b88835d19dd" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/01.polyfit.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matlab.m" beforeDir="false" afterPath="$PROJECT_DIR$/matlab.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/output.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/02.polyfit.double.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/out/production/02.polyfit.double/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/out/production/02.polyfit.double/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/out/production/02.polyfit.double/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/out/production/02.polyfit.double/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/out/production/02.polyfit.double/02.polyfit.double.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/out/production/02.polyfit.double/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/out/production/02.polyfit.double/datax1_double.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/out/production/02.polyfit.double/datay1_double.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/out/production/02.polyfit.double/javaRun" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/out/production/02.polyfit.double/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/out/production/02.polyfit.double/matRun" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/out/production/02.polyfit.double/matlab.m" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/out/production/02.polyfit.double/pyRun" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../02.polyfit.double/out/production/02.polyfit.double/runAll" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/pythonProject/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/pythonProject/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/pythonProject/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/pythonProject/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/pythonProject/.idea/pythonProject.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/pythonProject/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/pythonProject/datax1_double.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/pythonProject/datay1_double.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../PycharmProjects/pythonProject/main.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,25 +51,38 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="ProjectId" id="2m7etoTVTjzPkkyVrd45ZG3gbj1" />
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2mAf6hNR3nMBhPxRvMj7NhQQ56Q" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.editor&quot;
   }
-}]]></component>
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-98f27166c754-ba05f1cad1b1-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.21829.153" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="11e6b347-f6f2-40cd-816c-c3468f954431" name="Changes" comment="" />
-      <created>1726432259404</created>
+      <changelist id="15d595a4-7035-4aed-a400-8b88835d19dd" name="Changes" comment="" />
+      <created>1726524128703</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1726432259404</updated>
+      <updated>1726524128703</updated>
     </task>
     <servers />
   </component>

@@ -14,7 +14,7 @@ def readBinFile( fileName ):
 x = readBinFile('datax1_double.bin')
 y = readBinFile('datay1_double.bin')
 print(x)
-cycles = 987654
+cycles = 1000
 
 start = time.time()
 

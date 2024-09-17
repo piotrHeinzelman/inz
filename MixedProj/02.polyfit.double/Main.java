@@ -47,7 +47,7 @@ public class Main {
     double w1 = 0.0;
     double w0 = 0.0;
 
-    Long cycles = 987654L;
+    Long cycles = 1000L;
 
     Instant start = Instant.now();
     for ( int C=0; C<cycles; C++ ) {

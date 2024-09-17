@@ -1,5 +1,5 @@
 
-cycles=987654;
+cycles=1000;
 
 %generate data
 if (false)
