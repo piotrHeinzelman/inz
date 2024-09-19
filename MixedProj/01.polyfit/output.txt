@@ -1,3 +1,25 @@
 01.polyfit() 
  
 --- Matlab app start: ---
+ duration:    00:00.505343
+
+ X[65535] * 1000
+ result:    1.0e+04 *
+
+    0.0000    3.2865
+
+--- Matlab app end: --- 
+ 
+--- Python app start: --- 
+ duration: 3.4992237091064453 [sek.]
+
+ X[ 65535 ] *  1000
+ result:  [4.05892728e-04 3.28652811e+04]
+--- Python app end: ---
+ 
+--- Java app start: ---
+ duration: 0.109 [sek.]
+
+ X[65535] * 1000
+ result: [4.058927275805958E-4, 32865.281121613974]
+--- Java app end: ---

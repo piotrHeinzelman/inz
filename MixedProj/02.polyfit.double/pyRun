@@ -1,23 +1,6 @@
 echo " "
 echo "--- Python app start: --- "
 
-
-#SBATCH --account <project-id>
-#SBATCH --job-name Python_ExampleJob
-#SBATCH --nodes=1
-#SBATCH --time=00:10:00
-#SBATCH --gpus-per-node=1
-
-
-module load miniconda3/24.1.2-py310
-module list
-
-source activate gpu_env
-
 python main.py
-
-conda deactivate
-
-
 
 echo "--- Python app end: ---"
