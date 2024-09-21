@@ -1,4 +1,153 @@
-Test ciągłości numeracji po przejściu do nowego rozdziału.
+
+\chapter{ Jednowymiarowa regresja liniowa}
+\cite{russell2023} Funkcja liniowa jednej zmiennej to funkcja w postaci \(y=w_1x +w_0\); współczynnki \(w_0\) i \(w_1\) możemy traktować jak wagi, i możemy je traktować łącznie jako wektor \(\textbf{W}=<w_0,w_1>\) a samo przekształcenie można utożsamić z iloczynem skalarnym \(y=\textbf{W}*<1,x> \). Zadanie dopasowania najlepszej hipotezy \(hw\) wiążącej te dwie wielkości nosi nazwę regresji liniowej. Matematycznie dopasowanie to sprowadza się do znalezienia wektora W minimalizującego funkcję straty, zgodnie z teorią Gaussa jako miarę tej straty przyjmuje się sumę miar dla wszystkich przykładów:
+\begin{equation}
+       Loss(h_w) = \sum_{j=1}^{N} L_2 \big{(}y_j, hw(x_j)\big{)} = \sum_{j=1}^{N} L_2 \big{(}y_j-hw(x_j)\big{)}^2 =
+       \sum_{j=1}^{N} L_2 \big{(}y_j-(w_1x + w_0)\big{)}^2,
+\end{equation}
+Naszym celem jest znalezienie optymalnego wektora W 
+\begin{equation}
+       \textbf{W} = \text{argmin } Loss(h_w)
+\end{equation}
+Gdy funkcja ciągła osiąga minimum w danym punkcie, pierwsze pochodne cząstkowe po argumentach tej funkcji zerują się w tym punkcie; w kontekście regresji liniowej nasza funkcja \(Loss(h_w)\) jest funkcją dwu zmiennych: \(w_0\) i \(w_1\), których wartości w punkcie minimum określone są przez układ równań:
+ 
+
+    \begin{equation}
+        \Biggl\{
+                \begin{matrix}
+                    \frac{\partial}{\partial{w_0}} \sum_ \big{(}y_j -(w_1x + w_0)\big{)}^2 = 0,\\
+                     
+                    \frac{\partial}{\partial{w_1}} \sum \big{(}y_j -(w_1x + w_0)\big{)}^2 = 0,
+                \end{matrix} 
+    \end{equation} 
+
+Rozwiązaniem takiego układu są wartości:
+
+\begin{equation}
+w_1=\frac{ N(\sum x_jy_j)-(\sum x_j)(\sum y_j) }{ N(x_j^2)-(\sum x_j)^2 }, 
+w_0=\frac{\sum y_j - w_1( \sum x_j)}{N},
+\end{equation}
+
+Dla dużych N\cite{russell2023} musimy użyć następującej, równoważnej postaci rzeczonych wzorów:
+\begin{equation}
+w_1=\frac{ \sum (x_j-\overline{x})( y_j - \overline{y}  )  }{ \sum ( x_j - \overline{x} )^2 }, 
+w_0=\overline y - w_1\overline x,
+\end{equation}
+gdzie \(\overline{x}\) i \(\overline{y} \) są średnimi arytmetycznymi: 
+\begin{equation}
+\overline{x}=\frac{\sum x_j}{N}, \overline{y}=\frac{\sum y_j}{N},
+\end{equation}
+
+
+\subsection{Realizacja obliczeń}
+Przykłady obliczeń Python i Matlab zostały zaczerpnięte z [ossowski2023].
+pełen kod dostępny pod adresem: https://github.com/piotrHeinzelman/inz/tree/main
+w przypadku Matlab i Python korzystam z dostępnych funkcji, w przypadku Java obliczam wg. wzoru ! 23 !. Obliczenia różnymi metodami dają zbliżone wyniki, więc zakładam że moje implementacje są poprawne. 
+
+Matlab: 
+\begin{lstlisting}
+
+    x=[ 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 ]
+    y=[ -1.69 -0.79 5.77 7.80 4.56 14.32 15.47 8.88 7.41 17.26 14.83 20.47 20.39 27.04 22.53 22.36 29.35 22.86 31.22 28.13 ]
+
+    for i = 1:n
+        a = polyfit(x,y,1);
+    end
+\end{lstlisting}
+
+Python: 
+\begin{lstlisting}
+for i in range( cycles ):
+    a = np.polyfit(x,y,1)
+\end{lstlisting}
+
+Java:
+\begin{lstlisting}
+for ( int C=0; C<cycles; C++ ) {
+        double xsr = 0.0;
+        double ysr = 0.0;
+        for (int i = 0; i < x.length; i++) {
+            xsr += x[i];
+            ysr += y[i];
+        }
+        xsr = xsr / x.length;
+        ysr = ysr / y.length;
+
+        w1 = 0.0;
+        w0 = 0.0;
+        double sumTop = 0.0;
+        double sumBottom = 0.0;
+        for (int i = 0; i < x.length; i++) {
+            sumTop += ((x[i] - xsr) * (y[i] - ysr));
+            sumBottom += ((x[i] - xsr) * (x[i] - xsr));
+        }
+        w1 = sumTop / sumBottom;
+        w0 = ysr - w1 * xsr;
+    }
+\end{lstlisting}
+
+czasy wykonania kodu polyfit 20 próbek: 
+Java:    0.042  sek. !!!    
+Matlab:  5.936 sek.
+Python: 26.918 sek.
+
+
+
+
+
+\section{Spadek gradientowy} Jako że naszym celem jest minimalizowanie straty, rozpoczynamy od dowolnego punktu na płaszczyźnie \(<w0,w1>\), wyliczamy przybliżenie gradientu w tym punkcie, i czynimy niewielki krok w kierunku wyznaczonym przez gradient. W przypadku regresji jednowymiarowej funkcja straty jest funkcją kwadratową, więc pochodne cząstkowe są funkcjami liniowymi. 
+\begin{equation}
+\begin{split}
+\frac {\partial g ( f(x) )}{\partial x} = \frac {g' ( f(x) ) \partial f(x)}{\partial x},\\
+\\
+\frac {\partial}{\partial x}x^2=2x, \text{ i }
+\frac {\partial}{\partial x}x=1,
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+\frac {\partial}{ \partial w_i} Loss(w) = 
+\frac {\partial}{ \partial w_i} (y-h_w(x))^2 =2(y-h_w(x)) * \frac{\partial}{\partial w_i}(y-h_w(x)) = \\ = 2(y-h_w(x))*\frac{\partial}{\partial w_i}(y-(w_1x + w_0))
+\end{split}
+\end{equation}
+
+
+Pochodne cząstkowe dla parametrów:
+\begin{equation}
+\begin{split}
+\frac {\partial}{ \partial w_0} Loss(w) = -2(y-h_w(x)), \\
+\frac {\partial}{ \partial w_1} Loss(w) = -2(y-h_w(x))*x, \\
+\end{split}
+\end{equation}
+Reguła uczenia wag: gdzie \(\alpha\) jest stałą uczenia, około 0,01
+\begin{equation}
+\begin{split}
+w_0 \leftarrow w_0 + \alpha \sum (y_j - h_w(x_i)),\\
+w_1 \leftarrow w_1 + \alpha \sum (y_j - h_w(x_i))*x_i,\\
+\end{split}
+\end{equation}
+Dla wielozmiennej regresji liniowej mamy \cite{russell2023} 
+\begin{equation}
+\begin{split}
+w_i \leftarrow w_i + \alpha \sum_{j} \big{(}y_j - h_w(x_j))*x_j,_i\big{)},\\
+\end{split}
+\end{equation}
+A błąd kwadratowy dla całego zbioru: \cite{russell2023} 
+\begin{equation}
+L(W)=||\overline y-y||^2 = ||XW-Y||^2
+\end{equation}
+\section{Obliczenia - Matlab} 
+Rozwiązanie \cite{ossowski2023} możemy zaimplementować bezpośrednio w Matlabie, albo wykorzystać funkcję  \textit{ polyfit }  przy założeniu stopnia wielomianu równego jeden.
+
+
+
+
+\chapter{ SVN - maszyny wektorów nośnych }
+\cite{russell2023} Na początkuXXI wieku popularność zyskała sobie klasa modeli o nazwie \textbf{maszyny wektorów nośnych} (ang. \textit{Support Vector Machine}) stanowiąca proste podejście do nadzorowanego uczenia. 
+
+ 
+--------------
 
 
 \begin{figure}[!hb]

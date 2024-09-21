@@ -97,6 +97,10 @@
 \RequirePackage{amssymb}
 \RequirePackage{amsthm}
 \RequirePackage{esint}
+
+\usepackage[default]{sourcecodepro}
+\usepackage[T1]{fontenc}
+
 %\RequirePackage[version=4]{mhchem}
 \ifXeTeX
     \RequirePackage{mathspec} % wczytuje również fontspec
@@ -110,6 +114,9 @@
     \RequirePackage{lmodern}
     \renewcommand*\familydefault{\sfdefault}
     \RequirePackage[T1]{fontenc}
+    %add P.H.
+    %\usepackage[default]{sourcecodepro}
+    %\usepackage[T1]{fontenc}
 \fi
 \renewcommand{\familydefault}{\sfdefault}
 
