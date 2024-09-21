@@ -16,6 +16,7 @@ import java.util.Random;
 //dF(Z)*E
 
 public class Layer {
+    private String name;
     private  LType lType;
     private  Neuron[] neurons;
     private  float X[];
@@ -80,12 +81,25 @@ public class Layer {
     private float F ( float y ){
         float z;
         switch (this.lType) {
-            case sigmod: { z = (float) ( 1/(1 + Math.exp( -y ))); break;}
-            case crossentropy: { z = (float) ( 1/(1 + Math.exp( -y ))); break;}
+            case sigmod: { z = (float) ( 1/(1 + Math.exp( -y ))); break; }
+            case crossentropy: { z = (float) ( 1/(1 + Math.exp( -y ))); break; }
                         // Activation fun = sigmod,
                         // S=[s,1-s] // Z=[z,1-z]
                         // Loss fun : L(S,Z)=-Sum(si*ln zi) = -(s*ln(z) +(1-s)*ln(1-z) )
                         //
+            case softmax: {
+                    if (Z[0]==0.0) {
+                        float ymax=0.0f;
+                              for ( float y_ : Y ){ if ( y_ > ymax ) { ymax=y_; }}
+                        float sumexpy=0.0f;
+                              for ( int i=0; i<Z.length; i++ ){ Z[i] = (float) Math.exp( Y[i]-ymax ); }
+                        float maxZ=0.0f;
+                              for ( float z_ : Z){ maxZ = maxZ + z_; }
+                        for ( int i=0; i<Z.length; i++ ){ Z[i] = Z[i]/maxZ; }
+                    }
+                    z=0;
+                    for ( int i=0; i<Z.length; i++ ){ if (Y[i] == y){ z=Z[i]; }}
+                    break; }
             case linear:
                 default: { z=y; break; }
         }
@@ -95,9 +109,9 @@ public class Layer {
     private float dF (float z ){
         float df;
         switch (lType) {
-
             case sigmod: { df = z*(1-z); break; }
             case crossentropy: { df = 1; break; }
+            case softmax: { df = 1; break; }
             case linear:
             default: { df=1; break; }
         }
@@ -120,7 +134,7 @@ public class Layer {
 
     @Override
     public String toString() {
-        return "\nLayer{" +
+        return "\nLayer{" + name + " : "+
                 "\nneurons=" + Arrays.toString(neurons) +
                 "\nX=" + Arrays.toString(X) +
                 "\nY=" + Arrays.toString(Y) +
@@ -128,4 +142,6 @@ public class Layer {
                 "\ndZ=" + Arrays.toString(dFofZ) +
                 '}';
     }
+
+    public void setName(String name) { this.name = name; }
 }

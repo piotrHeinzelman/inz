@@ -5,7 +5,7 @@ import pl.heinzelman.neu.Layer;
 
 import java.util.Arrays;
 
-public class Task3x1CrossEntropy implements Task{
+public class Task3x2SoftMax implements Task{
 
 
     @Override
@@ -15,7 +15,6 @@ public class Task3x1CrossEntropy implements Task{
 
     @Override
     public void run() {
-
 
         Layer layer1=new Layer( LType.sigmod , 3 ,2 );
         layer1.setName( "Layer: 1" );
@@ -44,8 +43,6 @@ public class Task3x1CrossEntropy implements Task{
         layer1.nForward();
 //System.out.println( layer1 );
 
-
-
         float[] XforL2 = layer1.getZ();
 //System.out.println(  Arrays.toString( XforL2 ) );
 
@@ -56,16 +53,20 @@ public class Task3x1CrossEntropy implements Task{
 
 
         // 3*neu / 2*weight
-        Layer layer2 = new Layer( LType.crossentropy , 1 ,3  );
+        Layer layer2 = new Layer( LType.softmax , 2 ,3  );
         layer2.setName( "Layer: 2" );
         // first neu
         layer2.setWmn( 0, 0,  1 );
         layer2.setWmn( 0, 1, -1 );
         layer2.setWmn( 0, 2,  1 );
 
+        layer2.setWmn( 1, 0,  -1 );
+        layer2.setWmn( 1, 1,   1 );
+        layer2.setWmn( 1, 2,  -1 );
+
 
         layer2.setX( XforL2 );
-        //System.out.println( "XforL2"+XforL2 );
+System.out.println( "XforL2"+XforL2 );
         layer2.nForward();
 
 
@@ -81,7 +82,6 @@ public class Task3x1CrossEntropy implements Task{
 System.out.println( "z:" + Arrays.toString( z ));
 System.out.println( "s:" + Arrays.toString( s ));
 
-
         float[] e = new float[z.length];
         for ( int i=0;i<z.length;i++ ){
             e[i]=s[i]-z[i];
@@ -95,8 +95,8 @@ System.out.println( "s:" + Arrays.toString( s ));
 
         float[] eOut=layer2.getEout();
         layer1.nBackward( eOut );
-        System.out.println( "eOut (L2):" + Arrays.toString( eOut ));
-        System.out.println( layer1 );
-        System.out.println( layer2 );
+System.out.println( "eOut (L2):" + Arrays.toString( eOut ));
+System.out.println( layer1 );
+System.out.println( layer2 );
     }
 }
