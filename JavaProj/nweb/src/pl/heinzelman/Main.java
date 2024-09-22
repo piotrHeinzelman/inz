@@ -9,8 +9,8 @@ public class Main {
     Task task;
     // task = new TaskForLoop2sek(); //
     // task = new Task2x3_simple_backward();
-    // task = new Task3x1CrossEntropy();
-       task = new Task3x2SoftMax();
+     task = new Task3x1CrossEntropy();
+    //   task = new Task3x2SoftMax();
     task.doTask();
 
 

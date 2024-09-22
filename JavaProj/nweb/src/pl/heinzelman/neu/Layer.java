@@ -65,6 +65,28 @@ public class Layer {
         }
     }
 
+
+
+    public void nBackward( float[] S , LossType lossFunction ){
+        // poprawić w zaleznosci od warstwy dodac mnozenie o dL
+        float[] e = new float[Z.length];
+        //for ( int i=0;i<Z.length;i++ ){
+        //    e[i]=S[i]-Z[i];
+        //}
+        float k=1;
+        for (int i=0;i<Z.length;i++) {
+            switch ( lossFunction ) {
+                case squareError: { e[i]=0.5f*2*(S[i]-Z[i]); break; }
+                case crossEntropy: { e[i]=(S[i]-Z[i]); break; }
+                case softmax:     { e[i]=(S[i]-Z[i]); break; }
+                case notOutLayer: { e[i]=1; break; }
+            }
+            e[i]=e[i]*k;
+        }
+
+        nBackward( e );
+    }
+
     public void nBackward( float[] Ein ){
         for ( float f : Eout ){ f=0f; } // clear Eout
         for ( int n=0; n< neurons.length; n++ ){
