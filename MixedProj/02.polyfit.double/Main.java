@@ -41,12 +41,16 @@ public class Main {
 
 
     public static void main(String[] args) throws IOException {
-        double[] x = loadBin("datax1_double.bin");
-        double[] y = loadBin("datay1_double.bin");
+	String name=args[0];
+	System.out.println(args[0]);
+	
+        double[] x = loadBin("datax"+name+".bin");
+        double[] y = loadBin("datay"+name+".bin");
 
     double w1 = 0.0;
     double w0 = 0.0;
 
+    
     Long cycles = 1000L;
 
     Instant start = Instant.now();

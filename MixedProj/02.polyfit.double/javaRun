@@ -5,7 +5,10 @@ javac MainBigDecimal.java
 echo " "
 echo "--- Java app start: ---"
 
-java Main
+java Main 20
+java Main 65K
+java Main 4M
+
 
 echo "--- Java app end: ---"
 

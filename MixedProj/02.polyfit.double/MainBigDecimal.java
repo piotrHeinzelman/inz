@@ -44,8 +44,8 @@ public class MainBigDecimal {
     public static void main(String[] args) throws IOException {
 
         System.out.println( 0.1 + 0.2 );
-        BigDecimal[] x = loadBin("datax1_double.bin");
-        BigDecimal[] y = loadBin("datay1_double.bin");
+        BigDecimal[] x = loadBin("datax20.bin");
+        BigDecimal[] y = loadBin("datay20.bin");
 
         BigDecimal w1 = BigDecimal.ZERO;
         BigDecimal w0 = BigDecimal.ZERO;
