@@ -1,5 +1,6 @@
 
 javac Main.java 
+javac MainBigDecimal.java
 
 echo " "
 echo "--- Java app start: ---"
@@ -9,4 +10,10 @@ java Main
 echo "--- Java app end: ---"
 
 
+echo " "
+echo "--- Java Big Decimal app start: ---"
+
+java MainBigDecimal
+
+echo "--- Java app end: ---"
 
