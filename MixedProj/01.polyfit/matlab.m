@@ -28,6 +28,11 @@ if (true)
     fclose(fileID);
 end
 
+%disp( x );
+disp( y );
+
+
+
 
 ST = datetime('now');
 for i = 1:cycles
