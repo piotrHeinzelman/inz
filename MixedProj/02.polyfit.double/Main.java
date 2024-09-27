@@ -7,6 +7,12 @@ import java.time.temporal.ChronoUnit;
 
 public class Main {
 
+    private static  String name="20"; //
+    private static Long cycles = 1000L;
+
+
+
+
     public static double[] loadBin( String filename ) throws IOException {
         double[] buf = null;
         int len;
@@ -41,17 +47,13 @@ public class Main {
 
 
     public static void main(String[] args) throws IOException {
-	String name=args[0];
-	System.out.println(args[0]);
-	
-        double[] x = loadBin("datax"+name+".bin");
-        double[] y = loadBin("datay"+name+".bin");
+        double[] x = loadBin("data/datax"+name+".bin");
+        double[] y = loadBin("data/datay"+name+".bin");
 
     double w1 = 0.0;
     double w0 = 0.0;
 
     
-    Long cycles = 1000L;
 
     Instant start = Instant.now();
     for ( int C=0; C<cycles; C++ ) {

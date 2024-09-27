@@ -1,16 +1,13 @@
 
-javac Main.java 
+javac Main.java
 javac MainBigDecimal.java
 
 echo " "
 echo "--- Java app start: ---"
 
-java Main 20
-java Main 65K
-java Main 4M
+java Main 
 
-
-echo "--- Java app end: ---"
+echo ""
 
 
 echo " "
@@ -18,5 +15,7 @@ echo "--- Java Big Decimal app start: ---"
 
 java MainBigDecimal
 
-echo "--- Java app end: ---"
+echo ""
 
+rm Main.class
+rm MainBigDecimal.class

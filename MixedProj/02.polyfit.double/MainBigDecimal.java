@@ -8,6 +8,10 @@ import java.time.temporal.ChronoUnit;
 
 public class MainBigDecimal {
 
+    private static String name="20";
+    private static Long cycles = 1000L;
+
+
     public static BigDecimal[] loadBin( String filename ) throws IOException {
         BigDecimal[] buf = null;
         int len;
@@ -43,16 +47,15 @@ public class MainBigDecimal {
 
     public static void main(String[] args) throws IOException {
 
-        System.out.println( 0.1 + 0.2 );
-        BigDecimal[] x = loadBin("datax20.bin");
-        BigDecimal[] y = loadBin("datay20.bin");
+        //System.out.println( 0.1 + 0.2 );
+        BigDecimal[] x = loadBin("data/datax"+name+".bin");
+        BigDecimal[] y = loadBin("data/datay"+name+".bin");
 
         BigDecimal w1 = BigDecimal.ZERO;
         BigDecimal w0 = BigDecimal.ZERO;
 
         Double w1d=null;
         Double w0d=null;
-    Long cycles = 1000L;
 
     Instant start = Instant.now();
     for ( int C=0; C<cycles; C++ ) {

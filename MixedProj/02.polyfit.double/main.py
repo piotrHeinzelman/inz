@@ -2,6 +2,9 @@ import numpy as np
 import time 
 import datetime
 
+cycles = 1000
+name = '20'
+
 #
 def readBinFile( fileName ):
     file = open( fileName, 'rb' )
@@ -11,10 +14,8 @@ def readBinFile( fileName ):
 
 
 
-x = readBinFile('datax1_double.bin')
-y = readBinFile('datay1_double.bin')
-print(x)
-cycles = 1000
+x = readBinFile('data/datax'+name+'.bin')
+y = readBinFile('data/datay'+name+'.bin')
 
 start = time.time()
 

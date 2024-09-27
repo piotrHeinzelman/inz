@@ -2,4 +2,5 @@ echo "x[20] 02.polyfit() " > output.txt
 ./matRun >> output.txt
 ./pyRun  >> output.txt
 ./javaRun >> output.txt
+./cRun    >> output.txt
 cat output.txt

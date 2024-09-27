@@ -3,4 +3,4 @@ echo "--- Matlab app start: ---"
 
 /usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run matlab.m'
 
-echo "--- Matlab app end: --- "
+echo ""
