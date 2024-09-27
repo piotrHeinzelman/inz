@@ -1,3 +1,30 @@
 x[20] 02.polyfit() 
  
 --- Matlab app start: ---
+ duration:    00:00.127327
+
+ X[20] * 1000
+ result:     1.5731   -0.6091
+
+
+ 
+--- Python app start: --- 
+ duration: 0.03851962089538574 [sek.]
+
+ X[ 20 ] *  1000
+ result:  [ 1.57310526 -0.60910526]
+--- Python app end: ---
+ 
+--- Java app start: ---
+ duration: 0.002 [sek.]
+
+ X[20] * 1000
+ result: [1.5731052631578948, -0.6091052631578986]
+
+ 
+--- Java Big Decimal app start: ---
+ duration: 0.041 [sek.]
+
+ X[20] * 1000
+ result: [7192.75379446123, 2.1064188784856433E-4]
+
