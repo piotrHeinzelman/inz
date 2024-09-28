@@ -185,3 +185,10 @@ https://www.amd.com/en/support/download/drivers.html
 
 setxkbmap pl
 
+
+
+#~/.nanorc
+set tabsize 4
+set tabstospaces
+
+include /usr/share/nano/c.nanorc
