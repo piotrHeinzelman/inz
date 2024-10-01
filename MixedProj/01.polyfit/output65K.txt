@@ -1,0 +1,31 @@
+x[65K] 02.polyfit() 
+ 
+--- Matlab app start: ---
+ duration:    00:00.140071
+
+ X[65535] * 100
+ result:    -0.0000    0.5003
+
+
+ 
+--- Python app start: --- 
+ duration: 0.32903027534484863 [sek.]
+
+ X[ 65535 ] *  100
+ result:  [-4.51299505e-08  5.00281393e-01]
+--- Python app end: ---
+ 
+--- Java app start: ---
+ duration: 0.018 [sek.]
+
+ X[65535] * 100
+ result: [-4.512995045567502E-8, 0.5002813927507307]
+
+ 
+--- Java Big Decimal app start: ---
+
+--- C++  app start: ---
+duration: 0.041169 [sek.]
+X[65K] * 100
+w0: -4.513e-08, w1: 0.500281
+

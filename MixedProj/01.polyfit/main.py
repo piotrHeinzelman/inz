@@ -24,6 +24,7 @@ for i in range( cycles ):
 
 end = time.time()
 
+
 d = end-start
 print ( ' duration:' , d , '[sek.]' )
 print ('')
