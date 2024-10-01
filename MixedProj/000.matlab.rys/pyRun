@@ -1,0 +1,6 @@
+echo " "
+echo "--- Python app start: --- "
+
+python 01.py
+
+echo "--- Python app end: ---"
