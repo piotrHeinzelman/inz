@@ -1,33 +1,31 @@
-#from numba import jit, cuda
-
 import numpy as np
-import time
+import time 
 import datetime
 
+cycles = 1000
+name = '20'
+
+#
 def readBinFile( fileName ):
     file = open( fileName, 'rb' )
-    data = np.fromfile ( file, dtype=np.uint16 )
+    data = np.fromfile ( file, dtype=np.double )	
     file.close()
-    return data
+    return data	
 
-#@jit(target_backend='cuda')
-#@jit
 
-x = readBinFile('datax_uint16.bin')
-y = readBinFile('datay_uint16.bin')
+
+x = readBinFile('data/datax'+name+'.bin')
+y = readBinFile('data/datay'+name+'.bin')
 
 start = time.time()
 
-cycles = 1000
-for i in range(cycles):
-    a = np.polyfit(x, y, 1)
+for i in range( cycles ):
+    a = np.polyfit(x,y,1)
 
 end = time.time()
-
 
 d = end-start
 print ( ' duration:' , d , '[sek.]' )
 print ('')
 print ( ' X[',x.size,'] * ' , cycles )
 print ( ' result: ', a )
-

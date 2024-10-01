@@ -1,0 +1,12 @@
+
+javac Main.java 
+
+echo " "
+echo "--- Java app start: ---"
+
+java Main
+
+echo "--- Java app end: ---"
+
+
+

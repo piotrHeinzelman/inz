@@ -1,39 +1,59 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
 
 public class Main {
 
-    public static int[] loadBin( String filename ) throws IOException {
-        int[] buf = null;
+    private static  String name="20"; //
+    private static Long cycles = 1000L;
+
+
+
+
+    public static double[] loadBin( String filename ) throws IOException {
+        double[] buf = null;
         int len;
 
         File f = new File(filename);
-        len = (int) ( 0.5 * f.length());
-        buf = new int[ len ];
-
+        len = (int) ( 0.125 * f.length());
+        buf = new double[ len ];
 
         FileInputStream fis = new FileInputStream( filename );
-            for ( int i=0;i<len;i++ ) {
-                int read = fis.read();
-                int read2 = fis.read();
-                buf[i] = ( int ) (read2*256+read);
-            }
+        byte[] bB=new byte[8];
+        byte[] bR=new byte[8];
+        double val=0;
+        for ( int i=0;i<len;i++ ) {
+
+            fis.read(bB,0,8);
+            bR[0]=bB[7];
+            bR[1]=bB[6];
+            bR[2]=bB[5];
+            bR[3]=bB[4];
+            bR[4]=bB[3];
+            bR[5]=bB[2];
+            bR[6]=bB[1];
+            bR[7]=bB[0];
+            val=ByteBuffer.wrap(bR).getDouble();
+            buf[i]=val;
+
+        }
         return buf;
     }
 
 
 
+
     public static void main(String[] args) throws IOException {
-        int[] x = loadBin("datax_uint16.bin");
-        int[] y = loadBin("datay_uint16.bin");
+        double[] x = loadBin("data/datax"+name+".bin");
+        double[] y = loadBin("data/datay"+name+".bin");
 
     double w1 = 0.0;
     double w0 = 0.0;
-    Long cycles = 1000L;
+
+    
 
     Instant start = Instant.now();
     for ( int C=0; C<cycles; C++ ) {
@@ -51,7 +71,7 @@ public class Main {
         w0 = 0.0;
         double sumTop = 0.0;
         double sumBottom = 0.0;
-        for ( int i = 0; i < x.length; i++ ) {
+        for (int i = 0; i < x.length; i++) {
             sumTop += ((x[i] - xsr) * (y[i] - ysr));
             sumBottom += ((x[i] - xsr) * (x[i] - xsr));
         }
@@ -65,14 +85,7 @@ public class Main {
     System.out.println( " X[" + x.length + "] * " + cycles);
     System.out.println( " result: [" + w1 + ", " + w0 + "]" );
     }
-    
-    
-
 }
-
-
-
-
 
 
 
