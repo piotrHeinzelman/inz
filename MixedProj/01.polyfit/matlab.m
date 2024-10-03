@@ -50,4 +50,48 @@ disp( a );
 
 
 
+
+ST = datetime('now');
+
+xsr = 0;
+ysr = 0;
+w0  = 0;
+w1  = 0;
+
+for c = 1:cycles
+   xsr = 0;
+   ysr = 0;
+   for i=1:length(x)
+      xsr = (x(i)+xsr);
+      ysr = (y(i)+ysr);
+   end
+
+   xsr = xsr/length(x);
+   ysr = ysr/length(x);
+
+   w0=0;
+   w1=0;
+   sumTop=0;
+   sumBottom=0;
+
+   for i = 1:length(x)
+      sumTop     = ((( x(i)-xsr ) * ( y(i)-ysr )) + sumTop);
+      sumBottom  = ((( x(i)-xsr ) * ( x(i)-xsr )) + sumBottom);
+   end
+   w1 = sumTop/sumBottom;
+   w0 = ysr-( w1 * xsr );      
+
+end
+
+ED = datetime('now');
+
+D = duration( ED-ST, 'FORMAT', 'mm:ss.SSSSSS' );
+fprintf(' duration simple implementation: ' )
+disp( D );
+disp( w1 ); 
+disp( w0 );
+
+
+
+
  
