@@ -77,6 +77,8 @@ for c = 1:cycles
    for i = 1:length(x)
       sumTop     = ((( x(i)-xsr ) * ( y(i)-ysr )) + sumTop);
       sumBottom  = ((( x(i)-xsr ) * ( x(i)-xsr )) + sumBottom);
+
+
    end
    w1 = sumTop/sumBottom;
    w0 = ysr-( w1 * xsr );      
