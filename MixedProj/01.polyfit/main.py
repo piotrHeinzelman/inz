@@ -11,7 +11,7 @@ def readBinFile( fileName ):
     data = np.fromfile ( file, dtype=np.double )	
     file.close()
     return data	
-
+    
 
 
 x = readBinFile('data/datax'+name+'.bin')
@@ -27,12 +27,50 @@ end = time.time()
 
 d = end-start
 
-print ('#  X[',x.size,'] * ' , cycles ,' result: ', a )
+print ('# polyfit() X[',x.size,'] * ' , cycles ,' result: ', a )
 print ('# time: ' , d  , '[sek.]' )
 print ('')
-
-print ('   y[0]=' , d )
-
+print ('y[0]=' , d )
 print ('')
 
 
+
+
+
+
+
+
+
+
+
+start = time.time()
+
+for i in range( cycles ):
+    xsr=0
+    ysr=0
+    for i in range( len(x) ):
+        xsr+=x[i]
+        ysr+=y[i]          
+    xsr=xsr/len(x)
+    ysr=ysr/len(x)
+
+    w0=0
+    w1=0
+    sumTop=0
+    sumBottom=0
+    for i in range( len(x) ):
+        sumTop   +=(x[i]-xsr)*(y[i]-ysr)
+        sumBottom+=(x[i]-xsr)*(x[i]-xsr)
+
+    w1=sumTop/sumBottom
+    w0=ysr - w1*xsr
+
+end = time.time()
+d = end-start
+
+
+print ('# implementation X[',x.size,'] * ' , cycles ,' w0: ', w0 , ', w1: ' , w1  )
+print ('# time: ' , d  , '[sek.]' )
+print ('')
+print ('y[1]=' , d )
+print ('')

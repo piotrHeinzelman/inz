@@ -1,17 +1,22 @@
 
-echo "                                                                                                     import matplotlib.pyplot as plt " > output.txt
-echo "                                                                                                     plt.title('X[20] x 1000') " >> output.txt
-echo "                                                                                                     x=['Python','Matlab','Java','C++'] " >> output.txt
-echo "                                                                                                     y=[0,0,0,0] " >> output.txt
-echo "                                                                                                     " >> output.txt
+echo "import matplotlib.pyplot as plt " > output.txt
+echo "plt.title('X[20] x 1000') " >> output.txt
+echo "x=['Python polyfit()','Python implement.','Matlab polyfit()', Matlab implement.','Java implement.','C++ implement.','',''] " >> output.txt
+echo "y=[0,0,0,0,0,0] " >> output.txt
+echo "  " >> output.txt
+echo "  " >> output.txt
 
 ./pyRun  >> output.txt
 ./matRun >> output.txt
 ./javaRun >> output.txt
 ./cRun    >> output.txt
 
-echo "                                                                                                     plt.barh() " >> output.txt 
-echo "                                                                                                     plt.savefig( 'fig01.pdf' ) " >> output.txt 
-echo "                                                                                                     plt.close() " >> output.txt 
+echo "  " >> output.txt
+echo "  " >> output.txt
+echo "plt.barh( x, y ) " >> output.txt 
+echo "plt.savefig( 'fig01.pdf',dpi=400 ) " >> output.txt 
+#echo "plt.savefig( 'fig01.pgf',dpi=400 ) " >> output.txt 
+echo "plt.close() " >> output.txt 
 
-cat output.txt
+#cat output.txt
+python output.txt

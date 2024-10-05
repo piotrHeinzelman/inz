@@ -42,7 +42,7 @@ L = size( x );
 
 fprintf('# Polyfit:  X[%i] * cycles: %i \n', L(1), cycles  );
 fprintf( '# result: a:%f, a:%f\n\n' , a(2), a(1) );
-fprintf (' y[1]=%f\n' , seconds(D)  );
+fprintf ('y[2]=%f\n' , seconds(D)  );
 
 
 ST2 = datetime('now');
@@ -84,7 +84,5 @@ D2 = duration( ED2-ST2 );
 
 fprintf('# implemented:  X[%i] * cycles: %i \n', L(1), cycles  );
 fprintf('# result: w0:%f, w1:%f\n\n', w0, w1);
-fprintf (' y[5]=%f\n' , seconds(D2)  );
-fprintf (' x[5]="Matlab: custom impl."\n');
-fprintf (' x[1]="Matlab: polyfit()"\n');
+fprintf ('y[3]=%f\n' , seconds(D2)  );
 

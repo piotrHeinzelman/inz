@@ -14,7 +14,7 @@ y[3]=1
 
 #plt.plot(x,y)
 plt.barh(x,y);
-plt.show();
+#plt.show();
 
 # x = np.arange(20, 65535)
 # my = [ 0.11     , 0.57   ]
@@ -52,7 +52,8 @@ import matplotlib.pyplot as plt
 plt.savefig('01.pdf')
 plt.savefig('01.jpg')
 plt.savefig('01.png',dpi=150)
-
+plt.savefig('01.pgf',dpi=400)
+plt.close()
 
 
 #import matplotlib.pyplot as plt

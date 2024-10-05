@@ -83,7 +83,7 @@ public class Main {
     System.out.println( "# X[" + x.length + "] * " + cycles);
     System.out.println( "# time: " + (   ChronoUnit.MILLIS.between(start, end)/1000.0  ) + " [sek.],  result: [" + w1 + ", " + w0 + "]" );
     System.out.println( " " ); 
-    System.out.println( " y[2]=" + ChronoUnit.MILLIS.between(start, end)/1000.0 ); 
+    System.out.println( "y[4]=" + ChronoUnit.MILLIS.between(start, end)/1000.0 ); 
     }
 }
 
