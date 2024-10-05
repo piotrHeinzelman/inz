@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
 
-# plt.style.use('_mpl-gallery')
+ plt.style.use('_mpl-gallery')
 
 # make data
 
