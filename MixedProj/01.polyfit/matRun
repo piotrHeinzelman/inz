@@ -1,6 +1,5 @@
-echo " "
-echo "--- Matlab app start: ---"
+echo "#    --- Matlab ---"
 
 /usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run matlab.m'
 
-echo ""
+

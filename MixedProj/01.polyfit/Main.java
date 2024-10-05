@@ -80,10 +80,10 @@ public class Main {
         //
     }
     Instant end = Instant.now();
-    System.out.println( " duration: " + (ChronoUnit.MILLIS.between(start, end)/1000.0) + " [sek.]");
-    System.out.println( "");
-    System.out.println( " X[" + x.length + "] * " + cycles);
-    System.out.println( " result: [" + w1 + ", " + w0 + "]" );
+    System.out.println( "# X[" + x.length + "] * " + cycles);
+    System.out.println( "# time: " + (   ChronoUnit.MILLIS.between(start, end)/1000.0  ) + " [sek.],  result: [" + w1 + ", " + w0 + "]" );
+    System.out.println( " " ); 
+    System.out.println( " y[2]=" + ChronoUnit.MILLIS.between(start, end)/1000.0 ); 
     }
 }
 

@@ -26,7 +26,13 @@ end = time.time()
 
 
 d = end-start
-print ( ' duration:' , d , '[sek.]' )
+
+print ('#  X[',x.size,'] * ' , cycles ,' result: ', a )
+print ('# time: ' , d  , '[sek.]' )
 print ('')
-print ( ' X[',x.size,'] * ' , cycles )
-print ( ' result: ', a )
+
+print ('   y[0]=' , d )
+
+print ('')
+
+

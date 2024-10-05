@@ -1,4 +1,3 @@
-
 cycles=1000;
 name="20";
 
@@ -38,20 +37,15 @@ end
 
 ED = datetime('now');
 
-D = duration( ED-ST, 'FORMAT', 'mm:ss.SSSSSS' );
+D = duration( ED-ST );
 L = size( x );
-fprintf(' duration: ' );
-disp( D );
-fprintf(' X[%i] * %i', L(1), cycles );
-fprintf('\n result: ' );
-disp( a );
+
+fprintf('# Polyfit:  X[%i] * cycles: %i \n', L(1), cycles  );
+fprintf( '# result: a:%f, a:%f\n\n' , a(2), a(1) );
+fprintf (' y[1]=%f\n' , seconds(D)  );
 
 
-
-
-
-
-ST = datetime('now');
+ST2 = datetime('now');
 
 xsr = 0;
 ysr = 0;
@@ -85,15 +79,12 @@ for c = 1:cycles
 
 end
 
-ED = datetime('now');
+ED2 = datetime('now');
+D2 = duration( ED2-ST2 );
 
-D = duration( ED-ST, 'FORMAT', 'mm:ss.SSSSSS' );
-fprintf(' duration simple implementation: ' )
-disp( D );
-disp( w1 ); 
-disp( w0 );
+fprintf('# implemented:  X[%i] * cycles: %i \n', L(1), cycles  );
+fprintf('# result: w0:%f, w1:%f\n\n', w0, w1);
+fprintf (' y[5]=%f\n' , seconds(D2)  );
+fprintf (' x[5]="Matlab: custom impl."\n');
+fprintf (' x[1]="Matlab: polyfit()"\n');
 
-
-
-
- 
