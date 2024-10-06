@@ -19,7 +19,7 @@ y = readBinFile('data/datay'+name+'.bin')
 
 start = time.time()
 
-for i in range( cycles ):
+for c in range( cycles ):
     a = np.polyfit(x,y,1)
 
 end = time.time()
@@ -45,7 +45,7 @@ print ('')
 
 start = time.time()
 
-for i in range( cycles ):
+for c in range( cycles ):
     xsr=0
     ysr=0
     for i in range( len(x) ):
