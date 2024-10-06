@@ -21,6 +21,7 @@ pi[0]=0.0005295276641845703
 m[0] =0.116236
 mi[0]=0.002762
 j[0] =0.00006
+jb[0]=0.042
 c[0] =0.00000542
 
 p[1] =0.006508588790893555
@@ -73,12 +74,13 @@ j[7]= 10.143
 
 
 
-plt.plot( x, p, 'bx-', label='Python wbudowany', linewidth=.5 )
-plt.plot( x, pi, 'bx:', label='Python wlasna impl.', linewidth=.5 )
-plt.plot( x, m, 'rx-', label='Matlab wbudowany', linewidth=.5 )
-plt.plot( x, mi, 'rx:', label='Matlab wlasna impl', linewidth=.5 )
-plt.plot( x, j, 'go-', label='Java', linewidth=.5 )
-plt.plot( x, c, 'yo-', label='C', linewidth=.5 )
+plt.plot( x, p, 'b.-', label='Python wbudowany', linewidth=.5 )
+plt.plot( x, pi, 'b.:', label='Python wlasna impl.', linewidth=.5 )
+plt.plot( x, m, 'r.-', label='Matlab wbudowany', linewidth=.5 )
+plt.plot( x, mi, 'r.:', label='Matlab wlasna impl', linewidth=.5 )
+plt.plot( x, j, 'g.-', label='Java', linewidth=.5 )
+plt.plot( x, jb, 'gX-', label='JavaBigDecimal', linewidth=.5 )
+plt.plot( x, c, 'y.-', label='C', linewidth=.5 )
 
 
 
