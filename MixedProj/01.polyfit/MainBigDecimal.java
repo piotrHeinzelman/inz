@@ -9,7 +9,7 @@ import java.time.temporal.ChronoUnit;
 public class MainBigDecimal {
 
     private static String name="20";
-    private static Long cycles = 1000L;
+    private static Long cycles = 100L;
 
 
     public static BigDecimal[] loadBin( String filename ) throws IOException {

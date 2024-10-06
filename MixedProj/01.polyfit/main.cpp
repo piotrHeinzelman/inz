@@ -12,8 +12,8 @@ using namespace std;
 int main() {
 
    const string NAME = "20";
-   int           len = 20;
-   const long CYCLES = 1000;
+   int           len = 6;
+   const long CYCLES = 100;
    string fileName=""+NAME+".bin";
 
 

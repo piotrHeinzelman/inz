@@ -1,0 +1,4 @@
+
+g++ -Wall -g main.cpp -o main.elf
+./main.elf
+rm main.elf

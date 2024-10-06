@@ -2,7 +2,7 @@ import numpy as np
 import time 
 import datetime
 
-cycles = 1000
+cycles = 100
 name = '20'
 
 #
@@ -45,32 +45,39 @@ print ('')
 
 start = time.time()
 
+Len = len(x)
 for c in range( cycles ):
     xsr=0
     ysr=0
-    for i in range( len(x) ):
+    for i in range( Len ):
         xsr+=x[i]
-        ysr+=y[i]          
-    xsr=xsr/len(x)
-    ysr=ysr/len(x)
+        ysr+=y[i]
+
+    xsr=xsr/Len
+    ysr=ysr/Len
 
     w0=0
     w1=0
     sumTop=0
     sumBottom=0
-    for i in range( len(x) ):
-        sumTop   +=(x[i]-xsr)*(y[i]-ysr)
-        sumBottom+=(x[i]-xsr)*(x[i]-xsr)
+
+    for i in range( Len ):
+        z=(x[i]-xsr)
+        sumTop+=(z*(y[i]-ysr))
+        sumBottom+=(z*z)
 
     w1=sumTop/sumBottom
-    w0=ysr - w1*xsr
+    w0=ysr-(w1*xsr)
 
 end = time.time()
 d = end-start
 
 
-print ('# implementation X[',x.size,'] * ' , cycles ,' w0: ', w0 , ', w1: ' , w1  )
+print ('# implementation X[',x.size,'] * ' , cycles ,' w1: ', w1 , ', w0: ' , w0  )
 print ('# time: ' , d  , '[sek.]' )
 print ('')
 print ('y[1]=' , d )
 print ('')
+
+
+

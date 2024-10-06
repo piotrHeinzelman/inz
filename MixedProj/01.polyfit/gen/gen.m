@@ -1,7 +1,7 @@
 
 %generate data
 if (true)
-    len=6000
+    len=6
     x=[ 1:len ];
 
     fileID=fopen('datax20.bin','w');
