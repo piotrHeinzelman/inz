@@ -1,0 +1,41 @@
+import matplotlib.pyplot as plt 
+plt.title('Regresja liniowa: polyfit  X[65535] x 1000') 
+x=[  'Python()','Python I','Matlab()','Matlab I','Java I','C++ I'] 
+y=[0,0,0,0,0,0] 
+  
+  
+#   --- Python --- 
+# polyfit() X[ 65535 ] *  1000  result:  [-4.51299505e-08  5.00281393e-01]
+# time:  3.275268077850342 [sek.]
+
+y[0]= 3.275268077850342
+
+# implementation X[ 65535 ] *  1000  w0:  0.5002813927507307 , w1:  -4.512995045567502e-08
+# time:  61.396740198135376 [sek.]
+
+y[1]= 0.0000061396740198135376
+
+#    --- Matlab ---
+# Polyfit:  X[65535] * cycles: 1000 
+# result: a:0.500281, a:-0.000000
+
+y[2]=0.684126
+# implemented:  X[65535] * cycles: 1000 
+# result: w0:0.500281, w1:-0.000000
+
+y[3]=0.221126
+# --- Java  ---
+# X[65535] * 1000
+# time: 0.111 [sek.],  result: [-4.512995045567502E-8, 0.5002813927507307]
+ 
+y[4]=0.111
+#  --- C++ ---
+#  X[20] * 1000
+#  time: 0.000136 [sek.],  w0: 0.00745934, w1: 0.56371
+
+y[5]=0.000136
+  
+  
+plt.barh( x, y ) 
+plt.savefig( '../000.fig/fig02a.pdf',dpi=400 ) 
+plt.close() 

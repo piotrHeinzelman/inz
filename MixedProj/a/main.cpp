@@ -11,13 +11,13 @@ using namespace std;
 
 int main() {
 
-   const string NAME = "4M";
-   int           len = 500000;
+   const string NAME = "20";
+   int           len = 20;
    const long CYCLES = 1000;
    string fileName=""+NAME+".bin";
 
 
-  cout << "--- C++  app start: ---\n";
+  cout << "#  --- C++ ---\n";
 
 
    double X[ len ];
@@ -73,9 +73,10 @@ int main() {
   }
 
   clock_t duration = clock() - before;
-  cout << "duration: " << (float)duration / CLOCKS_PER_SEC << " [sek.]\n";
-  cout << "X[" << NAME << "] * " << CYCLES << "\n";
-  cout << "w0: " << w1 << ", w1: " << w0 << "\n\n";
+  cout << "#  X[" << NAME << "] * " << CYCLES << "\n";
+  cout << "#  time: " << (float)duration / CLOCKS_PER_SEC << " [sek.],  w0: " << w1 << ", w1: " << w0 << "\n";
+  cout << "\ny[5]=" << (float)duration / CLOCKS_PER_SEC << "\n" ;
+
 
 
   return 0;
