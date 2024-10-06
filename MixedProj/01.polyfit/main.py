@@ -1,6 +1,7 @@
 import numpy as np
 import time 
 import datetime
+import sys
 
 cycles = 100
 name = '20'
@@ -30,7 +31,7 @@ d = end-start
 print ('# polyfit() X[',x.size,'] * ' , cycles ,' result: ', a )
 print ('# time: ' , d  , '[sek.]' )
 print ('')
-print ('y[0]=' , d )
+print ('p[]=' , d )
 print ('')
 
 
@@ -38,7 +39,7 @@ print ('')
 
 
 
-
+sys.exit()
 
 
 
@@ -76,7 +77,7 @@ d = end-start
 print ('# implementation X[',x.size,'] * ' , cycles ,' w1: ', w1 , ', w0: ' , w0  )
 print ('# time: ' , d  , '[sek.]' )
 print ('')
-print ('y[1]=' , d )
+print ('pi[]=' , d )
 print ('')
 
 

@@ -12,8 +12,8 @@ using namespace std;
 int main() {
 
    const string NAME = "20";
-   int           len = 6;
-   const long CYCLES = 100;
+   long len = 60;
+   const long CYCLES = 10000;
    string fileName=""+NAME+".bin";
 
 
@@ -75,7 +75,7 @@ int main() {
   clock_t duration = clock() - before;
   cout << "#  X[" << NAME << "] * " << CYCLES << "\n";
   cout << "#  time: " << (float)duration / CLOCKS_PER_SEC << " [sek.],  w0: " << w1 << ", w1: " << w0 << "\n";
-  cout << "\ny[5]=" << (float)duration / CLOCKS_PER_SEC << "\n" ;
+  cout << "\nc[]=" << (float)duration / CLOCKS_PER_SEC << "\n" ;
 
 
 

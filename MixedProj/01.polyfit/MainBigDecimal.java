@@ -83,10 +83,11 @@ public class MainBigDecimal {
         //
     }
     Instant end = Instant.now();
-    System.out.println( " duration: " + (ChronoUnit.MILLIS.between(start, end)/1000.0) + " [sek.]");
+    System.out.println( "# duration: " + (ChronoUnit.MILLIS.between(start, end)/1000.0) + " [sek.]");
+    System.out.println( "jb=" + (ChronoUnit.MILLIS.between(start, end)/1000.0));
     System.out.println( "");
-    System.out.println( " X[" + x.length + "] * " + cycles);
-    System.out.println( " result: [" + w1d + ", " + w0d + "]" );
+    System.out.println( "# X[" + x.length + "] * " + cycles);
+    System.out.println( "# result: [" + w1d + ", " + w0d + "]" );
     }
 }
 
