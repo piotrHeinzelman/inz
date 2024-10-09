@@ -6,24 +6,49 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.println("Hello world!");
+
+
+
         try {
              robot = new Robot();
 
 
             Thread.sleep(1000 );
 
+            if (true) return;
+
+            //getBonus();
+
+            //
+            //if (true) return;
+
             while ( true ){
             gotoPage(1);
             getBonus();
-            //resend( 13 );
-                waitInMin( 3 );
+            clickAllTrains();
+            gotoBlue();
+            getBonus();
+            gotoPage(1);
+            robot.delay(1000*15);
+            robot.delay(1000*15);
+            robot.delay(1000*15);
                 getBonus();
-                clickTrains();
-                robot.delay(1000*15); // Click one second
-                clickTrains();
+                waitInMin( 1 );
                 getBonus();
-                robot.delay(1000*15); // Click one second
-                clickTrains();
+                waitInMin( 1 );
+                getBonus();
+                waitInMin( 1 );
+                getBonus();
+                waitInMin( 1 );
+                //resend( 13 );
+            //    waitInMin( 3 );
+            //    getBonus();
+            //    clickTrains();
+            //    robot.delay(1000*15); // Click one second
+            //    clickTrains();
+            //    getBonus();
+            //    robot.delay(1000*15); // Click one second
+            //    clickTrains();
             }
 
 
@@ -78,7 +103,7 @@ moment();
     }
 
     public static void moment(){
-        robot.delay(500); // Click one second
+        robot.delay(100); // Click one second
     }
 
     public static void resend( int times ){
@@ -110,30 +135,34 @@ moment();
         click();
         moment();
         moment();
-        click();
-        moment();
-        moment();
-        click();
-        moment();
-        moment();
-        click();
-        moment();
-        moment();
-        click();
-        moment();
-        moment();
+
     }
 
-    public static void clickTrains(){
-        for (int i=0;i<10;i++) {
-            robot.mouseMove(1470, 770 - i * 10);
-            click();
-            moment();
-            robot.mouseMove(1100, 815);
-            click();
-            moment();
-        }
+    public static void clickAllTrains() throws InterruptedException {
+        clickTrains();
+        getBonus();
+        Thread.sleep(5000);
+        clickTrains();
+        getBonus();
+        Thread.sleep(5000);
+    }
 
+
+    public static void clickTrains() throws InterruptedException {
+        for (int i=0;i<12;i++) {
+            //robot.mouseMove(1270+10*i, 770 - i * 8);
+            //click();
+            //moment();
+            //robot.mouseMove(1100, 815);
+            //click();
+            //moment();
+
+            // click rotate
+            robot.mouseMove(1500, 735);
+            click();
+            moment();
+            Thread.sleep(1500);
+        }
     }
 
     public static void waitInMin(int i){
@@ -141,6 +170,18 @@ moment();
             robot.delay(1000 * 30 ); // Click one second
             System.out.println( " ");
             robot.delay(1000 * 30 ); // Click one second
+        }
+    }
+
+
+    public static void  gotoBlue(){
+        robot.mouseMove(45, 450);
+        click();
+        for (int i=0;i<12;i++) {
+            robot.mouseMove(870+i*(100/12), 760-5*i );
+            //robot.mouseMove(970, 700 );
+            click();
+            moment();
         }
     }
 
