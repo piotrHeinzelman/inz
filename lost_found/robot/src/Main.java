@@ -23,16 +23,13 @@ public class Main {
             getBonus();
             gotoPage(1);
             robot.delay(1000*15);
-            robot.delay(1000*15);
-            robot.delay(1000*15);
+           // robot.delay(1000*15);
+           // robot.delay(1000*15);
                 getBonus();
-                waitInMin( 1 );
+                robot.delay(500);
+          //      waitInMin( 1 );
                 getBonus();
-                waitInMin( 1 );
-                getBonus();
-                waitInMin( 1 );
-                getBonus();
-                waitInMin( 1 );
+
                 //resend( 13 );
             //    waitInMin( 3 );
             //    getBonus();
@@ -154,7 +151,7 @@ moment();
             robot.mouseMove(1500, 735);
             click();
             moment();
-            Thread.sleep(1500);
+            Thread.sleep(500);
         }
     }
 

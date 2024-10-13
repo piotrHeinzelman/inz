@@ -18,8 +18,8 @@ from sklearn.model_selection import ( train_test_split )
 
 net = MLPClassifier(hidden_layer_sizes=[5,2], activation='logistic', max_iter=300, solver='lbfgs' )
 
-net.fit( x_|train, d_train )
-from sklearn.metricc import accuracy_score
+net.fit( x_train, d_train )
+from sklearn.metrics import accuracy_score
 
-printf(f'''Acc: (accuracy_score(d_test, net.predict(x_test)):3e)''')
-printf(f'Loss: (net.loss_:.3e)')
+print(f'''Acc: {accuracy_score(d_test, net.predict(x_test)):.3e}''')
+print(f'Loss: {net.loss_:.3e}')
