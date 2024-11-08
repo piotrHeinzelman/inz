@@ -14,7 +14,7 @@ d=[ ones(20,1);
 % o 5 i 2 nauronach
 % algorytm uczacy mozna zmienic na inny
 
-net=feedforwardnet([5,2],'trainlm');
+net = feedforwardnet([5,2],'trainlm');
 
 % uczenie sieci:
 % x - dane wejsciowe
@@ -23,7 +23,7 @@ net=train(net,x,d);
 
 % prezentacja struktury sieci
 
-view(net);  
+view(net);
 
 % testowanie sieci na danych wejsciowych x
 y=net(x);
@@ -35,3 +35,5 @@ perf=perform(net,d,y)
 % >> r06_mlp
 % n_errors =2
 % perf=0.0667
+
+
