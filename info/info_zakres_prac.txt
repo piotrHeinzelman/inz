@@ -292,3 +292,39 @@ Zgadza się, ten temat Pan wybrał. I teraz trzeba skonstruować zakres pracy i 
 
 
 
+
+*******************************
+
+Do każdego punktu należy dodać kilka zdań opisu, żeby było to nieco bardziej treściwe. Np. we wstępie powinno się znaleźć wprowadzenia do tematyki pracy, coś o motywacji podjęcia tematu oraz sformułowanie celu pracy. W przeglądzie można napisać coś o liczbie istniejących rozwiązań, które będą brane pod uwagę (czasem jest ich kilka, a czasem dziesiątki). Opis platformy ma sens wtedy, jeżeli ma powstać jakieś urządzenie - wtedy kilka słów o nim. Implementacja - co, jak i czym. Jak będą tworzone jakieś zbiory danych, to warto uzasadnić dlaczego. Potem jak to będzie badane, analizowane, porównywane i z czym. Ostatni punkt powinien zawierać 3 elementy: podsumowanie przeprowadzonych prac, ocena uzyskanych wyników oraz sugestie dotyczące dalszego rozwoju projektu.
+
+Rozszerzony przykład:
+1. Wstęp
+Wprowadzenie do tematyki sterowania wizyjnego w procesach autonomicznych robotów.
+Problematyka ergonomii i efektywności w istniejących systemach manualnego sterowania robotami.
+Cel pracy oraz krótki opis proponowanego rozwiązania — autonomicznego robota sterowanego wizyjnie.
+2. Przegląd istniejących rozwiązań
+Analiza trzech aktualnie dostępnych autonomicznych robotów wykorzystywanych w logistyce lub produkcji.
+Przegląd procesów wykorzystujących roboty manualnie sterowane lub oparte na tradycyjnych czujnikach.
+Identyfikacja ograniczeń i problemów związanych z obecnymi rozwiązaniami.
+3. Opis proponowanego rozwiązania
+Opis koncepcji autonomicznego robota sterowanego systemem wizyjnym.
+Omówienie specyfiki zastosowanego oprogramowania oraz algorytmów wykorzystywanych do nawigacji i wykrywania obiektów.
+Projektowanie hardware’u robota, w tym integracja systemu wizyjnego, zasilania oraz sposobu montażu.
+4. Opis platformy eksperymentalnej
+Opis środowiska testowego i narzędzi wykorzystanych do oceny efektywności nowego robota (czujniki, kamery, systemy kontrolne).
+Charakterystyka użytych urządzeń, w tym robotów, czujników wizyjnych i jednostek przetwarzających.
+5. Implementacja rozwiązania
+Proces integracji i wdrożenia systemu wizyjnego do autonomicznego robota.
+Integracja systemu wizyjnego, czujników i oprogramowania z platformą robota.
+Testy funkcjonalne i operacyjne nowego robota.
+6. Badanie i analiza efektywności systemu
+Analiza czasu realizacji zadań i liczby operacji wykonanych przez robota sterowanego wizyjnie w porównaniu do tradycyjnych robotów.
+Ocena ergonomii i wpływu na użytkowników systemu.
+Przegląd możliwych problemów i ich rozwiązań.
+7. Podsumowanie i wnioski
+Podsumowanie przeprowadzonych badań.
+Wnioski dotyczące efektywności nowego rozwiązania.
+Propozycje dalszych kierunków badań oraz możliwości wdrożenia rozwiązania na szerszą skalę.
+
+Generalnie punkty 1, 2 i 7 powinny być zawsze. Pozostałe są zależne od rodzaju pracy i nie powinny być przepisane stąd dosłownie. Jeśli praca ma charakter mocno praktyczny i jest związana ze sprzętem, to następuje opis sprzętu (platformy badawczej), a następnie implementacji wybranego rozwiązania danego problemu oraz wyników przeprowadzonych eksperymentów. W pracy bez użycia specjalistycznego sprzętu (do takiego nie zalicza się normalnego komputera i kamery), większy nacisk będzie położony na przykład na badanie i porównywanie wybranych metod. Tak to, z grubsza, powinno wyglądać. Liczba punktów jest płynna, a ich tytuły nie muszą się potem zgadzać z tytułami rozdziałów. To ma być ogólne, w punktach, przedstawienie tego co się będzie w pracy robiło. Jeśli praca jest bardziej teoretyczna czy też tylko komputerowa (jakieś rozpoznawanie obrazów, ale bez żadnych robotów), to trzeba opisać wykorzystywane narzędzia (zamiast platformy), jeśli badania mają polegać na testowaniu różnych algorytmów (np. różnych głębokich sieci), to trzeba zrobić jakieś wprowadzenie do tych algorytmów. Ważne jest, żeby zakres pracy był na tyle ogólny, aby nie zmuszał już na początku do realizacji jakichś bardzo konkretnych zadań, bo może się później okazać, że te zadania/metody/rozwiązania zostały niezbyt dobrze na początku dobrane (co jest usprawiedliwione, wszak na początku opracowywane zagadnienia nie są bardzo dobrze znane) i nie ma sensu ich badać (bo znalazły się lepsze). Tymczasem wówczas recenzent może powiedzieć, i słusznie, że treść pracy nie odpowiada jej zakresowi. Z drugiej strony, zakres pracy nie może być tak ogólny, by pasował do każdej pracy. Jakiś złoty środek trzeba znaleźć.
+Propozycję tematu i zakresu pracy należy umieścić w analogicznym wątku na własnym kanale, potem wspólnie to doszlifujemy. Gotową wersję wpiszę do Isoda i przekażę prof. Sierociukowi do zatwierdzania lub ewentualnej korekty.
