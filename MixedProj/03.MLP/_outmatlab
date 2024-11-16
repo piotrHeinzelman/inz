@@ -1,181 +1,95 @@
 #    --- Matlab ---
 
-x =
-
-  Columns 1 through 7
-
-    1.5377    2.8339   -1.2588    1.8622    1.3188   -0.3077    0.5664
-    1.6715   -0.2075    1.7172    2.6302    1.4889    2.0347    1.7269
-    0.8978    0.7586    1.3192    1.3129    0.1351    0.9699    0.8351
-   -0.0891    1.0326    1.5525    2.1006    2.5442    1.0859   -0.4916
-    2.4193    1.2916    1.1978    2.5877    0.1955    1.6966    1.8351
-
-  Columns 8 through 14
-
-    1.3426    4.5784    3.7694   -0.3499    4.0349    1.7254    0.9369
-    0.6966    1.2939    0.2127    1.8884   -0.1471   -0.0689    0.1905
-    1.6277    2.0933    2.1093    0.1363    1.0774   -0.2141   -0.1135
-    0.2577   -0.0616    3.3505    0.3844    1.7481    0.8076    1.8886
-    0.7563    1.2157   -0.1658   -0.1480    1.1049    1.7223    3.5855
-
-  Columns 15 through 21
-
-    1.7147    0.7950    0.8759    2.4897    2.4090    2.4172   -1.1596
-   -1.9443    2.4384    1.3252    0.2451    2.3703   -0.7115    0.9080
-    0.9932    2.5326    0.2303    1.3714    0.7744    2.1174   -1.9771
-    0.2352   -0.4023   -0.4224    1.4882    0.8226    0.8039   -2.2938
-    0.3331    1.1873    0.9175   -0.9330    0.5610   -0.7947   -3.3617
-
-  Columns 22 through 28
-
-   -2.8880   -1.8999   -2.5445   -1.6965   -2.6003   -1.5100   -1.2606
-   -1.1748   -0.6210   -3.0582   -2.4686   -2.2725   -0.9016   -2.2779
-   -2.2620   -3.7502   -2.2857   -2.8314   -2.9792   -3.1564   -2.5336
-   -2.8479   -3.1201    0.5260   -0.3445   -1.6925   -3.2571   -2.8655
-   -1.5450   -2.8487   -2.3349   -1.4472   -0.9609   -3.1176   -0.7393
-
-  Columns 29 through 35
-
-   -0.2881   -2.1941   -4.1384   -2.8396   -0.6454   -3.0722   -1.0390
-   -1.2985   -4.0518   -2.3538   -2.8236   -3.5771   -1.4920   -1.7180
-   -4.0026   -1.0358   -1.4799   -2.0200   -2.0348   -2.7982   -0.9813
-   -2.1765   -1.2086   -3.3320   -4.3299   -3.4491   -1.6665   -1.6086
-   -1.3399   -2.0679   -2.1952   -2.2176   -2.3031   -1.9770   -1.9487
-
-  Columns 36 through 42
-
-   -1.8760   -0.5633   -3.9609   -2.1977   -3.2078    3.1832    1.9702
-   -1.9665   -3.3337   -0.8725   -1.6498   -2.2991    1.9358    4.6035
-   -2.1332   -2.7145   -0.6486   -2.2248   -2.5890    1.9333    3.9337
-   -1.5483   -2.1303   -1.8163   -2.4762   -1.1380    4.0001    1.3358
-   -1.1739   -0.4730   -1.5331   -2.2097   -1.3748    3.9111    3.5946
-
-  Columns 43 through 49
-
-    3.9492    3.3071    3.1352    3.5152    3.2614    2.0585    2.8377
-    4.2347    2.7704    1.4938    2.5554    2.8441    3.2761    2.7388
-    3.3503    2.9710    3.1825    1.4349    2.9155    4.6039    3.0983
-    2.4100    2.7219    3.4227    1.3298    3.4716    1.7872    3.0662
-    3.3502    4.2503    3.9298    3.2398    2.3096    2.3484    4.1921
-
-  Columns 50 through 56
-
-    2.8539    2.4680    4.6821    2.1243    2.5162    2.2880    1.8258
-    3.4434    3.3919    1.7493    2.0520    2.2589    2.4922    2.6794
-    3.0414    2.2658    2.9692    3.2323    3.4264    2.6272    2.7635
-    3.6524    3.3271    4.0826    4.0061    2.3491    3.2571    2.0556
-    1.3882    2.9755    1.0512    4.0205    3.8617    3.0012    2.9292
-
-  Columns 57 through 60
-
-    2.8078    2.7259    4.5301    2.7510
-    3.0125   -0.0292    2.5430    4.2424
-    5.0237    0.7416    5.2294    3.3376
-    1.6782    3.9248    3.0000    2.9451
-    0.5137    3.5812    0.8076    0.6807
+x = [ 1.5377   2.8339   -1.2588   1.8622   1.3188   -0.3077   0.5664   1.3426   4.5784   3.7694   -0.3499   4.0349   1.7254   0.9369   1.7147   0.7950   0.8759   2.4897   2.4090   2.4172   -1.1596   -2.8880   -1.8999   -2.5445   -1.6965   -2.6003   -1.5100   -1.2606   -0.2881   -2.1941   -4.1384   -2.8396   -0.6454   -3.0722   -1.0390   -1.8760   -0.5633   -3.9609   -2.1977   -3.2078   3.1832   1.9702   3.9492   3.3071   3.1352   3.5152   3.2614   2.0585   2.8377   2.8539   2.4680   4.6821   2.1243   2.5162   2.2880   1.8258   2.8078   2.7259   4.5301   2.7510
+1.6715   -0.2075   1.7172   2.6302   1.4889   2.0347   1.7269   0.6966   1.2939   0.2127   1.8884   -0.1471   -0.0689   0.1905   -1.9443   2.4384   1.3252   0.2451   2.3703   -0.7115   0.9080   -1.1748   -0.6210   -3.0582   -2.4686   -2.2725   -0.9016   -2.2779   -1.2985   -4.0518   -2.3538   -2.8236   -3.5771   -1.4920   -1.7180   -1.9665   -3.3337   -0.8725   -1.6498   -2.2991   1.9358   4.6035   4.2347   2.7704   1.4938   2.5554   2.8441   3.2761   2.7388   3.4434   3.3919   1.7493   2.0520   2.2589   2.4922   2.6794   3.0125   -0.0292   2.5430   4.2424
+0.8978   0.7586   1.3192   1.3129   0.1351   0.9699   0.8351   1.6277   2.0933   2.1093   0.1363   1.0774   -0.2141   -0.1135   0.9932   2.5326   0.2303   1.3714   0.7744   2.1174   -1.9771   -2.2620   -3.7502   -2.2857   -2.8314   -2.9792   -3.1564   -2.5336   -4.0026   -1.0358   -1.4799   -2.0200   -2.0348   -2.7982   -0.9813   -2.1332   -2.7145   -0.6486   -2.2248   -2.5890   1.9333   3.9337   3.3503   2.9710   3.1825   1.4349   2.9155   4.6039   3.0983   3.0414   2.2658   2.9692   3.2323   3.4264   2.6272   2.7635   5.0237   0.7416   5.2294   3.3376
+-0.0891   1.0326   1.5525   2.1006   2.5442   1.0859   -0.4916   0.2577   -0.0616   3.3505   0.3844   1.7481   0.8076   1.8886   0.2352   -0.4023   -0.4224   1.4882   0.8226   0.8039   -2.2938   -2.8479   -3.1201   0.5260   -0.3445   -1.6925   -3.2571   -2.8655   -2.1765   -1.2086   -3.3320   -4.3299   -3.4491   -1.6665   -1.6086   -1.5483   -2.1303   -1.8163   -2.4762   -1.1380   4.0001   1.3358   2.4100   2.7219   3.4227   1.3298   3.4716   1.7872   3.0662   3.6524   3.3271   4.0826   4.0061   2.3491   3.2571   2.0556   1.6782   3.9248   3.0000   2.9451
+2.4193   1.2916   1.1978   2.5877   0.1955   1.6966   1.8351   0.7563   1.2157   -0.1658   -0.1480   1.1049   1.7223   3.5855   0.3331   1.1873   0.9175   -0.9330   0.5610   -0.7947   -3.3617   -1.5450   -2.8487   -2.3349   -1.4472   -0.9609   -3.1176   -0.7393   -1.3399   -2.0679   -2.1952   -2.2176   -2.3031   -1.9770   -1.9487   -1.1739   -0.4730   -1.5331   -2.2097   -1.3748   3.9111   3.5946   3.3502   4.2503   3.9298   3.2398   2.3096   2.3484   4.1921   1.3882   2.9755   1.0512   4.0205   3.8617   3.0012   2.9292   0.5137   3.5812   0.8076   0.6807 ]
 
 
-d =
 
-  Columns 1 through 13
 
-     1     1     1     1     1     1     1     1     1     1     1     1     1
 
-  Columns 14 through 26
 
-     1     1     1     1     1     1     1     2     2     2     2     2     2
-
-  Columns 27 through 39
-
-     2     2     2     2     2     2     2     2     2     2     2     2     2
-
-  Columns 40 through 52
-
-     2     3     3     3     3     3     3     3     3     3     3     3     3
-
-  Columns 53 through 60
-
-     3     3     3     3     3     3     3     3
+d = [ 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 ];
 
 
 a =
 
     Neural Network
  
-              name: 'Feed-Forward Neural Network'
-          userdata: (your custom info)
+  name: 'Feed-Forward Neural Network'
+  userdata: (your custom info)
  
     dimensions:
  
-         numInputs: 1
-         numLayers: 3
-        numOutputs: 1
+ numInputs: 1
+ numLayers: 3
+    numOutputs: 1
     numInputDelays: 0
     numLayerDelays: 0
  numFeedbackDelays: 0
  numWeightElements: 45
-        sampleTime: 1
+    sampleTime: 1
  
     connections:
  
-       biasConnect: [1; 1; 1]
-      inputConnect: [1; 0; 0]
-      layerConnect: [0 0 0; 1 0 0; 0 1 0]
-     outputConnect: [0 0 1]
+   biasConnect: [1; 1; 1]
+  inputConnect: [1; 0; 0]
+  layerConnect: [0 0 0; 1 0 0; 0 1 0]
+ outputConnect: [0 0 1]
  
     subobjects:
  
-             input: Equivalent to inputs{1}
-            output: Equivalent to outputs{3}
+ input: Equivalent to inputs{1}
+    output: Equivalent to outputs{3}
  
-            inputs: {1x1 cell array of 1 input}
-            layers: {3x1 cell array of 3 layers}
-           outputs: {1x3 cell array of 1 output}
-            biases: {3x1 cell array of 3 biases}
-      inputWeights: {3x1 cell array of 1 weight}
-      layerWeights: {3x3 cell array of 2 weights}
+    inputs: {1x1 cell array of 1 input}
+    layers: {3x1 cell array of 3 layers}
+   outputs: {1x3 cell array of 1 output}
+    biases: {3x1 cell array of 3 biases}
+  inputWeights: {3x1 cell array of 1 weight}
+  layerWeights: {3x3 cell array of 2 weights}
  
     functions:
  
-          adaptFcn: 'adaptwb'
-        adaptParam: (none)
-          derivFcn: 'defaultderiv'
-         divideFcn: 'dividerand'
-       divideParam: .trainRatio, .valRatio, .testRatio
-        divideMode: 'sample'
-           initFcn: 'initlay'
-        performFcn: 'mse'
-      performParam: .regularization, .normalization
-          plotFcns: {'plotperform', 'plottrainstate', 'ploterrhist',
-                    'plotregression'}
-        plotParams: {1x4 cell array of 4 params}
-          trainFcn: 'trainlm'
-        trainParam: .showWindow, .showCommandLine, .show, .epochs,
-                    .time, .goal, .min_grad, .max_fail, .mu, .mu_dec,
-                    .mu_inc, .mu_max
+  adaptFcn: 'adaptwb'
+    adaptParam: (none)
+  derivFcn: 'defaultderiv'
+ divideFcn: 'dividerand'
+   divideParam: .trainRatio, .valRatio, .testRatio
+    divideMode: 'sample'
+   initFcn: 'initlay'
+    performFcn: 'mse'
+  performParam: .regularization, .normalization
+  plotFcns: {'plotperform', 'plottrainstate', 'ploterrhist',
+    'plotregression'}
+    plotParams: {1x4 cell array of 4 params}
+  trainFcn: 'trainlm'
+    trainParam: .showWindow, .showCommandLine, .show, .epochs,
+    .time, .goal, .min_grad, .max_fail, .mu, .mu_dec,
+    .mu_inc, .mu_max
  
     weight and bias values:
  
-                IW: {3x1 cell} containing 1 input weight matrix
-                LW: {3x3 cell} containing 2 layer weight matrices
-                 b: {3x1 cell} containing 3 bias vectors
+    IW: {3x1 cell} containing 1 input weight matrix
+    LW: {3x3 cell} containing 2 layer weight matrices
+ b: {3x1 cell} containing 3 bias vectors
  
     methods:
  
-             adapt: Learn while in continuous use
-         configure: Configure inputs & outputs
-            gensim: Generate Simulink model
-              init: Initialize weights & biases
-           perform: Calculate performance
-               sim: Evaluate network outputs given inputs
-             train: Train network with examples
-              view: View diagram
-       unconfigure: Unconfigure inputs & outputs
+ adapt: Learn while in continuous use
+ configure: Configure inputs & outputs
+    gensim: Generate Simulink model
+  init: Initialize weights & biases
+   perform: Calculate performance
+   sim: Evaluate network outputs given inputs
+ train: Train network with examples
+  view: View diagram
+   unconfigure: Unconfigure inputs & outputs
  
 
-n_errors =
-
-     2
+n_errors =  2
 
 
 perf =
