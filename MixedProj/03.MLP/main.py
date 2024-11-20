@@ -1,16 +1,13 @@
 # sudo pacman -S python-scikit-learn
 
-import numpy as np
-from numpy.random import randn
+# conda create -n sklearn-env -c conda-forge scikit-learn
+# conda activate sklearn-env
 
-
-from sklearn.neural_network import ( MLPClassifier )
-from sklearn.model_selection import ( train_test_split )
-
-from sklearn.metrics import accuracy_score
 
 from data.readdata import load_mnist
-
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import (train_test_split)
+from sklearn.neural_network import (MLPClassifier)
 
 x_train, y_train = load_mnist( kind='train' )
 x_test, y_test = load_mnist( kind='t10k' )
