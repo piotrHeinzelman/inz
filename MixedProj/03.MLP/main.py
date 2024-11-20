@@ -1,6 +1,7 @@
+# sudo pacman -S python-scikit-learn
+
 import numpy as np
 from numpy.random import randn
-
 
 
 from sklearn.neural_network import ( MLPClassifier )
@@ -8,23 +9,33 @@ from sklearn.model_selection import ( train_test_split )
 
 from sklearn.metrics import accuracy_score
 
-
-# sudo pacman -S python-scikit-learn
-
+from data.readdata import load_mnist
 
 
-x1 = 1+randn(20,5)
-x2 =-2*+randn(20,5)
-x3 = 3+randn(20,5)
-x = np.concatenate((x1, x2, x3),axis=0)
-d = np.concatenate(([1]*20, [2]*20, [3]*20),axis=0)
+x_train, y_train = load_mnist( kind='train' )
+x_test, y_test = load_mnist( kind='t10k' )
 
 
-(x_train, x_test, d_train, d_test) = train_test_split( x,d,test_size=0.2  )
+print( x_train.size )
+print( x_test.size )
 
-net = MLPClassifier(hidden_layer_sizes=[5,2], activation='logistic', max_iter=300, solver='lbfgs' )
+( x_train, x_trash, y_train, y_trash) = train_test_split( x_train, y_train, test_size=0.1 ) 
+( x_test, x_trash, y_test, y_trash)   = train_test_split( x_test , y_test , test_size=0.1 )
 
-net.fit( x_train, d_train )
+print( x_train.size )
+print( x_test.size )
 
-print(f'''Acc: {accuracy_score(d_test, net.predict(x_test)):.3e}''')
-print(f'Loss: {net.loss_:.3e}')
+
+
+for i in range ( 50, 750, 10 ):
+    net = MLPClassifier( hidden_layer_sizes=[32,32,10], activation='logistic', max_iter=i, solver='lbfgs' )
+    net.fit( x_train, y_train )
+    score =  accuracy_score( y_test, net.predict( x_test ))   
+    loss  =  net.loss_ 
+
+    print( '# cycles:   (%i) ' % i )
+    print( '# Accuracy score: (%f) ' % score )
+    print( '# Net loss:       (%f) ' % loss  )
+    print( 'p[]=[ %i, %f ] ' % ( i, score ) )
+#    print(i)
+

@@ -1,2 +1,5 @@
-echo "#   --- Python --- "
-python main.py
+echo  "#   --- Python --- " > out_py
+
+python main.py >> out_py
+
+cat out_py
