@@ -1,7 +1,9 @@
 import tensorflow as tf
 import time
 from tensorflow.keras.backend import clear_session
+
 # List available physical devices
+
 physical_devices = tf.config.list_physical_devices('GPU')
 print("Num GPUs Available: ", len(physical_devices))
 
