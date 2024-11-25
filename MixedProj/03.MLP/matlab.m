@@ -4,6 +4,56 @@
 
 
 
+    fileIMG=fopen( 'data/train-labels-idx1-ubyte','r');
+    y1=fread( fileIMG, 'uint8' );
+    fclose(fileIMG);    
+    yt=y1(4:60008);
+
+		
+
+    fileIMG=fopen( 'data/t10k-labels-idx1-ubyte','r');
+    y1=fread( fileIMG, 'uint8' );
+    fclose(fileIMG);
+    
+    y=y1(4:1000);
+
+
+    fileIMG=fopen( 'data/train-images-idx3-ubyte','r');
+    x1=fread( fileIMG, 'uint8' );
+    fclose(fileIMG);    
+    xt=x1(4:47040016)/255;
+    
+	
+
+    fileIMG=fopen( 'data/t10k-images-idx3-ubyte','r');
+    x1=fread( fileIMG, 'uint8' );
+    fclose(fileIMG);    
+    xt=x1(4:7840016)/255
+    
+	
+
+
+
+
+
+
+%  t10k-images-idx3-ubyte
+%  t10k-labels-idx1-ubyte
+%  train-images-idx3-ubyte
+%  train-labels-idx1-ubyte
+
+
+
+exit();
+
+
+
+
+
+
+
+
+
 x1 = [   1.5377    1.6715    0.8978   -0.0891    2.4193;
     2.8339   -0.2075    0.7586    1.0326    1.2916 ];
 
@@ -33,7 +83,7 @@ x3 = [   3.1832    1.9358    1.9333    4.0001    3.9111;
 % i warstwa 5 neuronow, druga 2 naurony
 % algorytm uczacy mozna zmienic na inny
 
-net = feedforwardnet([5,2],'trainlm');
+net = feedforwardnet([ 5,2 ],'trainlm');
 
 % uczenie sieci:
 % x - dane wejsciowe
