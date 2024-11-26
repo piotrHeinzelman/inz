@@ -1,4 +1,4 @@
-import matplotlib.pyplot as plt 
+import matplotlib.pyplot as plt
 import numpy as np
 plt.title('Regresja liniowa: polyfit  X[6] x 100') 
 plt.style.use('_mpl-gallery')
@@ -7,6 +7,7 @@ plt.style.use('_mpl-gallery')
 x=[6,60,600,6_000,60_000,600_000,6_000_000,60_000_000]
 p=[None,None,None,None,None,None,None,None]
 pi=[None,None,None,None,None,None,None,None]
+pn=[None,None,None,None,None,None,None,None]
 m=[None,None,None,None,None,None,None,None]
 mi=[None,None,None,None,None,None,None,None]
 j=[None,None,None,None,None,None,None,None]
@@ -25,6 +26,7 @@ c[0]=0.000000542
 
 p[1]=0.006508588790893555
 pi[1]=0.0046460628509521484
+pn[1]=0.2321
 m[1]=0.119444
 mi[1]=0.002877
 j[1]=0.00007
@@ -54,6 +56,7 @@ c[4]=0.037662
 
 p[5]= 2.708757162094116
 pi[5]= 45.06006598472595
+pn[5]= 0.9
 m[5]=1.461024
 mi[5]=0.204299
 j[5]=0.102
@@ -73,12 +76,13 @@ j[7]=10.143
 
 
 
-plt.plot( x, p, 'bo-', label='Python wbudowany', linewidth=.5 )
+plt.plot( x, p,  'bo-', label='Python wbudowany', linewidth=.5 )
 plt.plot( x, pi, 'bo:', label='Python wlasna impl.', linewidth=.5 )
-plt.plot( x, m, 'ro-', label='Matlab wbudowany', linewidth=.5 )
+plt.plot( x, pn, 'yo:', label='Python numba wlasna impl.', linewidth=.5 )
+plt.plot( x, m,  'ro-', label='Matlab wbudowany', linewidth=.5 )
 plt.plot( x, mi, 'ro:', label='Matlab wlasna impl', linewidth=.5 )
-plt.plot( x, j, 'go-', label='Java', linewidth=.5 )
-plt.plot( x, c, 'yo-', label='C', linewidth=.5 )
+plt.plot( x, j,  'go-', label='Java', linewidth=.5 )
+plt.plot( x, c,  'yo-', label='C', linewidth=.5 )
 
 
 
@@ -87,10 +91,6 @@ plt.xscale('log') # 'linear' 'symlog' 'logit'
 plt.yscale('log') # 'linear' 'symlog' 'logit' 
 plt.ylim( 0.1, 5 )
 plt.xticks(x,[ '6','6*10^1','6*10^2','6*10^3','6*10^4','6*10^5','6*10^6','6*10^7'    ])
-
-
-
-
 
   
 plt.savefig( '../000.fig/fig01.pdf',dpi=400 ) 

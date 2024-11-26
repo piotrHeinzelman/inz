@@ -2,6 +2,7 @@
 % Osowski / Szmurlo matematyczne modele
 % page 89
 
+% https://www.tensorflow.org/?hl=pl
 
 
     fileIMG=fopen( 'data/train-labels-idx1-ubyte','r');
