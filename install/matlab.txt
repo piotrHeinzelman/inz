@@ -28,3 +28,4 @@ $ sudo cp /lib/libstdc++.* ~/Downloads/matlab_R2024a_Linux/bin/glnxa64/
 
 $ sudo pacman -S nvidia
 
+sudo pacman -Sy libcanberra
