@@ -1,0 +1,189 @@
+PorÃ³wnanie wydajnoÅci jÄzykÃ³w programowania Matlab, Python i C++ w realizacji sieci
+neuronowych do przetwarzaniu obrazÃ³w
+
+
+
+1. WstÄp
+Cel pracy oraz krÃ³tkie wyjaÅnienie doboru tematÃ³w wprowadzajÄcych.
+
+
+
+2. Wprowadzenie do metod sztucznych sieci neuronowych.
+PrzeglÄd modeli matematycznych sieci neuronowych.
+Matematyczny model procesu uczenia sieci neuronowej.
+Realizacja perceptronu wielowarstwowego w jÄzyku Java.
+Testy perceptronu wielowarstwowego w Java.
+
+
+
+3. Problemy efektywnoÅci w przetwarzaniu numerycznym
+Ograniczenia maszyn cyfrowych w obliczeniach.
+PrzeglÄd metod realizacji przetwarzania rÃ³wnolegÅego.
+Ograniczenia modeli sieci neuronowych przy przetwarzaniu rÃ³wnolegÅym. (wymuszenie synchronizacji)
+?? PorÃ³wnanie moÅ¼liwoÅci wykorzystania CUDA i procesorÃ³w strumieniowych ??
+
+
+
+4. Realizacje obliczeÅ Jednowymiarowej regresji liniowej
+
+a) Matlab - wbudowana funkcja
+
+b) Matlab - wÅasna implementacja
+
+c) Python - wbudowana funkcja
+
+d) Python - wÅasna implementacja
+
+e) Java - wÅasna implementacja
+
+f) C++ - wÅasna implementacja
+
+
+
+Cel podstawowy: porÃ³wnanie wydajnoÅci podstawowych operacji arytmetycznych w zaleÅ¼noÅci od JÄzyka.
+
+Cele dodatkowe: potwierdzenie poprawnoÅci wÅasnej implementacji przez porÃ³wnanie wynikÃ³w,
+
+Sprawdzenie poprawnoÅci funkcji wczytujÄcej dane z plikÃ³w,
+
+
+
+oraz opcjonalnie jeÅli wystarczy czasu:
+
+g) Python tensorflow.keras lub PyTorch, lub CuPy  //https://www.geeksforgeeks.org/tools-and-libraries-to-leverage-gpu-computing-in-python/
+
+h) C++ na GPU Cuda
+
+
+
+Cel podstawowy: porÃ³wnanie realnego wzrostu wydajnoÅci obliczeÅ na GPU.
+
+
+
+
+
+4. Realizacje obliczeÅ Klasyfikowanie pisma odrÄcznego MLP z wykorzystaniem danych MNIST
+
+a) Matlab 
+
+b) Python -numpy, -sklearn
+
+c) Python -tensorflow
+
+d) wÅasna implementacja w Java
+
+Cel podstawowy: porÃ³wnanie wydajnoÅci realizacji w zaleÅ¼noÅci od JÄzyka.
+
+Cele dodatkowe: potwierdzenie poprawnoÅci wÅasnej implementacji przez porÃ³wnanie wynikÃ³w,
+
+
+ 
+
+5) realizacja Klasyfikowanie pisma odrÄcznego sieci gÅÄbokie CNN realizacja sieci z wykorzytsniem bibliotek.
+
+a) Matlab 
+
+b) Python tensorflow.keras
+
+c) wÅasna implementacja Java lub C++ libtorch
+
+Cel podstawowy: porÃ³wnanie wydajnoÅci implementacji. Zbadanie wydajnoÅci uczenia sieci.
+
+Cele dodatkowe: potwierdzenie poprawnoÅci wÅasnej implementacji w Java lub C++
+
+
+
+
+
+6) Rozpoznawanie twarzy sieci gÅÄbokie CNN 
+
+a) Matlab 
+
+b) Python tensorflow.keras
+
+c) wÅasna implementacja Java lub C++ libtorch
+
+Cel podstawowy: porÃ³wnanie wydajnoÅci implementacji. 
+
+
+
+7) Klasyfikacji obrazÃ³w z wykorzystaniem sieci gÅÄbokiej CNN 
+
+a) Matlab 
+
+b) Python tensorflow.keras
+
+c) C++ libtorch
+
+Cel podstawowy: porÃ³wnanie wydajnoÅci implementacji i wydajnoÅci procesu uczenia nadzorowanego.
+
+
+
+8) detekcja i segmentacji obiektÃ³w sieci gÅÄbokiej CNN 
+
+b) Python tensorflow.keras
+
+c) C++ libtorch
+
+Cel podstawowy: porÃ³wnanie wydajnoÅci implementacji. 
+
+
+
+9. PorÃ³wnanie zrealizowanych modeli.
+Analiza czasu realizacji zadaÅ.
+Ocena uÅ¼ytych jÄzykÃ³w i bibliotek pod kÄtem dostÄpnoÅci i "??ÅatwoÅci / wygody uÅ¼ycia?? / wymagania".
+PrzeglÄd moÅ¼liwych problemÃ³w i ich rozwiÄzaÅ.
+
+
+
+10. Podsumowanie i wnioski
+Podsumowanie przeprowadzonych badaÅ.
+Propozycje dalszych kierunkÃ³w badaÅ oraz moÅ¼liwoÅci wdroÅ¼enia rozwiÄzania na szerszÄ skalÄ.
+ 
+
+
+
+
+
+*************************
+
+
+
+
+
+
+
+Na poczÄtku pracy nad dyplomem trzeba sformuÅowaÄ tytuÅ i zakres pracy. ZwÅaszcza ten drugi wymaga wstÄpnego zorientowania siÄ w tematyce, czyli przekopania internetu, porozmawiania z promotorem i ustalenia jakiejÅ realizowalnej wersji. 
+
+
+
+Temat szkic: PorÃ³wnanie jÄzykÃ³w programowania (Matlab, Python, C??) 
+
++ewentualnie rozwiÄziÄzaÅ technicznych (GPU, CPU, FPGA) w zastosowaniach NN , Deep NN 
+
+
+
+Zakres:
+
+1. WstÄp.
+
+2. PrzeglÄd istniejÄcych rozwiÄzaÅ. (Python, Matlab, C? , CPU, GPU FPGA )
+
+3. Opis platformy eksperymentalnej.
+
+4. Implementacja wybranych rozwiÄzaÅ.
+
+5. Stworzenie zbioru danych.
+
+6. Badanie i analiza i porÃ³wnanie wynikÃ³w.
+
+7. Podsumowanie i wnioski.
+
+
+
+Badania majÄ polegaÄ na testowaniu rÃ³Å¼nych algorytmÃ³w (np. rÃ³Å¼nych gÅÄbokich sieci), to trzeba zrobiÄ jakieÅ wprowadzenie do tych algorytmÃ³w. WaÅ¼ne jest, Å¼eby zakres pracy byÅ na tyle ogÃ³lny, aby nie zmuszaÅ juÅ¼ na poczÄtku do realizacji jakichÅ bardzo konkretnych zadaÅ, bo moÅ¼e siÄ pÃ³Åºniej okazaÄ, Å¼e te zadania/metody/rozwiÄzania zostaÅy niezbyt dobrze na poczÄtku dobrane (co jest usprawiedliwione, wszak na poczÄtku opracowywane zagadnienia nie sÄ bardzo dobrze znane) i nie ma sensu ich badaÄ (bo znalazÅy siÄ lepsze). Tymczasem wÃ³wczas recenzent moÅ¼e powiedzieÄ, i sÅusznie, Å¼e treÅÄ pracy nie odpowiada jej zakresowi. Z drugiej strony, zakres pracy nie moÅ¼e byÄ tak ogÃ³lny, by pasowaÅ do kaÅ¼dej pracy. JakiÅ zÅoty Årodek trzeba znaleÅºÄ.
+
+
+
+
+
