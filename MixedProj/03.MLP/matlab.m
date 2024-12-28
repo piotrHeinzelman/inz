@@ -3,10 +3,13 @@
 % page 89
 % https://www.tensorflow.org/?hl=pl
 % https://www.mathworks.com/help/deeplearning/ref/feedforwardnet.html
+% https://www.mathworks.com/help/overview/ai-and-statistics.html?s_tid=hc_product_group_bc
+
+% To train a deep learning network, use trainnet.
 
 
 if ( 1==1 ) 
-    percent=0.1;
+    percent=1;
 
     fileIMG=fopen( 'data/train-labels-idx1-ubyte','r');
     fileData=fread( fileIMG, 'uint8' );
@@ -61,7 +64,7 @@ end
 % i warstwa 24 neuronow, druga 24 naurony
 % algorytm uczacy mozna zmienic na inny
  
-net = feedforwardnet([ 24,24,10 ],'trainlm');
+net = feedforwardnet([ 24,24,10 ],'traingd'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
 
 % uczenie sieci:
 % x - dane wejsciowe
@@ -73,22 +76,22 @@ net = train( net, xtrain, ytrain );
 
 z = net(xtrain);
 
-a = net
-exit();
+%a = net
+%exit();
 
 % prezentacja struktury sieci
 % view(net);
 
 % testowanie sieci na danych wejsciowych x
 
-n_errors = sum(abs(round(z-y)));
-perf=perform(net,y,z);
+n_errors = sum(abs(round(z-ytrain)));
+perf=perform(net,ytrain,z);
 
 
-disp("test data:")
-zt = net(xt);
-n_errors = sum(abs(round(zt-yt)))
-perf=perform(net,yt,zt)
+%disp("test data:")
+%zt = net(xt);
+%n_errors = sum(abs(round(zt-yt)))
+%perf=perform(net,yt,zt)
 
 
 

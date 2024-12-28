@@ -1,3 +1,5 @@
+% To train a deep learning network, use trainnet.
+
 cycles=100;
 name="20";
 
