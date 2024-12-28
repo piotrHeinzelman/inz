@@ -4,6 +4,7 @@
 % https://www.tensorflow.org/?hl=pl
 % https://www.mathworks.com/help/deeplearning/ref/feedforwardnet.html
 % https://www.mathworks.com/help/overview/ai-and-statistics.html?s_tid=hc_product_group_bc
+% https://www.youtube.com/watch?v=aircAruvnKk
 
 % To train a deep learning network, use trainnet.
 
@@ -27,10 +28,10 @@ if ( 1==1 )
     fileIMG=fopen( 'data/train-images-idx3-ubyte','r');
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);    
-    fileData(17:16+percent*784*600);
+    tmp=fileData(17:16+percent*784*600);
     
     for i=1:percent*600
-        col=fileData(1+(i-1)*784:i*784);
+        col=tmp(1+(i-1)*784:i*784);
         xtrain(1:784,i)=col';
     end    
     xtrain=xtrain/255;
@@ -39,16 +40,28 @@ if ( 1==1 )
     fileIMG=fopen( 'data/t10k-images-idx3-ubyte','r');
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);    
-    fileData(17:16+percent*784*100);
+    tmp=fileData(17:16+percent*784*100);
     
     for i=1:percent*100
-        col=fileData(1+(i-1)*784:i*784);
+        col=tmp(1+(i-1)*784:i*784);
         xtest(1:784,i)=col';
     end    
     xtest=xtest/255;
     fileData=1;
 end
 
+
+img0=xtrain(1:784,1);
+img0=img0*256;
+image(img0);
+
+img=zeros(28,28);
+for i=(1:28)
+    row=img0((i-1)*28+1:(i)*28);
+   img(i,1:28)=row; 
+end    
+image(img)
+exit();
 
 %  t10k-images-idx3-ubyte
 %  t10k-labels-idx1-ubyte
@@ -64,7 +77,7 @@ end
 % i warstwa 24 neuronow, druga 24 naurony
 % algorytm uczacy mozna zmienic na inny
  
-net = feedforwardnet([ 24,24,10 ],'traingd'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
+net = feedforwardnet([ 16,16,10 ],'traingd'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
 
 % uczenie sieci:
 % x - dane wejsciowe
