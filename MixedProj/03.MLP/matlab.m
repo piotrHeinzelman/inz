@@ -26,7 +26,7 @@ end
 
 
 if ( 1==1 ) 
-    percent=0.1;
+    percent=100;
 
     fileIMG=fopen( 'data/train-labels-idx1-ubyte','r');
     fileData=fread( fileIMG, 'uint8' );
@@ -101,8 +101,8 @@ end
 net = feedforwardnet([ 64,64 ],'traingd'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
 %net = fitnet([ 24,24 ],'trainlm'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
 
-net.trainParam.epochs = 2000;
-net.trainParam.goal   = 0.9;
+net.trainParam.epochs = 5000;
+net.trainParam.goal   = 0.03;
 
 %min_grad	
 %Minimum Gradient Magnitude
