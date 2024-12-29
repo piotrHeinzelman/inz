@@ -9,21 +9,58 @@
 % To train a deep learning network, use trainnet.
 
 
+function showx( arrayx , i )
+    img0=arrayx(1:784,i);
+    img0=img0*256;
+    image(img0);
+    
+    img=zeros(28,28);
+        for i=(1:28)
+            row=img0((i-1)*28+1:(i)*28);
+           img(i,1:28)=row; 
+        end    
+    image(img)
+end
+
+
+
+
 if ( 1==1 ) 
-    percent=1;
+    percent=10;
 
     fileIMG=fopen( 'data/train-labels-idx1-ubyte','r');
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
-    ytrain=fileData(9:8+percent*600)';
+    ytmp=fileData(9:8+percent*600)';
+    ysize=size(ytmp);
+    ysize=ysize(2);
+    ytrain=zeros(10,ysize);
+    for i=(1:ysize)
+        d=ytmp(i);
+        if (d==0)
+            d=10; 
+        end
+        ytrain(d,i)=1;
+    end
+    
     fileData=1;
 
     fileIMG=fopen( 'data/t10k-labels-idx1-ubyte','r');
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
 
-    ytest=fileData(9:8+percent*100)';
-    fileData=1;
+    ytmp=fileData(9:8+percent*100)';
+    ysize=size(ytmp);
+    ysize=ysize(2);
+    ytest=zeros(10,ysize);
+    for i=(1:ysize)
+        d=ytmp(i);
+        if (d==0)
+            d=10; 
+        end
+        ytest(d,i)=1;
+    end
+
 
     fileIMG=fopen( 'data/train-images-idx3-ubyte','r');
     fileData=fread( fileIMG, 'uint8' );
@@ -50,56 +87,46 @@ if ( 1==1 )
     fileData=1;
 end
 
-
-img0=xtrain(1:784,1);
-img0=img0*256;
-image(img0);
-
-img=zeros(28,28);
-for i=(1:28)
-    row=img0((i-1)*28+1:(i)*28);
-   img(i,1:28)=row; 
-end    
-image(img)
-exit();
-
-%  t10k-images-idx3-ubyte
-%  t10k-labels-idx1-ubyte
-%  train-images-idx3-ubyte
-%  train-labels-idx1-ubyte
-
-
-
-% exit();
+%showx( xtrain , 4 );
+showx( xtrain , 1 );
+showx( xtrain , 2 );
+showx( xtrain , 3 );
+%exit();
 
 
 % struktura MLP 2 warstwy ukryte
-% i warstwa 24 neuronow, druga 24 naurony
+% i warstwa 16 neuronow, druga 16 naurony
 % algorytm uczacy mozna zmienic na inny
  
-net = feedforwardnet([ 16,16,10 ],'traingd'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
+%net = feedforwardnet([ 24,24,10 ],'traingd'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
+net = fitnet([ 16,16 ],'trainlm'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
+
 
 % uczenie sieci:
 % x - dane wejsciowe
 % y - wartosci zadane (destination)
 
-%net = train(net,x,y);
 net = train( net, xtrain, ytrain );
- 
+z = net( xtest );
 
-z = net(xtrain);
+%show( net );
 
-%a = net
-%exit();
+
+
 
 % prezentacja struktury sieci
 % view(net);
 
 % testowanie sieci na danych wejsciowych x
 
-n_errors = sum(abs(round(z-ytrain)));
-perf=perform(net,ytrain,z);
+n_errors = sum(abs(round(z-ytest)));
+perf=perform(net,ytest,z);
 
+z = net( xtrain(1:784,1) )
+z = net( xtrain(1:784,2) )
+z = net( xtrain(1:784,3) )
+
+%exit();
 
 %disp("test data:")
 %zt = net(xt);
@@ -117,3 +144,4 @@ perf=perform(net,ytrain,z);
 % >> r06_mlp
 % n_errors =2
 % perf=0.0667
+
