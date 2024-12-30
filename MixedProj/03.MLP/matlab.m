@@ -142,7 +142,7 @@ end
 
 %disp("test data:")
 %zt = net(xt);
-%n_errors = sum(abs(round(zt-yt)))
+n_errors = sum(abs(round(zt-yt)))
 %perf=perform(net,yt,zt)
 
 
