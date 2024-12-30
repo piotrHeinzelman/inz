@@ -9,6 +9,65 @@
 % To train a deep learning network, use trainnet.
 
 
+function accuracy = accuracyCheck( first, second )
+    goals=0;
+    s=size(first);
+    s=s(2);
+    for i=(1:s)
+        val1=first(i);
+        val2=second(i);
+        if (val1==val2)
+            goals=goals+1;
+        end    
+    end 
+    accuracy = goals/s;
+end
+
+
+function index = indexOfMaxInVector( vec ) % 
+    val=vec(1);
+    index=1;
+    s=size(vec);
+    s=s(1);
+    for i = (2:s)
+        if (val<vec(i))
+            index=i;
+            val=vec(i);
+        end    
+    end
+end
+
+%vec = [0.1, 0.3, 0.15, 0.2]';
+%i = indexOfMaxInVector( vec )
+
+
+function aryOfInt = aryOfVectorToAryOfInt( aryOfVec )
+    s = size( aryOfVec );
+    h=s(1);
+    s=s(2);
+    aryOfInt=zeros(1,s);
+    for i=1:s
+      vec=aryOfVec(1:h,i);  
+      index = indexOfMaxInVector(vec);   
+      if index==10
+          index=0;
+      end    
+      aryOfInt(i)=index; 
+    end    
+end
+
+%aryOfVec=[.2, .1
+ %         .3, .15
+%         -.2, .2
+%          .4, .5
+%          .5, .4
+%          .2, .3]
+
+
+% flat = aryOfVectorToAryOfInt( aryOfVec );
+
+
+
 function showx( arrayx , i )
     img0=arrayx(1:784,i);
     img0=img0*256;
@@ -26,7 +85,7 @@ end
 
 
 if ( 1==1 ) 
-    percent=100;
+    percent=0.2;
 
     fileIMG=fopen( 'data/train-labels-idx1-ubyte','r');
     fileData=fread( fileIMG, 'uint8' );
@@ -127,22 +186,35 @@ net.trainParam.goal   = 0.03;
 net = train( net, xtrain, ytrain );
 
 z = net( xtest );
-perf=perform( net, ytest, z )
+flatZ = aryOfVectorToAryOfInt( z );
+flatZtest = aryOfVectorToAryOfInt( ytest ); 
+accuracy = accuracyCheck(flatZ, flatZtest)
+
+%perf=perform( net, ytest, z )
 
  
 
 % testowanie sieci na danych wejsciowych x
 
-if (1==1)
-    z = net( xtrain(1:784,1) )
-    z = net( xtrain(1:784,2) )
-    z = net( xtrain(1:784,3) )
+if (1==2)
+    z1 = net( xtrain(1:784,1) )
+    z1 = net( xtrain(1:784,2) )
+    z1 = net( xtrain(1:784,3) )
+
+    %showx( xtest , 5 );
+    %showx( xtest , 2 );
+    %showx( xtrain , 3 );
 end
+
+
+
+
+
 %exit();
 
 %disp("test data:")
 %zt = net(xt);
-n_errors = sum(abs(round(zt-yt)))
+%n_errors = sum(abs(round(zt-yt)))
 %perf=perform(net,yt,zt)
 
 
