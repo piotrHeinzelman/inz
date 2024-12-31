@@ -85,7 +85,7 @@ end
 
 
 if ( 1==1 ) 
-    percent=0.2;
+    percent=100;
 
     fileIMG=fopen( 'data/train-labels-idx1-ubyte','r');
     fileData=fread( fileIMG, 'uint8' );
@@ -157,10 +157,11 @@ end
 % i warstwa 16 neuronow, druga 16 naurony
 % algorytm uczacy mozna zmienic na inny
  
-net = feedforwardnet([ 64,64 ],'traingd'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
+neurons = 64;
+net = feedforwardnet([ neurons,neurons ],'traingd'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
 %net = fitnet([ 24,24 ],'trainlm'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
 
-net.trainParam.epochs = 5000;
+net.trainParam.epochs = 1500;
 net.trainParam.goal   = 0.03;
 
 %min_grad	
@@ -183,12 +184,22 @@ net.trainParam.goal   = 0.03;
 % x - dane wejsciowe
 % y - wartosci zadane (destination)
 
-net = train( net, xtrain, ytrain );
+datasetSize = percent
+layerSize = neurons
+maxCycles = net.trainParam.epochs
+for i=1:10
 
-z = net( xtest );
-flatZ = aryOfVectorToAryOfInt( z );
-flatZtest = aryOfVectorToAryOfInt( ytest ); 
-accuracy = accuracyCheck(flatZ, flatZtest)
+    ST = datetime('now');
+    net = train( net, xtrain, ytrain );
+    ED = datetime('now');
+    trainTime = duration( ED-ST );
+    
+    z = net( xtest );
+    flatZ = aryOfVectorToAryOfInt( z );
+    flatZtest = aryOfVectorToAryOfInt( ytest ); 
+    accuracy = accuracyCheck(flatZ, flatZtest)
+
+end 
 
 %perf=perform( net, ytest, z )
 
