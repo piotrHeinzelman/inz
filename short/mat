@@ -1,0 +1,2 @@
+cd ~/INZ/inz/MatlabProjs/NewProj
+/usr/local/MATLAB/R2024a/bin/matlab   -nodisplay -nosplash - nodesktop

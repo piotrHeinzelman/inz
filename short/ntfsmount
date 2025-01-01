@@ -1,0 +1,1 @@
+sudo mount -t ntfs3 /dev/sda1 /mnt -rw

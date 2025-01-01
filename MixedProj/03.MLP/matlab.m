@@ -157,7 +157,7 @@ end
 % i warstwa 16 neuronow, druga 16 naurony
 % algorytm uczacy mozna zmienic na inny
  
-neurons = 32;
+neurons = 12;
 net = feedforwardnet([ neurons,neurons ],'traingd'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
 %net = fitnet([ 24,24 ],'trainlm'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
 
@@ -187,7 +187,7 @@ net.trainParam.goal   = 0.03;
 datasetSize = percent
 layerSize = neurons
 maxCycles = net.trainParam.epochs
-for i=1:15
+for i=1:20
 
     ST = datetime('now');
     net = train( net, xtrain, ytrain );

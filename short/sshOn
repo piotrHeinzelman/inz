@@ -1,0 +1,5 @@
+sudo systemctl start sshd
+sudo ufw allow 22/tcp
+ip addr show
+
+

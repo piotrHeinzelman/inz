@@ -1,0 +1,6 @@
+sudo systemctl stop sshd
+sudo systemctl disable sshd
+sudo ufw disallow 22/tcp
+ip addr show
+
+
