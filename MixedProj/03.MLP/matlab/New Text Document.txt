@@ -2,7 +2,7 @@
 20% data, 64 neurons, 10 * 1500 epochs, = 82,95 accuracy
 50% data, 64 neurons, 10 * 1500 epochs, = 84,74 accuracy
 100% data, 64 neurons, 10 * 1500 epochs, = 88,34 accuracy 
- 
+100% data, 32 neurons, 10 * 1500 epochs, = 87,26 accuracy  
 
 
 
