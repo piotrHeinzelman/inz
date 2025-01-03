@@ -147,47 +147,19 @@ if ( 1==1 )
 end
 
 %showx( xtrain , 4 );
-%showx( xtrain , 1 );
-%showx( xtrain , 2 );
-%showx( xtrain , 3 );
-%exit();
 
+neurons = 64;
+datasetSize = percent;
+layerSize = neurons;
 
-% struktura MLP 2 warstwy ukryte
-% i warstwa 16 neuronow, druga 16 naurony
-% algorytm uczacy mozna zmienic na inny
- 
-neurons = 12;
-net = feedforwardnet([ neurons,neurons ],'traingd'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
-%net = fitnet([ 24,24 ],'trainlm'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
+for i=1:10
 
-net.trainParam.epochs = 1500;
-net.trainParam.goal   = 0.03;
+    net = feedforwardnet([ neurons,neurons ],'traingd'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
+    %net = fitnet([ 24,24 ],'trainlm'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
+    
+    net.trainParam.epochs = 5000;
+    net.trainParam.goal   = 0.03;
 
-%min_grad	
-%Minimum Gradient Magnitude
-
-%max_fail	
-%Maximum Number of Validation Increases
-
-%time	
-%Maximum Training Time
-
-%goal	
-%Minimum Performance Value
-
-%epochs	
-%Maximum Number of Training Epochs (Iterations)
-
-
-% uczenie sieci:
-% x - dane wejsciowe
-% y - wartosci zadane (destination)
-
-datasetSize = percent
-layerSize = neurons
-maxCycles = net.trainParam.epochs
-for i=1:20
 
     ST = datetime('now');
     net = train( net, xtrain, ytrain );
@@ -197,46 +169,15 @@ for i=1:20
     z = net( xtest );
     flatZ = aryOfVectorToAryOfInt( z );
     flatZtest = aryOfVectorToAryOfInt( ytest ); 
-    accuracy = accuracyCheck(flatZ, flatZtest)
+    accuracy = accuracyCheck(flatZ, flatZtest);
+
+
+    D = duration( ED-ST );
+
+
+    fprintf('# MLP: 2x64Neu * 5000cycles: (Win10, IDE Matlab)\n' );
+    fprintf( '# accuracy: a:%f\n\n' , accuracy );
+    fprintf ('m[]=%f\n' , seconds(D)  );
 
 end 
-
-%perf=perform( net, ytest, z )
-
  
-
-% testowanie sieci na danych wejsciowych x
-
-if (1==2)
-    z1 = net( xtrain(1:784,1) )
-    z1 = net( xtrain(1:784,2) )
-    z1 = net( xtrain(1:784,3) )
-
-    %showx( xtest , 5 );
-    %showx( xtest , 2 );
-    %showx( xtrain , 3 );
-end
-
-
-
-
-
-%exit();
-
-%disp("test data:")
-%zt = net(xt);
-%n_errors = sum(abs(round(zt-yt)))
-%perf=perform(net,yt,zt)
-
-
-
-
-% [net,Y,E,Pf,Af,tr] = adapt( net, x, y );
-% disp(tr)
-
-
-% przykladowy wynik uruchomienia
-% >> r06_mlp
-% n_errors =2
-% perf=0.0667
-
