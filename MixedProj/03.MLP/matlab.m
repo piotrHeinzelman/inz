@@ -9,6 +9,10 @@
 % To train a deep learning network, use trainnet.
 
 
+ 
+D = gpuDevice
+ 
+
 function accuracy = accuracyCheck( first, second )
     goals=0;
     s=size(first);
@@ -152,17 +156,32 @@ neurons = 64;
 datasetSize = percent;
 layerSize = neurons;
 
-for i=1:1
+for i=1:4
 
     net = feedforwardnet([ neurons,neurons ],'traingd'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
     %net = fitnet([ 24,24 ],'trainlm'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
     
     net.trainParam.epochs = 5000;
     net.trainParam.goal   = 0.03;
+    net.input.processFcns = {'mapminmax'}; % https://www.mathworks.com/matlabcentral/answers/278051-output-processing-function-removeconstantrows-is-not-supported-with-gpu
+    net.output.processFcns = {'mapminmax'};%
 
+
+    gxtrain = gpuArray( xtrain );
+    gytrain = gpuArray( ytrain );
 
     ST = datetime('now');
-    net = train( net, xtrain, ytrain );
+
+    gpu=true;
+    if ( gpu )
+        %GPU
+        net = configure(net,xtrain,ytrain);
+        net = train(net, gxtrain, gytrain,'useParallel','yes','useGPU','yes');
+    else
+        %No GPU
+        net = train( net, xtrain, ytrain );
+    end    
+    
     ED = datetime('now');
     trainTime = duration( ED-ST );
     
