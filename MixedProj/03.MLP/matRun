@@ -1,6 +1,8 @@
 echo "#    --- Matlab ---"
 
-/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run matlab.m' 
+/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run matlab.m' >> matlab_Linux_out.txt
+
+
 
 
 

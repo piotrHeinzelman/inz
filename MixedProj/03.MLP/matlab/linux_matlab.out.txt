@@ -1,5 +1,0 @@
-#    --- Matlab ---
-# MLP: 2x64Neu * 5000cycles: (Linux, batch mode)
-# accuracy: a:0.815000
-
-m[]=16839.843076
