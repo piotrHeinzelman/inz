@@ -194,7 +194,7 @@ for i=1:4
     D = duration( ED-ST );
 
 
-    fprintf('# MLP: 2x64Neu * 5000cycles: (Linux, batch mode)\n' );
+    fprintf('# MLP: 2x64Neu * 5000cycles: (Linux GPU, batch mode)\n' );
     fprintf( '# accuracy: a:%f\n\n' , accuracy );
     fprintf ('m[]=%f\n' , seconds(D)  );
 
