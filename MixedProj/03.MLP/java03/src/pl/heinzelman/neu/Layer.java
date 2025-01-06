@@ -29,7 +29,7 @@ public class Layer {
     public Layer( LType lType, int n, int m ) { // n - number of neurons & output size Y[n], Z[n]
         this.lType=lType;                        // m - number of inputs  = input  size X[n]
         this.neurons = new Neuron[n];
-        for (int i=0;i<n;i++){
+        for (int i=0; i<n; i++){
             this.neurons[i]=new Neuron(m, this);
         }
         X = new float[m];
@@ -49,10 +49,10 @@ public class Layer {
     public void rnd(){
         Random random=new Random();
         for ( Neuron neu : neurons ) {
-            for ( int m=0;m<neurons.length;m++ ) {
+            for ( int m=0; m<X.length; m++ ) {
                 neu.setWm( m , random.nextFloat());
             }
-            System.out.println( neu );
+            //System.out.println( neu );
         }
     }
 

@@ -1,19 +1,19 @@
 package pl.heinzelman;
 
 import pl.heinzelman.tasks.*;
+import pl.heinzelman.tools.Tools;
 
 public class Main {
 
     public static void main(String[] args) {
 
-    Task task;
-    // task = new TaskForLoop2sek(); //
-    // task = new Task2x3_simple_backward();
-     task = new Task3x1CrossEntropy();
-    //   task = new Task3x2SoftMax();
-    task.doTask();
+        Tools tools = new Tools();
+        tools.prepareData( 1 );
+        if (true) return;
 
-
+        Task task;
+        task = new Task_64_64_simple_backward();
+        task.doTask();
     }
 }
         
