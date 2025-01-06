@@ -1,5 +1,5 @@
 
-cd ~/INZ/inz/JavaProj/nweb/src/
+cd /home/john/INZ/inz/MixedProj/03.MLP/java03/src/
 javac pl/heinzelman/Main.java -d ../out
 cd ../out
 
@@ -7,9 +7,9 @@ echo " "
 echo "---"
 echo " "
 echo "start: "
-date +%k:%M:%S.%N
+rem date +%k:%M:%S.%N
 
 java pl.heinzelman.Main
 
 echo "end:"
-date +%k:%M:%S.%N
+rem date +%k:%M:%S.%Npwd is a shell builtin
