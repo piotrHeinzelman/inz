@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-plt.title('dokladnosc sieci / ilosc neuronow') 
+plt.title('dokładność sieci / ilość neuronow') 
 plt.style.use('_mpl-gallery')
 
 
