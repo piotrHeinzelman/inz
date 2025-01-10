@@ -90,7 +90,7 @@ public class Layer {
     public void nBackward( float[] Ein ){
         for ( float f : Eout ){ f=0f; } // clear Eout
         for ( int n=0; n< neurons.length; n++ ){
-            System.out.println( "Ein[n]:"+Ein[n]  + ", "+dFofZ[n]);
+            //System.out.println( "Ein[n]:"+Ein[n]  + ", "+dFofZ[n]);
             neurons[n].Backward( Ein[n] * dFofZ[n] );
         }
     }

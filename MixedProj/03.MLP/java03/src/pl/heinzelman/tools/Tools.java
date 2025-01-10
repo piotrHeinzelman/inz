@@ -3,13 +3,11 @@ package pl.heinzelman.tools;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
 import static java.awt.image.BufferedImage.TYPE_BYTE_GRAY;
-import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
 public class Tools {
 
@@ -21,11 +19,11 @@ public class Tools {
 
     private byte[] trainYfile=null;
     private byte[] testYfile=null;
-    private double[][] trainY=null;
-    private double[][] testY=null;
+    private float[][] trainY=null;
+    private float[][] testY=null;
 
-    private double[][] trainX=null;
-    private double[][] testX=null;
+    private float[][] trainX=null;
+    private float[][] testX=null;
 
     public  void prepareData( int percent ){
 
@@ -33,48 +31,43 @@ public class Tools {
             trainYfile =  loadBin( path + trainYname,  8, percent*600 ); // offset=8, size=percent*600  // OK
             testYfile =  loadBin( path + testYname,   8, percent*100 );   // offset=8, size=percent*100 // OK
 
-            trainY = new double[percent*600][];
-            testY  = new double[percent*100][];
+            trainY = new float[percent*600][];
+            testY  = new float[percent*100][];
             //train Y
             for (int i=0;i<percent*600;i++){
-                trainY[i] = new double[]{ 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d };
-                trainY[i][ trainYfile[i] ]=1.0d;
+                trainY[i] = new float[]{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+                trainY[i][ trainYfile[i] ]=1.0f;
             }
             // test Y
             for (int i=0;i<percent*100;i++){
-                testY[i] = new double[]{ 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d };
-                testY[i][ testYfile[i] ]=1.0d;
+                testY[i] = new float[]{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+                testY[i][ testYfile[i] ]=1.0f;
             }
 
 
             byte[] trainXfile = loadBin(path + trainXname, 16, percent * 784 * 600);// offset=16 size=percent*784*600
-            trainX=new double[percent*600][784];
+            trainX=new float[percent*600][784];
             for (int i=0;i<percent*100;i++) {
                 int off=i*784;
                 for (int j=0;j<784;j++){
-                    trainX[i][j]=Byte.toUnsignedInt( trainXfile[off+j] )/256.0; //0-1
+                    trainX[i][j]=Byte.toUnsignedInt( trainXfile[off+j] )/256.0f; //0-1
                     //System.out.println( trainX[i][j] );
                 }
             }
 
             byte[] testXfile =   loadBin( path + testXname,  16, percent*784*100 );   // offset=16, size=percent*784*100
-            testX=new double[percent*100][784];
+            testX=new float[percent*100][784];
             for (int i=0;i<percent*100;i++) {
                 int off=i*784;
                 for (int j=0;j<784;j++){
-                    testX[i][j]=Byte.toUnsignedInt( testXfile[off+j] )/256.0;
+                    testX[i][j]=Byte.toUnsignedInt( testXfile[off+j] )/256.0f;
                 }
             }
 
             // show data:
-            for ( int i=0;i<100;i++ ) {
-                saveVectorAsImg(trainX[i], trainYfile[i] +"_key_is_" + i );
-            }
-            //System.out.println( testY[1][0] );
-            //System.out.println( trainXfile.length );
-            //double[] doubles = testY[0];
-
-
+            //for ( int i=0;i<100;i++ ) {
+            //    saveVectorAsImg( trainX[i], trainYfile[i] +"_key_is_" + i );
+            //}
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -94,7 +87,7 @@ public class Tools {
 
 
 
-    public void saveVectorAsImg( double[] doubles, String nameSuffix ){
+    public void saveVectorAsImg( float[] doubles, String nameSuffix ){
         int width=28;
         int height=28;
             BufferedImage image = new BufferedImage( width , height , TYPE_BYTE_GRAY );
@@ -103,13 +96,11 @@ public class Tools {
             for ( int i=0; i<width; i++){
                 int off=i*width;
                 for (int j=0;j<height;j++){
-                    double aDouble = (1-doubles[off + j])*254;
+                    float aDouble = (1-doubles[off + j])*254;
                     aDouble=aDouble*255;
                     image.setRGB( j, i, (int) aDouble);
                 }
             }
-
-
         try {
             ImageIO.write(image ,  "png", file );
         } catch (IOException e) {
@@ -120,6 +111,38 @@ public class Tools {
     }
 
 
+    public float[][] getTrainY() {
+        return trainY;
+    }
 
+    public float[][] getTestY() {
+        return testY;
+    }
+
+    public float[][] getTrainX() {
+        return trainX;
+    }
+
+    public float[][] getTestX() {
+        return testX;
+    }
+
+
+    public int getIndexMaxFloat( float[] floats ){
+        int maxI=0;
+        float val=floats[0];
+            for ( int i=1;i<floats.length; i++ ){
+                if ( floats[i]>val ) { val=floats[i]; maxI=i; }
+            }
+        return maxI;
+    }
+
+    public String toStr( float[] floats ){
+        String out="[";
+        for (int i=0;i<floats.length; i++){
+            out+=", "+floats[i];
+        }
+        return out+"]";
+    }
 
 }

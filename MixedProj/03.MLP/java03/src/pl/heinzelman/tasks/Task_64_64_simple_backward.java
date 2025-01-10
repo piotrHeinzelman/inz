@@ -10,6 +10,11 @@ import java.util.Arrays;
 public class Task_64_64_simple_backward implements Task{
 
 
+    float[][] testX = null;
+    float[][] testY = null;
+    float[][] trainX = null;
+    float[][] trainY = null;
+
     @Override
     public void prepare() {
         // NOP
@@ -17,6 +22,15 @@ public class Task_64_64_simple_backward implements Task{
 
     @Override
     public void run() {
+
+
+        Tools tools = new Tools();
+        tools.prepareData( 1 );
+
+        testX = tools.getTestX();
+        testY = tools.getTestY();
+        trainX = tools.getTrainX();
+        trainY = tools.getTrainY();
 
 
         Layer layer1=new Layer( LType.sigmod , 64 ,784 ); layer1.setName("Layer1"); // n neurons
@@ -28,46 +42,44 @@ public class Task_64_64_simple_backward implements Task{
         Layer layer3=new Layer( LType.sigmod , 10 ,64 ); layer3.setName("Layer3"); // n neurons
         layer3.rnd();
 
-        Tools tools = new Tools();
-              tools.prepareData(1 );
+        int goals0;
+        for ( int index=0; index<1/*trainX.length*/; index++ ) {
+            // ONE CYCLE
 
 
-        if ( true ) { System.out.println( layer1.toString() );  return; }
+            float[] firstX = trainX[index];
+            layer1.setX( firstX );
+            layer1.nForward();
+
+            float[] XforL2 = layer1.getZ();
+
+            layer2.setX(XforL2);
+            layer2.nForward();
+            float[] XforL3 = layer2.getZ();
+
+            layer3.setX(XforL3);
+            layer3.nForward();
+
+            System.out.println( tools.toStr(  XforL2 ) );
+            //System.out.println( tools.getIndexMaxFloat( trainY[index] ) );
+
+            //System.out.println( trainY[index][9] );
+
+            layer3.nBackward( trainY[index], LossType.squareError );
+            float[] eout3 = layer3.getEout();
+
+            layer2.nBackward(eout3);
+            float[] eout2 = layer2.getEout();
+
+            layer1.nBackward(eout2);
+
+        }
 
 
-/*
-        float[] firstX = new float[]{1,2};
-        layer1.setX( firstX );
-        layer1.nForward();
-
-        float[] XforL2 = layer1.getZ();
 
 
-        // 3*neu / 2*weight
-        Layer layer2 = new Layer( LType.sigmod , 2 ,3  );  layer2.setName("Layer2");
-        // first neu
-        layer2.setWmn( 0, 0,  1 );
-        layer2.setWmn( 0, 1, -1 );
-        layer2.setWmn( 0, 2,  1 );
 
-        // secont neu
-        layer2.setWmn( 1, 0, -1 );
-        layer2.setWmn( 1, 1,  1 );
-        layer2.setWmn( 1, 2, -1 );
+        if ( true ) { /*System.out.println( layer1.toString() ); */ return; }
 
-        layer2.setX( XforL2 );
-        System.out.println( "XforL2"+XforL2 );
-        layer2.nForward();
-
-        float[] s = new float[]{1,0};
-        layer2.nBackward( s , LossType.squareError );
-        System.out.println( "s: " + Arrays.toString( s ) );
-
-        float[] eOut=layer2.getEout();
-        layer1.nBackward( eOut );
-        System.out.println( layer1 );
-        System.out.println(layer2);
-
- */
     }
 }
