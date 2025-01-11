@@ -117,10 +117,24 @@ public class Task_64_64_simple_backward implements Task{
            // layer1.saveAllWeightAsImg("_layer1_" +index );
 
 
-
         }
 
+        // check accuracy
+        int len=testX.length;
+        int accuracy=0;
+        for ( int i=0;i<len;i++ ){
+            layer1.setX( testX[i] );
+            layer1.nForward();
 
+            layer2.setX( layer1.getZ() );
+            layer2.nForward();
+            layer3.setX( layer2.getZ() );
+            int netClassId = tools.getIndexMaxFloat(layer3.getZ());
+            int fileClassId=tools.getIndexMaxFloat( testY[i] );
+
+            if ( fileClassId== netClassId) { accuracy++; }
+        }
+        System.out.println( 100.0f*accuracy/len + "%" );
 
 
 
