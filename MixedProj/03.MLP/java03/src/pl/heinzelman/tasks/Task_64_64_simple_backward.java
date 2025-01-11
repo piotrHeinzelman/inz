@@ -32,6 +32,13 @@ public class Task_64_64_simple_backward implements Task{
         trainX = tools.getTrainX();
         trainY = tools.getTrainY();
 
+        // show data
+        if ( true ) {
+                System.out.println( tools.toStr(  testY[0] ) );
+                tools.saveVectorAsImg( testX[0] ,  "_test_" );
+                System.out.println( tools.getIndexMaxFloat( testY[0] ) );
+        return; }
+
 
         Layer layer1=new Layer( LType.sigmod , 64 ,784 ); layer1.setName("Layer1"); // n neurons
         layer1.rnd();
