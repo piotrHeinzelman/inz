@@ -1,7 +1,14 @@
 package pl.heinzelman.neu;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
+
+import static java.awt.image.BufferedImage.TYPE_BYTE_GRAY;
+import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
 // Forward
 // y = Neu[n]*X[]; /y is scalar, a number !
@@ -27,7 +34,7 @@ public class Layer {
     private  float Eout[]; // S-Z for last
 
     public Layer( LType lType, int n, int m ) { // n - number of neurons & output size Y[n], Z[n]
-        this.lType=lType;                        // m - number of inputs  = input  size X[n]
+        this.lType=lType;                        // m - number of inputs  = input  size X[m]
         this.neurons = new Neuron[n];
         for (int i=0; i<n; i++){
             this.neurons[i]=new Neuron(m, this);
@@ -48,9 +55,10 @@ public class Layer {
 
     public void rnd(){
         Random random=new Random();
+        float normalization=this.X.length/10.0f;
         for ( Neuron neu : neurons ) {
             for ( int m=0; m<X.length; m++ ) {
-                neu.setWm( m , random.nextFloat());
+                neu.setWm( m , (float)( random.nextFloat() / normalization )  );
             }
             //System.out.println( neu );
         }
@@ -166,4 +174,57 @@ public class Layer {
     }
 
     public void setName(String name) { this.name = name; }
+
+    @Deprecated
+    public float[] getY() { return Y; }
+
+    @Deprecated
+    public float[] getNeuronWeight( int i ){
+        return neurons[i].getMyWeight();
+    }
+
+    @Deprecated
+    public void saveAllWeightAsImg( String nameSuffix ){
+        int width = Y.length; // size of Y, number of neurons
+        int height = X.length; // size of X , number of input signal
+        BufferedImage image = new BufferedImage( width , height , TYPE_INT_RGB );
+
+        float k=-255;
+        File file = new File("weights_"+nameSuffix+".png");
+        for ( int i=0; i<width; i++){
+
+            // my Neuros is...
+            float[] neuronWeights = getNeuronWeight(i);
+            for (int j=0;j<height;j++){
+                float aDouble = neuronWeights[j];
+                //    k=aDouble*255;
+                //image.setRGB( i, j, (int) aDouble );
+
+                //if ( k<256 ) { k++; }
+                k = aDouble*90;
+                k=k*255;
+                k=k%255;
+                k=127-k;
+                float c=0; float R=0; float G=0; float B=0;
+                if ( k < 0 ) { // RED FF0000, 50% 804040, 0% 000000   R F->12->8->4->0, G,B 0->2->4->2->0
+                     R=-k;
+                     G=0;
+                     B=0;
+                } else {
+                     R=0;  G=k;  B=k;
+                }
+                c=R*256*256+G*255+B;
+                image.setRGB( i, j,  (int) c );
+                //System.out.println( k );
+            }
+        }
+        try {
+            ImageIO.write(image ,  "png", file );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
 }

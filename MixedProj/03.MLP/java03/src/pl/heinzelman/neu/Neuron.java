@@ -20,7 +20,9 @@ public class Neuron {
         float res=0;
         for ( int m=0; m<W.length; m++ ) {
             res+= X[m]*W[m];
+            //System.out.println( "X[m]:" + X[m] + ", W[m]: " + W[m] + " = res:" + res );
         }
+
         return res;
     }
 
@@ -38,4 +40,7 @@ public class Neuron {
     public String toString() {
         return "N{ W=" + Arrays.toString(W) + '}';
     }
+
+    @Deprecated
+    public float[] getMyWeight() { return W; }
 }

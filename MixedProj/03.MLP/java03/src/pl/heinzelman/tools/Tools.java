@@ -106,8 +106,6 @@ public class Tools {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
 
@@ -143,6 +141,15 @@ public class Tools {
             out+=", "+floats[i];
         }
         return out+"]";
+    }
+
+
+    public float[] vectorSubstSsubZ( float[] s, float[] z ){
+        float[] out = new float[ z.length];
+        for ( int i=0;i<z.length; i++ ){
+            out[i]=s[i]-z[i];
+        }
+        return out;
     }
 
 }
