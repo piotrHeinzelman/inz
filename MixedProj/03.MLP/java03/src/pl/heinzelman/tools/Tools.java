@@ -147,7 +147,7 @@ public class Tools {
     public float[] vectorSubstSsubZ( float[] s, float[] z ){
         float[] out = new float[ z.length];
         for ( int i=0;i<z.length; i++ ){
-            out[i]=s[i]-z[i];
+            out[i] = ( s[i] - z[i] );
         }
         return out;
     }

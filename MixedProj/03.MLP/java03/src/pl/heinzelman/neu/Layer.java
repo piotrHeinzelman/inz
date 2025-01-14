@@ -67,20 +67,29 @@ public class Layer {
 
     public void nForward(){
         for ( int n=0;n< neurons.length;n++) {
-            Y[n] = neurons[n].Forward( X );
-            Z[n] = F ( Y[n] );
-            dFofZ[n] = dF( Z[n] );
+            Y[n] = neurons[n].Forward(X);
+        }
+        if ( lType!=LType.softmax ) {
+            for ( int n=0;n< neurons.length;n++) {
+                 { Z[n] = F ( Y[n] ); }
+                dFofZ[n] = dF( Z[n] );
+            }
+        } else { // softmax
+            F(Y[0]);
+            for ( int i=0;i<dFofZ.length;dFofZ[i]=1,i++ );
         }
     }
 
 
 
     public void nBackward( float[] S , LossType lossFunction ){
+        /*
         // poprawić w zaleznosci od warstwy dodac mnozenie o dL
         float[] e = new float[Z.length];
-        //for ( int i=0;i<Z.length;i++ ){
-        //    e[i]=S[i]-Z[i];
-        //}
+        for ( int i=0;i<Z.length;i++ ) {
+            e[i]=0;
+        }
+ 
         float k=1;
         for (int i=0;i<Z.length;i++) {
             switch ( lossFunction ) {
@@ -90,15 +99,20 @@ public class Layer {
                 case notOutLayer: { e[i]=1; break; }
             }
             e[i]=e[i]*k;
+
+
         }
 
         nBackward( e );
+
+         */
     }
 
-    public void nBackward( float[] Ein ){
+    public void nBackward( float[] Ein ){ // S-Z or Ein
         for ( float f : Eout ){ f=0f; } // clear Eout
         for ( int n=0; n< neurons.length; n++ ){
             //System.out.println( "Ein[n]:"+Ein[n]  + ", "+dFofZ[n]);
+            //System.out.println( Ein[n] * dFofZ[n] );
             neurons[n].Backward( Ein[n] * dFofZ[n] );
         }
     }
@@ -111,13 +125,29 @@ public class Layer {
     private float F ( float y ){
         float z;
         switch (this.lType) {
-            case sigmod: { z = (float) ( 1/(1 + Math.exp( -y ))); break; }
-            case crossentropy: { z = (float) ( 1/(1 + Math.exp( -y ))); break; }
+            case sigmod: { z = (float) (1.0f/(1.0f + Math.exp( -y ))); break; }
+            case crossentropy: { z = (float) ( 1.0f/(1.0f + Math.exp( -y ))); break; }
                         // Activation fun = sigmod,
                         // S=[s,1-s] // Z=[z,1-z]
                         // Loss fun : L(S,Z)=-Sum(si*ln zi) = -(s*ln(z) +(1-s)*ln(1-z) )
                         //
             case softmax: {
+                    float sum=0.0f;
+                    int indexOfMax=0;
+                    for ( int i=1;i<Y.length;i++){
+                        if (Y[i] > Y[indexOfMax] ) { indexOfMax=i;};
+                    }
+
+                    for ( int i=0;i<Y.length;i++){
+                        sum+=  Math.exp( Y[i] );
+                    }
+                    Z[indexOfMax]=(float) ( Math.exp( Y[indexOfMax] ) / sum );
+                    float tmp=1.0f-Z[indexOfMax];
+                    for ( int i=0;i<Z.length;i++){
+                        if ( i!=indexOfMax ) { Z[i]=tmp; }
+                    }
+                    z=0;
+                    /*
                     if (Z[0]==0.0) {
                         float ymax=0.0f;
                               for ( float y_ : Y ){ if ( y_ > ymax ) { ymax=y_; }}
@@ -129,6 +159,7 @@ public class Layer {
                     }
                     z=0;
                     for ( int i=0; i<Z.length; i++ ){ if (Y[i] == y){ z=Z[i]; }}
+                    */
                     break; }
             case linear:
                 default: { z=y; break; }
@@ -136,7 +167,7 @@ public class Layer {
         return z;
     }
 
-    private float dF (float z ){
+    private float dF ( float z ){
         float df;
         switch (lType) {
             case sigmod: { df = z*(1-z); break; }
