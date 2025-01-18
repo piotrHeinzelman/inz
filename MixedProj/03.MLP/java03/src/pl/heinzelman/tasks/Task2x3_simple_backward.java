@@ -2,7 +2,7 @@ package pl.heinzelman.tasks;
 
 import pl.heinzelman.neu.LType;
 import pl.heinzelman.neu.Layer;
-import pl.heinzelman.neu.LossType;
+import pl.heinzelman.tools.Tools;
 
 import java.util.Arrays;
 
@@ -56,8 +56,9 @@ public class Task2x3_simple_backward implements Task{
         layer2.nForward();
 
         float[] s = new float[]{1,0};
-        layer2.nBackward( s , LossType.squareError );
-        System.out.println( "s: " + Arrays.toString( s ) );
+        float[] s_z = Tools.vectorSubstSsubZ(s, layer2.getZ());
+        layer2.nBackward( s_z );
+        System.out.println( "s: " + Arrays.toString( s_z ) );
 
         float[] eOut=layer2.getEout();
         layer1.nBackward( eOut );

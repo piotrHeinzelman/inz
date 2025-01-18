@@ -33,7 +33,7 @@ public class LayerTest3 {
         float[] Z1=L1.getZ();
         System.out.println( "Z1: "+ tools.toStr( Z1 ));
 
-        Layer L2 = new Layer(LType.softmax , 2, 3 ); // 2 neurons, 3 inputs
+        Layer L2 = new Layer(LType.softmaxBinary , 2, 3 ); // 2 neurons, 3 inputs
         L2.setWmn( 0,0, 1.0f);
         L2.setWmn( 0,1, -1.0f);
         L2.setWmn( 0,2, 1.0f);

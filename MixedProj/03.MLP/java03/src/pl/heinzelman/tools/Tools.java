@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import static java.awt.image.BufferedImage.TYPE_BYTE_GRAY;
+import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
 public class Tools {
 
@@ -144,12 +145,56 @@ public class Tools {
     }
 
 
-    public float[] vectorSubstSsubZ( float[] s, float[] z ){
+    public static float[] vectorSubstSsubZ( float[] s, float[] z ){
         float[] out = new float[ z.length];
         for ( int i=0;i<z.length; i++ ){
             out[i] = ( s[i] - z[i] );
         }
         return out;
     }
+
+
+
+    public static float meanSquareError( float[] s, float[]z ){
+        float out = 0.0f;
+        for ( int i=0;i<z.length; i++ ){
+            float delta = s[i] - z[i];
+            out+=delta*delta;
+        }
+        return out;
+    }
+
+
+    public static BufferedImage arrayOfFloatToImage( float[] data , int xScale ){
+        int width = data.length/xScale;
+        int height = 510;
+        float min = data[0];
+        float max = data[0];
+        for ( int i=1;i< data.length;i++ ){
+            if ( data[i]<min ) { min=data[i]; }
+            if ( data[i]>max ) { max=data[i]; }
+        }
+        float delta=( max-min )/(height-10);
+        BufferedImage image = new BufferedImage( width , height , TYPE_INT_RGB );
+
+        int pointColor = (255*255*240)+(255*244)+244;
+        for ( int i=0;i<width;i++ ){
+            int val=(int) (( data[xScale*i]-min )/delta ) ;
+            //System.out.println( "min: " + min + ", max: " + max + ", data[100*i]: " + ( data[100*i]-min )/delta );
+            image.setRGB( i, 5+val , pointColor );
+        }
+        return image;
+    }
+
+    public static void saveImg( BufferedImage image, String nameSuffix ){
+        File file = new File("image"+nameSuffix+".png");
+        try {
+            ImageIO.write(image ,  "png", file );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 
 }

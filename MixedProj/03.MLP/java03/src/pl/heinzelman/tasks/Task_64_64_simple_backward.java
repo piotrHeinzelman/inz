@@ -2,7 +2,6 @@ package pl.heinzelman.tasks;
 
 import pl.heinzelman.neu.LType;
 import pl.heinzelman.neu.Layer;
-import pl.heinzelman.neu.LossType;
 import pl.heinzelman.tools.Tools;
 
 import java.util.Arrays;
@@ -25,7 +24,7 @@ public class Task_64_64_simple_backward implements Task{
 
 
         Tools tools = new Tools();
-        tools.prepareData( 1 );
+        tools.prepareData( 100 );
 
         testX = tools.getTestX();
         testY = tools.getTestY();
@@ -67,75 +66,98 @@ public class Task_64_64_simple_backward implements Task{
         Layer layer2=new Layer( LType.sigmod , 64 ,64 ); layer2.setName("Layer2"); // n neurons
         layer2.rnd();
 
-        Layer layer3=new Layer( LType.sigmod , 10 ,64 ); layer3.setName("Layer3"); // n neurons
+        Layer layer3=new Layer( LType.softmaxMultiClass , 10 ,64 ); layer3.setName("Layer3"); // n neurons
         layer3.rnd();
 
+        //System.out.println( layer1 );
+
+
         int goals0;
-        for ( int index=0; index<trainX.length; index++ ) {
-            // ONE CYCLE
 
+        for (int cycle=0;cycle<50;cycle++) {
+            int step=1;
+            for (int epoch = 0; epoch < 500; epoch++) {
 
-            float[] firstX = trainX[index];
+                for (int index = 0; index < trainX.length; index++) {
+                    // ONE CYCLE
+                       int ind_ex=index; //(index*step) % trainX.length;
 
-            layer1.setX( firstX );
-            layer1.nForward();
+                    float[] firstX = trainX[ ind_ex ];
+                    //System.out.println( (index*step) % trainX.length );
+
+                    layer1.setX( firstX );
+                    layer1.nForward();
 //System.out.println( tools.toStr( layer1.getY() ));
 //System.out.println( tools.toStr( layer1.getZ() ));
 //System.out.println( layer1 );
-            // >>
-            layer2.setX( layer1.getZ() );
-            layer2.nForward();
+                    // >>
+                    layer2.setX(layer1.getZ());
+                    layer2.nForward();
 //System.out.println( tools.toStr( layer2.getZ() ));
-            // >>
-            layer3.setX( layer2.getZ() );
-            layer3.nForward();
+                    // >>
+                    layer3.setX(layer2.getZ());
+                    layer3.nForward();
 //System.out.println( tools.toStr( layer3.getZ() ));
-            //System.out.println( layer3 );
-            //System.out.println( tools.toStr( trainY[index] ));
+
+                    //System.out.println( tools.toStr( trainY[index] ));
 
 
 //System.out.println( tools.toStr( layer3.getZ() ));
 //System.out.println( tools.toStr( trainY[index] ));
-            float[] S_Z = tools.vectorSubstSsubZ(trainY[index], layer3.getZ());
-//System.out.println( tools.toStr( S_Z ));
+
+
+                    //float[] S_Z = tools.vectorSubstSsubZ(trainY[index], layer3.getZ());
+                    float[] S_Z = tools.vectorSubstSsubZ(trainY[ ind_ex ], layer3.getZ());
+//System.out.println( tools.toStr( layer3.getZ() ) + "::" + tools.toStr( trainY[index] ) + " -- " + tools.toStr( tools.vectorSubstSsubZ(trainY[index], layer3.getZ()) ));
+
 
 //System.out.println( layer3 );
 
-            layer3.nBackward( S_Z, LossType.squareError );
+                    layer3.nBackward( S_Z );
+
 
 //System.out.println( layer3 );
 
-            float[] eout3 = layer3.getEout();
+                    float[] eout3 = layer3.getEout();
 //System.out.println( tools.toStr( eout3 ) );
 
-            layer2.nBackward( eout3 );
-            float[] eout2 = layer2.getEout();
 
-            layer1.nBackward( eout2 );
+                    layer2.nBackward(eout3);
+                    float[] eout2 = layer2.getEout();
+
+                    layer1.nBackward(eout2);
 
 //System.out.println( layer1 );
-           // layer1.saveAllWeightAsImg("_layer1_" +index );
+                    // layer1.saveAllWeightAsImg("_layer1_" +index );
+
+                //if (index==1) { System.out.println(   tools.toStr( layer3.getZ() ) + "::" + tools.toStr( S_Z ) ); }
+                 //   System.out.println( Arrays.toString( S_Z )); if (index>10) return;
+                }
+
+                step++;
 
 
+            }
+            // check accuracy
+            int len = testX.length;
+            int accuracy = 0;
+            for (int i = 0; i < len; i++) {
+                layer1.setX(testX[i]);
+                layer1.nForward();
+
+                layer2.setX(layer1.getZ());
+                layer2.nForward();
+                layer3.setX(layer2.getZ());
+                int netClassId = tools.getIndexMaxFloat(layer3.getZ());
+                int fileClassId = tools.getIndexMaxFloat(testY[i]);
+
+                if (fileClassId == netClassId) {
+                    accuracy++;
+                }
+            }
+            System.out.println(100.0f * accuracy / len + "%");
+            System.out.println( layer3 );
         }
-
-        // check accuracy
-        int len=testX.length;
-        int accuracy=0;
-        for ( int i=0;i<len;i++ ){
-            layer1.setX( testX[i] );
-            layer1.nForward();
-
-            layer2.setX( layer1.getZ() );
-            layer2.nForward();
-            layer3.setX( layer2.getZ() );
-            int netClassId = tools.getIndexMaxFloat(layer3.getZ());
-            int fileClassId=tools.getIndexMaxFloat( testY[i] );
-
-            if ( fileClassId== netClassId) { accuracy++; }
-        }
-        System.out.println( 100.0f*accuracy/len + "%" );
-
 
 
         if ( true ) { /*System.out.println( layer1.toString() ); */ return; }

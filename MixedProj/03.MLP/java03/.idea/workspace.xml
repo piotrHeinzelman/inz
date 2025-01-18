@@ -99,6 +99,12 @@
     "JUnit.LayerTest.forwardTest.executor": "Run",
     "JUnit.LayerTest2.forwardTest.executor": "Run",
     "JUnit.LayerTest3.forwardTest.executor": "Run",
+    "JUnit.LayerTest4.forwardTest.executor": "Run",
+    "JUnit.LayerTest5.forwardTest.executor": "Run",
+    "JUnit.LayerTest6.forwardTest.executor": "Run",
+    "JUnit.LayerTest6_CrossEntropyBinary_test.forwardTest.executor": "Run",
+    "JUnit.LayerTest6_MSE_test.executor": "Run",
+    "JUnit.LayerTest6_MSE_test.forwardTest.executor": "Run",
     "LombokPluginIS_LOMBOK_JPS_FIX_ENABLED": "true",
     "LombokPluginIS_LOMBOK_VERSION_CHECK_Enabled": "true",
     "Repository.Attach.Annotations": "false",
@@ -126,19 +132,7 @@
       <recent name="pl.heinzelman.tasks" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.LayerTest3.forwardTest">
-    <configuration name="Main (2)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.Main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="pl.heinzelman.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.LayerTest6_CrossEntropyBinary_test.forwardTest">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="pl.heinzelman.Main" />
       <module name="nweb" />
@@ -149,7 +143,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="LayerTest2.forwardTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="LayerTest4.forwardTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
       <extension name="coverage">
         <pattern>
@@ -158,14 +152,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="pl.heinzelman.neu" />
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.neu.LayerTest2" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.neu.LayerTest4" />
       <option name="METHOD_NAME" value="forwardTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="LayerTest3.forwardTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="LayerTest5.forwardTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
       <extension name="coverage">
         <pattern>
@@ -174,14 +168,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="pl.heinzelman.neu" />
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.neu.LayerTest3" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.neu.LayerTest5" />
       <option name="METHOD_NAME" value="forwardTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="LayerTest.forwardTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="LayerTest6_CrossEntropyBinary_test.forwardTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
       <extension name="coverage">
         <pattern>
@@ -190,7 +184,23 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="pl.heinzelman.neu" />
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.neu.LayerTest" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.neu.LayerTest6_CrossEntropyBinary_test" />
+      <option name="METHOD_NAME" value="forwardTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LayerTest6_MSE_test.forwardTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="nweb" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pl.heinzelman.neu.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="pl.heinzelman.neu" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.neu.LayerTest6_MSE_test" />
       <option name="METHOD_NAME" value="forwardTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -199,11 +209,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.LayerTest3.forwardTest" />
-        <item itemvalue="JUnit.LayerTest2.forwardTest" />
-        <item itemvalue="JUnit.LayerTest.forwardTest" />
+        <item itemvalue="JUnit.LayerTest6_CrossEntropyBinary_test.forwardTest" />
+        <item itemvalue="JUnit.LayerTest6_MSE_test.forwardTest" />
         <item itemvalue="Application.Main" />
-        <item itemvalue="Application.Main (2)" />
+        <item itemvalue="JUnit.LayerTest5.forwardTest" />
+        <item itemvalue="JUnit.LayerTest4.forwardTest" />
       </list>
     </recent_temporary>
   </component>

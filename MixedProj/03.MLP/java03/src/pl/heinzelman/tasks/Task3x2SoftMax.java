@@ -2,7 +2,7 @@ package pl.heinzelman.tasks;
 
 import pl.heinzelman.neu.LType;
 import pl.heinzelman.neu.Layer;
-import pl.heinzelman.neu.LossType;
+import pl.heinzelman.tools.Tools;
 
 import java.util.Arrays;
 
@@ -41,7 +41,7 @@ public class Task3x2SoftMax implements Task{
 
 
         // 3*neu / 2*weight
-        Layer layer2 = new Layer( LType.softmax , 2 ,3  );
+        Layer layer2 = new Layer( LType.softmaxBinary , 2 ,3  );
         layer2.setName( "Layer: 2" );
         // first neu
         layer2.setWmn( 0, 0,  1 );
@@ -58,9 +58,10 @@ System.out.println( "XforL2"+XforL2 );
 
         layer2.nForward();
         float[] s = new float[]{1,0};
-        layer2.nBackward( s, LossType.softmax );
+        float[] s_z = Tools.vectorSubstSsubZ(s, layer2.getZ());
+        layer2.nBackward( s_z );
 
-        System.out.println( "s:" + Arrays.toString( s ));
+        System.out.println( "s:" + Arrays.toString( s_z ));
 
         float[] eOut=layer2.getEout();
         layer1.nBackward( eOut );

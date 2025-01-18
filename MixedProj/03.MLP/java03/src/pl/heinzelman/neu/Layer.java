@@ -47,68 +47,92 @@ public class Layer {
         Eout = new float[m];
     }
 
+
     public void setWmn( int n, int m, float wji ){
         neurons[n].setWm( m, wji );
     }
 
 
-
     public void rnd(){
         Random random=new Random();
-        float normalization=this.X.length/10.0f;
+        float normalization=1;//this.X.length/5.0f;
         for ( Neuron neu : neurons ) {
             for ( int m=0; m<X.length; m++ ) {
-                neu.setWm( m , (float)( random.nextFloat() / normalization )  );
+                neu.setWm( m , (float)( -1.0f+2.0f*random.nextFloat() / normalization )  );
             }
             //System.out.println( neu );
         }
     }
 
 
-    public void nForward(){
-        for ( int n=0;n< neurons.length;n++) {
-            Y[n] = neurons[n].Forward(X);
-        }
-        if ( lType!=LType.softmax ) {
-            for ( int n=0;n< neurons.length;n++) {
-                 { Z[n] = F ( Y[n] ); }
-                dFofZ[n] = dF( Z[n] );
+    public float[] nForward() {
+        switch (lType) {
+            case sigmod: {
+                for (int n = 0; n < neurons.length; n++) {
+                    Y[n] = neurons[n].Forward(X);
+                    Z[n] = F(Y[n]);
+                    dFofZ[n] = dF(Z[n]);
+                }
+                return Z;
             }
-        } else { // softmax
-            F(Y[0]);
-            for ( int i=0;i<dFofZ.length;dFofZ[i]=1,i++ );
+            case softmaxBinary: {
+                Y[0] = neurons[0].Forward(X);
+                Y[1] = neurons[1].Forward(X);
+                float ymax=Y[0];
+                if (Y[1]>Y[0]){ ymax=Y[1];}
+                float y0 = (float) Math.exp(Y[0]-ymax);
+                float y1 = (float) Math.exp(Y[1]-ymax);
+
+
+                System.out.println( "Y[0]: "+ Y[0] + ", Math.exp(Y[0]): " + Math.exp(Y[0]) + ", y0: " + y0 + ", y1: " + y1  );
+
+                Z[0] = y0 / (y0 + y1);
+                Z[1] = y1 / (y0 + y1);
+                //dFofZ[n] = dF( Z[n] ); dF need S , moved to Back...
+                return Z;
+            }
+
+            case softmaxMultiClass: {
+                int len = neurons.length;
+                float sum = 0.0f;
+                float max = Y[0] = neurons[0].Forward(X);
+                for (int i=1;i<len;i++){
+                    Y[i]=neurons[i].Forward(X);
+                    if (Y[i]>max) { max=Y[i]; }
+                }
+                for (int i = 0; i < len; i++) {
+                    Y[i] = (float) Math.exp( Y[i]-max );
+                    sum += Y[i];
+                }
+                for (int i = 0; i < len; i++) {
+                    Z[i] = Y[i] / sum;
+                }
+                //dFofZ[n] = dF( Z[n] ); dF need S , moved to Back...
+                return Z;
+            }
+
+            default: {
+                return Z;
+            }
         }
     }
 
-
-
-    public void nBackward( float[] S , LossType lossFunction ){
-        /*
-        // poprawić w zaleznosci od warstwy dodac mnozenie o dL
-        float[] e = new float[Z.length];
-        for ( int i=0;i<Z.length;i++ ) {
-            e[i]=0;
-        }
- 
-        float k=1;
-        for (int i=0;i<Z.length;i++) {
-            switch ( lossFunction ) {
-                case squareError: { e[i]=0.5f*2*(S[i]-Z[i]); break; }
-                case crossEntropy: { e[i]=(S[i]-Z[i]); break; }
-                case softmax:     { e[i]=(S[i]-Z[i]); break; }
-                case notOutLayer: { e[i]=1; break; }
-            }
-            e[i]=e[i]*k;
-
-
-        }
-
-        nBackward( e );
-
-         */
-    }
 
     public void nBackward( float[] Ein ){ // S-Z or Ein
+        if (lType==LType.softmaxBinary){
+            //System.out.println( "Z[0]: " + Z[0] + ", 1-Z[0]: " + (1-Z[0]) + ", Ein[0]-Z[0]: "+(Ein[0]-Z[0]) + ", (Ein[0]-Z[0])/(Z[0]*(1-Z[0])): " + (Ein[0]-Z[0])/(Z[0]*(1-Z[0])) );
+            dFofZ[0]=(Ein[0]-Z[0])/(Z[0]*(1-Z[0]));
+            dFofZ[1]=(Ein[1]-Z[1])/(Z[1]*(1-Z[1]));
+            //System.out.println( "d0: "+ dFofZ[0] + ", d1: "+ dFofZ[1]  );
+        }
+
+        if (lType==LType.softmaxMultiClass){
+            //System.out.println( "Z[0]: " + Z[0] + ", 1-Z[0]: " + (1-Z[0]) + ", Ein[0]-Z[0]: "+(Ein[0]-Z[0]) + ", (Ein[0]-Z[0])/(Z[0]*(1-Z[0])): " + (Ein[0]-Z[0])/(Z[0]*(1-Z[0])) );
+            for (  int i=0;i<Z.length;i++) {
+                dFofZ[i] = (Ein[i] - Z[i]); // / (Z[i] * (1 - Z[i]));
+            }
+        }
+
         for ( float f : Eout ){ f=0f; } // clear Eout
         for ( int n=0; n< neurons.length; n++ ){
             //System.out.println( "Ein[n]:"+Ein[n]  + ", "+dFofZ[n]);
@@ -126,41 +150,7 @@ public class Layer {
         float z;
         switch (this.lType) {
             case sigmod: { z = (float) (1.0f/(1.0f + Math.exp( -y ))); break; }
-            case crossentropy: { z = (float) ( 1.0f/(1.0f + Math.exp( -y ))); break; }
-                        // Activation fun = sigmod,
-                        // S=[s,1-s] // Z=[z,1-z]
-                        // Loss fun : L(S,Z)=-Sum(si*ln zi) = -(s*ln(z) +(1-s)*ln(1-z) )
-                        //
-            case softmax: {
-                    float sum=0.0f;
-                    int indexOfMax=0;
-                    for ( int i=1;i<Y.length;i++){
-                        if (Y[i] > Y[indexOfMax] ) { indexOfMax=i;};
-                    }
 
-                    for ( int i=0;i<Y.length;i++){
-                        sum+=  Math.exp( Y[i] );
-                    }
-                    Z[indexOfMax]=(float) ( Math.exp( Y[indexOfMax] ) / sum );
-                    float tmp=1.0f-Z[indexOfMax];
-                    for ( int i=0;i<Z.length;i++){
-                        if ( i!=indexOfMax ) { Z[i]=tmp; }
-                    }
-                    z=0;
-                    /*
-                    if (Z[0]==0.0) {
-                        float ymax=0.0f;
-                              for ( float y_ : Y ){ if ( y_ > ymax ) { ymax=y_; }}
-                        float sumexpy=0.0f;
-                              for ( int i=0; i<Z.length; i++ ){ Z[i] = (float) Math.exp( Y[i]-ymax ); }
-                        float maxZ=0.0f;
-                              for ( float z_ : Z){ maxZ = maxZ + z_; }
-                        for ( int i=0; i<Z.length; i++ ){ Z[i] = Z[i]/maxZ; }
-                    }
-                    z=0;
-                    for ( int i=0; i<Z.length; i++ ){ if (Y[i] == y){ z=Z[i]; }}
-                    */
-                    break; }
             case linear:
                 default: { z=y; break; }
         }
@@ -171,8 +161,6 @@ public class Layer {
         float df;
         switch (lType) {
             case sigmod: { df = z*(1-z); break; }
-            case crossentropy: { df = 1; break; }
-            case softmax: { df = 1; break; }
             case linear:
             default: { df=1; break; }
         }
@@ -256,6 +244,12 @@ public class Layer {
         }
     }
 
-
+    public float BinaryCrossEntropy( float[] s, float[] z ){ // s(yi) - target class : z(p) - reply of net : , yi = true label (0 or 1)
+        float sum=0.0f;  // BCE = -1/n * SUM ( yi*log(pi) + (1-yi)*log(1-pi)   )
+        for ( int i=0;i<s.length;i++ ){
+            sum += s[i] * Math.log ( z[i] ) + ( 1-s[i]) *Math.log (1-z[i]);
+        }
+        return sum/( s.length );
+    }
 
 }
