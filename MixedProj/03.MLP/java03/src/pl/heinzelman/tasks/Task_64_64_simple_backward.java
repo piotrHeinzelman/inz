@@ -4,159 +4,109 @@ import pl.heinzelman.neu.LType;
 import pl.heinzelman.neu.Layer;
 import pl.heinzelman.tools.Tools;
 
-import java.util.Arrays;
+import java.awt.image.BufferedImage;
 
 public class Task_64_64_simple_backward implements Task{
 
+    private float[][] testX;
+    private float[][] testY;
+    private float[][] trainX;
+    private float[][] trainY;
 
-    float[][] testX = null;
-    float[][] testY = null;
-    float[][] trainX = null;
-    float[][] trainY = null;
+    private Layer layer1;
+    private Layer layer2;
+    private Layer layer3;
+
+    private Tools tools = new Tools();
+
+    int numOfEpoch=50;
+    float[] CSBin_data=new float[numOfEpoch];
 
     @Override
     public void prepare() {
-        // NOP
-    }
-
-    @Override
-    public void run() {
-
-
-        Tools tools = new Tools();
-        tools.prepareData( 100 );
+        tools.prepareData( 1 );
 
         testX = tools.getTestX();
         testY = tools.getTestY();
         trainX = tools.getTrainX();
         trainY = tools.getTrainY();
 
-        /*
-
-        Layer layerx=new Layer( LType.sigmod , 3 ,5 ); layerx.setName("Layer1"); // n neurons
-        layerx.rnd();
-        float[] myX=new float[]{ 0.2f, 0.3f, 0.4f, 0.5f, 0.6f };
-        float[] mySOczekiwany =new float[]{ 0.0f, 1.0f, 0.0f };
-        layerx.setX( myX );
-        layerx.nForward();
-        float[] myz = layerx.getZ();
-
-        System.out.println( layerx );
-        for (int i=0;i<200;i++) {
-            layerx.nBackward( tools.vectorSubstSsubZ(  mySOczekiwany, layerx.getZ() ) );
-        }
-        System.out.println( layerx );
-
-
-
-
-        if ( true ) { return; }
-
-        // show data
-        if ( true ) {
-                System.out.println( tools.toStr(  testY[0] ) );
-                tools.saveVectorAsImg( testX[0] ,  "_test_" );
-                System.out.println( tools.getIndexMaxFloat( testY[0] ) );
-        return; }
-         */
-
-        Layer layer1=new Layer( LType.sigmod , 64 ,784 ); layer1.setName("Layer1"); // n neurons
+        layer1=new Layer( LType.sigmod , 64 ,784 ); layer1.setName("Layer1"); // n neurons
         layer1.rnd();
 
-        Layer layer2=new Layer( LType.sigmod , 64 ,64 ); layer2.setName("Layer2"); // n neurons
+        layer2=new Layer( LType.sigmod , 64 ,64 ); layer2.setName("Layer2"); // n neurons
         layer2.rnd();
 
-        Layer layer3=new Layer( LType.softmaxMultiClass , 10 ,64 ); layer3.setName("Layer3"); // n neurons
+        layer3=new Layer( LType.softmaxMultiClass , 10 ,64 ); layer3.setName("Layer3"); // n neurons
         layer3.rnd();
 
-        //System.out.println( layer1 );
 
+        if ( false ) {
+            int i = 1;
+            System.out.println(tools.toStr( testY[i] ));
+            tools.saveVectorAsImg( testX[i], "_test_");
+            System.out.println( tools.getIndexMaxFloat(testY[i] ));
+        }
+    }
 
-        int goals0;
+    @Override
+    public void run() {
 
-        for (int cycle=0;cycle<50;cycle++) {
+        for (int cycle=0;cycle<1;cycle++) {
+
+            float Loss = 0.0f;
             int step=1;
-            for (int epoch = 0; epoch < 500; epoch++) {
+            for (int epoch = 0; epoch < numOfEpoch; epoch++) {
+                step++;
+                for ( int index = 0; index < trainX.length; index++ ) {
 
-                for (int index = 0; index < trainX.length; index++) {
                     // ONE CYCLE
-                       int ind_ex=index; //(index*step) % trainX.length;
+                    int ind_ex = /*index; //*/ (index*step) % trainX.length;
 
                     float[] firstX = trainX[ ind_ex ];
-                    //System.out.println( (index*step) % trainX.length );
 
                     layer1.setX( firstX );
                     layer1.nForward();
-//System.out.println( tools.toStr( layer1.getY() ));
-//System.out.println( tools.toStr( layer1.getZ() ));
-//System.out.println( layer1 );
-                    // >>
-                    layer2.setX(layer1.getZ());
+                    layer2.setX( layer2.getZ() );
                     layer2.nForward();
-//System.out.println( tools.toStr( layer2.getZ() ));
-                    // >>
-                    layer3.setX(layer2.getZ());
+                    layer3.setX( layer2.getZ() );
                     layer3.nForward();
-//System.out.println( tools.toStr( layer3.getZ() ));
 
-                    //System.out.println( tools.toStr( trainY[index] ));
-
-
-//System.out.println( tools.toStr( layer3.getZ() ));
-//System.out.println( tools.toStr( trainY[index] ));
-
-
-                    //float[] S_Z = tools.vectorSubstSsubZ(trainY[index], layer3.getZ());
-                    float[] S_Z = tools.vectorSubstSsubZ(trainY[ ind_ex ], layer3.getZ());
-//System.out.println( tools.toStr( layer3.getZ() ) + "::" + tools.toStr( trainY[index] ) + " -- " + tools.toStr( tools.vectorSubstSsubZ(trainY[index], layer3.getZ()) ));
-
-
-//System.out.println( layer3 );
+                    float[] S_Z = tools.vectorSubstSsubZ( trainY[ ind_ex ], layer3.getZ());
 
                     layer3.nBackward( S_Z );
-
-
-//System.out.println( layer3 );
-
-                    float[] eout3 = layer3.getEout();
-//System.out.println( tools.toStr( eout3 ) );
-
-
-                    layer2.nBackward(eout3);
-                    float[] eout2 = layer2.getEout();
-
-                    layer1.nBackward(eout2);
-
-//System.out.println( layer1 );
-                    // layer1.saveAllWeightAsImg("_layer1_" +index );
-
-                //if (index==1) { System.out.println(   tools.toStr( layer3.getZ() ) + "::" + tools.toStr( S_Z ) ); }
-                 //   System.out.println( Arrays.toString( S_Z )); if (index>10) return;
+                    Loss += Tools.crossEntropyMulticlassError( layer3.getZ() );
                 }
-
-                step++;
-
-
+                CSBin_data[epoch]=Loss/trainX.length;
             }
+
+
             // check accuracy
             int len = testX.length;
             int accuracy = 0;
             for (int i = 0; i < len; i++) {
-                layer1.setX(testX[i]);
+                layer1.setX( testX[i] );
                 layer1.nForward();
-
-                layer2.setX(layer1.getZ());
+                layer2.setX( layer2.getZ() );
                 layer2.nForward();
-                layer3.setX(layer2.getZ());
-                int netClassId = tools.getIndexMaxFloat(layer3.getZ());
-                int fileClassId = tools.getIndexMaxFloat(testY[i]);
+                layer3.setX( layer2.getZ() );
+                layer3.nForward();
 
+
+
+                int netClassId = tools.getIndexMaxFloat( layer3.getZ() );
+                int fileClassId = tools.getIndexMaxFloat( testY[i] );
+                //System.out.println( netClassId + " : " + fileClassId );
                 if (fileClassId == netClassId) {
                     accuracy++;
                 }
+
+
             }
             System.out.println(100.0f * accuracy / len + "%");
-            System.out.println( layer3 );
+
+            BufferedImage image = Tools.arrayOfFloatToImage( CSBin_data, 10 );
+            Tools.saveImg( image , " CrossEntropy_Multiclass "+cycle);
         }
 
 
