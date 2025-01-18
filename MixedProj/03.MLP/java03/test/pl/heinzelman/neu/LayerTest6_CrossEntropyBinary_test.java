@@ -26,11 +26,11 @@ public class LayerTest6_CrossEntropyBinary_test {
         float[][] S = new float[4][];
             S[0] = new float[]{1,0};
             S[1] = new float[]{0,1};
-            S[2] = new float[]{0,0};
-            S[3] = new float[]{1,0};
+            S[2] = new float[]{1,0};
+            S[3] = new float[]{0,1};
 
 
-        int numOfEpoch=3;
+        int numOfEpoch=10000;
         float[] CSBin_data=new float[numOfEpoch];
         for (int epoch=0;epoch<numOfEpoch; epoch++) {
 
@@ -43,7 +43,7 @@ public class LayerTest6_CrossEntropyBinary_test {
                 MSE += Tools.meanSquareError(S[i], L1.getZ());
                 float[] S_Z = Tools.vectorSubstSsubZ(S[i], L1.getZ());
                 L1.nBackward(S_Z) ;
-                System.out.println( "x: " + Arrays.toString( L1.getX())  +", y: " + Arrays.toString( L1.getY())  + " : z:" + Arrays.toString( L1.getZ() ) );
+                //System.out.println( "x: " + Arrays.toString( L1.getX())  +", y: " + Arrays.toString( L1.getY())  + " : z:" + Arrays.toString( L1.getZ() ) );
             }
             CSBin_data[epoch]=MSE/X.length;
         }
