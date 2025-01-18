@@ -173,6 +173,14 @@ public class Tools {
         return out;
     }
 
+    public static float crossEntropyMulticlassError( float[] s, float[]z ){
+        float out = 0.0f;
+        for ( int i=0;i<z.length; i++ ){
+            out += -Math.log( s[i] );
+        }
+        return out;
+    }
+
 
     public static BufferedImage arrayOfFloatToImage( float[] data , int xScale ){
         int width = data.length/xScale;

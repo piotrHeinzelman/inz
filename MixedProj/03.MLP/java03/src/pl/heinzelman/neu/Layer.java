@@ -76,27 +76,13 @@ public class Layer {
                 return Z;
             }
 
-            /*
-            case sigmod_CrossEntropy_Binary: {
-                Y[0] = neurons[0].Forward(X);
-                Y[1] = neurons[1].Forward(X);
-                float ymax=Y[0];
-                if (Y[1]>Y[0]){ ymax=Y[1];}
-                float y0 = (float) Math.exp(Y[0]-ymax);
-                float y1 = (float) Math.exp(Y[1]-ymax);
-                //System.out.println( "Y[0]: "+ Y[0] + ", Math.exp(Y[0]): " + Math.exp(Y[0]) + ", y0: " + y0 + ", y1: " + y1  );
 
-                Z[0] = y0 / (y0 + y1);
-                Z[1] = y1 / (y0 + y1);
-                //dFofZ[n] = dF( Z[n] ); dF need S , moved to Back...
-                return Z;
-            }
-            */
             case softmaxMultiClass: {
                 int len = neurons.length;
                 float sum = 0.0f;
                 float max = Y[0] = neurons[0].Forward(X);
                 for (int i=1;i<len;i++){
+                    dFofZ[i] = 1;
                     Y[i]=neurons[i].Forward(X);
                     if (Y[i]>max) { max=Y[i]; }
                 }
@@ -107,7 +93,6 @@ public class Layer {
                 for (int i = 0; i < len; i++) {
                     Z[i] = Y[i] / sum;
                 }
-                //dFofZ[n] = dF( Z[n] ); dF need S , moved to Back...
                 return Z;
             }
 
@@ -119,32 +104,11 @@ public class Layer {
 
 
     public void nBackward( float[] Ein ){ // S-Z or Ein
-        //if (lType==LType.sigmod_CrossEntropy_Binary){
-            //System.out.println( "Z[0]: " + Z[0] + ", 1-Z[0]: " + (1-Z[0]) + ", Ein[0]-Z[0]: "+(Ein[0]-Z[0]) + ", (Ein[0]-Z[0])/(Z[0]*(1-Z[0])): " + (Ein[0]-Z[0])/(Z[0]*(1-Z[0])) );
-            //dFofZ[0]=(Ein[0]-Z[0])/(Z[0]*(1-Z[0]));
-            //dFofZ[1]=(Ein[1]-Z[1])/(Z[1]*(1-Z[1]));
-            //System.out.println( "d0: "+ dFofZ[0] + ", d1: "+ dFofZ[1]  );
-        //}
-
-        if (lType==LType.softmaxMultiClass){
-            //System.out.println( "Z[0]: " + Z[0] + ", 1-Z[0]: " + (1-Z[0]) + ", Ein[0]-Z[0]: "+(Ein[0]-Z[0]) + ", (Ein[0]-Z[0])/(Z[0]*(1-Z[0])): " + (Ein[0]-Z[0])/(Z[0]*(1-Z[0])) );
-            for (  int i=0;i<Z.length;i++) {
-                dFofZ[i] = (Ein[i] - Z[i]); // / (Z[i] * (1 - Z[i]));
-            }
-        }
-
         for ( float f : Eout ){ f=0f; } // clear Eout
         for ( int n=0; n< neurons.length; n++ ){
-            //System.out.println( "Ein[n]:"+Ein[n]  + ", "+dFofZ[n]);
-            //System.out.println( Ein[n] * dFofZ[n] );
             neurons[n].Backward( Ein[n] * dFofZ[n] );
         }
     }
-
-
-
-
-    // Math F(y) / dF(z)
 
     private float F ( float y ){
         float z;
