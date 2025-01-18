@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
 
-import static java.awt.image.BufferedImage.TYPE_BYTE_GRAY;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
 // Forward
@@ -67,7 +66,8 @@ public class Layer {
 
     public float[] nForward() {
         switch (lType) {
-            case sigmod: {
+            case sigmod:
+            case sigmod_CrossEntropy_Binary:{
                 for (int n = 0; n < neurons.length; n++) {
                     Y[n] = neurons[n].Forward(X);
                     Z[n] = F(Y[n]);
@@ -75,23 +75,23 @@ public class Layer {
                 }
                 return Z;
             }
-            case softmaxBinary: {
+
+            /*
+            case sigmod_CrossEntropy_Binary: {
                 Y[0] = neurons[0].Forward(X);
                 Y[1] = neurons[1].Forward(X);
                 float ymax=Y[0];
                 if (Y[1]>Y[0]){ ymax=Y[1];}
                 float y0 = (float) Math.exp(Y[0]-ymax);
                 float y1 = (float) Math.exp(Y[1]-ymax);
-
-
-                System.out.println( "Y[0]: "+ Y[0] + ", Math.exp(Y[0]): " + Math.exp(Y[0]) + ", y0: " + y0 + ", y1: " + y1  );
+                //System.out.println( "Y[0]: "+ Y[0] + ", Math.exp(Y[0]): " + Math.exp(Y[0]) + ", y0: " + y0 + ", y1: " + y1  );
 
                 Z[0] = y0 / (y0 + y1);
                 Z[1] = y1 / (y0 + y1);
                 //dFofZ[n] = dF( Z[n] ); dF need S , moved to Back...
                 return Z;
             }
-
+            */
             case softmaxMultiClass: {
                 int len = neurons.length;
                 float sum = 0.0f;
@@ -119,12 +119,12 @@ public class Layer {
 
 
     public void nBackward( float[] Ein ){ // S-Z or Ein
-        if (lType==LType.softmaxBinary){
+        //if (lType==LType.sigmod_CrossEntropy_Binary){
             //System.out.println( "Z[0]: " + Z[0] + ", 1-Z[0]: " + (1-Z[0]) + ", Ein[0]-Z[0]: "+(Ein[0]-Z[0]) + ", (Ein[0]-Z[0])/(Z[0]*(1-Z[0])): " + (Ein[0]-Z[0])/(Z[0]*(1-Z[0])) );
-            dFofZ[0]=(Ein[0]-Z[0])/(Z[0]*(1-Z[0]));
-            dFofZ[1]=(Ein[1]-Z[1])/(Z[1]*(1-Z[1]));
+            //dFofZ[0]=(Ein[0]-Z[0])/(Z[0]*(1-Z[0]));
+            //dFofZ[1]=(Ein[1]-Z[1])/(Z[1]*(1-Z[1]));
             //System.out.println( "d0: "+ dFofZ[0] + ", d1: "+ dFofZ[1]  );
-        }
+        //}
 
         if (lType==LType.softmaxMultiClass){
             //System.out.println( "Z[0]: " + Z[0] + ", 1-Z[0]: " + (1-Z[0]) + ", Ein[0]-Z[0]: "+(Ein[0]-Z[0]) + ", (Ein[0]-Z[0])/(Z[0]*(1-Z[0])): " + (Ein[0]-Z[0])/(Z[0]*(1-Z[0])) );
@@ -149,8 +149,9 @@ public class Layer {
     private float F ( float y ){
         float z;
         switch (this.lType) {
-            case sigmod: { z = (float) (1.0f/(1.0f + Math.exp( -y ))); break; }
-
+            case sigmod:
+            case sigmod_CrossEntropy_Binary:
+                { z = (float) (1.0f/(1.0f + Math.exp( -y ))); break; }
             case linear:
                 default: { z=y; break; }
         }
@@ -160,8 +161,10 @@ public class Layer {
     private float dF ( float z ){
         float df;
         switch (lType) {
-            case sigmod: { df = z*(1-z); break; }
+            case sigmod:
+                { df = z*(1-z); break; }
             case linear:
+            case sigmod_CrossEntropy_Binary:
             default: { df=1; break; }
         }
         return df;

@@ -41,7 +41,7 @@ public class Task3x2SoftMax implements Task{
 
 
         // 3*neu / 2*weight
-        Layer layer2 = new Layer( LType.softmaxBinary , 2 ,3  );
+        Layer layer2 = new Layer( LType.sigmod_CrossEntropy_Binary, 2 ,3  );
         layer2.setName( "Layer: 2" );
         // first neu
         layer2.setWmn( 0, 0,  1 );

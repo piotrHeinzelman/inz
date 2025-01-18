@@ -1,6 +1,7 @@
 package pl.heinzelman.neu;
 
 
+import org.junit.Assert;
 import org.junit.Test;
 import pl.heinzelman.tools.Tools;
 
@@ -45,10 +46,19 @@ public class LayerTest6_MSE_test {
                 float[] S_Z = Tools.vectorSubstSsubZ(S[i], L1.getZ());
                 L1.nBackward(S_Z);
             }
-            MSEdata[epoch]=MSE;
+            MSEdata[epoch]=MSE/X.length;
         }
 
         BufferedImage image = Tools.arrayOfFloatToImage( MSEdata, 100 );
         Tools.saveImg( image , " MSE_by_Epoch ");
+
+
+        int i=1;
+        L1.setX( X[i] );
+        L1.nForward();
+        float[] Z = L1.getZ();
+
+        System.out.println( Arrays.toString(Z) + " : " + Arrays.toString( S[i]) + ", index: " + tools.getIndexMaxFloat( S[i] )  );
+        Assert.assertEquals( tools.getIndexMaxFloat(Z),  tools.getIndexMaxFloat( S[i] ));
     }
 }

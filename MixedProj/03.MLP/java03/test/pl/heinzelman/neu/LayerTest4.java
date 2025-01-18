@@ -12,7 +12,7 @@ public class LayerTest4 {
 
         Tools tools = new Tools();
 
-        Layer L1 = new Layer(LType.softmaxBinary, 2,2); // 3 neurons, 2 inputs
+        Layer L1 = new Layer(LType.sigmod_CrossEntropy_Binary, 2,2); // 3 neurons, 2 inputs
         float[] X = new float[]{1,2};
         float[] S = new float[]{1,0};
         L1.rnd();

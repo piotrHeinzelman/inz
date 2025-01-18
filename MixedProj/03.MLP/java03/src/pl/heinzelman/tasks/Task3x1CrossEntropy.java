@@ -40,7 +40,7 @@ public class Task3x1CrossEntropy implements Task{
         float[] XforL2 = layer1.getZ();
 
         // 3*neu / 2*weight
-        Layer layer2 = new Layer( LType.softmaxBinary , 1 ,3  );
+        Layer layer2 = new Layer( LType.sigmod_CrossEntropy_Binary, 1 ,3  );
         layer2.setName( "Layer: 2" );
         // first neu
         layer2.setWmn( 0, 0,  1 );

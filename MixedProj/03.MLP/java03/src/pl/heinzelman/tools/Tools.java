@@ -164,6 +164,15 @@ public class Tools {
         return out;
     }
 
+    public static float crossEntropyBinaryError2input( float[] s, float[]z ){
+        float out = 0.0f;
+        for ( int i=0;i<z.length; i++ ){
+            float delta = s[i] - z[i];
+            out+=delta*delta;
+        }
+        return out;
+    }
+
 
     public static BufferedImage arrayOfFloatToImage( float[] data , int xScale ){
         int width = data.length/xScale;

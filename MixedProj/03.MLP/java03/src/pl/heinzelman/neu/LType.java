@@ -1,5 +1,5 @@
 package pl.heinzelman.neu;
 
 public enum LType {
-    linear, ReLU, sigmod, softmaxBinary, softmaxMultiClass
+    linear, ReLU, sigmod, sigmod_CrossEntropy_Binary, softmaxMultiClass
 }
