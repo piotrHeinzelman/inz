@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="226d75a0-8f9f-4282-8835-2c4e42efc398" name="Default Changelist" comment="" />
+    <list default="true" id="226d75a0-8f9f-4282-8835-2c4e42efc398" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../info/info_zakres_prac.txt" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
