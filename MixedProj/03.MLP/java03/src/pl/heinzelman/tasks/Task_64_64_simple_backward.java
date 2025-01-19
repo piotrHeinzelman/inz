@@ -5,6 +5,7 @@ import pl.heinzelman.neu.Layer;
 import pl.heinzelman.tools.Tools;
 
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 public class Task_64_64_simple_backward implements Task{
 
@@ -19,12 +20,12 @@ public class Task_64_64_simple_backward implements Task{
 
     private Tools tools = new Tools();
 
-    int numOfEpoch=50;
+    int numOfEpoch=500;
     float[] CSBin_data=new float[numOfEpoch];
 
     @Override
     public void prepare() {
-        tools.prepareData( 1 );
+        tools.prepareData( 100 );
 
         testX = tools.getTestX();
         testY = tools.getTestY();
@@ -40,19 +41,12 @@ public class Task_64_64_simple_backward implements Task{
         layer3=new Layer( LType.softmaxMultiClass , 10 ,64 ); layer3.setName("Layer3"); // n neurons
         layer3.rnd();
 
-
-        if ( false ) {
-            int i = 1;
-            System.out.println(tools.toStr( testY[i] ));
-            tools.saveVectorAsImg( testX[i], "_test_");
-            System.out.println( tools.getIndexMaxFloat(testY[i] ));
-        }
     }
 
     @Override
     public void run() {
 
-        for (int cycle=0;cycle<1;cycle++) {
+        for (int cycle=0;cycle<10;cycle++) {
 
             float Loss = 0.0f;
             int step=1;
@@ -63,23 +57,26 @@ public class Task_64_64_simple_backward implements Task{
                     // ONE CYCLE
                     int ind_ex = /*index; //*/ (index*step) % trainX.length;
 
-                    float[] firstX = trainX[ ind_ex ];
 
-                    layer1.setX( firstX );
+                    layer1.setX( trainX[ ind_ex ] );
                     layer1.nForward();
-                    layer2.setX( layer2.getZ() );
+                    layer2.setX( layer1.getZ() );
                     layer2.nForward();
                     layer3.setX( layer2.getZ() );
                     layer3.nForward();
 
-                    float[] S_Z = tools.vectorSubstSsubZ( trainY[ ind_ex ], layer3.getZ());
-
+                    float[] S_Z = tools.vectorSubstSsubZ( trainY[ ind_ex ], layer3.getZ() );
                     layer3.nBackward( S_Z );
                     Loss += Tools.crossEntropyMulticlassError( layer3.getZ() );
+                    layer2.nBackward( layer3.getEout() );
+                    layer1.nBackward( layer2.getEout() );
                 }
                 CSBin_data[epoch]=Loss/trainX.length;
-            }
 
+            }
+            System.out.println( Arrays.toString( layer1.getNeuronWeight(0)));
+            System.out.println( Arrays.toString( layer3.getX()));
+            System.out.println( Arrays.toString( layer3.getZ()));
 
             // check accuracy
             int len = testX.length;
@@ -87,30 +84,18 @@ public class Task_64_64_simple_backward implements Task{
             for (int i = 0; i < len; i++) {
                 layer1.setX( testX[i] );
                 layer1.nForward();
-                layer2.setX( layer2.getZ() );
+                layer2.setX( layer1.getZ() );
                 layer2.nForward();
                 layer3.setX( layer2.getZ() );
                 layer3.nForward();
 
-
-
                 int netClassId = tools.getIndexMaxFloat( layer3.getZ() );
                 int fileClassId = tools.getIndexMaxFloat( testY[i] );
-                //System.out.println( netClassId + " : " + fileClassId );
                 if (fileClassId == netClassId) {
                     accuracy++;
                 }
-
-
             }
             System.out.println(100.0f * accuracy / len + "%");
-
-            BufferedImage image = Tools.arrayOfFloatToImage( CSBin_data, 10 );
-            Tools.saveImg( image , " CrossEntropy_Multiclass "+cycle);
         }
-
-
-        if ( true ) { /*System.out.println( layer1.toString() ); */ return; }
-
     }
 }

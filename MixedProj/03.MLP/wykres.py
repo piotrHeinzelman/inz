@@ -39,8 +39,11 @@ y = np.array([2305,2294,2235,2164    ])
 colors = np.array(["magenta","magenta","magenta","magenta" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
 plt.scatter(x, y, c=colors, label="Matlab window 10")
 
-
-
+x = np.array([40,41,42,43            ])
+y = np.array([14428,?,?,?    ])
+colors = np.array(["magenta","magenta","magenta","magenta" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
+plt.scatter(x, y, c=colors, label="Java window 10")
+ 
 
 plt.legend()
 plt.savefig( '../000.fig/fig03.pdf',dpi=400 ) 

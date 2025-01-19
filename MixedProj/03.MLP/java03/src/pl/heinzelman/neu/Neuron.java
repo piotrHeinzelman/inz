@@ -6,7 +6,7 @@ public class Neuron {
     private float bias=0;
     private final float[] W;
     private final Layer parent;
-    private final static float mu=0.1f;
+    private final static float mu=0.001f;
 
     public void setBias( float b ) { this.bias=b; }
     public float getBias(){ return bias; }
@@ -33,8 +33,8 @@ public class Neuron {
         // weights
         float[] X = parent.getX();
         for ( int m=0; m<W.length; m++ ) {
-            W[m] += mu * en_x_dFIznI * X[m];
             parent.getEout()[m] += ( W[m] * en_x_dFIznI );
+            W[m] += mu * en_x_dFIznI * X[m];
         }
     }
 
@@ -45,7 +45,7 @@ public class Neuron {
         return "N{ W=" + Arrays.toString(W) + '}';
     }
 
-    @Deprecated
+    //@Deprecated
     public float[] getMyWeight() { return W; }
 
 

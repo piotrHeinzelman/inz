@@ -72,7 +72,9 @@ public class Layer {
                     Y[n] = neurons[n].Forward(X);
                     Z[n] = F(Y[n]);
                     dFofZ[n] = dF(Z[n]);
+
                 }
+                for (int m=0;m<Eout.length;m++){ Eout[m]=0; }
                 return Z;
             }
 
@@ -104,7 +106,7 @@ public class Layer {
 
 
     public void nBackward( float[] Ein ){ // S-Z or Ein
-        for ( float f : Eout ){ f=0f; } // clear Eout
+        for ( int i=0;i<neurons.length;i++ ){ Eout[i]=0.0f; }
         for ( int n=0; n< neurons.length; n++ ){
             neurons[n].Backward( Ein[n] * dFofZ[n] );
         }
@@ -161,15 +163,15 @@ public class Layer {
 
     public void setName(String name) { this.name = name; }
 
-    @Deprecated
+    //@Deprecated
     public float[] getY() { return Y; }
 
-    @Deprecated
+    //@Deprecated
     public float[] getNeuronWeight( int i ){
         return neurons[i].getMyWeight();
     }
 
-    @Deprecated
+    //@Deprecated
     public void saveAllWeightAsImg( String nameSuffix ){
         int width = Y.length; // size of Y, number of neurons
         int height = X.length; // size of X , number of input signal
