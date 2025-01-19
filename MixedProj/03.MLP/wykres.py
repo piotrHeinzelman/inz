@@ -39,9 +39,9 @@ y = np.array([2305,2294,2235,2164    ])
 colors = np.array(["magenta","magenta","magenta","magenta" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
 plt.scatter(x, y, c=colors, label="Matlab window 10")
 
-x = np.array([40,41,42,43            ])
-y = np.array([14428,14427,?,?    ])
-colors = np.array(["brown","brown","brown","brown" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
+x = np.array([40,41,42  ])
+y = np.array([14428,14427,17360  ])
+colors = np.array(["brown","brown","brown" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
 plt.scatter(x, y, c=colors, label="Java window 10")
  
 
