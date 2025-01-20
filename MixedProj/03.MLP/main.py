@@ -1,10 +1,28 @@
-# sudo pacman -S python-scikit-learn
 
-# conda create -n sklearn-env -c conda-forge scikit-learn
-# conda activate sklearn-env
+import numpy as np
+import time
+import datetime
+import sys
+
+x_train = load_mnist ()
+  'data/t10k-images-idx3-ubyte'
+  'data/t10k-labels-idx1-ubyte'
+  'data/train-images-idx3-ubyte'
+  'data/train-labels-idx1-ubyte'
 
 
-from data.readdata import load_mnist
+
+
+
+
+
+
+
+
+
+
+
+
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import (train_test_split)
 from sklearn.neural_network import (MLPClassifier)
