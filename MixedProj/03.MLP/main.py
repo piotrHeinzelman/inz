@@ -86,9 +86,12 @@ for i in range(10):
 
 end=time.time()
 d=end-start
-print("Time: " , d)
+print("# Time: " , d)
+print("ps[]=" , d)
 
-print (net)
+
+
+#print (net)
 print ("# loss:", net.loss_ , ", score: " , net.score( testX, testY ), ", predict: ",net.predict(testX[:1]) )
 
 #resultY = net.predict( testX )
