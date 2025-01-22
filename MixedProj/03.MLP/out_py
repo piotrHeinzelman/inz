@@ -1,1 +1,7 @@
 #   --- Python --- 
+Time:  34.2649302482605
+MLPClassifier(activation='logistic', hidden_layer_sizes=(64, 64), max_iter=5000,
+              random_state=1, solver='sgd')
+loss: 0.07933520326259016 , score:  0.79 , predict:  [[0 0 0 0 0 0 0 1 0 0]]
+[ True  True  True  True  True  True  True  True  True  True]
+[ True  True  True  True  True  True  True  True  True  True]

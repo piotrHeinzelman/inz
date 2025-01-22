@@ -35,7 +35,7 @@ def readFileY ( fileName , offset, percent, multi ):
     return out
 
 
-percent=1
+percent=100
 trainX = readFileX ('data/train-images-idx3-ubyte', 16, percent ,6 )
 trainY = readFileY ('data/train-labels-idx1-ubyte', 8, percent, 6 )
 testX = readFileX ('data/t10k-images-idx3-ubyte', 16, percent, 1  )
@@ -69,7 +69,7 @@ if (False):
 
 
 #net = snn.MLPClassifier(hidden_layer_sizes=(64,64,10), activation='logistic', solver='sgd', alpha=0.0001, learning_rate='constant', learning_rate_init=0.001, max_iter=5000 )
-net = snn.MLPClassifier(hidden_layer_sizes=(64,64,10), random_state=1, early_stopping=False, activation='logistic', solver='sgd', alpha=0.0001, learning_rate='constant', learning_rate_init=0.001, max_iter=5000 )
+net = snn.MLPClassifier(hidden_layer_sizes=(64,64), random_state=1, alpha=0.0001, max_iter=5000, early_stopping=False, activation='logistic', solver='sgd', learning_rate='constant', learning_rate_init=0.001 )
 net.fit( trainX, trainY )
 
 l=[]
@@ -89,10 +89,11 @@ d=end-start
 print("Time: " , d)
 
 print (net)
-print ("loss:", net.loss_ , ", score: " , net.score( testX, testY ), ", predict: ",net.predict(testX[:1]) )
+print ("# loss:", net.loss_ , ", score: " , net.score( testX, testY ), ", predict: ",net.predict(testX[:1]) )
 
-resultY = net.predict_proba( testX[:1] )
-print (resultY)
+#resultY = net.predict( testX )
+
+
 
 
 
