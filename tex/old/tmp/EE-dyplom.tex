@@ -1,0 +1,107 @@
+% !TEX program = xelatex
+% !TeX encoding = utf8
+% !TeX spellcheck = pl-PL
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Wybierz rodzaj pracy dyplomowej oraz wydział
+% Pick thesis type and faculty
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[thesis=inz,faculty=ee]{EE-dyplom} 
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bbm,graphicx} 
+
+    %add P.H.
+    %\usepackage[default]{sourcecodepro}
+    %\usepackage[T1]{fontenc}
+
+% thesis=[inz|mgr|bsc|msc]
+%  * inz - praca inżynierska
+%  * mgr - praca magisterska
+%  * bsc - bachelor thesis
+%  * msc - master thesis
+
+% Skróty nazw wydziałów zgodne z domenami internetowymi
+% Abbreviations of Faculties according to Internet subdomains
+% faculty=[
+%	arch,
+%	gik,
+%	ee,
+%	wip
+%	]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Konfiguracja - do personalizacji
+% Configuration - to be personalized
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \instytut{Instytut Sterowania i Elektroniki Przemysłowej}
+\kierunek{Informatyka Stosowana}
+%\specjalnosc{Rzeczowidztwo}
+\title{Porównanie wydajności wybranych języków programowania w realizacji sieci neuronowych do przetwarzaniu obrazów\\
+}
+
+
+\engtitle{Comparison of the performance of selected programming languages in the implementation of neural networks for image processing}
+\album{146703}
+\author{Piotr Heinzelman}
+\promotor{dr inż. Witold Czajewski}
+\date{2024}
+\longdate{2024-09-27}
+
+%\grantlicense{TRUE} % [TRUE|FALSE]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Streszczenie pracy i abstract.
+% In case of thesis in English swap the order - English version goes first.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\streszczeniepracy{
+
+
+
+Idea jest taka, by sprawdzić jak w różnych językach progrmowania wygląda jakieś kompleksowe zastosowanie sieci neuronowych do przetwarzania obrazów. Dwa najpopularniejsze języki to C++ i Python, potem jest Matlab. Dość powszechne jest też uruchamianie kodu Pythona w Colabie. Chodzi o zrobienie dokładnie kilku takich samych aplikacji w kilku językach i porównanie ich pod różnymi kątami. Przykładowe aplikacje to: klasyfikacja obrazów, rozpoznawanie obiektów na obrazach, śledzenie obiektów, segmentacja obiektów, modyfikacja obrazów czy ich fragmentów.
+
+Jeśli taki zakres projektu Panom odpowiada, to proszę dać znać, a założę dedykowany projektowi kanał na Teamsach, gdzie będziemy się dalej komunikować.
+
+} % koniec streszczenia
+
+\slowakluczowe{A, B, C}
+
+\thesisabstract{
+This is abstract. This one is a little too short as it should occupy the whole page.
+
+\lipsum[1-4]
+} % end of abstract
+
+\thesiskeywords{X, Y, Z}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Tu zaczyna się dokument
+% Here is the beginning of the document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+    % Strony nagłówkowe
+    % Headers
+    \frontpages
+
+    % Właściwa treść jest w pliku tekst/main.tex
+    % Real contents is in tekst/main.tex
+    \input{tekst/main}
+
+    % Bibliografia - musi być
+    % Bibliography - must exist
+    \bibliografia
+
+    % Strony końcowe - można zakomentować, jeśli zbędne
+    % Additional pages - comment out if not needed
+    
+    % Wykaz symboli i skrótów - patrz opis w tekście przykładowym
+%    \acronymslist
+    % Spis rysunków
+    \listoffigures
+    % Spis tabel
+    \listoftables
+    % Załączniki (plik appendices.tex)
+    \easyappendices
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

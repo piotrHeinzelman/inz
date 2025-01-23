@@ -1,0 +1,50 @@
+Dobór algorytmu do zadania jest bardzo ważny, zdecydowanie ważniejszy niż dobór języka - jednak nie będzie on głównym tematem tej pracy. Tu zakładamy użycie tych samych algorytmów i porównujemy wydajności implementacji algorytmu w różnych "językach". Teoretycznie wyniki powinny być zbliżone przy założeniu, że programy doskonale wykorzystują możliwości sprzętu. Celem pracy jest porównanie, które języki ogólnego przeznaczenia liczą szybciej, które lepiej wykorzystują dodatkową infrastrukturę taką jak \textit{wątki}, \textit{procesy},  \textit{hyperThreading}, czy rdzenie \textit{CUDA} na kartach graficznych.
+Jeśli gdzieś zaobserwujemy różnice - to będą one wynikały zastosowania innych języków, które w odmienny sposób zapisują i odczytują liczby, kolejkują zadania czy optymalizują wygenerowany kod. \newLine 
+Jednak zanim przejdziemy do~porównania, przyjrzymy się modelom matematycznym, a z ich pomocą zbudujemy prosty model obiektowy. Następnie przetestujemy model obiektowy, prześledzimy przetwarzanie na najniższych poziomach, aż do pojedynczych operacji. Te działania pomogą nam przygotować zadania numeryczne, do rozwiązania których użyjemy maszyn cyfrowych.
+
+\begin{lstlisting}
+/*
+
+4. Realizacje obliczeń Klasyfikowanie pisma odręcznego MLP z wykorzystaniem danych MNIST
+a) Matlab
+b) Python -numpy, -sklearn
+c) Python -tensorflow
+d) własna implementacja w Java
+
+Cel podstawowy: porównanie wydajności realizacji w zależności od Języka.
+Cele dodatkowe: potwierdzenie poprawności własnej implementacji przez porównanie wyników,
+
+
+5) realizacja Klasyfikowanie pisma odręcznego sieci głębokie CNN realizacja sieci z wykorzytsniem bibliotek.
+a) Matlab
+b) Python tensorflow.keras
+c) własna implementacja Java lub C++ libtorch
+
+Cel podstawowy: porównanie wydajności implementacji. Zbadanie wydajności uczenia sieci.
+Cele dodatkowe: potwierdzenie poprawności własnej implementacji w Java lub C++
+
+
+6) Rozpoznawanie twarzy sieci głębokie CNN
+a) Matlab
+b) Python tensorflow.keras
+c) własna implementacja Java lub C++ libtorch
+
+Cel podstawowy: porównanie wydajności implementacji.
+
+
+7) Klasyfikacji obrazów z wykorzystaniem sieci głębokiej CNN
+a) Matlab
+b) Python tensorflow.keras
+c) C++ libtorch
+
+Cel podstawowy: porównanie wydajności implementacji i wydajności procesu uczenia nadzorowanego.
+
+8) detekcja i segmentacji obiektów sieci głębokiej CNN
+b) Python tensorflow.keras
+c) C++ libtorch
+
+Cel podstawowy: porównanie wydajności implementacji.
+
+
+*/
+\end{lstlisting}
