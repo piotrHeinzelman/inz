@@ -1,6 +1,7 @@
 # https://keras.io/examples/vision/mnist_convnet/
 # https://keras.io/getting_started/ 
-
+# https://keras.io/guides/sequential_model/
+# https://keras.io/guides/functional_api/
 
 import numpy as np
 import time
@@ -16,7 +17,7 @@ def readFileX ( fileName , offset, percent, multi ):
     file.read( offset )
     data=np.fromfile( fileName, np.uint8, percent*100*784*multi, '', offset )
     data=data.reshape(percent*100*multi, 784)
-    data=1-(data/128)
+    data=(data/255)
     file.close()
     return data
 
@@ -28,28 +29,44 @@ def readFileY ( fileName , offset, percent, multi ):
     
     out=[]
     for i in range ( len ):
-        tmp=[0,0,0,0,0,0,0,0,0,0]
-        tmp[ data[i]] = 1    
-        out.append( tmp )
+#        tmp=[0,0,0,0,0,0,0,0,0,0]
+#        tmp[ data[i]] = 1    
+#        out.append( tmp )
+        out.append( data[i] )        
     file.close()
     return out
 
 
 percent=1
+num_classes = 10
+
 trainX = readFileX ('data/train-images-idx3-ubyte', 16, percent ,6 )
 trainY = readFileY ('data/train-labels-idx1-ubyte', 8, percent, 6 )
 testX = readFileX ('data/t10k-images-idx3-ubyte', 16, percent, 1  )
 testY = readFileY ('data/t10k-labels-idx1-ubyte', 8, percent, 1 )
 
-print ( trainX[0] )
-print ( trainY )
-print ( testX[0] )
-print ( testY )
+# Scale images to the [0, 1] range
+trainX = trainX.astype("float32") # / 255
+testX = testX.astype("float32") # / 255
 
+# convert class vectors to binary class matrices
+trainY = keras.utils.to_categorical(trainY, num_classes)
+testY = keras.utils.to_categorical(testY, num_classes)
+
+
+
+trainX = trainX.reshape(6*percent*100, 784).astype("float32") / 255
+testX = testX.reshape(1*percent*100, 784).astype("float32") / 255
 
 
 
 if (True):
+    print ( trainX[0] )
+    print ( trainY[0] )
+    print ( testX[0] )
+    print ( testY[0] )
+
+if (False):
     fig, ax = plt.subplots( nrows=2, ncols=5, sharex=True, sharey=True )
     ax=ax.flatten()
     img = trainX[0].reshape(28,28)
@@ -62,55 +79,44 @@ if (True):
 
 # Model / data parameters
 num_classes = 10
-input_shape = (28, 28, 1)
+
+inputs = keras.Input(shape=(784,))
+
+dense = layers.Dense(64, activation="sigmoid")
+x = dense(inputs)
+x = layers.Dense(64, activation="sigmoid")(x)
+outputs = layers.Dense(10)(x)
+
+model = keras.Model(inputs=inputs, outputs=outputs, name="mnist_model")
 
 
 
-# model.add(layers.Dense(64, activation=activations.relu))
-# This is equivalent to:
-
-# from keras import layers
-#from keras import activations
-
-# model.add(layers.Dense(64))
-# model.add(layers.Activation(activations.relu))
-
-
-model = keras.Sequential(
-    [
-        keras.Input(shape=input_shape),
-        layers.Dense(64, activation="sigmoid" ),
-        layers.Dense(64, activation="sigmoid" ),
-        layers.Dense(num_classes, activation="softmax"),
-    ]
-)
 
 model.summary()
 
 
 # Train the model
-epochs = 500
+epochs = 5
 
-model.compile(loss="categorical_crossentropy", optimizer="adam", metrics=["accuracy"])
+#model.compile(loss="categorical_crossentropy", optimizer="adam", metrics=["accuracy"])
+model.compile(optimizer='sgd', loss='binary_crossentropy', metrics=[keras.metrics.Accuracy()])
 
 
 start=time.time()
 
 for i in range(10):
-    model.fit(trainX, trainY, epochs=epochs, validation_split=0.1)
+    history = model.fit(trainX, trainY, batch_size=64, epochs=2, validation_split=0.2)
+#    model.fit(trainX, trainY, batch_size=percent*100*6, epochs=epochs, validation_split=0.1)
 
 end=time.time()
 d=end-start
 print("# Time: " , d)
-print("ps[]=" , d)
-
-
 
 
 # Evaluate the trained model
-score = model.evaluate(testX, testY, verbose=0)
-print("Test loss:", score[0])
-print("Test accuracy:", score[1])
+#score = model.evaluate(testX, testY, verbose=1)
+#print("Test loss:", score[0])
+#print("Test accuracy:", score[1])
 
 
 
