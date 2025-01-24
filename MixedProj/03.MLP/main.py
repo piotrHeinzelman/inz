@@ -1,15 +1,26 @@
-# https://keras.io/examples/vision/mnist_convnet/
-# https://keras.io/getting_started/ 
-# https://keras.io/guides/sequential_model/
-# https://keras.io/guides/functional_api/
+# https://keras.io/examples/vision/mnist_convnet
+# https://www.tensorflow.org/?hl=pl
+
+import tensorflow as tf
 
 import numpy as np
 import time
 import matplotlib.pyplot as plt
 
-import keras
-from keras import layers
+tf.config.list_physical_devices('GPU') 
+print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
+# params
+epochs = 150
+cycles=10
+percent=10
+num_classes = 10
+    
+
+mnist = tf.keras.datasets.mnist
+
+(x_train, y_train),(x_test, y_test) = mnist.load_data()
+x_train, x_test = x_train / 255.0, x_test / 255.0
 
 
 def readFileX ( fileName , offset, percent, multi ):
@@ -37,23 +48,63 @@ def readFileY ( fileName , offset, percent, multi ):
     return out
 
 
-percent=100
-num_classes = 10
 
 trainX = readFileX ('data/train-images-idx3-ubyte', 16, percent ,6 )
 trainY = readFileY ('data/train-labels-idx1-ubyte', 8, percent, 6 )
 testX = readFileX ('data/t10k-images-idx3-ubyte', 16, percent, 1  )
 testY = readFileY ('data/t10k-labels-idx1-ubyte', 8, percent, 1 )
 
-# Scale images to the [0, 1] range
+
 trainX = trainX.astype("float32") # / 255
 testX = testX.astype("float32") # / 255
 trainX = trainX.reshape(6*percent*100, 784).astype("float32") / 255
 testX = testX.reshape(1*percent*100, 784).astype("float32") / 255
 
+
 # convert class vectors to binary class matrices
-trainY = keras.utils.to_categorical(trainY, num_classes)
-testY = keras.utils.to_categorical(testY, num_classes)
+#trainY = keras.utils.to_categorical(trainY, num_classes)
+#testY = keras.utils.to_categorical(testY, num_classes)
+
+
+
+model = tf.keras.models.Sequential([
+  tf.keras.layers.Flatten(input_shape=(28,28)),
+  tf.keras.layers.Dense(64, activation='sigmoid'),
+  tf.keras.layers.Dense(64, activation='sigmoid'),
+  tf.keras.layers.Dropout(0.2),
+  tf.keras.layers.Dense(10, activation='softmax')
+])
+
+model.compile(optimizer='adam',
+  loss='sparse_categorical_crossentropy',
+  metrics=['accuracy'])
+
+model.fit(x_train, y_train, epochs=5)
+model.evaluate(x_test, y_test)
+
+
+
+
+
+exit()
+
+
+
+
+
+
+
+
+
+# Scale images to the [0, 1] range
+#trainX = trainX.astype("float32") # / 255
+#testX = testX.astype("float32") # / 255
+#trainX = trainX.reshape(6*percent*100, 784).astype("float32") / 255
+#testX = testX.reshape(1*percent*100, 784).astype("float32") / 255
+
+# convert class vectors to binary class matrices
+#trainY = keras.utils.to_categorical(trainY, num_classes)
+#testY = keras.utils.to_categorical(testY, num_classes)
 
 
 
@@ -74,48 +125,13 @@ if (False):
     plt.show()
 
 
-# Model / data parameters
-num_classes = 10
-
-inputs = keras.Input(shape=(784,))
-
-dense = layers.Dense(64, activation="sigmoid")
-x1 = dense(inputs)
-x2 = layers.Dense(64, activation="sigmoid")(x1)
-outputs = layers.Dense(10, activation="softmax")(x2)
-
-model = keras.Model(inputs=inputs, outputs=outputs, name="mnist_model")
-
-if (False):
-    model.summary()
-
-
-# Train the model
-epochs = 500
-
-
-model.compile(
-    loss='binary_crossentropy',
-    metrics=["accuracy"],
-)
-
-
-# model.compile(optimizer='sgd', loss='binary_crossentropy', metrics=[keras.metrics.Accuracy()])
-
-
 start=time.time()
-for i in range(10):
-    history = model.fit(trainX, trainY, batch_size=6*100*percent, epochs=epochs, validation_split=0.2, verbose=0)
+for i in range(cycles):
+    model.fit(trainX, trainY, epochs=epochs, validation_split=0.2, verbose=0)
 
 end=time.time()
 d=end-start
 print("# Time: " , d)
-
-
-
-test_scores = model.evaluate(testX, testY, verbose=2)
-print("Test loss:", test_scores[0])
-print("Test accuracy:", test_scores[1])
 
 
 
