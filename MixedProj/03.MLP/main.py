@@ -37,7 +37,7 @@ def readFileY ( fileName , offset, percent, multi ):
     return out
 
 
-percent=1
+percent=100
 num_classes = 10
 
 trainX = readFileX ('data/train-images-idx3-ubyte', 16, percent ,6 )
@@ -91,7 +91,7 @@ if (False):
 
 
 # Train the model
-epochs = 5
+epochs = 500
 
 
 model.compile(
@@ -105,7 +105,7 @@ model.compile(
 
 start=time.time()
 for i in range(10):
-    history = model.fit(trainX, trainY, batch_size=6*100*percent, epochs=50, validation_split=0.2, verbose=0)
+    history = model.fit(trainX, trainY, batch_size=6*100*percent, epochs=epochs, validation_split=0.2, verbose=0)
 
 end=time.time()
 d=end-start
