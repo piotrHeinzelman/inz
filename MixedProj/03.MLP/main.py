@@ -48,6 +48,8 @@ testY = readFileY ('data/t10k-labels-idx1-ubyte', 8, percent, 1 )
 # Scale images to the [0, 1] range
 trainX = trainX.astype("float32") # / 255
 testX = testX.astype("float32") # / 255
+trainX = trainX.reshape(6*percent*100, 784).astype("float32") / 255
+testX = testX.reshape(1*percent*100, 784).astype("float32") / 255
 
 # convert class vectors to binary class matrices
 trainY = keras.utils.to_categorical(trainY, num_classes)
@@ -55,12 +57,7 @@ testY = keras.utils.to_categorical(testY, num_classes)
 
 
 
-trainX = trainX.reshape(6*percent*100, 784).astype("float32") / 255
-testX = testX.reshape(1*percent*100, 784).astype("float32") / 255
-
-
-
-if (True):
+if (False):
     print ( trainX[0] )
     print ( trainY[0] )
     print ( testX[0] )
@@ -83,40 +80,42 @@ num_classes = 10
 inputs = keras.Input(shape=(784,))
 
 dense = layers.Dense(64, activation="sigmoid")
-x = dense(inputs)
-x = layers.Dense(64, activation="sigmoid")(x)
-outputs = layers.Dense(10)(x)
+x1 = dense(inputs)
+x2 = layers.Dense(64, activation="sigmoid")(x1)
+outputs = layers.Dense(10, activation="softmax")(x2)
 
 model = keras.Model(inputs=inputs, outputs=outputs, name="mnist_model")
 
-
-
-
-model.summary()
+if (False):
+    model.summary()
 
 
 # Train the model
 epochs = 5
 
-#model.compile(loss="categorical_crossentropy", optimizer="adam", metrics=["accuracy"])
-model.compile(optimizer='sgd', loss='binary_crossentropy', metrics=[keras.metrics.Accuracy()])
+
+model.compile(
+    loss='binary_crossentropy',
+    metrics=["accuracy"],
+)
+
+
+# model.compile(optimizer='sgd', loss='binary_crossentropy', metrics=[keras.metrics.Accuracy()])
 
 
 start=time.time()
-
 for i in range(10):
-    history = model.fit(trainX, trainY, batch_size=64, epochs=2, validation_split=0.2)
-#    model.fit(trainX, trainY, batch_size=percent*100*6, epochs=epochs, validation_split=0.1)
+    history = model.fit(trainX, trainY, batch_size=6*100*percent, epochs=50, validation_split=0.2, verbose=0)
 
 end=time.time()
 d=end-start
 print("# Time: " , d)
 
 
-# Evaluate the trained model
-#score = model.evaluate(testX, testY, verbose=1)
-#print("Test loss:", score[0])
-#print("Test accuracy:", score[1])
+
+test_scores = model.evaluate(testX, testY, verbose=2)
+print("Test loss:", test_scores[0])
+print("Test accuracy:", test_scores[1])
 
 
 
