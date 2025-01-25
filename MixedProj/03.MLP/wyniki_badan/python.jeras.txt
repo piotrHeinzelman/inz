@@ -1,6 +1,0 @@
-#   --- Python --- 
-# Time:  779.4024634361267
-313/313 - 0s - 390us/step - accuracy: 0.1135 - loss: 0.3249
-Test loss: 0.3248915672302246
-Test accuracy: 0.11349999904632568
-(base) [john@myarch 03.MLP]$  

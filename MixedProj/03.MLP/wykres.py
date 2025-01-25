@@ -43,6 +43,13 @@ x = np.array([40  ])
 y = np.array([1823  ])
 colors = np.array(["brown" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
 plt.scatter(x, y, c=colors, label="Python sklearn Linux Arch")
+
+
+x = np.array([50  ])
+y = np.array([4591  ])
+colors = np.array(["purple" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
+plt.scatter(x, y, c=colors, label="Python TensorFlow keras Linux Arch")
+
  
 
 plt.legend()

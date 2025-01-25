@@ -1,0 +1,8 @@
+#   --- Python --- 
+Num GPUs Available:  0
+# Time:  4591.968781232834
+
+57ms/step - accuracy: 1.0000 - loss: 3.2356e-04
+340us/step - accuracy: 0.9733 - loss: 0.5109
+333us/step - accuracy: 0.9729 - loss: 0.5085
+336us/step - accuracy: 0.9730 - loss: 0.5059
