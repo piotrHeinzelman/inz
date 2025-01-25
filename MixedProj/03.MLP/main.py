@@ -63,9 +63,9 @@ model.compile(optimizer='adam',
 start=time.time()
 for i in range(cycles):
     # model.fit(trainX, trainY, epochs=epochs, validation_split=0.00, verbose=0)
-    model.fit(trainX, trainY, epochs=epochs-1, verbose=0)
-    model.fit(trainX, trainY, epochs=1, verbose=1)
-    print(i)
+    model.fit(trainX, trainY, epochs=epochs, verbose=0)
+#    model.fit(trainX, trainY, epochs=1, verbose=1)
+#    print(i)
 
 
 end=time.time()
