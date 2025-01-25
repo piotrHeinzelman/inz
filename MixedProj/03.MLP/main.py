@@ -2,6 +2,7 @@
 # https://www.tensorflow.org/?hl=pl
 
 import tensorflow as tf
+import keras
 
 import numpy as np
 import time
@@ -11,17 +12,11 @@ tf.config.list_physical_devices('GPU')
 print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
 # params
-epochs = 150
+epochs = 500
 cycles=10
-percent=10
+percent=100
 num_classes = 10
     
-
-mnist = tf.keras.datasets.mnist
-
-(x_train, y_train),(x_test, y_test) = mnist.load_data()
-x_train, x_test = x_train / 255.0, x_test / 255.0
-
 
 def readFileX ( fileName , offset, percent, multi ):
     file=open( fileName, 'rb' )
@@ -37,15 +32,8 @@ def readFileY ( fileName , offset, percent, multi ):
     file.read( offset )
     len=percent*100*multi
     data=np.fromfile( fileName, np.uint8, len, '', offset )
-    
-    out=[]
-    for i in range ( len ):
-#        tmp=[0,0,0,0,0,0,0,0,0,0]
-#        tmp[ data[i]] = 1    
-#        out.append( tmp )
-        out.append( data[i] )        
     file.close()
-    return out
+    return data
 
 
 
@@ -60,15 +48,8 @@ testX = testX.astype("float32") # / 255
 trainX = trainX.reshape(6*percent*100, 784).astype("float32") / 255
 testX = testX.reshape(1*percent*100, 784).astype("float32") / 255
 
-
-# convert class vectors to binary class matrices
-#trainY = keras.utils.to_categorical(trainY, num_classes)
-#testY = keras.utils.to_categorical(testY, num_classes)
-
-
-
 model = tf.keras.models.Sequential([
-  tf.keras.layers.Flatten(input_shape=(28,28)),
+  tf.keras.layers.Input(shape=(784,)),
   tf.keras.layers.Dense(64, activation='sigmoid'),
   tf.keras.layers.Dense(64, activation='sigmoid'),
   tf.keras.layers.Dropout(0.2),
@@ -79,40 +60,20 @@ model.compile(optimizer='adam',
   loss='sparse_categorical_crossentropy',
   metrics=['accuracy'])
 
-model.fit(x_train, y_train, epochs=5)
-model.evaluate(x_test, y_test)
+start=time.time()
+for i in range(cycles):
+    # model.fit(trainX, trainY, epochs=epochs, validation_split=0.00, verbose=0)
+    model.fit(trainX, trainY, epochs=epochs-1, verbose=0)
+    model.fit(trainX, trainY, epochs=1, verbose=1)
+    print(i)
 
 
+end=time.time()
+d=end-start
+print("# Time: " , d)
 
 
-
-exit()
-
-
-
-
-
-
-
-
-
-# Scale images to the [0, 1] range
-#trainX = trainX.astype("float32") # / 255
-#testX = testX.astype("float32") # / 255
-#trainX = trainX.reshape(6*percent*100, 784).astype("float32") / 255
-#testX = testX.reshape(1*percent*100, 784).astype("float32") / 255
-
-# convert class vectors to binary class matrices
-#trainY = keras.utils.to_categorical(trainY, num_classes)
-#testY = keras.utils.to_categorical(testY, num_classes)
-
-
-
-if (False):
-    print ( trainX[0] )
-    print ( trainY[0] )
-    print ( testX[0] )
-    print ( testY[0] )
+model.evaluate(testX, testY)
 
 if (False):
     fig, ax = plt.subplots( nrows=2, ncols=5, sharex=True, sharey=True )
@@ -123,18 +84,3 @@ if (False):
     ax[0].set_yticks([])
     plt.tight_layout()
     plt.show()
-
-
-start=time.time()
-for i in range(cycles):
-    model.fit(trainX, trainY, epochs=epochs, validation_split=0.2, verbose=0)
-
-end=time.time()
-d=end-start
-print("# Time: " , d)
-
-
-
-
-
-
