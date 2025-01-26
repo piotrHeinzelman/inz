@@ -1,0 +1,5 @@
+  nvidia-smi
+
+  chdmod -x nvidia-all-driver
+  
+  https://medium.com/@vanshkathnawal0942/deep-learning-and-python-with-tensorflow-gpu-setup-on-arch-linux-the-easy-way-81097a82fa8c
