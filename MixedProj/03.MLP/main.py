@@ -1,15 +1,20 @@
 # https://keras.io/examples/vision/mnist_convnet
 # https://www.tensorflow.org/?hl=pl
+# https://www.osc.edu/resources/getting_started/howto/howto_use_gpu_in_python
+
+# https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html
 
 import tensorflow as tf
-import keras
+# import keras
 
 import numpy as np
 import time
 import matplotlib.pyplot as plt
 
-tf.config.list_physical_devices('GPU') 
+tf.config.list_physical_devices('GPU')
 print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
+
+exit()
 
 # params
 epochs = 500

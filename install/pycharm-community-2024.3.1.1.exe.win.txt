@@ -1,0 +1,49 @@
+Windows 10 NVIDIA GPU Python
+To set up a Windows 10 machine with an NVIDIA GPU for Python programming, follow these steps:
+
+Install NVIDIA Drivers: Ensure that your NVIDIA drivers are up to date. You can download the latest drivers from the NVIDIA website.
+https://us.download.nvidia.com/Windows/566.36/566.36-desktop-win10-win11-64bit-international-dch-whql.exe
+https://us.download.nvidia.com/Windows/566.36/566.36-desktop-win10-win11-64bit-international-nsd-dch-whql.exe
+
+Install CUDA Toolkit: Download and install the CUDA Toolkit from the NVIDIA website. This toolkit provides the necessary libraries and tools for GPU-accelerated computing.
+https://developer.download.nvidia.com/compute/cuda/12.8.0/local_installers/cuda_12.8.0_571.96_windows.exe
+
+Install cuDNN: cuDNN is a GPU-accelerated library for deep neural networks. You need to create an NVIDIA Developer account to download cuDNN. Ensure you download the version compatible with your CUDA Toolkit version.
+https://developer.download.nvidia.com/compute/cudnn/9.7.0/local_installers/cudnn_9.7.0_windows.exe
+
+Install Anaconda: Anaconda is a popular distribution of Python that includes many scientific computing libraries. Install Anaconda from the official website.
+https://www.anaconda.com/download-success
+
+Create a Python Environment: Use Anaconda to create a new environment for your Python projects. For example, you can create an environment named deeplearning with Python 3.5 using the command:
+conda create --name deeplearning python=3.5
+
+Activate the environment with:
+conda activate deeplearning
+
+Install TensorFlow or PyTorch: Install TensorFlow or PyTorch with GPU support. For TensorFlow, you can install the GPU version using:
+pip install tensorflow-gpu
+
+For PyTorch, use:
+pip install torch torchvision
+
+Verify GPU Usage: To ensure that TensorFlow or PyTorch is using the GPU, you can run a simple script to check GPU availability. For TensorFlow, you can use:
+import tensorflow as tf
+print("Is GPU available?", tf.test.is_gpu_available())
+
+For PyTorch, you can use:
+import torch
+print("Is CUDA available?", torch.cuda.is_available())
+
+Additional Tools: Install additional tools like Numba, which can compile Python code for execution on CUDA-capable GPUs, and PyCUDA for more direct CUDA programming.
+By following these steps, you can set up your Windows 10 machine with an NVIDIA GPU to perform GPU-accelerated Python programming.
+
+
+
+
+
+
+
+https://www.python.org/ftp/python/3.12.8/python-3.12.8-amd64.exe
+
+https://www.tensorflow.org/install
+
