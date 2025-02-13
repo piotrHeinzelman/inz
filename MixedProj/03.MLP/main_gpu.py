@@ -1,15 +1,7 @@
-# https://keras.io/examples/vision/mnist_convnet
-# https://www.tensorflow.org/?hl=pl
-# https://www.osc.edu/resources/getting_started/howto/howto_use_gpu_in_python
-
-# https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html
-
 import tensorflow as tf
-# import keras
 
 import numpy as np
-import time
-import matplotlib.pyplot as plt
+import time 
 
 tf.config.list_physical_devices('GPU')
 print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
@@ -67,10 +59,8 @@ model.compile(optimizer='adam',
 
 start=time.time()
 for i in range(cycles):
-    # model.fit(trainX, trainY, epochs=epochs, validation_split=0.00, verbose=0)
     model.fit(trainX, trainY, epochs=epochs, verbose=0)
-#    model.fit(trainX, trainY, epochs=1, verbose=1)
-#    print(i)
+
 
 
 end=time.time()
@@ -79,13 +69,4 @@ print("# Time: " , d)
 
 
 model.evaluate(testX, testY)
-
-if (False):
-    fig, ax = plt.subplots( nrows=2, ncols=5, sharex=True, sharey=True )
-    ax=ax.flatten()
-    img = trainX[0].reshape(28,28)
-    ax[0].imshow( img, cmap='Greys' )
-    ax[0].set_xticks([])
-    ax[0].set_yticks([])
-    plt.tight_layout()
-    plt.show()
+ 
