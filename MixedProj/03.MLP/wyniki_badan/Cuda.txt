@@ -17,3 +17,53 @@ cddn 7.6.5
 Num GPUs Available:  1 !!!
 
 ----------
+
+https://www.tensorflow.org/install/pip#windows-native
+
+Software requirements
+Python 3.9–3.12
+pip version 19.0 or higher for Linux (requires manylinux2014 support) and Windows. pip version 20.3 or higher for macOS.
+Windows Native Requires Microsoft Visual C++ Redistributable for Visual Studio 2015, 2017 and 2019
+The following NVIDIA® software are only required for GPU support.
+
+NVIDIA® GPU drivers
+>= 525.60.13 for Linux
+>= 528.33 for WSL on Windows
+CUDA® Toolkit 12.3.
+cuDNN SDK 8.9.7.
+(Optional) TensorRT to improve latency and throughput for inference.
+
+
+Go to the Microsoft Visual C++ downloads.
+https://support.microsoft.com/help/2977003/the-latest-supported-visual-c-downloads
+
+
+3. Install Miniconda
+Miniconda is the recommended approach for installing TensorFlow with GPU support. It creates a separate environment to avoid changing any installed software in your system. This is also the easiest way to install the required software especially for the GPU setup.
+
+Download the Miniconda Windows Installer. Double-click the downloaded file and follow the instructions on the screen.
+
+https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe
+
+conda create --name tf python=3.9
+
+conda deactivate
+conda activate tf
+
+conda install -c conda-forge cudatoolkit=11.2 cudnn=8.1.0
+pip install --upgrade pip
+
+pip install "tensorflow<2.11" 
+
+Verify the CPU setup:
+
+
+
+python -c "import tensorflow as tf; print(tf.reduce_sum(tf.random.normal([1000, 1000])))"
+
+If a tensor is returned, you've installed TensorFlow successfully.
+
+Verify the GPU setup:
+
+
+python -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
