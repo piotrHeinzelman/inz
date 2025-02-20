@@ -1,5 +1,5 @@
 https://jaggu-iitm.medium.com/setting-up-deep-learning-with-cuda-tensorflow-and-keras-on-arch-linux-with-dual-gpu-nvidia-gpu-82963d2ecb75
-
+https://medium.com/@vanshkathnawal0942/deep-learning-and-python-with-tensorflow-gpu-setup-on-arch-linux-the-easy-way-81097a82fa8c
  
 anaconda 
 Anaconda3-2024.10-1-Windows-x86_64.exe
