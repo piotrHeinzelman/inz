@@ -1,0 +1,25 @@
+
+- The cuda binaries are in /opt/cuda/bin/
+- The cuda samples are in /opt/cuda/samples/
+- The cuda docs are in /opt/cuda/doc/
+- You need to source /etc/profile or restart your session in order for the CUDA
+  binaries to appear in your $PATH
+- The default host compiler for nvcc is set by the $NVCC_CCBIN environment
+  variable in /etc/profile.d/cuda.sh
+- The default host compiler for nvcc is no longer configured using symlinks in
+  /opt/cuda/bin/ but by the $NVCC_CCBIN environment variable in
+  /etc/profile.d/cuda.sh.  You need to source /etc/profile or restart your
+  session for it to be available in your environment.  Additionally, you may
+  need to clear the build cache of your projects where the old path may have
+  been recorded.
+- When you uninstall an old, unrequired version of GCC that was previously
+  required by cuda for the default host compiler ($NVCC_CCBIN), you may need
+  to source /etc/profile or restart your session.  Additionally, you may need
+  to clear the build cache of your projects where the old path may be still
+  recorded.
+Optional dependencies for cuda
+    gdb: for cuda-gdb
+    glu: required for some profiling tools in CUPTI [installed]
+    nvidia-utils: for NVIDIA drivers (not needed in CDI containers) [installed]
+    rdma-core: for GPUDirect Storage (libcufile_rdma.so)
+

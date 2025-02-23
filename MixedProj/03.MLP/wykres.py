@@ -54,6 +54,12 @@ y = np.array([4591  ])
 colors = np.array(["brown" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
 plt.scatter(x, y, c=colors, label="Python TensorFlow keras Linux Arch 4591[sek.]")
 
+
+x = np.array([36  ])
+y = np.array([10141  ])
+colors = np.array(["brown" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
+plt.scatter(x, y, c=colors, label="Python TensorFlow +GPU Linux Arch 10141 [sek.]")
+
  
 plt.legend()
 plt.savefig( '../000.fig/fig03.pdf',dpi=400 ) 

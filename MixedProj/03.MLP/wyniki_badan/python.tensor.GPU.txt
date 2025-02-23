@@ -1,0 +1,10 @@
+#   --- Python --- 
+Num GPUs Available:  1
+# Time:  5142
+4ms / step accuracy 0.9612  loss 0.5861   50% !!! data size !!!
+
+Time : 10141
+2ms / step. accuracy 0.97, loss 0.5093
+
+
+
