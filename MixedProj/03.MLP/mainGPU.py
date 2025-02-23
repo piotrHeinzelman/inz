@@ -20,7 +20,7 @@ for gpu in gpus:
 
 # params
 epochs = 5000
-percent = 1
+percent = 100
 num_classes = 10
     
 
