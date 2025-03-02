@@ -1,6 +1,7 @@
 Driver: 555.85
-cuda 11.2.2
-cuDNN 8.1
+cuda Toolkit 11.2.2
+cuDNN 8.1.1.33  for 11.2
 tensorflow 2.10
 gcc 9.3.1
 python 3.9.11
+tensotRT TensorRT-8.2.2.1.Windows10.x86_64.cuda-11.4.cudnn8.2
