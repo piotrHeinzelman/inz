@@ -55,10 +55,10 @@ colors = np.array(["brown" ]) #"green","blue","yellow","pink","black","orange","
 plt.scatter(x, y, c=colors, label="Python TensorFlow keras Linux Arch 4591[sek.]")
 
 
-x = np.array([36  ])
-y = np.array([10141  ])
+x = np.array([36, 37, 38  ])
+y = np.array([5398, 5337, 5503  ])
 colors = np.array(["brown" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
-plt.scatter(x, y, c=colors, label="Python TensorFlow +GPU Linux Arch 10141 [sek.]")
+plt.scatter(x, y, c=colors, label="Python TensorFlow +GPU Linux Arch 5398 [sek.]")
 
  
 plt.legend()

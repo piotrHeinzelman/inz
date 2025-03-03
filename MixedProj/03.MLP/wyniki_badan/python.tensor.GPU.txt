@@ -1,10 +1,48 @@
 #   --- Python --- 
 Num GPUs Available:  1
-# Time:  5142
-4ms / step accuracy 0.9612  loss 0.5861   50% !!! data size !!!
 
-Time : 10141
-2ms / step. accuracy 0.97, loss 0.5093
+Time : 5398
+
+Time: 5337
+
+#   --- Python --- 
+Num GPUs Available:  1
+TensorFlow is using the GPU
+PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')
+Operation completed
+Time taken for computation: 5503.143970966339 seconds
 
 
 
+# Time:  5503.143970966339
+510ms/step 
+- accuracy: 0.9688 
+- loss: 0.0450
+
+579us/step 
+- accuracy: 0.9660 
+- loss: 0.1378
+
+
+556us/step 
+- accuracy: 0.9628 
+- loss: 0.1491
+
+548us/step 
+- accuracy: 0.9636 
+- loss: 0.1433
+
+
+2ms/step 
+- accuracy: 0.9643 
+- loss: 0.1399
+
+2ms/step 
+- accuracy: 0.9643 
+- loss: 0.1398
+
+
+
+XLA service 0x700a... initialized for platform CUDA (this does nnot guarantee that XLA will be used). Devices: StreamExecutor device(0): NVIDIA RTX 4070
+cuda_dnn.cc:529  Loaded cuDNN versiob 90700
+device_compiler.h:188] Compiled cluster using XLA!

@@ -19,7 +19,7 @@ print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 # params
 epochs = 500
 cycles=10
-percent=60
+percent=100
 num_classes = 10
     
 

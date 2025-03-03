@@ -92,7 +92,7 @@ d=end-start
 
 clear_session()
 print("Operation completed")
-print(f"Time taken for computation: {end_time - start_time} seconds")
+print(f"Time taken for computation: {d} seconds")
 
 
 

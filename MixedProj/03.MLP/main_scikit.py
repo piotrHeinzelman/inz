@@ -10,6 +10,37 @@ import sklearn.neural_network as snn
 import matplotlib.pyplot as plt
 
 
+
+
+import tensorflow as tf
+from tensorflow.keras.backend import clear_session
+
+# List available physical devices
+
+physical_devices = tf.config.list_physical_devices('GPU')
+print("Num GPUs Available: ", len(physical_devices))
+
+if physical_devices:
+    print("TensorFlow is using the GPU")
+    for gpu in physical_devices:
+        tf.config.experimental.set_memory_growth(gpu, True)
+        print(gpu)
+else:
+    print("TensorFlow is not using the GPU")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def readFileX ( fileName , offset, percent, multi ):
     file=open( fileName, 'rb' )
     file.read( offset )
@@ -77,17 +108,25 @@ l=[]
 start=time.time()
 
 
-for i in range(10):
-    for epo in range (500):
-        net.partial_fit( trainX, trainY )
+#for i in range(10):
+#    for epo in range (500):
+
+net.partial_fit( trainX, trainY )
+
     # l.append( net.score(testX, testY) )   
 
-# print (l)
 
 end=time.time()
 d=end-start
 print("# Time: " , d)
 print("ps[]=" , d)
+
+# print (l)
+clear_session()
+print("Operation completed")
+print(f"Time taken for computation: {d} seconds")
+
+
 
 
 
