@@ -60,6 +60,10 @@ y = np.array([5398, 5337, 5503  ])
 colors = np.array(["brown" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
 plt.scatter(x, y, c=colors, label="Python TensorFlow +GPU Linux Arch 5398 [sek.]")
 
+
+
+plt.scatter(x, y, c=colors, label="Java 14426 [sek.]")
+
  
 plt.legend()
 plt.savefig( '../000.fig/fig03.pdf',dpi=400 ) 
