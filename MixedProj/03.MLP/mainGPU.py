@@ -8,14 +8,31 @@ import tensorflow as tf
 
 import numpy as np
 import time
+from tensorflow.keras.backend import clear_session
 import matplotlib.pyplot as plt
 
+
+physical_devices = tf.config.list_physical_devices('GPU')
+print("Num GPUs Available: ", len(physical_devices))
+
+if physical_devices:
+    print("TensorFlow is using the GPU")
+    for gpu in physical_devices:
+        tf.config.experimental.set_memory_growth(gpu, True)
+        print(gpu)
+else:
+    print("TensorFlow is not using the GPU")
+# Simple TensorFlow computation to test GPU utilization
+
+
+
+
 #Check available GPUs
-gpus = tf.config.experimental.list_physical_devices('GPU')
-print('Num GPUs Available: ', len(gpus))
-for gpu in gpus:
-   print('Name:', gpu.name, 'Type:', gpu.device_type)
-   tf.config.experimental.set_memory_growth(gpu, True)
+#gpus = tf.config.experimental.list_physical_devices('GPU')
+#print('Num GPUs Available: ', len(gpus))
+#for gpu in gpus:
+#   print('Name:', gpu.name, 'Type:', gpu.device_type)
+#   tf.config.experimental.set_memory_growth(gpu, True)
 
 
 # params
@@ -72,8 +89,23 @@ model.fit(trainX, trainY, epochs=epochs, verbose=0)
 
 end=time.time()
 d=end-start
+
+clear_session()
+print("Operation completed")
+print(f"Time taken for computation: {end_time - start_time} seconds")
+
+
+
 print("# Time: " , d)
 
 
 model.evaluate(testX, testY)
+
+
+
+
+
+
+
+
 
