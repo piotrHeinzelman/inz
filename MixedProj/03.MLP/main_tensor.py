@@ -1,27 +1,46 @@
 # https://keras.io/examples/vision/mnist_convnet
 # https://www.tensorflow.org/?hl=pl
 # https://www.osc.edu/resources/getting_started/howto/howto_use_gpu_in_python
-
 # https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html
 
 import tensorflow as tf
-# import keras
 
 import numpy as np
 import time
+from tensorflow.keras.backend import clear_session
 import matplotlib.pyplot as plt
 
-tf.config.list_physical_devices('GPU')
-print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
-#exit()
+
+
+physical_devices = tf.config.list_physical_devices('GPU')
+#print("Num GPUs Available: ", len(physical_devices))
+
+if physical_devices:
+#    print("TensorFlow is using the GPU")
+   for gpu in physical_devices:
+      tf.config.experimental.set_memory_growth(gpu, True)
+#        print(gpu)
+#else:
+#    print("TensorFlow is not using the GPU")
+# Simple TensorFlow computation to test GPU utilization
+
+
+
+
+#Check available GPUs
+#gpus = tf.config.experimental.list_physical_devices('GPU')
+#print('Num GPUs Available: ', len(gpus))
+#for gpu in gpus:
+#   print('Name:', gpu.name, 'Type:', gpu.device_type)
+#   tf.config.experimental.set_memory_growth(gpu, True)
+
 
 # params
 epochs = 500
-cycles=10
-percent=100
+percent = 100
 num_classes = 10
-    
+
 
 def readFileX ( fileName , offset, percent, multi ):
     file=open( fileName, 'rb' )
@@ -66,26 +85,19 @@ model.compile(optimizer='adam',
   metrics=['accuracy'])
 
 start=time.time()
-for i in range(cycles):
-    # model.fit(trainX, trainY, epochs=epochs, validation_split=0.00, verbose=0)
-    model.fit(trainX, trainY, epochs=epochs, verbose=0)
-#    model.fit(trainX, trainY, epochs=1, verbose=1)
-#    print(i)
 
+model.fit(trainX, trainY, epochs=epochs, verbose=0)
 
 end=time.time()
 d=end-start
-print("# Time: " , d)
+
+clear_session()
+
+
+print("# Python Tensorflow Time: " , d)
 
 
 model.evaluate(testX, testY)
 
-if (False):
-    fig, ax = plt.subplots( nrows=2, ncols=5, sharex=True, sharey=True )
-    ax=ax.flatten()
-    img = trainX[0].reshape(28,28)
-    ax[0].imshow( img, cmap='Greys' )
-    ax[0].set_xticks([])
-    ax[0].set_yticks([])
-    plt.tight_layout()
-    plt.show()
+
+

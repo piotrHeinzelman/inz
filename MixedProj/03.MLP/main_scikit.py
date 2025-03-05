@@ -1,43 +1,13 @@
 # from Python - Machine learning i deep learning ISBN: 978-83-283-7001-2
 # https://scikit-learn.org/dev/modules/generated/sklearn.neural_network.MLPClassifier.html
 
-import numpy as np
 import time
 import datetime
 import sys
 import struct
 import sklearn.neural_network as snn
 import matplotlib.pyplot as plt
-
-
-
-
-import tensorflow as tf
-from tensorflow.keras.backend import clear_session
-
-# List available physical devices
-
-physical_devices = tf.config.list_physical_devices('GPU')
-print("Num GPUs Available: ", len(physical_devices))
-
-if physical_devices:
-    print("TensorFlow is using the GPU")
-    for gpu in physical_devices:
-        tf.config.experimental.set_memory_growth(gpu, True)
-        print(gpu)
-else:
-    print("TensorFlow is not using the GPU")
-
-
-
-
-
-
-
-
-
-
-
+import numpy as np
 
 
 
@@ -47,7 +17,6 @@ def readFileX ( fileName , offset, percent, multi ):
     data=np.fromfile( fileName, np.uint8, percent*100*784*multi, '', offset )
     data=data.reshape(percent*100*multi, 784)
     data=1-(data/128)
-#   data=(data/16)
     file.close()
     return data
 
@@ -56,11 +25,11 @@ def readFileY ( fileName , offset, percent, multi ):
     file.read( offset )
     len=percent*100*multi
     data=np.fromfile( fileName, np.uint8, len, '', offset )
-    
+
     out=[]
     for i in range ( len ):
         tmp=[0,0,0,0,0,0,0,0,0,0]
-        tmp[ data[i]] = 1    
+        tmp[ data[i]] = 1
         out.append( tmp )
     file.close()
     return out
@@ -100,42 +69,23 @@ if (False):
 
 
 #net = snn.MLPClassifier(hidden_layer_sizes=(64,64,10), activation='logistic', solver='sgd', alpha=0.0001, learning_rate='constant', learning_rate_init=0.001, max_iter=5000 )
-net = snn.MLPClassifier(hidden_layer_sizes=(64,64), random_state=1, alpha=0.0001, max_iter=5000, early_stopping=False, activation='logistic', solver='sgd', learning_rate='constant', learning_rate_init=0.001 )
-net.fit( trainX, trainY )
-
-l=[]
+net = snn.MLPClassifier( hidden_layer_sizes=(64,64), max_iter=500, random_state=1, alpha=0.0001,  early_stopping=False, activation='logistic', solver='sgd', learning_rate='constant', learning_rate_init=0.001 )
 
 start=time.time()
 
+net.fit( trainX, trainY )
 
-#for i in range(10):
-#    for epo in range (500):
-
-net.partial_fit( trainX, trainY )
-
-    # l.append( net.score(testX, testY) )   
+# net.partial_fit( trainX, trainY )
+# l.append( net.score(testX, testY) )
 
 
 end=time.time()
 d=end-start
-print("# Time: " , d)
-print("ps[]=" , d)
+print("# Python Sklearn Time: " , d)
+#print("ps[]=" , d)
 
-# print (l)
-clear_session()
-print("Operation completed")
-print(f"Time taken for computation: {d} seconds")
-
-
-
-
-
-#print (net)
-print ("# loss:", net.loss_ , ", score: " , net.score( testX, testY ), ", predict: ",net.predict(testX[:1]) )
+print ("# Python Sklearn loss:", net.loss_ , ", score: " , net.score( testX, testY ), ", predict: ",net.predict(testX[:1]) )
 
 #resultY = net.predict( testX )
-
-
-
 
 

@@ -1,0 +1,21 @@
+echo "#    --- Matlab ---"
+/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run matlab.m'
+/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run matlab.m'
+/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run matlab.m'
+
+echo "#    --- Python Tensorflow ---"
+python3 main_tensor.py
+python3 main_tensor.py
+python3 main_tensor.py
+
+echo "#    --- Python Scikit ---"
+python3 main_scikit.py
+python3 main_scikit.py
+python3 main_scikit.py
+
+
+
+
+
+
+
