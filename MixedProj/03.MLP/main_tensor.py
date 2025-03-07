@@ -14,31 +14,13 @@ import matplotlib.pyplot as plt
 
 
 physical_devices = tf.config.list_physical_devices('GPU')
-#print("Num GPUs Available: ", len(physical_devices))
-
 if physical_devices:
-#    print("TensorFlow is using the GPU")
    for gpu in physical_devices:
       tf.config.experimental.set_memory_growth(gpu, True)
-#        print(gpu)
-#else:
-#    print("TensorFlow is not using the GPU")
-# Simple TensorFlow computation to test GPU utilization
-
-
-
-
-#Check available GPUs
-#gpus = tf.config.experimental.list_physical_devices('GPU')
-#print('Num GPUs Available: ', len(gpus))
-#for gpu in gpus:
-#   print('Name:', gpu.name, 'Type:', gpu.device_type)
-#   tf.config.experimental.set_memory_growth(gpu, True)
-
 
 # params
 epochs = 500
-percent = 100
+percent = 50
 num_classes = 10
 
 
@@ -97,7 +79,8 @@ clear_session()
 print("# Python Tensorflow Time: " , d)
 
 
-model.evaluate(testX, testY)
+
+# model.evaluate(testX, testY)
 
 
 

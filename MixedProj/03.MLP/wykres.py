@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-plt.title('Czas [s] : MLP 5000 epok, 2 warstwy po 64 neuronw') 
+plt.title('Czas [s] : MLP 500 epok, 2 warstwy po 64 neuronw') 
 plt.style.use('_mpl-gallery')
 
 
@@ -15,50 +15,44 @@ plt.style.use('_mpl-gallery')
 #colors = np.array(["red","red","red","red", "orange","orange","orange","orange", "red","red", "orange","orange","orange","orange" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
 #plt.scatter(x, y, c=colors)
 
-x = np.array([3,4,5,6,         ])
-y = np.array([211,206,205,205  ])
-colors = np.array(["blue","blue","blue","blue" ]) # "red"
-plt.scatter(x, y, c=colors, label="Matlab Arch Linux GPU   208[sek.]")
+x = np.array([ 3, 4, 5,         ])
+y = np.array([ 15.56, 14.57, 14.47  ])
+colors = np.array(["blue","blue","blue" ]) # "red"
+plt.scatter(x, y, c=colors, label="Matlab - GPU   15.56 [sek.]")
 
 
-x = np.array([8,9,10,11      ])
-y = np.array([419,425,419,422  ])
-colors = np.array(["cyan","cyan","cyan","cyan" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
-plt.scatter(x, y, c=colors, label="Matlab window10 GPU     422[sek.]")
-
-
-
-
-x = np.array([19,20 ])
-y = np.array([1998, 2089 ])
-colors = np.array(["red","red" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
-plt.scatter(x, y, c=colors, label="Matlab Arch Linux      2044[sek.]")
-
-
-x = np.array([23,24,25,26            ])
-y = np.array([2305,2294,2235,2164    ])
-colors = np.array(["magenta","magenta","magenta","magenta" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
-plt.scatter(x, y, c=colors, label="Matlab window 10      2250[sek.]")
+#x = np.array([8,9,10,11      ])
+#y = np.array([419,425,419,422  ])
+#colors = np.array(["cyan","cyan","cyan","cyan" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
+#plt.scatter(x, y, c=colors, label="Matlab window10 GPU     422[sek.]")
 
 
 
 
-x = np.array([34  ])
-y = np.array([1823  ])
+#x = np.array([19,20 ])
+#y = np.array([1998, 2089 ])
+#colors = np.array(["red","red" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
+#plt.scatter(x, y, c=colors, label="Matlab Arch Linux      2044[sek.]")
+
+
+#x = np.array([23,24,25,26            ])
+#y = np.array([2305,2294,2235,2164    ])
+#colors = np.array(["magenta","magenta","magenta","magenta" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
+#plt.scatter(x, y, c=colors, label="Matlab window 10      2250[sek.]")
+
+
+
+
+x = np.array([13,14,15  ])
+y = np.array([83.58, 83.69, 83.23  ])
 colors = np.array(["green" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
-plt.scatter(x, y, c=colors, label="Python sklearn Linux Arch  1823[sek.]")
+plt.scatter(x, y, c=colors, label="Python sklearn - GPU 83.58 [sek.]")
 
 
-x = np.array([35  ])
-y = np.array([4591  ])
+x = np.array([ 23, 24, 25  ])
+y = np.array([ 482.10 , 483.86, 481.90 ])
 colors = np.array(["brown" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
-plt.scatter(x, y, c=colors, label="Python TensorFlow keras Linux Arch 4591[sek.]")
-
-
-x = np.array([36, 37, 38  ])
-y = np.array([5398, 5337, 5503  ])
-colors = np.array(["brown" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
-plt.scatter(x, y, c=colors, label="Python TensorFlow +GPU Linux Arch 5398 [sek.]")
+plt.scatter(x, y, c=colors, label="Python TensorFlow - GPU 481 [sek.]")
 
 
 

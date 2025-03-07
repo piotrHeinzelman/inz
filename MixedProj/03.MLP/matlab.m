@@ -91,7 +91,7 @@ end
 
 
 if ( 1==1 )
-    percent=100;
+    percent=50;
 
     fileIMG=fopen( 'data/train-labels-idx1-ubyte','r');
     fileData=fread( fileIMG, 'uint8' );

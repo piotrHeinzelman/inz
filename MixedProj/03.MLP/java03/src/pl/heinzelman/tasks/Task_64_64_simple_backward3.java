@@ -43,7 +43,7 @@ public class Task_64_64_simple_backward3 implements Task{
             System.out.println(tools.getIndexMaxFloat(testY[i]));
         }
 
-        int numOfEpoch=500000;
+        int numOfEpoch=500;
         float[] CSBin_data=new float[numOfEpoch];
         int goals0;
 

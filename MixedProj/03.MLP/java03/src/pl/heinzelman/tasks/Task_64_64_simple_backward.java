@@ -25,7 +25,7 @@ public class Task_64_64_simple_backward implements Task{
 
     @Override
     public void prepare() {
-        tools.prepareData( 100 );
+        tools.prepareData( 50 );
 
         testX = tools.getTestX();
         testY = tools.getTestY();
@@ -46,7 +46,7 @@ public class Task_64_64_simple_backward implements Task{
     @Override
     public void run() {
 
-        for (int cycle=0;cycle<10;cycle++) {
+        for (int cycle=0;cycle<1;cycle++) {
 
             float Loss = 0.0f;
             int step=1;
