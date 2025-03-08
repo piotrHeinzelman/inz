@@ -1,5 +1,5 @@
 
-% Osowski / Szmurlo matematyczne modele
+% S.Osowski / R.Szmurlo matematyczne modele
 % page 89
 % https://www.tensorflow.org/?hl=pl
 % https://www.mathworks.com/help/deeplearning/ref/feedforwardnet.html

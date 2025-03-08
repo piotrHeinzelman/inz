@@ -1,39 +1,154 @@
-% To train a deep learning network, use trainnet.
+% S.Osowski, R.Szmurlo : modele matematyczne uczenia maszynowego 
+% Alexnet - tryb Transfer Learning
 
-cycles=100;
-name="20";
+D = gpuDevice;
 
 
-%generate data
-if (false)
-    x=[ 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 ]
-
-    fileID=fopen( append ('data\datax',name,'.bin'),'w');
-    fwrite( fileID, x, 'double' );
-    fclose(fileID);
-
-    y=[ -1.69 -0.79 5.77 7.80 4.56 14.32 15.47 8.88 7.41 17.26 14.83 20.47 20.39 27.04 22.53 22.36 29.35 22.86 31.22 28.13 ]
-
-    fileID=fopen(append('data\datay',name,'.bin'),'w');
-    fwrite( fileID, y, 'double' );
-    fclose(fileID);
+function accuracy = accuracyCheck( first, second )
+    goals=0;
+    s=size(first);
+    s=s(2);
+    for i=(1:s)
+        val1=first(i);
+        val2=second(i);
+        if (val1==val2)
+            goals=goals+1;
+        end
+    end
+    accuracy = goals/s;
 end
 
 
-%load data
-if (false)
-    fileID=fopen(append('data/datax',name,'.bin'),'r');
-    x=fread( fileID, 'double' );
-    fclose(fileID);
+function index = indexOfMaxInVector( vec ) %
+    val=vec(1);
+    index=1;
+    s=size(vec);
+    s=s(1);
+    for i = (2:s)
+        if (val<vec(i))
+            index=i;
+            val=vec(i);
+        end
+    end
+end
 
-    fileID=fopen(append('data/datay',name,'.bin'),'r');
-    y=fread( fileID, 'double' );
-    fclose(fileID);
+%vec = [0.1, 0.3, 0.15, 0.2]';
+%i = indexOfMaxInVector( vec )
+
+
+function aryOfInt = aryOfVectorToAryOfInt( aryOfVec )
+    s = size( aryOfVec );
+    h=s(1);
+    s=s(2);
+    aryOfInt=zeros(1,s);
+    for i=1:s
+      vec=aryOfVec(1:h,i);
+      index = indexOfMaxInVector(vec);
+      if index==10
+          index=0;
+      end
+      aryOfInt(i)=index;
+    end
+end
+
+
+function showx( arrayx , i )
+    img0=arrayx(1:784,i);
+    img0=img0*256;
+    image(img0);
+
+    img=zeros(28,28);
+        for i=(1:28)
+            row=img0((i-1)*28+1:(i)*28);
+           img(i,1:28)=row;
+        end
+    image(img)
+end
+
+if ( 1==1 )
+    percent=1;
+
+    fileIMG=fopen( 'data/train-labels-idx1-ubyte','r');
+    fileData=fread( fileIMG, 'uint8' );
+    fclose(fileIMG);
+    ytmp=fileData(9:8+percent*600)';
+    ysize=size(ytmp);
+    ysize=ysize(2);
+    
+    for i=(1:ysize)
+        yz=[0,0,0,0,0,0,0,0,0,0];
+        d=ytmp(i);
+        if (d==0)
+            d=10;
+        end
+        yz(d)=1;
+        ytrain = categorical( ytmp );
+    end
+    
+
+    fileData=1;
+
+    fileIMG=fopen( 'data/t10k-labels-idx1-ubyte','r');
+    fileData=fread( fileIMG, 'uint8' );
+    fclose(fileIMG);
+
+    ytmp=fileData(9:8+percent*100)';
+    ysize=size(ytmp);
+    ysize=ysize(2);
+    ytest=zeros(10,ysize);
+    for i=(1:ysize)
+        d=ytmp(i);
+        if (d==0)
+            d=10;
+        end
+        ytest(d,i)=1;
+    end
+    ytest=categorical(ytmp);
+
+
+    fileIMG=fopen( 'data/train-images-idx3-ubyte','r');
+    fileData=fread( fileIMG, 'uint8' );
+    fclose(fileIMG);
+    tmp=fileData(17:16+percent*784*600);
+
+    for i=1:percent*600
+        col=tmp(1+(i-1)*784:i*784);
+        row=col';
+        for j=1:28
+            for k=1:28
+                val=row(k+((j-1)*28));
+                xtrain(j,k,i)=val;% /255;
+            end
+        end
+    end
+    %xtrain=xtrain/255;
+    fileData=1;
+
+    fileIMG=fopen( 'data/t10k-images-idx3-ubyte','r');
+    fileData=fread( fileIMG, 'uint8' );
+    fclose(fileIMG);
+    tmp=fileData(17:16+percent*784*100);
+
+    for i=1:percent*100
+        col=tmp(1+(i-1)*784:i*784);
+        row=col';
+        for j=1:28
+            for k=1:28
+                val=row(k+((j-1)*28));
+                xtest(j,k,i)=val; %/255;
+            end
+        end
+    end
+    fileData=1;
+    xtest = imageDatastore( 'data/train/' );
 end
 
 
 
-''
+
+%
+%
+%
 
 
 
@@ -43,67 +158,31 @@ end
 
 
 
+input = imageInputLayer([28 28 1]);  % 28x28px 1 channel
+conv = convolution2dLayer([5 5],10); % 10 filter, 5x5
+relu = reluLayer;                    %reLU    
+fc = fullyConnectedLayer(10);
+sm = softmaxLayer;
+co = classificationLayer;
+
+epochs=500;
+
+layers = [ input
+    conv
+    relu
+    fc
+    sm
+    co];
 
 
+options=trainingOptions('adam', 'MaxEpochs',epochs, 'ExecutionEnvironment','gpu','ValidationPatience',10);
 
 
+size( xtrain )
+size( ytrain )
+netTransfer = trainNetwork( xtrain, ytrain(1), layers, options);
+predictedLabels = classify(netTransfer, xtest);
 
-
-
-
-ST = datetime('now');
-for i = 1:cycles
-    a = polyfit(x,y,1);
-end
-
-ED = datetime('now');
-
-D = duration( ED-ST );
-L = size( x );
-
-fprintf('# Polyfit:  X[%i] * cycles: %i \n', L(1), cycles  );
-fprintf( '# result: a:%f, a:%f\n\n' , a(2), a(1) );
-fprintf ('m[]=%f\n' , seconds(D)  );
-
-
-ST2 = datetime('now');
-
-xsr = 0;
-ysr = 0;
-w0  = 0;
-w1  = 0;
-
-for c = 1:cycles
-   xsr = 0;
-   ysr = 0;
-   for i=1:length(x)
-      xsr = (x(i)+xsr);
-      ysr = (y(i)+ysr);
-   end
-
-   xsr = xsr/length(x);
-   ysr = ysr/length(x);
-
-   w0=0;
-   w1=0;
-   sumTop=0;
-   sumBottom=0;
-
-   for i = 1:length(x)
-      sumTop     = ((( x(i)-xsr ) * ( y(i)-ysr )) + sumTop);
-      sumBottom  = ((( x(i)-xsr ) * ( x(i)-xsr )) + sumBottom);
-
-
-   end
-   w1 = sumTop/sumBottom;
-   w0 = ysr-( w1 * xsr );      
-
-end
-
-ED2 = datetime('now');
-D2 = duration( ED2-ST2 );
-
-fprintf('# implemented:  X[%i] * cycles: %i \n', L(1), cycles  );
-fprintf('# result: w0:%f, w1:%f\n\n', w0, w1);
-fprintf ('mi[]=%f\n' , seconds(D2)  );
-
+accuracy = accuracyCheck( predictedLabels, ytest );
+ 
+ 
