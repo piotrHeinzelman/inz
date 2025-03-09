@@ -1,10 +1,6 @@
 % S.Osowski, R.Szmurlo : modele matematyczne uczenia maszynowego 
 % Alexnet - tryb Transfer Learning
-
 % https://www.mathworks.com/help/deeplearning/ug/introduction-to-convolutional-neural-networks.html
-
-D = gpuDevice;
-
 
 function accuracy = accuracyCheck( first, second )
     goals=0;
@@ -33,9 +29,6 @@ function index = indexOfMaxInVector( vec ) %
         end
     end
 end
-
-%vec = [0.1, 0.3, 0.15, 0.2]';
-%i = indexOfMaxInVector( vec )
 
 
 function aryOfInt = aryOfVectorToAryOfInt( aryOfVec )
@@ -68,7 +61,7 @@ function showx( arrayx , i )
 end
 
 if ( 1==1 )
-    percent=1;
+    percent=100;
 
     fileIMG=fopen( 'data/train-labels-idx1-ubyte','r');
     fileData=fread( fileIMG, 'uint8' );
@@ -138,31 +131,15 @@ if ( 1==1 )
     fileData=1;
 end
 
-
-
-
-%
-%
-%
-
-
-
-
-
-
-
-
-
 input = imageInputLayer([28 28 1]);  % 28x28px 1 channel
 conv = convolution2dLayer(5, 20); % 10 filter, 5x5
-relu = reluLayer;                    %reLU    
+relu = reluLayer;                    %reLU
 maxPooling2dLayer(2,Stride=2);
 fc = fullyConnectedLayer(10);
 sm = softmaxLayer;
 co = classificationLayer;
 
 epochs=500;
-%epochs=1;
 
 layers = [ input
     conv
@@ -206,7 +183,7 @@ weights_first=netTransfer.Layers(2,1).Weights(:,:,1,1);
 
  predictedLabels = classify(netTransfer, xtest);
   accuracy = accuracyCheck( predictedLabels', ytest );
- 
+
     fprintf('# CNN: 5x5 * 20 *  500 cycles: (Linux GPU, batch mode)\n' );
     fprintf( '# accuracy: a:%f\n\n' , accuracy );
     fprintf ('m[]=%f\n' , seconds(D)  );

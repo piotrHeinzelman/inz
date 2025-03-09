@@ -1,20 +1,21 @@
 #    --- Matlab ---
-# CNN: 5x5 * 20 *  500 cycles: (Linux GPU, batch mode)
-# accuracy: a:0.840000
-
-m[]=10.491577
 #    --- Matlab ---
 # CNN: 5x5 * 20 *  500 cycles: (Linux GPU, batch mode)
-# accuracy: a:0.840000
+# accuracy: a:0.981100
 
-m[]=10.597529
+m[]=791.031023
 #    --- Matlab ---
 # CNN: 5x5 * 20 *  500 cycles: (Linux GPU, batch mode)
-# accuracy: a:0.840000
+# accuracy: a:0.980700
 
-m[]=10.474022
+m[]=801.441885
 #    --- Matlab ---
 # CNN: 5x5 * 20 *  500 cycles: (Linux GPU, batch mode)
-# accuracy: a:0.840000
+# accuracy: a:0.978800
 
-m[]=10.694407
+m[]=788.605757
+#    --- Matlab ---
+# CNN: 5x5 * 20 *  500 cycles: (Linux GPU, batch mode)
+# accuracy: a:0.975600
+
+m[]=788.293468

@@ -12,10 +12,10 @@ plt.style.use('_mpl-gallery')
 #colors = np.array(["red","red","red","red", "orange","orange","orange","orange", "red","red", "orange","orange","orange","orange" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
 #plt.scatter(x, y, c=colors)
 
-x = np.array([ 3, 4, 5, 6         ])
-y = np.array([ 10.49, 10.59, 10.47, 10.69  ])
-colors = np.array(["blue","blue","blue","blue" ]) # "red"
-plt.scatter(x, y, c=colors, label="Matlab - GPU   10.47 [sek.]")
+x = np.array([ 3, 3, 4, 5, 6         ])
+y = np.array([ 0, 791, 801, 788, 788 ])
+colors = np.array(["white","blue","blue","blue","blue" ]) # "red"
+plt.scatter(x, y, c=colors, label="Matlab - GPU   791 [sek.]")
 
 
 #x = np.array([8,9,10,11      ])
