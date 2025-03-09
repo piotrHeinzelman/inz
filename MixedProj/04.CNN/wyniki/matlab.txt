@@ -1,0 +1,2 @@
+500 epoch, accuracy 83,94,89
+

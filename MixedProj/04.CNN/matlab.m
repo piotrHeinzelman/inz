@@ -76,18 +76,9 @@ if ( 1==1 )
     ytmp=fileData(9:8+percent*600)';
     ysize=percent*600;
     yyy=zeros(1,ysize);
-    %ysize=ysize(2);
-    
     for i=(1:ysize)
-        %yz=zeros(10,1);%[0,0,0,0,0,0,0,0,0,0];
         d=ytmp(i);
         d=d+1;
-        %if (d==0)
-        %    d=10;
-        %end
-        %yz(d)=true;
-        %ytrain(i) = categorical( yz );
-        %yyy(i)=yz;
         yyy(i)=d ;
     end
     ytrain=categorical(yyy);
@@ -99,18 +90,14 @@ if ( 1==1 )
     fclose(fileIMG);
 
     ytmp=fileData(9:8+percent*100)';
-    ysize=size(ytmp);
-    ysize=ysize(2);
-    ytest=zeros(10,ysize);
+    ysize=percent*100;
+    yyy=zeros(1,ysize);
     for i=(1:ysize)
         d=ytmp(i);
-        if (d==0)
-            d=10;
-        end
-        ytest(d,i)=1;
+        d=d+1;
+        yyy(i)=d ;
     end
-    ytest=categorical(ytmp);
-
+    ytest=categorical(yyy);
 
     fileIMG=fopen( 'data/train-images-idx3-ubyte','r');
     fileData=fread( fileIMG, 'uint8' );
@@ -128,9 +115,7 @@ if ( 1==1 )
 
             end
         end
-        % xtrain(i)=image(ary);
     end
-    %xtrain=xtrain/255;
     fileData=1;
 
     fileIMG=fopen( 'data/t10k-images-idx3-ubyte','r');
@@ -141,15 +126,16 @@ if ( 1==1 )
     for i=1:percent*100
         col=tmp(1+(i-1)*784:i*784);
         row=col';
+        ary=zeros(28,28);
         for j=1:28
             for k=1:28
                 val=row(k+((j-1)*28));
-                xtest(j,k,i)=val; %/255;
+                xtest(j,k,1,i)=val; %/255
+
             end
         end
     end
     fileData=1;
-    % xtest = imageDatastore( 'data/train/' );
 end
 
 
@@ -170,13 +156,13 @@ end
 input = imageInputLayer([28 28 1]);  % 28x28px 1 channel
 conv = convolution2dLayer(5, 20); % 10 filter, 5x5
 relu = reluLayer;                    %reLU    
-maxPooling2dLayer(2,Stride=2)
+maxPooling2dLayer(2,Stride=2);
 fc = fullyConnectedLayer(10);
 sm = softmaxLayer;
 co = classificationLayer;
 
 epochs=500;
-epochs=5;
+%epochs=1;
 
 layers = [ input
     conv
@@ -186,15 +172,28 @@ layers = [ input
     co];
 
 
-options=trainingOptions('adam', 'MaxEpochs',epochs, 'ExecutionEnvironment','gpu','ValidationPatience',10);
-lossFcn = "crossentropy";
+options=trainingOptions('adam', 'MaxEpochs',epochs, 'ExecutionEnvironment','gpu','ValidationPatience',10 , 'Verbose',0);
 
-size( xtrain ) 
-size( ytrain )
-netTransfer = trainNetwork( xtrain, ytrain, layers, options);
 
-weights_first=netTransfer.Layers(2,1).Weights(:,:,1,1)
-image(weights_first*255)
+ST = datetime('now');
+
+	netTransfer = trainNetwork( xtrain, ytrain, layers, options);
+
+ED = datetime('now');
+D = duration( ED-ST );
+
+
+
+
+weights_first=netTransfer.Layers(2,1).Weights(:,:,1,1);
+%image(weights_first*255)
+
+
+%for i=(1:10)
+%    netTransfer = trainNetwork( xtrain, ytrain, layers, options);
+%    weights_first=netTransfer.Layers(2,1).Weights(:,:,1,1)
+%    image(weights_first*255)
+%end
 
 %a=netTransfer;
 %a=netTransfer.Layers;
@@ -205,8 +204,11 @@ image(weights_first*255)
 
 
 
-% predictedLabels = classify(netTransfer, xtest);
-% accuracy = accuracyCheck( predictedLabels, ytest );
+ predictedLabels = classify(netTransfer, xtest);
+  accuracy = accuracyCheck( predictedLabels', ytest );
  
- 
-;
+    fprintf('# CNN: 5x5 * 20 *  500 cycles: (Linux GPU, batch mode)\n' );
+    fprintf( '# accuracy: a:%f\n\n' , accuracy );
+    fprintf ('m[]=%f\n' , seconds(D)  );
+
+

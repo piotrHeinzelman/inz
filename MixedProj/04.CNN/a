@@ -1,0 +1,29 @@
+D = gpuDevice;
+
+gxtrain = gpuArray( xtrain );
+gytrain = gpuArray( ytrain );
+
+ST = datetime('now');
+
+    gpu=true;
+    if ( gpu )
+        %GPU
+        net = configure(net,xtrain,ytrain);
+        net = train(net, gxtrain, gytrain,'useParallel','yes','useGPU','yes');
+    else
+        %No GPU
+        net = train( net, xtrain, ytrain );
+    end
+
+    ED = datetime('now');
+    trainTime = duration( ED-ST );
+
+
+    D = duration( ED-ST );
+
+
+    fprintf('# CNN: 5x5 * 20 *  500 cycles: (Linux GPU, batch mode)\n' );
+    fprintf( '# accuracy: a:%f\n\n' , accuracy );
+    fprintf ('m[]=%f\n' , seconds(D)  );
+
+
