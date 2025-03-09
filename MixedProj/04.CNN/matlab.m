@@ -74,19 +74,23 @@ if ( 1==1 )
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
     ytmp=fileData(9:8+percent*600)';
-    ysize=size(ytmp);
-    ysize=ysize(2);
+    ysize=percent*600;
+    yyy=zeros(1,ysize);
+    %ysize=ysize(2);
     
     for i=(1:ysize)
-        yz=[0,0,0,0,0,0,0,0,0,0];
+        %yz=zeros(10,1);%[0,0,0,0,0,0,0,0,0,0];
         d=ytmp(i);
-        if (d==0)
-            d=10;
-        end
-        yz(d)=1;
-        ytrain = categorical( ytmp );
+        d=d+1;
+        %if (d==0)
+        %    d=10;
+        %end
+        %yz(d)=true;
+        %ytrain(i) = categorical( yz );
+        %yyy(i)=yz;
+        yyy(i)=d ;
     end
-    
+    ytrain=categorical(yyy);
 
     fileData=1;
 
@@ -116,12 +120,15 @@ if ( 1==1 )
     for i=1:percent*600
         col=tmp(1+(i-1)*784:i*784);
         row=col';
+        ary=zeros(28,28);
         for j=1:28
             for k=1:28
                 val=row(k+((j-1)*28));
-                xtrain(j,k,i)=val;% /255;
+                xtrain(j,k,1,i)=val; %/255
+
             end
         end
+        % xtrain(i)=image(ary);
     end
     %xtrain=xtrain/255;
     fileData=1;
@@ -142,7 +149,7 @@ if ( 1==1 )
         end
     end
     fileData=1;
-    xtest = imageDatastore( 'data/train/' );
+    % xtest = imageDatastore( 'data/train/' );
 end
 
 
@@ -161,13 +168,15 @@ end
 
 
 input = imageInputLayer([28 28 1]);  % 28x28px 1 channel
-conv = convolution2dLayer([5 5],10); % 10 filter, 5x5
+conv = convolution2dLayer(5, 20); % 10 filter, 5x5
 relu = reluLayer;                    %reLU    
+maxPooling2dLayer(2,Stride=2)
 fc = fullyConnectedLayer(10);
 sm = softmaxLayer;
 co = classificationLayer;
 
 epochs=500;
+epochs=5;
 
 layers = [ input
     conv
@@ -178,13 +187,26 @@ layers = [ input
 
 
 options=trainingOptions('adam', 'MaxEpochs',epochs, 'ExecutionEnvironment','gpu','ValidationPatience',10);
+lossFcn = "crossentropy";
 
-
-size( xtrain )
+size( xtrain ) 
 size( ytrain )
-netTransfer = trainNetwork( xtrain, ytrain(1), layers, options);
-predictedLabels = classify(netTransfer, xtest);
+netTransfer = trainNetwork( xtrain, ytrain, layers, options);
 
-accuracy = accuracyCheck( predictedLabels, ytest );
+weights_first=netTransfer.Layers(2,1).Weights(:,:,1,1)
+image(weights_first*255)
+
+%a=netTransfer;
+%a=netTransfer.Layers;
+%a=netTransfer.Layers(2,1);
+%a=netTransfer.Layers(2,1).Weights;
+%weights_first=netTransfer.Layers(2,1).Weights(:,:,1,1);
+%image(weights_first*255);
+
+
+
+% predictedLabels = classify(netTransfer, xtest);
+% accuracy = accuracyCheck( predictedLabels, ytest );
  
  
+;
