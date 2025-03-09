@@ -1,2 +1,20 @@
-500 epoch, accuracy 83,94,89
+#    --- Matlab ---
+# CNN: 5x5 * 20 *  500 cycles: (Linux GPU, batch mode)
+# accuracy: a:0.840000
 
+m[]=10.491577
+#    --- Matlab ---
+# CNN: 5x5 * 20 *  500 cycles: (Linux GPU, batch mode)
+# accuracy: a:0.840000
+
+m[]=10.597529
+#    --- Matlab ---
+# CNN: 5x5 * 20 *  500 cycles: (Linux GPU, batch mode)
+# accuracy: a:0.840000
+
+m[]=10.474022
+#    --- Matlab ---
+# CNN: 5x5 * 20 *  500 cycles: (Linux GPU, batch mode)
+# accuracy: a:0.840000
+
+m[]=10.694407

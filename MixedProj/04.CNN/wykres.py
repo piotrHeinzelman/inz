@@ -1,24 +1,21 @@
 import matplotlib.pyplot as plt
 import numpy as np
-plt.title('Czas [s] : CNN klasyfikacja cyfr - MNIST') 
+plt.title('Czas [s] : CNN klasyfikacja cyfr - MNIST : 5x5 * 20 Filter 500 epoch') 
 plt.style.use('_mpl-gallery')
 
 
 
-#    Matlab Arch  GPU
-#    Matlab Win10 GPU
-#    Matlab Arch  
-#    Matlab Win10
+#    Matlab Matlab  GPU
 
 #x = np.array([1,2,3,4,           10,11,12,13,       20,21,      30,31,32,33            ])
 #y = np.array([211,206,205,205,   419,425,419,422,   1998, 2089, 2305,2294,2235,2164    ])
 #colors = np.array(["red","red","red","red", "orange","orange","orange","orange", "red","red", "orange","orange","orange","orange" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
 #plt.scatter(x, y, c=colors)
 
-#x = np.array([ 3, 4, 5,         ])
-#y = np.array([ 15.56, 14.57, 14.47  ])
-#colors = np.array(["blue","blue","blue" ]) # "red"
-#plt.scatter(x, y, c=colors, label="Matlab - GPU   15.56 [sek.]")
+x = np.array([ 3, 4, 5, 6         ])
+y = np.array([ 10.49, 10.59, 10.47, 10.69  ])
+colors = np.array(["blue","blue","blue","blue" ]) # "red"
+plt.scatter(x, y, c=colors, label="Matlab - GPU   10.47 [sek.]")
 
 
 #x = np.array([8,9,10,11      ])
@@ -49,17 +46,8 @@ plt.style.use('_mpl-gallery')
 #plt.scatter(x, y, c=colors, label="Python sklearn - GPU 83.58 [sek.]")
 
 
-x = np.array([ 1,2,3  ])
-y = np.array([ 10,20,30 ])
-colors = np.array(["brown" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
-plt.scatter(x, y, c=colors, label="!! TEST VALUE !!")
-
-
-
-
- 
 plt.legend()
-plt.savefig( '../000.fig/fig04.pdf',dpi=400 ) 
+plt.savefig( '../000.fig/fig04.pdf',dpi=400 )
 plt.show()
 plt.close()
 
