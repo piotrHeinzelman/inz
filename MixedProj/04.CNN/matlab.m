@@ -1,6 +1,8 @@
 % S.Osowski, R.Szmurlo : modele matematyczne uczenia maszynowego 
 % Alexnet - tryb Transfer Learning
 
+% https://www.mathworks.com/help/deeplearning/ug/introduction-to-convolutional-neural-networks.html
+
 D = gpuDevice;
 
 
