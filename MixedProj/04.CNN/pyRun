@@ -1,2 +1,2 @@
 echo "#   --- Python --- "
-python main.py
+python3 main.py
