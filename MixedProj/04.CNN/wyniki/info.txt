@@ -1,0 +1,5 @@
+CNN
+https://www.youtube.com/watch?v=2nrrzIx_i4g&t=6s
+http://neuralnetworksanddeeplearning.com
+https://miroslawmamczur.pl/jak-dzialaja-konwolucyjne-sieci-neuronowe-cnn/
+https://www.cs.put.poznan.pl/alawrynowicz/SI_ML_CNN_2020_lawrynowicz.pdf
