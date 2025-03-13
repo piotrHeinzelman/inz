@@ -77,8 +77,10 @@ testY = readFileY ('data/t10k-labels-idx1-ubyte', 8, percent, 1 )
 
 trainX = trainX.astype("float32") # / 255
 testX = testX.astype("float32") # / 255
-trainX = trainX.reshape(6*percent*100, 784).astype("float32") / 255
-testX = testX.reshape(1*percent*100, 784).astype("float32") / 255
+#trainX = trainX.reshape(6*percent*100, 784).astype("float32") / 255
+trainX = trainX.reshape(6*percent*100, 28,28).astype("float32") / 255
+#testX = testX.reshape(1*percent*100, 784).astype("float32") / 255
+testX = testX.reshape(1*percent*100, 28,28).astype("float32") / 255
 
 
 
