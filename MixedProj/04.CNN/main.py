@@ -17,19 +17,8 @@ import matplotlib.pyplot as plt
 
 from sklearn.metrics import classification_report, confusion_matrix, roc_curve, auc
 
-import pandas as pd
 
 
-
-
-
-
-
-
-
-
-
-sys.exit()
 
 
 
@@ -64,6 +53,22 @@ def readFileY ( fileName , offset, percent, multi ):
 
 
 
+def AlexNet():
+   NUMBER_OF_CLASSES = 10
+   return keras.models.Sequential([
+      keras.layers.Conv2D(name='conv1', filters=20, kernel_size=(5,5), activation='relu', input_shape=(28,28,1)),
+      keras.layers.BatchNormalization(),
+      keras.layers.MaxPool2D(pool_size=(2,2), strides=(2,2)),
+      keras.layers.Dense(64, activation='relu'),
+      keras.layers.Dense(64, activation='relu'),
+      keras.layers.Dropout(0.2),
+      keras.layers.Dense(10, activation='softmax')
+])
+
+
+
+
+
 trainX = readFileX ('data/train-images-idx3-ubyte', 16, percent ,6 )
 trainY = readFileY ('data/train-labels-idx1-ubyte', 8, percent, 6 )
 testX = readFileX ('data/t10k-images-idx3-ubyte', 16, percent, 1  )
@@ -75,13 +80,18 @@ testX = testX.astype("float32") # / 255
 trainX = trainX.reshape(6*percent*100, 784).astype("float32") / 255
 testX = testX.reshape(1*percent*100, 784).astype("float32") / 255
 
-model = tf.keras.models.Sequential([
-  tf.keras.layers.Input(shape=(784,)),
-  tf.keras.layers.Dense(64, activation='sigmoid'),
-  tf.keras.layers.Dense(64, activation='sigmoid'),
-  tf.keras.layers.Dropout(0.2),
-  tf.keras.layers.Dense(10, activation='softmax')
-])
+
+
+
+model = AlexNet()
+
+#model = tf.keras.models.Sequential([
+#  tf.keras.layers.Input(shape=(784,)),
+#  tf.keras.layers.Dense(64, activation='sigmoid'),
+#  tf.keras.layers.Dense(64, activation='sigmoid'),
+#  tf.keras.layers.Dropout(0.2),
+#  tf.keras.layers.Dense(10, activation='softmax')
+#])
 
 model.compile(optimizer='adam',
   loss='sparse_categorical_crossentropy',
