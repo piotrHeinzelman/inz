@@ -139,6 +139,12 @@ clear_session()
 print("# Python Tensorflow Time: " , d)
 
 
+score = model.evaluate(testX, testY, verbose=0)
+print("Test loss:", score[0])
+print("Test accuracy:", score[1])
+
+
+
 
 # model.evaluate(testX, testY)
 
