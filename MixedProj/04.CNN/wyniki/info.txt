@@ -1,3 +1,15 @@
+
+https://www.jefkine.com/general/2016/09/05/backpropagation-in-convolutional-neural-networks/
+https://www.cs.cmu.edu/~bhiksha/courses/deeplearning/Spring.2019/www/slides.spring19/lec10.CNN.pdf
+https://hal.science/hal-04409232/document
+https://medium.com/@skalinin/cnn-in-python-part-2-derivation-of-formulas-for-training-the-model-89982c085428
+https://zzutk.github.io/docs/reports/2016.10%20-%20Derivation%20of%20Backpropagation%20in%20Convolutional%20Neural%20Network%20(CNN).pdf
+https://www.youtube.com/watch?v=Lakz2MoHy6o	
+https://pavisj.medium.com/convolutions-and-backpropagations-46026a8f5d2c
+
+
+
+
 CNN
 https://www.youtube.com/watch?v=2nrrzIx_i4g&t=6s
 http://neuralnetworksanddeeplearning.com
