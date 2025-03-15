@@ -28,7 +28,7 @@ if physical_devices:
 
 # params
 epochs = 500
-percent = 50
+percent = 100
 num_classes = 10
 
 
@@ -91,10 +91,7 @@ trainX = trainX.reshape(6*percent*100, 28,28).astype("float32") / 255
 testX = testX.reshape(1*percent*100, 28,28).astype("float32") / 255
 
 
-
-
 model = AlexNet()
-
 model.summary()
 
 # --- flat to 1 item ---
@@ -139,7 +136,7 @@ clear_session()
 print("# Python Tensorflow Time: " , d)
 
 
-score = model.evaluate(testX, testY, verbose=0)
+score = model.evaluate(testX, testY, verbose=1 )
 print("Test loss:", score[0])
 print("Test accuracy:", score[1])
 

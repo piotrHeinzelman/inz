@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="226d75a0-8f9f-4282-8835-2c4e42efc398" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../../../info/info_zakres_prac.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../tex/Piotr Heinzelman, inz - Porównanie wydajności wybranych języków programowania w realizacji sieci neuronowych do przetwarzaniu obrazów, 2024.zip" beforeDir="false" afterPath="$PROJECT_DIR$/../../../tex/Piotr Heinzelman, inz - Porównanie wydajności wybranych języków programowania w realizacji sieci neuronowych do przetwarzaniu obrazów, 2024.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../tex/Piotr_Heinzelman__inz___Porównanie_wydajności_wybranych_języków_programowania_w_realizacji_sieci_neuronowych_do_przetwarzaniu_obrazów__2024.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../../../tex/Piotr_Heinzelman__inz___Porównanie_wydajności_wybranych_języków_programowania_w_realizacji_sieci_neuronowych_do_przetwarzaniu_obrazów__2024.pdf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +17,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -93,39 +94,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;JUnit.LayerTest.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest2.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest3.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest4.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest5.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest6.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest6_CrossEntropyBinary_test.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest6_CrossEntropy_Multiclass_test.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest6_MSE_test.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest6_MSE_test.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest8_CrossEntropy_Multiclass_test.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest8_CrossEntropy_Multiclass_test.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest9_Sig_CrossEntropyBinary_test.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;LombokPluginIS_LOMBOK_JPS_FIX_ENABLED&quot;: &quot;true&quot;,
-    &quot;LombokPluginIS_LOMBOK_VERSION_CHECK_Enabled&quot;: &quot;true&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/John/Desktop/New folder/inz/MixedProj/03.MLP/java03&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Application.Main.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.LayerTest.forwardTest.executor": "Run",
+    "JUnit.LayerTest2.forwardTest.executor": "Run",
+    "JUnit.LayerTest3.forwardTest.executor": "Run",
+    "JUnit.LayerTest4.forwardTest.executor": "Run",
+    "JUnit.LayerTest5.forwardTest.executor": "Run",
+    "JUnit.LayerTest6.forwardTest.executor": "Run",
+    "JUnit.LayerTest6_CrossEntropyBinary_test.forwardTest.executor": "Run",
+    "JUnit.LayerTest6_CrossEntropy_Multiclass_test.forwardTest.executor": "Run",
+    "JUnit.LayerTest6_MSE_test.executor": "Run",
+    "JUnit.LayerTest6_MSE_test.forwardTest.executor": "Run",
+    "JUnit.LayerTest8_CrossEntropy_Multiclass_test.executor": "Run",
+    "JUnit.LayerTest8_CrossEntropy_Multiclass_test.forwardTest.executor": "Run",
+    "JUnit.LayerTest9_Sig_CrossEntropyBinary_test.forwardTest.executor": "Run",
+    "JUnit.convTest.paddingTest.executor": "Run",
+    "JUnit.convTest.paddingTest2.executor": "Run",
+    "LombokPluginIS_LOMBOK_JPS_FIX_ENABLED": "true",
+    "LombokPluginIS_LOMBOK_VERSION_CHECK_Enabled": "true",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/john/opt/Java23",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.runner"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -141,7 +145,7 @@
       <recent name="pl.heinzelman.tasks" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.convTest.paddingTest2">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="pl.heinzelman.Main" />
       <module name="nweb" />
@@ -152,43 +156,11 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="LayerTest6_MSE_test.forwardTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="nweb" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="pl.heinzelman.neu.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="pl.heinzelman.neu" />
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.neu.LayerTest6_MSE_test" />
-      <option name="METHOD_NAME" value="forwardTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="LayerTest7_CrossEntropyBinary_test.forwardTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="nweb" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="pl.heinzelman.neu.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="pl.heinzelman.neu" />
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.neu.LayerTest7_CrossEntropyBinary_test" />
-      <option name="METHOD_NAME" value="forwardTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="LayerTest8_CrossEntropy_Multiclass_test.forwardTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="pl.heinzelman.neu.*" />
+          <option name="PATTERN" value="pl.heinzelman.neu.Neuron2D" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -204,7 +176,7 @@
       <module name="nweb" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="pl.heinzelman.neu.*" />
+          <option name="PATTERN" value="pl.heinzelman.neu.Neuron2D" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -216,13 +188,45 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="convTest.paddingTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="nweb" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pl.heinzelman.neu.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="pl.heinzelman.neu" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.neu.convTest" />
+      <option name="METHOD_NAME" value="paddingTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="convTest.paddingTest2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="nweb" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pl.heinzelman.neu.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="pl.heinzelman.neu" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.neu.convTest" />
+      <option name="METHOD_NAME" value="paddingTest2" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.convTest.paddingTest2" />
+        <item itemvalue="JUnit.convTest.paddingTest" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.LayerTest9_Sig_CrossEntropyBinary_test.forwardTest" />
         <item itemvalue="JUnit.LayerTest8_CrossEntropy_Multiclass_test.forwardTest" />
-        <item itemvalue="JUnit.LayerTest7_CrossEntropyBinary_test.forwardTest" />
-        <item itemvalue="JUnit.LayerTest6_MSE_test.forwardTest" />
       </list>
     </recent_temporary>
   </component>
@@ -250,6 +254,17 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pl/heinzelman/tools/Tools.java</url>
+          <line>218</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand>

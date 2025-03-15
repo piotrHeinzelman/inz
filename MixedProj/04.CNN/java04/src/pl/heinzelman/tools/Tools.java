@@ -214,4 +214,69 @@ public class Tools {
 
 
 
+    public static float[][] extendAry( float[][] X, int padding ){
+        int oversize=X.length+padding+padding;
+        float[][] XPadd = new float[oversize][oversize];
+
+        for ( int i=0;i<oversize;i++){
+            for (int j=0;j<oversize;j++){
+                XPadd[i][j]=0f;
+            }
+        }
+        for ( int i=0;i<X.length;i++ ){
+            for ( int j=0;j<X.length;j++){
+                XPadd[i+padding][j+padding]=X[i][j];
+            }
+        }
+        return XPadd;
+    }
+
+    public static float[][] conv( float[][] X, float[][] F, float bias, int stride /* 1 */ , int padding /* 0 */  ){
+        return  conv (  extendAry( X , padding ) , F,  bias , stride ) ;
+    }
+
+    public static float[][] conv( float[][] X, float[][] F, float bias  ){
+        return conv( X, F , bias, 1 );
+    }
+
+    public static float[][] conv( float[][] X, float[][] F, float bias, int stride /* 1 */ ){
+        int outputSize= 1+(( X.length-F.length )/stride);
+        System.out.println( outputSize );
+        int fSize=F.length;
+        float [][] Y = new float[outputSize][outputSize];
+        for ( int i=0;i<outputSize;i++ ){
+            System.out.println(i);
+            for ( int j=0;j<outputSize;j++ ){
+                float YIJ=bias;
+                {
+                    for (int m=0;m<fSize;m++){
+                        for (int n=0;n<fSize;n++){
+                            YIJ += ( F[m][n] + X[i+m][j+n]);
+                        }
+                    }
+                }
+                Y[i][j]= relu( YIJ );
+            }
+        }
+        return Y;
+    }
+
+
+    public static String AryToString( float[][]X ){
+        StringBuffer out = new StringBuffer();
+        for (int i=0;i<X.length;i++){
+            out.append("\n[" );
+            for ( int j=0;j<X.length;j++ ){
+                out.append( " "+X[i][j]+"," );
+            }
+            out.append("]");
+        }
+        return out.toString();
+    }
+
+
+    public static float relu( float xij ){
+        return xij>0?xij:0f;
+    }
+
 }

@@ -15,3 +15,8 @@ https://www.youtube.com/watch?v=2nrrzIx_i4g&t=6s
 http://neuralnetworksanddeeplearning.com
 https://miroslawmamczur.pl/jak-dzialaja-konwolucyjne-sieci-neuronowe-cnn/
 https://www.cs.put.poznan.pl/alawrynowicz/SI_ML_CNN_2020_lawrynowicz.pdf
+
+
+export XLA_FLAGS=--xla_gpu_cuda_data_dir=/path/to/cuda-12.2/
+export LD_LIBRARY_PATH=/path/to/cuda-12.2/lib:/path/to/cudnn-linux-x86_64-8.9.7.29_cuda12-archive/lib
+python -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
