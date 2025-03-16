@@ -65,5 +65,27 @@ public class convTest {
     }
 
 
+    @Test
+    public void paddingTest3 (){
+
+        Neuron2D neu =  new Neuron2D( 3 , null );
+        neu.setWm(0,0, 1);
+        neu.setWm(0,1, 2);
+        neu.setWm(0,2, 3);
+
+        neu.setWm(1,0, 4);
+        neu.setWm(1,1, 5);
+        neu.setWm(1,2, 6);
+
+        neu.setWm(2,0, 7);
+        neu.setWm(2,1, 8);
+        neu.setWm(2,2, 9);
+
+        System.out.println( Tools.AryToString(  neu.getMyWeight() ));
+
+        System.out.println( Tools.AryToString(  neu.getRot180() ));
+
+        //public float[][] getRot180();
+    }
 
 }

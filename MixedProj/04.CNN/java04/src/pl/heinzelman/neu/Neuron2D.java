@@ -5,6 +5,11 @@ import pl.heinzelman.tools.Tools;
 import java.util.Arrays;
 import java.util.Random;
 
+//
+//  Fupdate  = F - u dL/dF ; = Conv ( X, delta )     ; // delta = dL/dO
+//  deltaOut = dL/dX = FullConv ( rot180 F , delta ) ; // delta = dL/dO
+//
+
 public class Neuron2D {
 
 private float bias=0f;
@@ -35,7 +40,9 @@ public Neuron2D( int m, LayerConv parent ) {
         return Tools.conv( X, W , bias, 1 );
     }
 
-    public void Backward( float en_x_dFIznI ) {
+    public void Backward( float[][][] dL_dO_delta ) { // dL/dO = delta
+
+
         // weights
 //        float[] X = parent.getX();
 //        for ( int m=0; m<W.length; m++ ) {
@@ -61,6 +68,24 @@ public Neuron2D( int m, LayerConv parent ) {
                 W[i][j]= rand.nextFloat();
             }
         }
+    }
+
+    public void fix( float [][] dLdF ){
+        for ( int i=0;i< W.length; i++){
+            for (int j=0;j<W[0].length; j++){
+                W[i][j]= W[i][j] - (mu * dLdF[i][j]);
+            }
+        }
+    }
+
+    public float[][] getRot180(){
+        float[][] Rot180 = new float[ W.length ][ W.length ];
+        for (int i=0;i<W.length;i++){
+            for (int j=0;j<W.length;j++){
+                Rot180[W.length-i-1][W.length-j-1] = W[i][j];
+            }
+        }
+        return Rot180;
     }
 
 }

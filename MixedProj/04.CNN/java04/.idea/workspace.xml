@@ -112,6 +112,7 @@
     "JUnit.LayerTest9_Sig_CrossEntropyBinary_test.forwardTest.executor": "Run",
     "JUnit.convTest.paddingTest.executor": "Run",
     "JUnit.convTest.paddingTest2.executor": "Run",
+    "JUnit.convTest.paddingTest3.executor": "Run",
     "LombokPluginIS_LOMBOK_JPS_FIX_ENABLED": "true",
     "LombokPluginIS_LOMBOK_VERSION_CHECK_Enabled": "true",
     "Repository.Attach.Annotations": "false",
@@ -174,22 +175,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="LayerTest9_Sig_CrossEntropyBinary_test.forwardTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="nweb" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="pl.heinzelman.neu.Neuron2D" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="pl.heinzelman.neu" />
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.neu.LayerTest9_Sig_CrossEntropyBinary_test" />
-      <option name="METHOD_NAME" value="forwardTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="convTest.paddingTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
       <extension name="coverage">
@@ -222,13 +207,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="convTest.paddingTest3" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="nweb" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pl.heinzelman.neu.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="pl.heinzelman.neu" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.neu.convTest" />
+      <option name="METHOD_NAME" value="paddingTest3" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.LayerTest91_CNN_test.forwardTest" />
+        <item itemvalue="JUnit.convTest.paddingTest3" />
         <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.convTest.paddingTest2" />
         <item itemvalue="JUnit.convTest.paddingTest" />
-        <item itemvalue="JUnit.LayerTest9_Sig_CrossEntropyBinary_test.forwardTest" />
       </list>
     </recent_temporary>
   </component>

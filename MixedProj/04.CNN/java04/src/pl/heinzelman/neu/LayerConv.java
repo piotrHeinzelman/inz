@@ -17,9 +17,8 @@ public class LayerConv {
     private float X[][][];
     private float Y[][][];
     private float Z[][];
-    private float dFofZ[][];
-    //private  float Ein[]; // S-Z for last
-    private float Eout[]; // S-Z for last //   Eout is F size
+
+    private float [][][] dLdX;
 
     public LayerConv(int filterSize, int filterNum) {
         this.filters = new Neuron2D[filterNum];
@@ -35,14 +34,14 @@ public class LayerConv {
         }
     }
 
-    public void setName(String _name) {
+    public void setName( String _name ) {
         this.name = _name;
     }
 
     public String toString() {
         StringBuffer out = new StringBuffer("\n" + name + "\n");
         for (int i = 0; i < filters.length; i++) {
-            out.append(Tools.AryToString(filters[i].getMyWeight()));
+            out.append( Tools.AryToString(filters[i].getMyWeight()) );
         }
         return out.toString();
     }
@@ -62,14 +61,36 @@ public class LayerConv {
 
     public float[][][] nForward() {
         float Y[][][] = new float[ filters.length * X.length ][ X[0].length ][ X[0].length ];
-        //int i=0;
         for ( int xlen=0;xlen<X.length; xlen++ ){
             for ( int flen=0; flen< filters.length; flen++ ){
                 Y[ xlen*filters.length + flen ] = filters[flen].Forward( X[xlen] );
-                //System.out.println( " -- TEST -- xlen:" + xlen + ", flen:" + flen + ", -- " + Tools.AryToString( filters[flen].Forward( X[xlen] ) ) );
-                //i++;
             }
         }
         return Y;
     }
+
+
+    public void nBackward( float[][][] _dLdO ){ // delta [--x-- ][][]
+                                                //       [f0f1f2][][]
+                                                // !!!! _dLdO is size of nForward out. !!!!
+        int padd = (_dLdO[0].length-1)/2;
+
+        this.dLdX = new float[ _dLdO.length ][][];
+        for ( int xlen=0;xlen<X.length; xlen++ ){
+            for ( int flen=0; flen< filters.length; flen++ ){
+
+                float[][] _dLdO_ =  _dLdO[xlen * filters.length + flen];
+
+
+                float[][] dLdF = Tools.conv(X[xlen], _dLdO_, 0);
+                filters[flen].fix( dLdF ); // update Weigth
+
+                float [][] _dLdX_ = Tools.conv( Tools.extendAry( filters[flen].getRot180() , padd )  , _dLdO_ , 0);
+                this.dLdX[ xlen * filters.length + flen ] = _dLdX_;
+            }
+        }
+    }
+
+    public float[][][] getEout() { return dLdX; }
+
 }

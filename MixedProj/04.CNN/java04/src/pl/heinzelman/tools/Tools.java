@@ -245,7 +245,6 @@ public class Tools {
         int fSize=F.length;
         float [][] Y = new float[outputSize][outputSize];
         for ( int i=0;i<outputSize;i++ ){
-            System.out.println(i);
             for ( int j=0;j<outputSize;j++ ){
                 float YIJ=bias;
                 {
@@ -270,6 +269,15 @@ public class Tools {
                 out.append( " "+X[i][j]+"," );
             }
             out.append("]");
+        }
+        return out.toString();
+    }
+
+
+    public static String AryToString ( float[][][] T ){
+        StringBuffer out = new StringBuffer();
+        for ( int i=0;i<T.length;i++ ){
+            out.append( AryToString( T[i] ));
         }
         return out.toString();
     }
