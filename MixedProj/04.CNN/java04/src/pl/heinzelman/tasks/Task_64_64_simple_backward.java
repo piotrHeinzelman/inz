@@ -25,7 +25,7 @@ public class Task_64_64_simple_backward implements Task{
 
     @Override
     public void prepare() {
-        tools.prepareData( 50 );
+        tools.prepareData(50 );
 
         testX = tools.getTestX();
         testY = tools.getTestY();

@@ -3,6 +3,7 @@ package pl.heinzelman.neu;
 import pl.heinzelman.tools.Tools;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class Neuron2D {
 
@@ -16,6 +17,7 @@ public float getBias(){ return bias; }
 
 public Neuron2D( int m, LayerConv parent ) {
         this.parent=parent;
+        this.W = new float[m][m];
         for ( int i=0; i<m ; i++ ) {
             this.W[i] = new float[m];
         }
@@ -50,5 +52,15 @@ public Neuron2D( int m, LayerConv parent ) {
 
     //@Deprecated
     public float[][] getMyWeight() { return W; }
+
+
+    public void rnd( Random rand ){
+        this.bias = rand.nextFloat();
+        for ( int i=0;i< W.length; i++){
+            for (int j=0;j<W[0].length; j++){
+                W[i][j]= rand.nextFloat();
+            }
+        }
+    }
 
 }
