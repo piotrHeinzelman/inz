@@ -249,14 +249,47 @@ public class Tools {
                 {
                     for (int m=0;m<fSize;m++){
                         for (int n=0;n<fSize;n++){
-                            YIJ += ( F[m][n] + X[i+m][j+n]);
+                            //System.out.println( "YIJ="+YIJ + " + " + F[m][n] +" X "+ X[i+m][j+n] );
+                            YIJ += ( F[m][n] * X[i+m][j+n]);
+
                         }
                     }
                 }
-                Y[i][j]= relu( YIJ );
+                Y[i][j]=  /*relu*/( YIJ );
             }
         }
         return Y;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    public static float[][] aryAdd( float[][] A, float[][] B){
+        float [][] C = new float[A.length][A[0].length];
+        for ( int i=0;i<A.length;i++ ){
+            for ( int j=0;j<A[0].length;j++ ) {
+                C[i][j] = A[i][j]+B[i][j];
+            }
+        }
+        return C;
+    }
+
+    public static float[][] aryAdd( float[][] A, float[][] B, float[][] C, float[][] D ){
+        float [][] OUT = new float[A.length][A[0].length];
+        for ( int i=0;i<A.length;i++ ){
+            for ( int j=0;j<A[0].length;j++ ) {
+                OUT[i][j] = ( A[i][j]+B[i][j] ) + ( C[i][j]+D[i][j] );
+            }
+        }
+        return OUT;
     }
 
 
@@ -279,6 +312,16 @@ public class Tools {
             out.append( AryToString( T[i] ));
         }
         return out.toString();
+    }
+
+    public static float[][] getRot180( float[][] W ){
+        float[][] Rot180 = new float[ W.length ][ W.length ];
+        for (int i=0;i<W.length;i++){
+            for (int j=0;j<W.length;j++){
+                Rot180[W.length-i-1][W.length-j-1] = W[i][j];
+            }
+        }
+        return Rot180;
     }
 
 

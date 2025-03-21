@@ -86,17 +86,16 @@ public class LayerTest91_CNN_test {
         X[2][3] = new float[]{  53,54,55,56 };
 
 
-
-        LayerPoolingMax poolingMax = new LayerPoolingMax(2 );
+        LayerPoolingAvg poolingMax = new LayerPoolingAvg( 2 );
         poolingMax.setX( X );
+        System.out.println( "X: " + Tools.AryToString( X ));
 
         float[][][] out = poolingMax.nForward();
+        System.out.println( "Y: " + Tools.AryToString( out ));
 
-        System.out.println( poolingMax.toString() );
         poolingMax.nBackward( out );
-        System.out.println(   Tools.AryToString( poolingMax.getEout()));
 
-        System.out.println( poolingMax.toString() );
+        System.out.println( "E out:" + Tools.AryToString( poolingMax.getEout()));
 
     }
 

@@ -37,7 +37,7 @@ public Neuron2D( int m, LayerConv parent ) {
         float res=bias;
 
         //convolution
-        return Tools.conv( X, W , bias, 1 );
+        return Tools.conv( X, W, bias, 1 );
     }
 
     public void Backward( float[][][] dL_dO_delta ) { // dL/dO = delta
@@ -70,7 +70,7 @@ public Neuron2D( int m, LayerConv parent ) {
         }
     }
 
-    public void fix( float [][] dLdF ){
+    public void trainW(float [][] dLdF ){
         for ( int i=0;i< W.length; i++){
             for (int j=0;j<W[0].length; j++){
                 W[i][j]= W[i][j] - (mu * dLdF[i][j]);
@@ -79,13 +79,7 @@ public Neuron2D( int m, LayerConv parent ) {
     }
 
     public float[][] getRot180(){
-        float[][] Rot180 = new float[ W.length ][ W.length ];
-        for (int i=0;i<W.length;i++){
-            for (int j=0;j<W.length;j++){
-                Rot180[W.length-i-1][W.length-j-1] = W[i][j];
-            }
-        }
-        return Rot180;
+        return Tools.getRot180( W );
     }
 
 }

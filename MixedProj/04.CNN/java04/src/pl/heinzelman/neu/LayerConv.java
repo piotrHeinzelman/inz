@@ -2,7 +2,7 @@ package pl.heinzelman.neu;
 
 import pl.heinzelman.tools.Tools;
 
-import javax.tools.Tool;
+import java.util.Arrays;
 import java.util.Random;
 
 //
@@ -10,13 +10,16 @@ import java.util.Random;
 //  deltaOut = dL/dX = FullConv ( rot180 F , delta ) ; // delta = dL/dO
 //
 
+// X [num][i][j]
+// F [num][m][n]
+// D [num][x][y]
+
+
 public class LayerConv {
 
     private String name;
     private Neuron2D[] filters;
     private float X[][][];
-    private float Y[][][];
-    private float Z[][];
 
     private float [][][] dLdX;
 
@@ -53,6 +56,7 @@ public class LayerConv {
             for (int i = 0; i < _x[0].length; i++) {
                 for (int j = 0; j < _x[0].length; j++) {
                     X[n][i][j] = _x[n][i][j];
+                    //System.out.println( "X[n][i][j] = _x["+n+"]["+i+"]["+j+"]" );
                 }
             }
         }
@@ -73,15 +77,15 @@ public class LayerConv {
     public void nBackward( float[][][] _dLdO ){ // delta [--x-- ][][]
                                                 //       [f0f1f2][][]
                                                 // !!!! _dLdO is size of nForward out. !!!!
-        int padd = (_dLdO[0].length-1)/2;
+        int padd = (int)(_dLdO[0].length-1.0f/2.0f);
 
         this.dLdX = new float[ _dLdO.length ][][];
         for ( int flen=0; flen< filters.length; flen++ ){
             for ( int xlen=0;xlen<X.length; xlen++ ){
                 float[][] _dLdO_ =  _dLdO[flen*X.length + xlen];
 
-                float[][] dLdF = Tools.conv(X[xlen], _dLdO_, 0);
-                filters[flen].fix( dLdF ); // update Weigth
+                float[][] dLdF = Tools.conv( X[xlen], _dLdO_, 0);
+                filters[flen].trainW( dLdF ); // update Weigth
 
                 float [][] _dLdX_ = Tools.conv( Tools.extendAry( filters[flen].getRot180() , padd )  , _dLdO_ , 0);
                 this.dLdX[ flen*X.length + xlen ] = _dLdX_;
@@ -94,5 +98,8 @@ public class LayerConv {
     Neuron2D getNeuron(int i){
         return filters[i];
     }
+
+
+
 
 }

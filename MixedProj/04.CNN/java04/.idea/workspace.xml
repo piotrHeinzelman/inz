@@ -14,8 +14,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="JUnit5 Test Class" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -112,6 +112,8 @@
     "JUnit.LayerTest91_CNN_test.X3_F3_forward_maxPool.executor": "Run",
     "JUnit.LayerTest91_CNN_test.forwardTest.executor": "Run",
     "JUnit.LayerTest9_Sig_CrossEntropyBinary_test.forwardTest.executor": "Run",
+    "JUnit.ToolsTest.conv.executor": "Run",
+    "JUnit.ToolsTest.convRGB.executor": "Run",
     "JUnit.convTest.paddingTest.executor": "Run",
     "JUnit.convTest.paddingTest2.executor": "Run",
     "JUnit.convTest.paddingTest3.executor": "Run",
@@ -142,6 +144,7 @@
       <recent name="pl.heinzelman.neu" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
+      <recent name="pl.heinzelman.tools" />
       <recent name="pl.heinzelman.neu" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -150,7 +153,7 @@
       <recent name="pl.heinzelman.tasks" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.LayerTest91_CNN_test.X3_F3_forward_maxPool">
+  <component name="RunManager" selected="JUnit.ToolsTest.convRGB">
     <configuration name="LayerTest91_CNN_test.X3_F3_forward_conv" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
       <extension name="coverage">
@@ -199,33 +202,33 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="convTest.paddingTest2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ToolsTest.conv" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="pl.heinzelman.neu.*" />
+          <option name="PATTERN" value="pl.heinzelman.tools.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="pl.heinzelman.neu" />
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.neu.convTest" />
-      <option name="METHOD_NAME" value="paddingTest2" />
+      <option name="PACKAGE_NAME" value="pl.heinzelman.tools" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.tools.ToolsTest" />
+      <option name="METHOD_NAME" value="conv" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="convTest.paddingTest3" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ToolsTest.convRGB" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="pl.heinzelman.neu.*" />
+          <option name="PATTERN" value="pl.heinzelman.tools.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="pl.heinzelman.neu" />
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.neu.convTest" />
-      <option name="METHOD_NAME" value="paddingTest3" />
+      <option name="PACKAGE_NAME" value="pl.heinzelman.tools" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.tools.ToolsTest" />
+      <option name="METHOD_NAME" value="convRGB" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -233,11 +236,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ToolsTest.convRGB" />
+        <item itemvalue="JUnit.ToolsTest.conv" />
         <item itemvalue="JUnit.LayerTest91_CNN_test.X3_F3_forward_maxPool" />
-        <item itemvalue="JUnit.LayerTest91_CNN_test.X3_F3_forward_conv" />
-        <item itemvalue="JUnit.convTest.paddingTest2" />
-        <item itemvalue="JUnit.convTest.paddingTest3" />
         <item itemvalue="JUnit.LayerTest91_CNN_test.forwardTest" />
+        <item itemvalue="JUnit.LayerTest91_CNN_test.X3_F3_forward_conv" />
       </list>
     </recent_temporary>
   </component>
