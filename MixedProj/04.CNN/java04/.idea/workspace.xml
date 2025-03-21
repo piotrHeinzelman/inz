@@ -108,6 +108,8 @@
     "JUnit.LayerTest6_MSE_test.forwardTest.executor": "Run",
     "JUnit.LayerTest8_CrossEntropy_Multiclass_test.executor": "Run",
     "JUnit.LayerTest8_CrossEntropy_Multiclass_test.forwardTest.executor": "Run",
+    "JUnit.LayerTest91_CNN_test.X3_F3_forward_conv.executor": "Run",
+    "JUnit.LayerTest91_CNN_test.X3_F3_forward_maxPool.executor": "Run",
     "JUnit.LayerTest91_CNN_test.forwardTest.executor": "Run",
     "JUnit.LayerTest9_Sig_CrossEntropyBinary_test.forwardTest.executor": "Run",
     "JUnit.convTest.paddingTest.executor": "Run",
@@ -143,18 +145,40 @@
       <recent name="pl.heinzelman.neu" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="" />
       <recent name="pl.heinzelman.neu" />
+      <recent name="" />
       <recent name="pl.heinzelman.tasks" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.LayerTest91_CNN_test.forwardTest">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.Main" />
+  <component name="RunManager" selected="JUnit.LayerTest91_CNN_test.X3_F3_forward_maxPool">
+    <configuration name="LayerTest91_CNN_test.X3_F3_forward_conv" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pl.heinzelman.neu.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="pl.heinzelman.neu" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.neu.LayerTest91_CNN_test" />
+      <option name="METHOD_NAME" value="X3_F3_forward_conv" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LayerTest91_CNN_test.X3_F3_forward_maxPool" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="nweb" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pl.heinzelman.neu.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="pl.heinzelman.neu" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.neu.LayerTest91_CNN_test" />
+      <option name="METHOD_NAME" value="X3_F3_forward_maxPool" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -170,22 +194,6 @@
       <option name="PACKAGE_NAME" value="pl.heinzelman.neu" />
       <option name="MAIN_CLASS_NAME" value="pl.heinzelman.neu.LayerTest91_CNN_test" />
       <option name="METHOD_NAME" value="forwardTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="convTest.paddingTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="nweb" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="pl.heinzelman.neu.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="pl.heinzelman.neu" />
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.neu.convTest" />
-      <option name="METHOD_NAME" value="paddingTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -225,11 +233,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.LayerTest91_CNN_test.forwardTest" />
-        <item itemvalue="JUnit.convTest.paddingTest3" />
-        <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.LayerTest91_CNN_test.X3_F3_forward_maxPool" />
+        <item itemvalue="JUnit.LayerTest91_CNN_test.X3_F3_forward_conv" />
         <item itemvalue="JUnit.convTest.paddingTest2" />
-        <item itemvalue="JUnit.convTest.paddingTest" />
+        <item itemvalue="JUnit.convTest.paddingTest3" />
+        <item itemvalue="JUnit.LayerTest91_CNN_test.forwardTest" />
       </list>
     </recent_temporary>
   </component>

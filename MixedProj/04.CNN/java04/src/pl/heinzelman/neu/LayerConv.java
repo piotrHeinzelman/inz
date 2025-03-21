@@ -61,9 +61,9 @@ public class LayerConv {
 
     public float[][][] nForward() {
         float Y[][][] = new float[ filters.length * X.length ][ X[0].length ][ X[0].length ];
-        for ( int xlen=0;xlen<X.length; xlen++ ){
-            for ( int flen=0; flen< filters.length; flen++ ){
-                Y[ xlen*filters.length + flen ] = filters[flen].Forward( X[xlen] );
+        for ( int flen=0; flen< filters.length; flen++ ){
+            for ( int xlen=0;xlen<X.length; xlen++ ){
+                Y[ flen*X.length + xlen ] = filters[flen].Forward( X[xlen] );
             }
         }
         return Y;
@@ -76,21 +76,23 @@ public class LayerConv {
         int padd = (_dLdO[0].length-1)/2;
 
         this.dLdX = new float[ _dLdO.length ][][];
-        for ( int xlen=0;xlen<X.length; xlen++ ){
-            for ( int flen=0; flen< filters.length; flen++ ){
-
-                float[][] _dLdO_ =  _dLdO[xlen * filters.length + flen];
-
+        for ( int flen=0; flen< filters.length; flen++ ){
+            for ( int xlen=0;xlen<X.length; xlen++ ){
+                float[][] _dLdO_ =  _dLdO[flen*X.length + xlen];
 
                 float[][] dLdF = Tools.conv(X[xlen], _dLdO_, 0);
                 filters[flen].fix( dLdF ); // update Weigth
 
                 float [][] _dLdX_ = Tools.conv( Tools.extendAry( filters[flen].getRot180() , padd )  , _dLdO_ , 0);
-                this.dLdX[ xlen * filters.length + flen ] = _dLdX_;
+                this.dLdX[ flen*X.length + xlen ] = _dLdX_;
             }
         }
     }
 
     public float[][][] getEout() { return dLdX; }
+
+    Neuron2D getNeuron(int i){
+        return filters[i];
+    }
 
 }

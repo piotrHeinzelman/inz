@@ -241,7 +241,6 @@ public class Tools {
 
     public static float[][] conv( float[][] X, float[][] F, float bias, int stride /* 1 */ ){
         int outputSize= 1+(( X.length-F.length )/stride);
-        //System.out.println( outputSize );
         int fSize=F.length;
         float [][] Y = new float[outputSize][outputSize];
         for ( int i=0;i<outputSize;i++ ){
