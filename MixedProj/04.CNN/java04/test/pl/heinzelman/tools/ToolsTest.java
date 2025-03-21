@@ -32,14 +32,47 @@ class ToolsTest {
 
         LayerConvRGB layerConvRGB = new LayerConvRGB(2, 2);
         layerConvRGB.setName("convRGB");
-        layerConvRGB.rnd();
+
+        float[][][] biases = layerConvRGB.getBiases();
+            biases[0][0] = new float[]{0.1f,-.1f};
+            biases[0][1] = new float[]{0.2f,-.2f};
+
+            biases[1][0] = new float[]{0.3f,-.3f};
+            biases[1][1] = new float[]{0.4f,-.4f};
+        // R
+        float[][] myWeight = layerConvRGB.getRNeuron(0).getMyWeight();
+        myWeight[0] = new float[]{0.1f,-.1f};
+        myWeight[1] = new float[]{0.2f,-.2f};
+
+                myWeight = layerConvRGB.getRNeuron(1).getMyWeight();
+        myWeight[0] = new float[]{0.3f,-.3f};
+        myWeight[1] = new float[]{0.4f,-.4f};
+
+        // G
+               myWeight = layerConvRGB.getGNeuron(0).getMyWeight();
+        myWeight[0] = new float[]{0.5f,-.5f};
+        myWeight[1] = new float[]{0.6f,-.6f};
+
+              myWeight = layerConvRGB.getGNeuron(1).getMyWeight();
+        myWeight[0] = new float[]{0.7f,-.7f};
+        myWeight[1] = new float[]{0.8f,-.8f};
+
+        // B
+               myWeight = layerConvRGB.getBNeuron(0).getMyWeight();
+        myWeight[0] = new float[]{0.9f,-.9f};
+        myWeight[1] = new float[]{1.f,-1.f};
+
+              myWeight = layerConvRGB.getBNeuron(1).getMyWeight();
+        myWeight[0] = new float[]{1.2f,-1.2f};
+        myWeight[1] = new float[]{1.5f,-1.5f};
+
+
+        //layerConvRGB.rnd();
         System.out.println( layerConvRGB.toString() );
 
         float[][][] forward = layerConvRGB.forward(input);
 
         System.out.println( Tools.AryToString( forward ) );
-
-
     }
 
     @Test

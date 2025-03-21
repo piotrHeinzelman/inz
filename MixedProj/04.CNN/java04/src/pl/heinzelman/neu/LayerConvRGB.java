@@ -109,9 +109,11 @@ public class LayerConvRGB extends LayerConv {
 
     public float[][][] getEout() { return dLdX; }
 
-    Neuron2D getNeuron(int i){
-        return Rfilters[i];
-    }
+    public Neuron2D getNeuron(int i){ return null; }
+    public Neuron2D getRNeuron(int i){ return  Rfilters[i]; }
+    public Neuron2D getGNeuron(int i){ return  Gfilters[i]; }
+    public Neuron2D getBNeuron(int i){ return  Bfilters[i]; }
+    public float[][][] getBiases(){ return  Bias; }
 
 
 
