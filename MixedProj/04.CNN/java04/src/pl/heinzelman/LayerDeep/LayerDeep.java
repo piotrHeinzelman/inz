@@ -40,6 +40,7 @@ public abstract class LayerDeep {
     protected void initBiases(){
         int size = getYSize();
         Random rand = new Random();
+        System.out.println( "size: " + size );
         biases = new float[size][size];
         for (int i=0;i<size;i++){
             for (int j=0;j<size;j++) {
@@ -89,7 +90,7 @@ public abstract class LayerDeep {
     protected abstract float[][] flatBackward( float[][] dLdO, int fnum, int channel );
 
     public int getYSize(){
-        return (( xsize+padding+padding )+1-filterSize)/stride;
+        return (int)1+(( xsize+padding+padding-filterSize )/stride);
     }
 
     public float[][][] Backward( float[][][] dLdO ) {
@@ -107,8 +108,8 @@ public abstract class LayerDeep {
         for ( int i=0;i<filterNum;i++){
             out.append( "\n" );
             out.append( filters[i].toString() );
-            out.append("\nBiases:" + Tools.AryToString( biases ));
         }
+        if (biases!=null) out.append("\nBiases:" + Tools.AryToString( biases ));
         return out.toString();
     }
 

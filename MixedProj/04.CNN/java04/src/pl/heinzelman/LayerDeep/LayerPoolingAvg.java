@@ -5,39 +5,57 @@ package pl.heinzelman.LayerDeep;
 //  deltaOut = dL/dX = FullConv ( rot180 F , delta ) ; // delta = dL/dO
 //
 
-public class LayerPoolingAvg {
+import pl.heinzelman.tools.Tools;
 
-    private String name;
+public class LayerPoolingAvg extends LayerDeep{
 
-    private int size;
-    private float X[][][];
+    private float DX;
+
+    public LayerPoolingAvg( int filterSize, Integer stride ) {
+        super(filterSize, 1, 0, stride);
+        DX = 1.0f/(filterSize*filterSize);
+    }
+
+    //public LayerPoolingAvg(int filterSize, Integer filterNum, Integer padding, Integer stride) {
+    //    super(filterSize, 1, padding, stride);
+    //    DX = 1.0f/(filterSize*filterSize);
+    //}
 
     private float [][][] dLdX; // outout dL/dx * dx
 
     private float dX; // inner derivate...
 
-    public LayerPoolingAvg(int size ) {
-        this.size = size;
-        this.dX = 1.0f/(size*size);
+    public void calcLayerPoolingAvg( int size ) {
+        this.filterSize = size;
     }
 
-    public void setName( String _name ) {
-        this.name = _name;
-    }
-
-    public void setX(float[][][] _x) {
-        this.X = new float[_x.length][_x[0].length][_x[0].length];
-        for (int n = 0; n < _x.length; n++) {
-            for (int i = 0; i < _x[0].length; i++) {
-                for (int j = 0; j < _x[0].length; j++) {
-                    X[n][i][j] = _x[n][i][j];
+    @Override
+    protected float[][] flatForward( int fnum, int channel ) {
+        System.out.println( DX );
+        float[][] x = X[channel];
+        int ySize = getYSize();
+        float[][] Y = new float[ySize][ySize];
+        for (int i=0;i<ySize;i++){
+            for (int j=0;j<ySize;j++) {
+                // sum 1 block
+                float sum=0.0f;
+                for (int m=0;m<filterSize;m++){
+                    for (int n=0;n<filterSize;n++) {
+                        sum+=x[i*filterSize+m][j*filterSize+n];
+                    }
                 }
+                Y[i][j] = (sum*DX);
             }
         }
-        dLdX = new float[_x.length ][_x[0].length][_x[0].length];
+        return Y;
     }
 
+    @Override
+    protected float[][] flatBackward(float[][] dLdO, int fnum, int channel) {
+        return new float[0][];
+    }
 
+    /*
     public float[][][] nForward() {
         int s = (int) Math.floor( X[0].length / size );
         float Y[][][] = new float[ X.length ][ s ][ s ];
@@ -59,9 +77,11 @@ public class LayerPoolingAvg {
             }
         return Y;
     }
+    */
 
 
-    public void nBackward( float[][][] _dLdO ){ // delta [--x-- ][][]
+    /*
+    public float[][][] nBackward( float[][][] _dLdO ){ // delta [--x-- ][][]
         dLdX = new float[_dLdO.length][ _dLdO[0].length*size][_dLdO[0].length*size];
         int s=_dLdO[0].length;
 
@@ -77,10 +97,9 @@ public class LayerPoolingAvg {
                 }
             }
         }
+        return dLdX;
     }
-
-
-    public float[][][] getEout() { return dLdX; }
+    */
 
 
 }

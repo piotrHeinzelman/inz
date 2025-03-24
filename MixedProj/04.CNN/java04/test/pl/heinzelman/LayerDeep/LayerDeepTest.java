@@ -11,6 +11,24 @@ import static org.junit.jupiter.api.Assertions.*;
 class LayerDeepTest {
     @Test
     public void creationConvolutionTest2() {
+        float[][][] input = new float[1][4][4];
+
+        //R
+        input[0][0] = new float[]{1.0f,6.0f,2.0f,2.0f};
+        input[0][1] = new float[]{5.0f,3.0f,1.0f,1.0f};
+        input[0][2] = new float[]{7.0f,0.0f,4.0f,1.0f};
+        input[0][3] = new float[]{2.0f,1.0f,4.0f,8.0f};
+
+
+        LayerDeep layer = new LayerPoolingAvg( 2, 2 );
+        layer.setName( "layer1" );
+        layer.setX( input );
+
+        float[][][] Y = layer.Forward();
+
+        System.out.println( Tools.AryToString( input ) );
+        System.out.println( Tools.AryToString( Y ) );
+        System.out.println( layer );
 
     }
 
@@ -43,8 +61,8 @@ class LayerDeepTest {
 
 
         System.out.println( layer );
-        layer.initBiases();
         layer.setX( input );
+        layer.initBiases();
         System.out.println( layer );
 
         float[][][] Y = layer.Forward();
