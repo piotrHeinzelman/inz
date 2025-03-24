@@ -1,11 +1,10 @@
 package pl.heinzelman.neu;
 
 import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import pl.heinzelman.LayerDeep.LayerConv;
+import pl.heinzelman.LayerDeep.LayerPoolingAvg;
 import pl.heinzelman.tools.Tools;
-
-import javax.tools.Tool;
-import java.awt.image.BufferedImage;
-import java.util.Arrays;
 
 public class LayerTest91_CNN_test {
     @Test
@@ -13,8 +12,7 @@ public class LayerTest91_CNN_test {
 
         Tools tools = new Tools();
 
-        LayerConv LCNN1 = new LayerConv( 3, 1 ); // 3x3 1 filter
-        LCNN1.rnd();
+        LayerConv LCNN1 = new LayerConv( 2, 1, null, null ); // 3x3 1 filter
         LCNN1.setName( "CNN 01" );
 
         float[][][] X = new float[1][5][5]; // x1, x2, x3, x4, x[0] = {1,2}
@@ -26,12 +24,14 @@ public class LayerTest91_CNN_test {
 
         LCNN1.setX( X );
 
-        float[][][] Z = LCNN1.nForward();
+        float[][][] Z = LCNN1.Forward();
+        System.out.println(  LCNN1.showWeight() );
 
-        LCNN1.nBackward( Z );
+        float[][][] eOUT = LCNN1.Backward(Z);
         System.out.println( Tools.AryToString( X ) );
         System.out.println( Tools.AryToString( Z ) );
-        System.out.println( Tools.AryToString( LCNN1.getEout() ));
+        System.out.println( Tools.AryToString( eOUT ));
+        System.out.println( LCNN1.showWeight() );
     }
 
 
@@ -51,14 +51,14 @@ public class LayerTest91_CNN_test {
         allX[1]=x1;
         allX[2]=x2;
 
-        LayerConv layerConv = new LayerConv(1, 3 );
+        LayerConv layerConv = new LayerConv( 1, 3, null, null );
                   layerConv.setX( allX );
 
-                  layerConv.getNeuron(0 ).setWm(0,0,5.0f );
-                  layerConv.getNeuron(1 ).setWm(0,0,10.0f );
-                  layerConv.getNeuron(2 ).setWm(0,0,20.0f );
+        //          layerConv.getNeuron(0 ).setWm(0,0,5.0f );
+        //          layerConv.getNeuron(1 ).setWm(0,0,10.0f );
+        //          layerConv.getNeuron(2 ).setWm(0,0,20.0f );
 
-        float[][][] out = layerConv.nForward();
+        float[][][] out = layerConv.Forward();
 
         System.out.println( layerConv.toString() );
         System.out.println(  Tools.AryToString( out ));

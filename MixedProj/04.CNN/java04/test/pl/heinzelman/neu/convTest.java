@@ -1,6 +1,8 @@
 package pl.heinzelman.neu;
 
 import org.junit.jupiter.api.Test;
+import pl.heinzelman.LayerDeep.Neuron2D;
+import pl.heinzelman.tools.Conv;
 import pl.heinzelman.tools.Tools;
 
 public class convTest {
@@ -18,7 +20,7 @@ public class convTest {
         System.out.println( Tools.AryToString( X ) );
 
         for (int i=0;i<4;i++) {
-            float[][] extendX = Tools.extendAry(X, i);
+            float[][] extendX = Conv.extendAry(X, i);
             System.out.println( "\n\nI="+i );
             System.out.println( Tools.AryToString( extendX ) );
         }
@@ -29,7 +31,7 @@ public class convTest {
 
         System.out.println( "\nFilter:" + Tools.AryToString( F ) );
 
-        float [][] Y = Tools.conv( X, F , bias );
+        float [][] Y = Conv.conv( X, F , bias );
 
         System.out.println( "\nConv:" + Tools.AryToString( Y ) );
 
@@ -47,7 +49,7 @@ public class convTest {
         X[3]=new float[]{15f,16f,17f,18f,19f};
         X[4]=new float[]{20f,21f,22f,23f,24f};
 
-        X=Tools.extendAry( X,1 );
+        X=Conv.extendAry( X,1 );
 
         System.out.println( Tools.AryToString( X ) );
 
@@ -58,7 +60,7 @@ public class convTest {
 
         System.out.println( "\nFilter:" + Tools.AryToString( F ) );
 
-        float [][] Y = Tools.conv( X, F , bias , 2 );
+        float [][] Y = Conv.conv( X, F , bias , 2 );
 
         System.out.println( "\nConv:" + Tools.AryToString( Y ) );
 

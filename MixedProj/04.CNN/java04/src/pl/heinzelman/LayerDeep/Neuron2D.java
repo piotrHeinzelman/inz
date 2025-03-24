@@ -1,27 +1,30 @@
-package pl.heinzelman.neu;
+package pl.heinzelman.LayerDeep;
 
+import pl.heinzelman.tools.Conv;
 import pl.heinzelman.tools.Tools;
 
 import java.util.Arrays;
 import java.util.Random;
 
+// https://pavisj.medium.com/convolutions-and-backpropagations-46026a8f5d2c
 //
 //  Fupdate  = F - u dL/dF ; = Conv ( X, delta )     ; // delta = dL/dO
 //  deltaOut = dL/dX = FullConv ( rot180 F , delta ) ; // delta = dL/dO
 //
 
 public class Neuron2D {
-
+private int m;
 private float bias=0f;
 private float[][] W;
-private final LayerConv parent;
-private final static float mu=0.001f;
+private final LayerDeep parent;
+private final static float mu=0.01f;
 
 public void setBias( float b ) { this.bias=b; }
 public float getBias(){ return bias; }
 
-public Neuron2D( int m, LayerConv parent ) {
+public Neuron2D( int m, LayerDeep parent ) {
         this.parent=parent;
+        this.m=m;
         this.W = new float[m][m];
         for ( int i=0; i<m ; i++ ) {
             this.W[i] = new float[m];
@@ -34,27 +37,14 @@ public Neuron2D( int m, LayerConv parent ) {
     }
 
     public float[][] Forward( float[][] X ) {
-        float res=bias;
-
         //convolution
-        return Tools.conv( X, W, bias, 1 );
-    }
-
-    public void Backward( float[][][] dL_dO_delta ) { // dL/dO = delta
-
-
-        // weights
-//        float[] X = parent.getX();
-//        for ( int m=0; m<W.length; m++ ) {
-//            parent.getEout()[m] += ( W[m] * en_x_dFIznI );
-//            W[m] += mu * en_x_dFIznI * X[m];
-//        }
+        return Conv.conv( X, W, bias, 1 );
     }
 
 
     @Override
     public String toString() {
-        return "N{ W=" + Arrays.toString(W) + '}';
+        return "N{ W=" + Tools.AryToString(W) + '}';
     }
 
     //@Deprecated
@@ -71,15 +61,26 @@ public Neuron2D( int m, LayerConv parent ) {
     }
 
     public void trainW(float [][] dLdF ){
-        for ( int i=0;i< W.length; i++){
-            for (int j=0;j<W[0].length; j++){
+        int m=W.length;
+        for ( int i=0;i<m; i++ ){
+            for ( int j=0;j<m; j++ ){
                 W[i][j]= W[i][j] - (mu * dLdF[i][j]);
             }
         }
     }
 
+    public void trainB(float dB ){
+        bias = bias - (mu * dB);
+    }
+
     public float[][] getRot180(){
-        return Tools.getRot180( W );
+        float[][] Rot180 = new float[ m ][ m ];
+            for (int i=0;i<m;i++){
+                for (int j=0;j<m;j++){
+                    Rot180[m-i-1][m-j-1] = W[i][j];
+            }
+        }
+    return Rot180;
     }
 
 }
