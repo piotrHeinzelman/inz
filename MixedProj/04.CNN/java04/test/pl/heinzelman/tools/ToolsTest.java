@@ -84,14 +84,19 @@ class ToolsTest {
         kernel[0] = new float[]{1.0f,2.0f};
         kernel[1] = new float[]{-1.0f,0.0f};
 
+        float [][] B = new float[2][];
+        B[0] = new float[]{.1f, .2f};
+        B[1] = new float[]{.4f, .3f};
+
+
         System.out.println(Tools.AryToString( input ));
         System.out.println(Tools.AryToString( kernel ));
-        System.out.println(Tools.AryToString( Conv.conv( input, kernel, 0 ) ));
+        System.out.println(Tools.AryToString( Conv.conv( input, kernel, B ) ));
 
         float[][] Rot_kernel = Conv.getRot180( kernel );
 
         System.out.println(Tools.AryToString( Rot_kernel ));
-        System.out.println(Tools.AryToString( Conv.conv( input, Rot_kernel, 0 ) ));
+        System.out.println(Tools.AryToString( Conv.conv( input, Rot_kernel, B ) ));
 
 
         System.out.println( "\n\n*******************\n\n"  );
@@ -101,6 +106,6 @@ class ToolsTest {
         float[][] extInput = Conv.extendAry(input, padd);
         System.out.println(Tools.AryToString( extInput ));
 
-        System.out.println(Tools.AryToString( Conv.conv( extInput, kernel, 0 ) ));
+        System.out.println(Tools.AryToString( Conv.conv( extInput, kernel, B ) ));
     }
 }

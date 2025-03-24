@@ -1,11 +1,14 @@
 package pl.heinzelman.LayerDeep;
 
+import pl.heinzelman.tools.Tools;
+
 import java.util.Arrays;
 import java.util.Random;
 
 public abstract class LayerDeep {
     protected String name;
     protected Neuron2D[] filters;
+    protected float[][] biases;
     protected float[][][] X;
     protected float[][][] dX;
     protected float[][][] Y;
@@ -34,6 +37,19 @@ public abstract class LayerDeep {
         }
     }
 
+    protected void initBiases(){
+        int size = getYSize();
+        Random rand = new Random();
+        biases = new float[size][size];
+        for (int i=0;i<size;i++){
+            for (int j=0;j<size;j++) {
+                biases[i][j]=rand.nextFloat();
+            }
+        }
+    }
+
+
+
     protected void initAry(){
         X  = new float[ channels ][ xsize ][ xsize ];
         //dX = new float[ channels ][ xsize ][ xsize ];
@@ -41,8 +57,9 @@ public abstract class LayerDeep {
 
     public void setName( String name ) { this.name = name; }
     public Neuron2D getNeuron(int i){ return filters[i]; }
+    public float[][] getBiases() { return biases; }
 
-    public void setX( float[][][] _x ) {
+    public void setX(float[][][] _x ) {
         this.channels= _x.length;
         this.xsize=_x[0].length;
         initAry();
@@ -85,11 +102,12 @@ public abstract class LayerDeep {
         return dOUT;
     }
 
-    public String showWeight(){
+    public String toString(){
         StringBuffer out = new StringBuffer();
         for ( int i=0;i<filterNum;i++){
             out.append( "\n" );
             out.append( filters[i].toString() );
+            out.append("\nBiases:" + Tools.AryToString( biases ));
         }
         return out.toString();
     }

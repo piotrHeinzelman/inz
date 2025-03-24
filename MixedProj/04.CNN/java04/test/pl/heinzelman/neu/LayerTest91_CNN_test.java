@@ -25,13 +25,13 @@ public class LayerTest91_CNN_test {
         LCNN1.setX( X );
 
         float[][][] Z = LCNN1.Forward();
-        System.out.println(  LCNN1.showWeight() );
+        System.out.println(  LCNN1 );
 
         float[][][] eOUT = LCNN1.Backward(Z);
         System.out.println( Tools.AryToString( X ) );
         System.out.println( Tools.AryToString( Z ) );
         System.out.println( Tools.AryToString( eOUT ));
-        System.out.println( LCNN1.showWeight() );
+        System.out.println( LCNN1  );
     }
 
 

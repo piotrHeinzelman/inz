@@ -26,41 +26,14 @@ public class LayerConv extends LayerDeep {
         return filters[fnum].Forward( X[channel] );
     }
 
-    /*
-    @Override
-    public float[][][] Backward( float[][][] _dLdO ){ // delta [--x-- ][][]
-                                                //       [f0f1f2][][]
-                                                // !!!! _dLdO is size of nForward out. !!!!
-        int padd = (int)(_dLdO[0].length-1.0f/2.0f);
-
-        float[][][] dOUT = new float[ _dLdO.length ][][];
-        for ( int fnum=0; fnum< filterNum; fnum++ ){
-            for ( int channel=0;channel<channels; channel++ ){
-
-                float[][] _dLdO_ =  _dLdO[fnum*channels + channel];
-
-                System.out.println( _dLdO_ );
-                float[][] dLdF = Conv.conv( X[channel], _dLdO_, 0);
-                filters[fnum].trainW( dLdF ); // update Weigth
-
-                float [][] _dLdX_ = Conv.conv( Conv.extendAry( filters[fnum].getRot180() , padd )  , _dLdO_ , 0);
-                dOUT[ fnum*channels + channel ] = _dLdX_;
-            }
-        }
-        return dOUT;
-    }
-    */
-
     @Override
     protected float[][] flatBackward( float[][] dLdO, int fnum, int channel ){
-        int padd = (int)(dLdO.length-1.0f/2.0f);
-
         // train W
-        float[][] dLdF = Conv.conv( X[channel], dLdO, 0);
+        float[][] dLdF = Conv.conv( X[channel], dLdO, biases);
         filters[fnum].trainW( dLdF ); // update Weigth
 
         // out
-        float [][] _dLdX_ = Conv.conv( Conv.extendAry( filters[fnum].getRot180() , padd )  , dLdO , 0);
+        float [][] _dLdX_ = Conv.fullConv( filters[fnum].getRot180(), dLdO );
         return _dLdX_;
     }
 

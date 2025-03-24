@@ -14,13 +14,9 @@ import java.util.Random;
 
 public class Neuron2D {
 private int m;
-private float bias=0f;
 private float[][] W;
 private final LayerDeep parent;
 private final static float mu=0.01f;
-
-public void setBias( float b ) { this.bias=b; }
-public float getBias(){ return bias; }
 
 public Neuron2D( int m, LayerDeep parent ) {
         this.parent=parent;
@@ -38,7 +34,7 @@ public Neuron2D( int m, LayerDeep parent ) {
 
     public float[][] Forward( float[][] X ) {
         //convolution
-        return Conv.conv( X, W, bias, 1 );
+        return Conv.conv( X, W, parent.getBiases(), 1 );
     }
 
 
@@ -52,7 +48,6 @@ public Neuron2D( int m, LayerDeep parent ) {
 
 
     public void rnd( Random rand ){
-        this.bias = rand.nextFloat();
         for ( int i=0;i< W.length; i++){
             for (int j=0;j<W[0].length; j++){
                 W[i][j]= rand.nextFloat();
@@ -69,9 +64,6 @@ public Neuron2D( int m, LayerDeep parent ) {
         }
     }
 
-    public void trainB(float dB ){
-        bias = bias - (mu * dB);
-    }
 
     public float[][] getRot180(){
         float[][] Rot180 = new float[ m ][ m ];

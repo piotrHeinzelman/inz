@@ -247,6 +247,7 @@ public class Tools {
 
     public static String AryToString( float[][]X ){
         StringBuffer out = new StringBuffer();
+        if (X==null) return "";
         for (int i=0;i<X.length;i++){
             out.append("\n[" );
             for ( int j=0;j<X.length;j++ ){
