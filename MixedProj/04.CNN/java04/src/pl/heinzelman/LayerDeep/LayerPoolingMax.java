@@ -1,93 +1,53 @@
 package pl.heinzelman.LayerDeep;
 
-//
-//  Fupdate  = F - u dL/dF ; = Conv ( X, delta )     ; // delta = dL/dO
-//  deltaOut = dL/dX = FullConv ( rot180 F , delta ) ; // delta = dL/dO
-//
+public class LayerPoolingMax extends LayerDeep{
 
-public class LayerPoolingMax {
 
-    private String name;
-
-    private int size;
-    private float X[][][];
-
-    private float [][][] dLdX; // outout dL/dx * dx
-
-    private float [][][] dX; // inner derivate...
-
-    public LayerPoolingMax( int size ) {
-        this.size = size;
+    public LayerPoolingMax(int filterSize, Integer stride ) {
+        super(filterSize, 1, 0, stride);
     }
 
-    public void setName( String _name ) {
-        this.name = _name;
-    }
-
-    public void setX(float[][][] _x) {
-        this.X = new float[_x.length][_x[0].length][_x[0].length];
-        for (int n = 0; n < _x.length; n++) {
-            for (int i = 0; i < _x[0].length; i++) {
-                for (int j = 0; j < _x[0].length; j++) {
-                    X[n][i][j] = _x[n][i][j];
-                }
-            }
-        }
-        dX = new float[_x.length ][_x[0].length][_x[0].length];
-        dLdX = new float[_x.length ][_x[0].length][_x[0].length];
-    }
-
-
-    public float[][][] nForward() {
-        int s = (int) Math.floor( X[0].length / size );
-        float Y[][][] = new float[ X.length ][ s ][ s ];
-            for ( int xlen=0;xlen<X.length; xlen++ ){
-                for ( int i=0;i<s;i++ ) {
-                    for ( int j=0;j<s;j++ ) {
-
-                        // --- max --- X[i][j] : X[i+size][j+size]
-                        float max=X[xlen][i*size][j*size];
-                        int maxx = 0;
-                        int maxy = 0;
-                        for (int x=0;x<size;x++){
-                            for (int y=0;y<size;y++) {
-                                dX[xlen][i*size][j*size]=0.0f;
-                                if ( max<X[xlen][i*size+x][j*size+y] ) { max=X[xlen][i*size+x][j*size+y]; maxx=x; maxy=y; }
-                            }
-                        }
-                        dX[xlen][i*size+maxx][j*size+maxy]=1.0f;
-                        Y[xlen][i][j]=max;
-                        // --- end of max
+    @Override
+    protected float[][] flatForward( int fnum, int channel ) {
+        int ySize = getYSize();
+        //Y = new float[ySize][ySize];
+        for (int i=0;i<ySize;i++){
+            for (int j=0;j<ySize;j++) {
+                // MAX
+                // --- max --- X[i][j] : X[i+size][j+size]
+                float max=X[channel][i*filterSize][j*filterSize];
+                int maxx = 0;
+                int maxy = 0;
+                for (int x=0;x<filterSize;x++){
+                    for (int y=0;y<filterSize;y++) {
+                        dX[channel][i*filterSize][j*filterSize]=0.0f;
+                        if ( max<X[channel][i*filterSize+x][j*filterSize+y] ) { max=X[channel][i*filterSize+x][j*filterSize+y]; maxx=x; maxy=y; }
                     }
                 }
+                dX[channel][i*filterSize+maxx][j*filterSize+maxy]=1.0f;
+                Y[channel][i][j]=max;
+                // ***  ENC
             }
-        return Y;
+        }
+        return Y[channel];
     }
 
+    @Override
+    protected float[][] flatBackward(float[][] dLdO, int fnum, int channel) {
+            int dlSize = dLdO.length;
+            float[][] delta_i = new float[dlSize*filterSize][dlSize*filterSize];
+            for (int i=0;i<dlSize;i++){
+                for (int j=0;j<dlSize;j++) {
 
-
-
-    public void nBackward( float[][][] _dLdO ){ // delta [--x-- ][][]
-        dLdX = new float[dX.length][ dX[0].length][dX[0].length];
-        int s=dX[0].length/size;
-
-        for (int num=0;num< dX.length;num++){
-            for ( int i=0;i<s; i++ ) {
-                for ( int j=0;j<s; j++){
-
-                    for (int x=0;x<size;x++) {
-                        for (int y=0;y<size;y++) {
-                            //System.out.println( "[x + i*size][y +j*size] [" + x +"+"+ i + "*" +size+"]["+y+"+"+j+"*"+size+"]");
-                            dLdX[num][x + i*size][y +j*size] = dX[num][x + i*size][y + j*size] * _dLdO[num][i][j];
+                    // sum 1 block
+                    for (int m=0;m<filterSize;m++){
+                        for (int n=0;n<filterSize;n++) {
+                            delta_i[i*filterSize+m][j*filterSize+n] = dLdO[i][j] * dX[channel][i*filterSize+m][j*filterSize+n] ;
                         }
                     }
                 }
             }
-        }
+            return delta_i;
     }
-
-
-    public float[][][] getEout() { return dLdX; }
-
 
 }

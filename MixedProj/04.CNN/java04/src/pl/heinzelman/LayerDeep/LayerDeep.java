@@ -53,7 +53,7 @@ public abstract class LayerDeep {
 
     protected void initAry(){
         X  = new float[ channels ][ xsize ][ xsize ];
-        //dX = new float[ channels ][ xsize ][ xsize ];
+        dX = new float[ channels ][ xsize ][ xsize ];
     }
 
     public void setName( String name ) { this.name = name; }

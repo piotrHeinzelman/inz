@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class LayerDeepTest {
     @Test
     public void creationConvolutionTest2() {
-        float[][][] input = new float[1][4][4];
+        float[][][] input = new float[2][4][4];
 
         //R
         input[0][0] = new float[]{1.0f,6.0f,2.0f,2.0f};
@@ -19,16 +19,55 @@ class LayerDeepTest {
         input[0][2] = new float[]{7.0f,0.0f,4.0f,1.0f};
         input[0][3] = new float[]{2.0f,1.0f,4.0f,8.0f};
 
+        input[1][0] = new float[]{1.0f,6.0f,2.0f,2.0f};
+        input[1][1] = new float[]{5.0f,3.0f,1.0f,1.0f};
+        input[1][2] = new float[]{7.0f,0.0f,4.0f,1.0f};
+        input[1][3] = new float[]{2.0f,1.0f,4.0f,8.0f};
 
-        LayerDeep layer = new LayerPoolingAvg( 2, 2 );
+
+        //LayerDeep layer = new LayerConv( 2, 1 , 0 , 1);
+        //LayerDeep layer = new LayerPoolingAvg( 2, 2 );
+        LayerDeep layer = new LayerPoolingMax( 2, 2 );
         layer.setName( "layer1" );
         layer.setX( input );
 
         float[][][] Y = layer.Forward();
 
-        System.out.println( Tools.AryToString( input ) );
-        System.out.println( Tools.AryToString( Y ) );
-        System.out.println( layer );
+        float[][][] deltaIn = new float[2][2][2];
+
+        //R
+        deltaIn[0][0] = new float[]{ 1.0f,6.0f };
+        deltaIn[0][0] = new float[]{ 5.0f,3.0f };
+        deltaIn[0][1] = new float[]{ 7.0f,4.0f };
+        deltaIn[0][1] = new float[]{ 7.0f,2.0f };
+        deltaIn[1][0] = new float[]{ 1.0f,6.0f };
+        deltaIn[1][0] = new float[]{ 5.0f,3.0f };
+        deltaIn[1][1] = new float[]{ 7.0f,4.0f };
+        deltaIn[1][1] = new float[]{ 7.0f,2.0f };
+/*
+        float[][][] delta3 = new float[1][3][3];
+
+        //R
+        delta3[0][0] = new float[]{ 1.0f,6.0f,2.0f };
+        delta3[0][0] = new float[]{ 5.0f,3.0f,1.0f };
+        delta3[0][0] = new float[]{ 5.0f,3.0f,1.0f };
+        delta3[0][1] = new float[]{ 7.0f,0.0f,0.0f };
+        delta3[0][1] = new float[]{ 7.0f,0.0f,1.2f };
+        delta3[0][1] = new float[]{ 7.0f,0.0f,1.2f };
+        delta3[0][2] = new float[]{ 7.0f,0.0f,1.2f };
+        delta3[0][2] = new float[]{ 7.0f,0.0f,1.2f };
+        delta3[0][2] = new float[]{ 7.0f,0.0f,1.2f };
+*/
+
+
+        float[][][] delta = layer.Backward( deltaIn );
+
+        System.out.println( "\nInput: " + Tools.AryToString( input ) );
+        System.out.println( "\nY: " + Tools.AryToString( Y ) );
+        System.out.println( "\ndeltaIn: " + Tools.AryToString( deltaIn ) );
+        System.out.println( "\nDelta: " + Tools.AryToString( delta ) );
+
+        System.out.println( "\nDx: " + Tools.AryToString( layer.dX ));
 
     }
 
