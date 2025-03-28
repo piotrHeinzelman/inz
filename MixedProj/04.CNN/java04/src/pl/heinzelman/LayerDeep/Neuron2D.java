@@ -66,6 +66,7 @@ public Neuron2D( int m, LayerConv parent ) {
         W[i][j] = wij;
     }
     public float getBias() { return bias; }
+    public void setBias( Float bias ) { this.bias = bias; }
     public float[][] getMyWeight() { return W; }
 
     public void rnd( Random rand , float max ){
