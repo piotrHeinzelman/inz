@@ -17,12 +17,10 @@ public class LayerPoolingAvg extends LayerDeep{
     }
 
     @Override
-    protected float[][] flatForward( int fnum, int channel ) {
+    protected float[][] flatForward( int fnum, int channel, float[][] Y ) {
         float[][] x = X[channel];
-        int ySize = getYSize();
-        float[][] Y = new float[ySize][ySize];
-        for (int i=0;i<ySize;i++){
-            for (int j=0;j<ySize;j++) {
+        for (int i=0;i<ysize;i++){
+            for (int j=0;j<ysize;j++) {
                 // sum 1 block
                 float sum=0.0f;
                 for (int m=0;m<filterSize;m++){
@@ -31,8 +29,7 @@ public class LayerPoolingAvg extends LayerDeep{
                         dX[channel][i*filterSize+m][j*filterSize+n]=DX;
                     }
                 }
-                Y[i][j] = (sum*DX);
-
+                Y[i][j] += (sum*DX);
             }
         }
         return Y;

@@ -1,14 +1,11 @@
 package pl.heinzelman.LayerDeep;
 
-import pl.heinzelman.tools.Tools;
-
-import java.util.Arrays;
 import java.util.Random;
 
 public abstract class LayerDeep {
     protected String name;
     protected Neuron2D[] filters;
-    protected float[][] biases;
+
     protected float[][][] X;
     protected float[][][] dX;
     protected float[][][] Y;
@@ -19,51 +16,40 @@ public abstract class LayerDeep {
 
     protected int channels;
     protected int xsize;
+    protected int ysize;
 
     public LayerDeep( int filterSize, Integer filterNum, Integer padding, Integer stride ) {
-        this.filterSize = (int)filterSize;
+        this.filterSize = filterSize;
         this.filterNum = (filterNum==null) ? 0 : (int)filterNum;
         this.padding = ( padding==null ) ? 0 : (int)padding;
         this.stride = (stride==null) ? 1 : (int)stride;
-        if ( filterNum>0 ) { initFilters(); }
     }
+
 
     protected void initFilters(){
         this.filters = new Neuron2D[ filterNum ];
         Random rand = new Random();
+        float max=getMaxRand();
         for ( int i=0;i<filterNum;i++ ){
-            filters[i] = new Neuron2D( filterSize, this );
-            filters[i].rnd(rand);
+          //  filters[i] = new Neuron2D( filterSize, this );
+           // filters[i].rnd(rand, max);
         }
     }
-
-    protected void initBiases(){
-        int size = getYSize();
-        Random rand = new Random();
-        System.out.println( "size: " + size );
-        biases = new float[size][size];
-        for (int i=0;i<size;i++){
-            for (int j=0;j<size;j++) {
-                biases[i][j]=rand.nextFloat();
-            }
-        }
-    }
-
-
 
     protected void initAry(){
         X  = new float[ channels ][ xsize ][ xsize ];
         dX = new float[ channels ][ xsize ][ xsize ];
     }
 
-    public void setName( String name ) { this.name = name; }
-    public Neuron2D getNeuron(int i){ return filters[i]; }
-    public float[][] getBiases() { return biases; }
+
+
 
     public void setX(float[][][] _x ) {
         this.channels= _x.length;
         this.xsize=_x[0].length;
+        this.ysize = getYSize();
         initAry();
+        if ( filterNum>0 ) { initFilters(); }
 
         for (int n = 0; n < channels; n++) {
             for (int i = 0; i < xsize; i++) {
@@ -74,24 +60,21 @@ public abstract class LayerDeep {
         }
     }
 
-    public float[][][] Forward() {
-        int ySize=getYSize();
-        Y = new float[ filterNum * channels ][ ySize ][ ySize ];
+    public float[][][] ConvForward() {
+        Y = new float[ filterNum ][ ysize ][ ysize ];
         for ( int fnum=0; fnum< filterNum; fnum++ ){
             for ( int channel=0;channel<channels; channel++ ){
-                Y[ fnum*channels + channel ] = flatForward( fnum, channel);
+                flatForward( fnum, channel, Y[ fnum ] );
             }
         }
         return Y;
     }
 
 
-    protected abstract float[][] flatForward( int fnum, int channel );
+    protected abstract float[][] flatForward( int fnum, int channel, float[][] Y );
     protected abstract float[][] flatBackward( float[][] dLdO, int fnum, int channel );
 
-    public int getYSize(){
-        return (int)1+(( xsize+padding+padding-filterSize )/stride);
-    }
+
 
     public float[][][] Backward( float[][][] dLdO ) {
         float[][][] dOUT = new float[ dLdO.length ][][];
@@ -99,19 +82,24 @@ public abstract class LayerDeep {
             for ( int channel=0;channel<channels; channel++ ) {
                 dOUT[ fnum*channels + channel ] = flatBackward( dLdO[fnum*channels + channel], fnum, channel );
             }
+
         }
         return dOUT;
     }
 
-    public String toString(){
-        StringBuffer out = new StringBuffer();
-        for ( int i=0;i<filterNum;i++){
-            out.append( "\n" );
-            out.append( filters[i].toString() );
-        }
-        if (biases!=null) out.append("\nBiases:" + Tools.AryToString( biases ));
-        return out.toString();
-    }
+    // ****************
 
+    public String toString(){ StringBuffer out = new StringBuffer(); for ( int i=0;i<filterNum;i++){ out.append( "\n" ); out.append( filters[i].toString() ); } return out.toString(); }
+    public void setName( String name ) { this.name = name; }
+    public Neuron2D getNeuron(int i){ return filters[i]; }
+
+    public int getYSize(){
+        return 1+(( xsize+padding+padding-filterSize )/stride);
+    }
+    protected float getMaxRand(){
+        float inputChannelNum = 6; // inputs
+        float outputChannelNum = filterNum; //
+        return (float)Math.pow((filterNum / ((inputChannelNum + outputChannelNum) * (filterSize * filterSize))), .5f);
+    }
 
 }

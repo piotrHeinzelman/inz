@@ -31,11 +31,9 @@ public class convTest {
 
         System.out.println( "\nFilter:" + Tools.AryToString( F ) );
 
-        float [][] B = new float[2][];
-        B[0] = new float[]{.1f, .2f};
-        B[1] = new float[]{.4f, .3f};
+        float B = .1f;
 
-        float [][] Y = Conv.conv( X, F, B );
+        float [][] Y = Conv.conv( X, F, 0 );
 
         System.out.println( "\nConv:" + Tools.AryToString( Y ) );
 
@@ -64,9 +62,7 @@ public class convTest {
 
         System.out.println( "\nFilter:" + Tools.AryToString( F ) );
 
-        float [][] B = new float[2][];
-        B[0] = new float[]{.1f, .2f};
-        B[1] = new float[]{.4f, .3f};
+        float B =  .2f;
 
         float [][] Y = Conv.conv( X, F, B, 2 );
 

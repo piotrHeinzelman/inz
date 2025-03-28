@@ -84,9 +84,7 @@ class ToolsTest {
         kernel[0] = new float[]{1.0f,2.0f};
         kernel[1] = new float[]{-1.0f,0.0f};
 
-        float [][] B = new float[2][];
-        B[0] = new float[]{.1f, .2f};
-        B[1] = new float[]{.4f, .3f};
+        float B = .3f;
 
 
         System.out.println(Tools.AryToString( input ));

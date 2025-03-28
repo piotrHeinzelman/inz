@@ -1,7 +1,6 @@
 package pl.heinzelman.neu;
 
 import org.junit.Test;
-import org.junit.jupiter.api.Disabled;
 import pl.heinzelman.LayerDeep.LayerConv;
 import pl.heinzelman.LayerDeep.LayerPoolingAvg;
 import pl.heinzelman.tools.Tools;
@@ -90,7 +89,7 @@ public class LayerTest91_CNN_test {
         poolingMax.setX( X );
         System.out.println( "X: " + Tools.AryToString( X ));
 
-        float[][][] out = poolingMax.Forward();
+        float[][][] out = poolingMax.ConvForward();
         System.out.println( "Y: " + Tools.AryToString( out ));
 
         float[][][] eOUT = poolingMax.Backward(out);

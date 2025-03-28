@@ -24,27 +24,25 @@ public class Conv {
 
     public static float[][] fullConv( float[][] X, float[][] F ){
         int padding = F.length-1;
-        return  conv (  extendAry( X , padding ) , F,  null , 1 ) ;
+        return  conv (  extendAry( X , padding ) , F,  0 , 1 ) ;
     }
 
-    public static float[][] conv( float[][] X, float[][] F, float[][] bias ){
+    public static float[][] conv( float[][] X, float[][] F, float bias ){
         return conv( X, F, bias, 1 );
     }
 
-    public static float[][] conv( float[][] X, float[][] F, float[][] bias, int stride /* 1 */ ){
+    public static float[][] conv( float[][] X, float[][] F, float bias, int stride /* 1 */ ){
 
         int outputSize= 1+(( X.length-F.length )/stride);
         int fSize=F.length;
         float [][] Y = new float[outputSize][outputSize];
         for ( int i=0;i<outputSize;i++ ){
             for ( int j=0;j<outputSize;j++ ){
-                float YIJ= (bias==null) ? 0f : bias[i][j];
+                float YIJ = bias;
                 {
                     for (int m=0;m<fSize;m++){
                         for (int n=0;n<fSize;n++){
-                            //System.out.println( "YIJ="+YIJ + " + " + F[m][n] +" X "+ X[i+m][j+n] );
-                            YIJ += ( F[m][n] * X[i+m][j+n]);
-
+                            YIJ += ( F[m][n] * X[i+m][j+n] );
                         }
                     }
                 }

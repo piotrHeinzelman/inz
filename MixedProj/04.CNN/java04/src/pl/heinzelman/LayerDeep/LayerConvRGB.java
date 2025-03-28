@@ -36,8 +36,8 @@ public class LayerConvRGB extends LayerConv {
 
     public void rnd() {
         Random rand = new Random();
-        for (int i = 0; i < Gfilters.length; i++) { Gfilters[i].rnd(rand); }
-        for (int i = 0; i < Bfilters.length; i++) { Bfilters[i].rnd(rand); }
+        for (int i = 0; i < Gfilters.length; i++) { Gfilters[i].rnd(rand, getMaxRand()); }
+        for (int i = 0; i < Bfilters.length; i++) { Bfilters[i].rnd(rand, getMaxRand()); }
 
         for ( int i=0;i<filterNum;i++) {
             for (int j=0;j<filterSize;j++) {

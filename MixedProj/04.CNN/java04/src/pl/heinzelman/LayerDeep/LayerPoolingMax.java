@@ -8,11 +8,9 @@ public class LayerPoolingMax extends LayerDeep{
     }
 
     @Override
-    protected float[][] flatForward( int fnum, int channel ) {
-        int ySize = getYSize();
-        //Y = new float[ySize][ySize];
-        for (int i=0;i<ySize;i++){
-            for (int j=0;j<ySize;j++) {
+    protected float[][] flatForward( int fnum, int channel, float [][] Y  ) {
+        for (int i=0;i<ysize;i++){
+            for (int j=0;j<ysize;j++) {
                 // MAX
                 // --- max --- X[i][j] : X[i+size][j+size]
                 float max=X[channel][i*filterSize][j*filterSize];
@@ -25,11 +23,11 @@ public class LayerPoolingMax extends LayerDeep{
                     }
                 }
                 dX[channel][i*filterSize+maxx][j*filterSize+maxy]=1.0f;
-                Y[channel][i][j]=max;
+                Y[i][j]=max;
                 // ***  ENC
             }
         }
-        return Y[channel];
+        return Y;
     }
 
     @Override

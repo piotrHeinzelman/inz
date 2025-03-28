@@ -4,10 +4,6 @@ import org.junit.jupiter.api.Test;
 import pl.heinzelman.tools.Conv;
 import pl.heinzelman.tools.Tools;
 
-import javax.tools.Tool;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 class LayerDeepTest {
     @Test
     public void creationConvolutionTest2() {
@@ -31,7 +27,7 @@ class LayerDeepTest {
         layer.setName( "layer1" );
         layer.setX( input );
 
-        float[][][] Y = layer.Forward();
+        float[][][] Y = layer.ConvForward();
 
         float[][][] deltaIn = new float[2][2][2];
 
@@ -73,7 +69,7 @@ class LayerDeepTest {
 
     @Test
     public void creationConvolutionTest() {
-        LayerDeep layer = new LayerConv( 2, 1, null, null );
+        LayerConv layer = new LayerConv( 2, 2, null, null );
         layer.setName( "layer1" );
 
         float[][][] input = new float[3][3][3];
@@ -99,28 +95,26 @@ class LayerDeepTest {
 
 
 
-        System.out.println( layer );
         layer.setX( input );
-        layer.initBiases();
         System.out.println( layer );
 
         float[][][] Y = layer.Forward();
         float[][][] delta = layer.Backward(Y);
 
-        System.out.println(Tools.AryToString( input ));
-        System.out.println(Tools.AryToString( Y ));
-        System.out.println(Tools.AryToString( delta ));
-
+        //System.out.println("\n\nInput:" + Tools.AryToString( input ));
+        System.out.println("\n\nY: "+Tools.AryToString( Y ));
+        System.out.println("\n\nDelta: " + Tools.AryToString( delta ));
+/*
         float [][] F = new float[2][];
         F[0] = new float[]{1f, 2f};
         F[1] = new float[]{-1f, 0f};
 
-        float[][] C = Conv.conv(input[0], F, layer.getBiases());
+        float[][] C = Conv.conv(input[0], F, layer.getNeuron(0).getBias());
         System.out.println( Tools.AryToString( C ) );
 
         float[][] FullC = Conv.fullConv( input[0], F );
         System.out.println( Tools.AryToString( FullC ) );
-
+*/
     }
 
 }
