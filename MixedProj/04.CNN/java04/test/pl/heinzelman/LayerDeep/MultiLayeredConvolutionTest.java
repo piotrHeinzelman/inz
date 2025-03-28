@@ -1,8 +1,11 @@
 package pl.heinzelman.LayerDeep;
 
+import org.junit.Assert;
 import org.junit.Test;
 import pl.heinzelman.tools.Conv;
 import pl.heinzelman.tools.Tools;
+
+import javax.tools.Tool;
 
 public class MultiLayeredConvolutionTest {
 
@@ -143,11 +146,8 @@ public class MultiLayeredConvolutionTest {
 
     @Test
     public void show(){
-        System.out.println(Tools.AryToString( createInputData() ));
-        int filterNum=0;
-        int channels=2;
-        int channelNum=0;
 
+        float[][][] X = createInputData();
         Neuron2D[] filters = createFilters();
 
         //System.out.println( filters[ filterNum * channels + channelNum ] ); ;
@@ -155,6 +155,19 @@ public class MultiLayeredConvolutionTest {
         //System.out.println( filters[ 1*3 + 0 ] );
         //System.out.println( filters[ 1*3 + 1 ] );
         //System.out.println( filters[ 1*3 + 2 ] );
+
+        LayerConv layerConv = new LayerConv(3, 2, null, null);
+
+        layerConv.filters = filters;
+        //System.out.println( Tools.AryToString(  layerConv.getNeuron(0).getMyWeight() ));
+        layerConv.setX( X );
+        float[][][] forward = layerConv.Forward();
+        System.out.println( Tools.AryToString( forward ) );
+
+        Assert.assertEquals( forward[0][0][0], 2f );
+        Assert.assertEquals( forward[1][0][0], -8f );
+
+
     }
 
 }
