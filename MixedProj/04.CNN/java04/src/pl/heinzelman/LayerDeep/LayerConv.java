@@ -1,7 +1,9 @@
 package pl.heinzelman.LayerDeep;
 
 import pl.heinzelman.tools.Conv;
+import pl.heinzelman.tools.Tools;
 
+import javax.tools.Tool;
 import java.util.Random;
 
 //
@@ -70,11 +72,47 @@ public class LayerConv {
 
 
 
+    public float[][] FilterTimesX( Neuron2D filter, float[][] Xc ) {
+        float[][] W = filter.getMyWeight();
+        float[][] OUT = new float[ysize][ysize];
+        //System.out.println( "filter:"+  filter  + "\n\nXc:" + Tools.AryToString( Xc ));
+
+        for ( int i=0;i<ysize;i++){ // iterate OUT[i][j]
+            for ( int j=0;j<ysize;j++) {
+
+                for (int x=0;x<filterSize;x++){
+                    for (int y=0;y<filterSize;y++) {
+                        OUT[i][j] = Xc[i*stride+x][j*stride+y] * W[i][j];
+                    }
+                }
+
+            }
+        }
+        return OUT;
+    }
+
+
     public float[][][] Forward() {
         Y = new float[ filterForChannel ][ ysize ][ ysize ];
+        float[][][] FOUT = new float[filterNum][][];
 
         for ( int fnum=0;fnum<filterNum; fnum++ ){
-            System.out.println( "filternum: " + fnum + ", channelNum:" + fnum%filterForChannel + ", filterClass: " + fnum/filterForChannel );
+            //System.out.println( "filternum: " + fnum + ", channelNum:" + fnum%filterForChannel + ", filterClass: " + fnum/filterForChannel );
+            FOUT[ fnum ] = FilterTimesX( filters[fnum], X[ fnum%filterForChannel ] );
+        }
+
+
+        for ( int f=0;f<filterForChannel;f++ ) {
+            // init bias
+            float b = filters[f*channels].getBias();
+            System.out.println( "Bias:" + b );
+            for (int x = 0; x < ysize; x++) {
+                for (int y = 0; y < ysize; y++) {
+                    Y[f][x][y]=b;
+                }
+            }
+            // sum FOUT
+            //
         }
         /*
 
@@ -104,7 +142,7 @@ public class LayerConv {
         }
         return Y;
         */
-        return null;
+        return Y;
     }
 
 
