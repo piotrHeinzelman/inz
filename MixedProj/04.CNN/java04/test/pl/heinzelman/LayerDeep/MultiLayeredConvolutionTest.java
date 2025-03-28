@@ -156,7 +156,7 @@ public class MultiLayeredConvolutionTest {
         //System.out.println( filters[ 1*3 + 1 ] );
         //System.out.println( filters[ 1*3 + 2 ] );
 
-        LayerConv layerConv = new LayerConv(3, 2, null, null);
+        LayerConv layerConv = new LayerConv(3, 2, null, 2);
 
         layerConv.filters = filters;
         //System.out.println( Tools.AryToString(  layerConv.getNeuron(0).getMyWeight() ));

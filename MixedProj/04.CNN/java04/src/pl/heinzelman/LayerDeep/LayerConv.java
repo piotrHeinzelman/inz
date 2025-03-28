@@ -72,6 +72,14 @@ public class LayerConv {
 
     public float[][][] Forward() {
         Y = new float[ filterForChannel ][ ysize ][ ysize ];
+
+        for ( int fnum=0;fnum<filterNum; fnum++ ){
+            System.out.println( "filternum: " + fnum + ", channelNum:" + fnum%filterForChannel + ", filterClass: " + fnum/filterForChannel );
+        }
+        /*
+
+
+
         for (int n=0;n<filterForChannel;n++ ){ // 3 ways
             for (int x=0;x<ysize;x++) {
                 for (int y = 0; y < ysize; y++) {
@@ -89,11 +97,14 @@ public class LayerConv {
                         }
 
                     }
-                    Y[n][x][y] = relu( sum );
+                    //Y[n][x][y] = relu( sum );
+                    Y[n][x][y] = sum ;
                 }
             }
         }
         return Y;
+        */
+        return null;
     }
 
 
