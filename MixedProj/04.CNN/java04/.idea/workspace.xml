@@ -116,6 +116,7 @@
     "JUnit.LayerTest91_CNN_test.executor": "Run",
     "JUnit.LayerTest91_CNN_test.forwardTest.executor": "Run",
     "JUnit.LayerTest9_Sig_CrossEntropyBinary_test.forwardTest.executor": "Run",
+    "JUnit.MultiLayeredConvolutionTest.executor": "Run",
     "JUnit.MultiLayeredConvolutionTest.show.executor": "Run",
     "JUnit.ToolsTest.conv.executor": "Run",
     "JUnit.ToolsTest.convRGB.executor": "Run",
@@ -211,6 +212,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MultiLayeredConvolutionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="nweb" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pl.heinzelman.LayerDeep.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="pl.heinzelman.LayerDeep" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.LayerDeep.MultiLayeredConvolutionTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="MultiLayeredConvolutionTest.show" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
       <extension name="coverage">
@@ -227,29 +243,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ToolsTest.convRGB" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="nweb" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="pl.heinzelman.tools.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="pl.heinzelman.tools" />
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.tools.ToolsTest" />
-      <option name="METHOD_NAME" value="convRGB" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.MultiLayeredConvolutionTest.show" />
+        <item itemvalue="JUnit.MultiLayeredConvolutionTest" />
         <item itemvalue="JUnit.LayerDeepTest.creationConvolutionTest" />
         <item itemvalue="JUnit.LayerDeepTest.creationConvolutionTest2" />
         <item itemvalue="JUnit.LayerTest91_CNN_test.forwardTest" />
-        <item itemvalue="JUnit.ToolsTest.convRGB" />
       </list>
     </recent_temporary>
   </component>

@@ -82,12 +82,14 @@ public class LayerConv {
 
                 for (int x=0;x<filterSize;x++){
                     for (int y=0;y<filterSize;y++) {
-                        OUT[i][j] = Xc[i*stride+x][j*stride+y] * W[i][j];
+                        //System.out.println( "IJ:" +i + ","+j +".  xc[" + ( i*stride+x ) + "][" + (j*stride+y) + "]:" + Xc[i*stride+x][j*stride+y]  + " --- W[" + x + "][" + y +"]: "  + W[x][y]);
+                        OUT[i][j] += ((Xc[ i*stride + x ][ j*stride + y ]) * (W[x][y]));
                     }
                 }
 
             }
         }
+        //System.out.println( "out:" +  Tools.AryToString( OUT ));
         return OUT;
     }
 
@@ -96,23 +98,30 @@ public class LayerConv {
         Y = new float[ filterForChannel ][ ysize ][ ysize ];
         float[][][] FOUT = new float[filterNum][][];
 
-        for ( int fnum=0;fnum<filterNum; fnum++ ){
+       for ( int fnum=0;fnum<filterNum; fnum++ ){
             //System.out.println( "filternum: " + fnum + ", channelNum:" + fnum%filterForChannel + ", filterClass: " + fnum/filterForChannel );
-            FOUT[ fnum ] = FilterTimesX( filters[fnum], X[ fnum%filterForChannel ] );
+            FOUT[ fnum ] = FilterTimesX( filters[fnum], X[ fnum%channels ] );
         }
-
+        //FOUT[ 0 ] = FilterTimesX( filters[0], X[ 0] );
+        //System.out.println( Tools.AryToString( FOUT[0] ));
 
         for ( int f=0;f<filterForChannel;f++ ) {
             // init bias
             float b = filters[f*channels].getBias();
-            System.out.println( "Bias:" + b );
+            //System.out.println( "Bias:" + b );
             for (int x = 0; x < ysize; x++) {
                 for (int y = 0; y < ysize; y++) {
                     Y[f][x][y]=b;
                 }
             }
             // sum FOUT
-            //
+            for ( int c=0; c<channels; c++ ){
+                for (int x = 0; x < ysize; x++) {
+                    for (int y = 0; y < ysize; y++) {
+                        Y[f][x][y] += FOUT[f*channels +c][x][y];
+                    }
+                }
+            }
         }
         /*
 

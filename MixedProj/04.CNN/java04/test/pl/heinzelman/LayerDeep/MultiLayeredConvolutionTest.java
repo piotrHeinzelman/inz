@@ -160,10 +160,14 @@ public class MultiLayeredConvolutionTest {
         layerConv.setX( X );
         layerConv.filters = createFilters();
         float[][][] forward = layerConv.Forward();
-        System.out.println( Tools.AryToString( forward ) );
+        
+        System.out.println( Tools.AryToString( forward[0] ) );
+        System.out.println( Tools.AryToString( forward[1] ) );
 
-        Assert.assertEquals( forward[0][0][0], 2f );
-        Assert.assertEquals( forward[1][0][0], -8f );
+
+        Assert.assertTrue( forward[0][0][0] - 2.0f < 0.0001f );
+        Assert.assertTrue( forward[1][0][0] + 8.0f < 0.0001f );
+        Assert.assertTrue( forward[1][2][2] + 5.0f < 0.0001f );
 
 
     }
