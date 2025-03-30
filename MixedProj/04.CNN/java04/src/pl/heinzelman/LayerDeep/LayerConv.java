@@ -49,7 +49,7 @@ public class LayerConv {
     protected int filterNum; // 6  ( input channel * filterForChannel )  for (n) for (c) filters(  n*channels + c ) // n: filterForChannel = output size // c: channel = input size
     protected int filterForChannel; // output channel
     protected int filterSize;
-    protected int padding;
+    protected int padding=0;
     protected int stride;
 
     protected int channels; // input channel
@@ -77,7 +77,7 @@ public class LayerConv {
     }
 
     public void setX(float[][][] _x ) {
-        if (padding<1) { _x = Conv.extendAry( _x, padding ); }
+        if ( padding!=0 ) { _x = Conv.extendAry( _x, padding ); }
         this.channels= _x.length;
         this.filterNum=filterForChannel*channels;
         this.xsize=_x[0].length;
@@ -121,7 +121,7 @@ public class LayerConv {
             for ( int c=0; c<channels; c++ ){
                 for (int x = 0; x < ysize; x++) {
                     for (int y = 0; y < ysize; y++) {
-                        Y[f][x][y] += FtmpOUT[f*channels +c][x][y];
+                        Y[f][x][y] += FtmpOUT[ f*channels +c ][x][y];
                     }
                 }
             }
