@@ -89,7 +89,7 @@ public class LayerTest91_CNN_test {
         poolingMax.setX( X );
         System.out.println( "X: " + Tools.AryToString( X ));
 
-        float[][][] out = poolingMax.ConvForward();
+        float[][][] out = poolingMax.Forward();
         System.out.println( "Y: " + Tools.AryToString( out ));
 
         float[][][] eOUT = poolingMax.Backward(out);
