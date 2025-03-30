@@ -27,16 +27,15 @@ public class PoolingTest {
         float[][][] Z = layerPoolingAvg.Forward();
         float[][][] OUT = layerPoolingAvg.Backward( Z );
 
-        //Assertions.assertTrue( Z[0][0][0] - 22f < 0.0001f );
-        //Assertions.assertTrue( Z[0][2][2] - 13f < 0.0001f );
-        //Assertions.assertTrue( Z[0][0][1] - 23f < 0.0001f );
-        //Assertions.assertTrue( Z[0][0][2] - 11f < 0.0001f );
+
+        Assertions.assertTrue( Math.pow( Z[0][0][0] +2.75 , 2) < 0.0001f );
+        Assertions.assertTrue( Math.pow(  Z[0][2][2] - 1.75 ,2) < 0.0001f );
 
 
-        System.out.println(Tools.AryToString( X ));
-        System.out.println( layerPoolingAvg.dX );
-        System.out.println(Tools.AryToString( Z ));
-        System.out.println(Tools.AryToString( OUT ));
+        //System.out.println(Tools.AryToString( X ));
+        //System.out.println( layerPoolingAvg.dX );
+        //System.out.println(Tools.AryToString( Z ));
+        //System.out.println(Tools.AryToString( OUT ));
 
 
 
@@ -64,10 +63,10 @@ public class PoolingTest {
         float[][][] Z = layerPoolingMax.Forward();
         float[][][] OUT = layerPoolingMax.Backward( Z );
 
-        Assertions.assertTrue( Z[0][0][0] - 22f < 0.0001f );
-        Assertions.assertTrue( Z[0][2][2] - 13f < 0.0001f );
-        Assertions.assertTrue( Z[0][0][1] - 23f < 0.0001f );
-        Assertions.assertTrue( Z[0][0][2] - 11f < 0.0001f );
+        Assertions.assertTrue( Math.pow( Z[0][0][0] - 22f ,2) < 0.0001f );
+        Assertions.assertTrue( Math.pow( Z[0][2][2] - 13f ,2) < 0.0001f );
+        Assertions.assertTrue( Math.pow( Z[0][0][1] - 23f ,2) < 0.0001f );
+        Assertions.assertTrue( Math.pow( Z[0][0][2] - 11f ,2) < 0.0001f );
 
         //System.out.println(Tools.AryToString( OUT ));
         //System.out.println(Tools.AryToString( layerPoolingMax.dX ));
