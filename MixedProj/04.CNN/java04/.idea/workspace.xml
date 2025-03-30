@@ -120,6 +120,7 @@
     "JUnit.MultiLayeredConvolutionTest.show.executor": "Run",
     "JUnit.PoolingTest.AvgPoolingTes.executor": "Run",
     "JUnit.PoolingTest.MaxPoolingTes.executor": "Run",
+    "JUnit.ReLUTest.ReLUTest.executor": "Run",
     "JUnit.ToolsTest.conv.executor": "Run",
     "JUnit.ToolsTest.convRGB.executor": "Run",
     "JUnit.convTest.paddingTest.executor": "Run",
@@ -165,23 +166,7 @@
       <recent name="pl.heinzelman.tasks" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.PoolingTest.AvgPoolingTes">
-    <configuration name="LayerDeepTest.creationConvolutionTest2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="nweb" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="pl.heinzelman.LayerDeep.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="pl.heinzelman.LayerDeep" />
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.LayerDeep.LayerDeepTest" />
-      <option name="METHOD_NAME" value="creationConvolutionTest2" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.ReLUTest.ReLUTest">
     <configuration name="MultiLayeredConvolutionTest.show" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
       <extension name="coverage">
@@ -230,6 +215,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ReLUTest.ReLUTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="nweb" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pl.heinzelman.LayerDeep.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="pl.heinzelman.LayerDeep" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.LayerDeep.ReLUTest" />
+      <option name="METHOD_NAME" value="ReLUTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="randTest.randTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
       <extension name="coverage">
@@ -248,11 +249,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ReLUTest.ReLUTest" />
         <item itemvalue="JUnit.PoolingTest.AvgPoolingTes" />
         <item itemvalue="JUnit.PoolingTest.MaxPoolingTes" />
         <item itemvalue="JUnit.MultiLayeredConvolutionTest.show" />
         <item itemvalue="JUnit.randTest.randTest" />
-        <item itemvalue="JUnit.LayerDeepTest.creationConvolutionTest2" />
       </list>
     </recent_temporary>
   </component>
