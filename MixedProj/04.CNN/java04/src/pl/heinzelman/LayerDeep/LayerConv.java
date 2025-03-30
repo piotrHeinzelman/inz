@@ -1,9 +1,7 @@
 package pl.heinzelman.LayerDeep;
 
 import pl.heinzelman.tools.Conv;
-import pl.heinzelman.tools.Tools;
 
-import javax.tools.Tool;
 import java.util.Random;
 
 //
@@ -15,6 +13,31 @@ import java.util.Random;
 // F [num][m][n]
 // D [num][x][y]
 
+//                        F11  F1c1    Fnc*Xc
+//  Xc1 [ ]---------+----> [ ] -----     b1
+//                 |                \   |
+//                 |      F12  F1c2  ( + ) ----->
+//  Xc2 [ ]---+--- | ---> [ ] ----- /
+//           |     |
+//           |     |
+//           |     |      F21  F2channel1
+//           |     +----> [ ] ------    b2
+//           |     |                \   |
+//           |            F22  F2c2   ( + ) ----->
+//           +----------> [ ] ------/
+//           |
+//           |     |      F31  F3c1     b3
+//           |     ---->  [ ] ----- \   |
+//           |                       ( + ) ------>
+//           |            F32  F3c2 /
+//           ---------->  [ ] -----
+//
+//
+//           Filter ( FilterNum*Channels + Channel )
+//
+//           out[n][c] = out[ n*c ] = Fnc * Xc                       separated multiply X & filter
+//                       out[n]     = SUM by c ( out[n][c] )  +bn    mass add filter outputs
+
 
 public class LayerConv {
     protected String name;
@@ -23,13 +46,13 @@ public class LayerConv {
     protected float[][][] X;
     protected float[][][] dX;
     protected float[][][] Y;
-    protected int filterNum; // 6 for (n) for (c) filters( c + n*channels ) // n: filterForChannel = output size // c: channel = input size
-    protected int filterForChannel; // 2
+    protected int filterNum; // 6  ( input channel * filterForChannel )  for (n) for (c) filters(  n*channels + c ) // n: filterForChannel = output size // c: channel = input size
+    protected int filterForChannel; // output channel
     protected int filterSize;
     protected int padding;
     protected int stride;
 
-    protected int channels;
+    protected int channels; // input channel
     protected int xsize;
     protected int ysize;
 
@@ -54,6 +77,7 @@ public class LayerConv {
     }
 
     public void setX(float[][][] _x ) {
+        if (padding<1) { _x = Conv.extendAry( _x, padding ); }
         this.channels= _x.length;
         this.filterNum=filterForChannel*channels;
         this.xsize=_x[0].length;
@@ -62,98 +86,69 @@ public class LayerConv {
         initFilters();
 
         for (int n = 0; n < channels; n++) {
-            for (int i = 0; i < xsize; i++) {
-                for (int j = 0; j < xsize; j++) {
-                    X[n][i][j] = _x[n][i][j];
+            for (int x = 0; x < xsize; x++) {
+                for (int y = 0; y < xsize; y++) {
+                    X[n][y][x] = _x[n][y][x];
                 }
             }
         }
     }
 
 
-
-    public float[][] FilterTimesX( Neuron2D filter, float[][] Xc ) {
-        float[][] W = filter.getMyWeight();
-        float[][] OUT = new float[ysize][ysize];
-        //System.out.println( "filter:"+  filter  + "\n\nXc:" + Tools.AryToString( Xc ));
-
-        for ( int i=0;i<ysize;i++){ // iterate OUT[i][j]
-            for ( int j=0;j<ysize;j++) {
-
-                for (int x=0;x<filterSize;x++){
-                    for (int y=0;y<filterSize;y++) {
-                        //System.out.println( "IJ:" +i + ","+j +".  xc[" + ( i*stride+x ) + "][" + (j*stride+y) + "]:" + Xc[i*stride+x][j*stride+y]  + " --- W[" + x + "][" + y +"]: "  + W[x][y]);
-                        OUT[i][j] += ((Xc[ i*stride + x ][ j*stride + y ]) * (W[x][y]));
-                    }
-                }
-
-            }
-        }
-        //System.out.println( "out:" +  Tools.AryToString( OUT ));
-        return OUT;
-    }
 
 
     public float[][][] Forward() {
         Y = new float[ filterForChannel ][ ysize ][ ysize ];
-        float[][][] FOUT = new float[filterNum][][];
+        float[][][] FtmpOUT = new float[filterNum][][];
 
-       for ( int fnum=0;fnum<filterNum; fnum++ ){
-            //System.out.println( "filternum: " + fnum + ", channelNum:" + fnum%filterForChannel + ", filterClass: " + fnum/filterForChannel );
-            FOUT[ fnum ] = FilterTimesX( filters[fnum], X[ fnum%channels ] );
+       // MASS multiply Fnc * Xc
+       for ( int fnum=0;fnum<filterNum; fnum++ ){   //System.out.println( "filternum: " + fnum + ", channelNum:" + fnum%filterForChannel + ", filterClass: " + fnum/filterForChannel );
+            FtmpOUT[ fnum ] = ConvolutionFilterTimesXc( filters[fnum], X[ fnum%channels ] );
         }
-        //FOUT[ 0 ] = FilterTimesX( filters[0], X[ 0] );
-        //System.out.println( Tools.AryToString( FOUT[0] ));
 
+       // by set of filter ( output channel )
         for ( int f=0;f<filterForChannel;f++ ) {
             // init bias
             float b = filters[f*channels].getBias();
-            //System.out.println( "Bias:" + b );
+
             for (int x = 0; x < ysize; x++) {
                 for (int y = 0; y < ysize; y++) {
                     Y[f][x][y]=b;
                 }
             }
+
             // sum FOUT
             for ( int c=0; c<channels; c++ ){
                 for (int x = 0; x < ysize; x++) {
                     for (int y = 0; y < ysize; y++) {
-                        Y[f][x][y] += FOUT[f*channels +c][x][y];
+                        Y[f][x][y] += FtmpOUT[f*channels +c][x][y];
                     }
                 }
             }
         }
-        /*
-
-
-
-        for (int n=0;n<filterForChannel;n++ ){ // 3 ways
-            for (int x=0;x<ysize;x++) {
-                for (int y = 0; y < ysize; y++) {
-                    float sum=0f;
-
-                    for ( int c=0;c<channels;c++ ) {   // channels
-                        Neuron2D filter = filters[c + n*channels];
-                        sum += filter.getBias();
-                        float[][] W = filter.getMyWeight();
-
-                        for (int i = 0; i < filterSize; i++) {
-                            for (int j = 0; j < filterSize; j++) {
-                                sum += ( W[i][j] * X[c][i+x][j+y] );
-                            }
-                        }
-
-                    }
-                    //Y[n][x][y] = relu( sum );
-                    Y[n][x][y] = sum ;
-                }
-            }
-        }
-        return Y;
-        */
         return Y;
     }
 
+
+
+    public float[][] ConvolutionFilterTimesXc(Neuron2D filter, float[][] Xc ) {
+        float[][] W = filter.getMyWeight();
+        float[][] OUT = new float[ysize][ysize];
+
+        for ( int i=0;i<ysize;i++){
+            for ( int j=0;j<ysize;j++) {
+
+                for (int x=0;x<filterSize;x++){
+                    for (int y=0;y<filterSize;y++) {
+                        // every channel (c)
+                        // target output[i][j]
+                        OUT[i][j] += ((Xc[ i*stride + x ][ j*stride + y ]) * (W[x][y]));
+                    }
+                }
+            }
+        }
+        return OUT;
+    }
 
 
 

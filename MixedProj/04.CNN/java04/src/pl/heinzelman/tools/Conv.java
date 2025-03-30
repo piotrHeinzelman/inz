@@ -21,6 +21,32 @@ public class Conv {
     }
 
 
+    public static float[][][] extendAry( float[][][] X, int padding ){
+        int oversize=X.length+padding+padding;
+        float[][][] XPadd = new float[X.length][oversize][oversize];
+        for (int c=0; c<X.length; c++) {
+            // for any channel
+            for (int i = 0; i < oversize; i++) {
+                for (int j = 0; j < oversize; j++) {
+                    XPadd[c][i][j] = 0f;
+                }
+            }
+            for (int i = 0; i < X.length; i++) {
+                for (int j = 0; j < X.length; j++) {
+                    XPadd[c][i + padding][j + padding] = X[c][i][j];
+                }
+            }
+        }
+        return XPadd;
+    }
+
+
+
+
+
+
+
+
 
     public static float[][] fullConv( float[][] X, float[][] F ){
         int padding = F.length-1;

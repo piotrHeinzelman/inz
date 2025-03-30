@@ -23,11 +23,11 @@ class LayerDeepTest {
 
         //LayerDeep layer = new LayerConv( 2, 1 , 0 , 1);
         //LayerDeep layer = new LayerPoolingAvg( 2, 2 );
-        LayerDeep layer = new LayerPoolingMax( 2, 2 );
+        LayerConv layer = new LayerConv( 2, 2 , null, null );
         layer.setName( "layer1" );
         layer.setX( input );
 
-        float[][][] Y = layer.ConvForward();
+        float[][][] Y = layer.Forward();
 
         float[][][] deltaIn = new float[2][2][2];
 
