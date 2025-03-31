@@ -55,7 +55,7 @@ public class MultiLayeredConvolutionTest {
         filterW11.setWm(2,1,-1);
         filterW11.setWm(2,2, 1);
 
-        filterW11.setBias( 1f );
+        //filterW11.setBias( 1f );
 
 
         Neuron2D filterW12 = new Neuron2D(3, null );  // 1 filter, 2 channel
@@ -100,7 +100,7 @@ public class MultiLayeredConvolutionTest {
         filterW21.setWm(2,1,-1);
         filterW21.setWm(2,2, 1);
 
-        filterW21.setBias( 0f );
+        //filterW21.setBias( 0f );
 
 
         Neuron2D filterW22 = new Neuron2D(3, null );  // 1 filter, 2 channel
@@ -159,6 +159,17 @@ public class MultiLayeredConvolutionTest {
         LayerConv layerConv = new LayerConv(3, 2, null, 2);
         layerConv.setX( X );
         layerConv.filters = createFilters();
+
+        layerConv.biases[0].setWm(0,0,0);
+        layerConv.biases[0].setWm(0,1,0);
+        layerConv.biases[0].setWm(1,0,0);
+        layerConv.biases[0].setWm(1,1,0);
+
+        layerConv.biases[1].setWm(0,0,1);
+        layerConv.biases[1].setWm(0,1,1);
+        layerConv.biases[1].setWm(1,0,1);
+        layerConv.biases[1].setWm(1,1,1);
+
 
         float[][][] forward = layerConv.Forward();
         float[][][] backward = layerConv.Backward( forward );

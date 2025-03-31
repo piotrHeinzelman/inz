@@ -16,7 +16,6 @@ public class Neuron2D {
 private int m; // number of W
 private float[][] W;
 
-private float bias;
 private final LayerConv parent;
 protected final static float mu=0.01f;
 
@@ -27,18 +26,7 @@ public Neuron2D( int m, LayerConv parent ) {
         for ( int i=0; i<m ; i++ ) {
             this.W[i] = new float[m];
         }
-        this.bias=0f;
     }
-
-
-
-/*
-    public void Forward(float[][] X , int fnum ) {
-        //convolution
-        parent.Y[fnum] = Tools.aryAdd( parent.Y[fnum], Conv.conv( X, W, bias, parent.stride ));
-    }
-*/
-
 
     public void trainW(float [][] dLdF ){
         int m=W.length;
@@ -50,23 +38,13 @@ public Neuron2D( int m, LayerConv parent ) {
     }
 
 
-
-
-
-
-
-
-
-
     @Override
     public String toString() {
-        return "N{ W=" + Tools.AryToString(W) + ",b: " +bias +'}';
+        return "N{ W=" + Tools.AryToString(W)+'}';
     }
     public void setWm( int i, int j, float wij ){
         W[i][j] = wij;
     }
-    public float getBias() { return bias; }
-    public void setBias( Float bias ) { this.bias = bias; }
     public float[][] getMyWeight() { return W; }
 
     public void rnd( Random rand , float max ){

@@ -44,6 +44,7 @@ import java.util.Random;
 public class LayerConv {
     protected String name;
     protected Neuron2D[] filters;
+    protected Neuron2D[] biases;
 
     protected float[][][] X;
     protected float[][][] dX;
@@ -71,6 +72,10 @@ public class LayerConv {
         for ( int i=0;i<filterNum;i++ ){
             filters[i] = new Neuron2D( filterSize, this );
             filters[i].rnd(rand, max);
+        }
+        this.biases = new Neuron2D[ filterForChannel ];
+        for ( int i=0;i<filterForChannel;i++ ){
+            biases[i] = new Neuron2D( filterSize, this );
         }
     }
     protected void initAry(){
@@ -111,13 +116,8 @@ public class LayerConv {
        // by set of filter ( output channel )
         for ( int f=0;f<filterForChannel;f++ ) {
             // init bias
-            float b = filters[f*channels].getBias();
-
-            for (int x = 0; x < ysize; x++) {
-                for (int y = 0; y < ysize; y++) {
-                    Y[f][x][y]=b;
-                }
-            }
+            float[][] b = biases[f].getMyWeight();
+                Y[f]=b;
 
             // sum FOUT
             for ( int c=0; c<channels; c++ ){
@@ -153,15 +153,6 @@ public class LayerConv {
         return OUT;
     }
 
-
-/*
-
-print('bias update: = delta for channel/filter')
-print( delta )
-
-*/
-
-
     public float[][][] Backward( float[][][] dLdO ) {
         float[][][] dOUT = new float[ channels ][xsize][xsize];
 
@@ -180,39 +171,33 @@ print( delta )
                 // print('Kernel gradient SUM: every channel: UPDATE WEIGHT ')
                 // print( signal.correlate2d( x, delta, "valid") )
                 float[][] deltaW = Conv.conv( X[ c ], dLdO[f], 0  );
-                System.out.println( "UPDATE WEIGHTS:" );
-                System.out.println( "Filter:" + filters[ f*channels + c ].toString() + ", \n\ndeltaW: " + Tools.AryToString( deltaW  ));
+                //System.out.println( "UPDATE WEIGHTS:" );
+                //System.out.println( "Filter:" + filters[ f*channels + c ].toString() + ", \n\ndeltaW: " + Tools.AryToString( deltaW  ));
                 filters[ f*channels + c ].trainW( deltaW );
-                System.out.println( "Updated Filter:" + filters[ f*channels + c ].toString() );
-
-
+                //System.out.println( "Updated Filter:" + filters[ f*channels + c ].toString() );
             }
             dOUT[c] = dOUTc;
         }
+        for (int f=0;f<filterForChannel;f++){
+            biases[f].trainW( dLdO[f] );
+        }
 
-
-        //System.out.println( dLdO );
-
-
-        /*
-        float[][][] _dLdX_ = new float[channels][xsize][xsize];
-        for ( int fnum=0; fnum< filterNum; fnum++ ){
-            for ( int channel=0;channel<channels; channel++ ) {
-
-                    //float[][] dLdF = Conv.conv( X[channel], dLdO[fnum*channels + channel], filters[fnum].getBias() );
-                    //filters[fnum].trainW( dLdF ); // update Weigth
-
-                    // out
-                    //_dLdX_[fnum] = Conv.fullConv( filters[fnum].getRot180(), dLdO[fnum*channels + channel] );
-                }
-                // ********************
-            }*/
         return dOUT;
     }
 
     // ****************
 
-    public String toString(){ if ( filters==null) { return ""; } StringBuffer out = new StringBuffer(); for ( int i=0;i<filterNum;i++){ out.append( "\n" ); out.append( filters[i].toString() ); } return out.toString(); }
+    public String toString(){ if ( filters==null) { return ""; }
+        StringBuffer out = new StringBuffer();
+        for ( int i=0;i<filterNum;i++){
+            out.append( "\n" ); out.append( filters[i].toString() );
+        }
+        out.append("\nbiases:");
+        for ( int i=0;i<filterForChannel;i++){
+            out.append( "\n" ); out.append( biases[i].toString() );
+        }
+        return out.toString(); }
+
     public void setName( String name ) { this.name = name; }
     public Neuron2D getNeuron(int i){ return filters[i]; }
     private float relu(float x){
