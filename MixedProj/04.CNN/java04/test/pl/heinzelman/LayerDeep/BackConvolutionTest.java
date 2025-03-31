@@ -46,20 +46,20 @@ public class BackConvolutionTest {
         System.out.println( Tools.AryToString( layerConv.dX ) );
         System.out.println( Tools.AryToString( OUTPUT_DELTA ) );
 
-        // UPDATE WEIGHT
+        //  UPDATE WEIGHT :- ) !!!
         /*
           [ 5.7,  7.1 ]
           [ 9.9, 11.3 ]
         */
 
 
-        // UPDATE BIAS = delta
+        //  UPDATE BIAS = delta
         /*
           [ 0.1, 0.2 ]
           [ 0.3, 0.8 ]
         */
 
-        //OUTPUT_DELTA
+        //  OUTPUT_DELTA :-) !!!
         /*
         [ 0.1, 0.4, 0.4 ]
         [ 0.6, 2.4, 2.4 ]
@@ -82,10 +82,6 @@ public class BackConvolutionTest {
         System.out.println(Tools.AryToString( Z ));
         //System.out.println(Tools.AryToString( OUT ));
 
-
-
     }
-
-
 
 }

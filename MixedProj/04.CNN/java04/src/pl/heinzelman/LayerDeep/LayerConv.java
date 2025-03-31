@@ -1,7 +1,9 @@
 package pl.heinzelman.LayerDeep;
 
 import pl.heinzelman.tools.Conv;
+import pl.heinzelman.tools.Tools;
 
+import java.util.Arrays;
 import java.util.Random;
 
 //
@@ -145,18 +147,53 @@ public class LayerConv {
                         OUT[i][j] += ((Xc[ i*stride + x ][ j*stride + y ]) * (W[x][y]));
                     }
                 }
+
             }
         }
         return OUT;
     }
 
 
+/*
 
+print('bias update: = delta for channel/filter')
+print( delta )
+
+*/
 
 
     public float[][][] Backward( float[][][] dLdO ) {
-        float[][][] dOUT = new float[ filterForChannel ][ ysize ][ ysize ];
-        System.out.println( dLdO );
+        float[][][] dOUT = new float[ channels ][xsize][xsize];
+
+        for (int c=0;c<channels;c++){
+            float [][] dOUTc = new float[ xsize ][ xsize ];
+
+            for (int f=0;f<filterForChannel;f++){
+                // every filter f on channel c
+
+                // print('outputDelta SUM: for all channel:  SEND FORWARD ')
+                // print( signal.convolve2d( delta, f, "full" ) )
+                float[][] OUTDeltafc = Conv.fullConv( dLdO[f], filters[ f*channels + c ].getRot180() ); // !!! ?
+                dOUTc = Tools.aryAdd( dOUTc, OUTDeltafc );
+
+
+                // print('Kernel gradient SUM: every channel: UPDATE WEIGHT ')
+                // print( signal.correlate2d( x, delta, "valid") )
+                float[][] deltaW = Conv.conv( X[ c ], dLdO[f], 0  );
+                System.out.println( "UPDATE WEIGHTS:" );
+                System.out.println( "Filter:" + filters[ f*channels + c ].toString() + ", \n\ndeltaW: " + Tools.AryToString( deltaW  ));
+                filters[ f*channels + c ].trainW( deltaW );
+                System.out.println( "Updated Filter:" + filters[ f*channels + c ].toString() );
+
+
+            }
+            dOUT[c] = dOUTc;
+        }
+
+
+        //System.out.println( dLdO );
+
+
         /*
         float[][][] _dLdX_ = new float[channels][xsize][xsize];
         for ( int fnum=0; fnum< filterNum; fnum++ ){
