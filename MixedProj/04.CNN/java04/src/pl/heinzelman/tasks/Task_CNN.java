@@ -40,6 +40,8 @@ public class Task_CNN implements Task{
         layerConv1.setX( trainX );
         layerConv1.initFilters();
 
+
+
         if (true) {return;}
 
         layer1=new Layer( LType.sigmod , 64 ,784 ); layer1.setName("Layer1"); // n neurons
