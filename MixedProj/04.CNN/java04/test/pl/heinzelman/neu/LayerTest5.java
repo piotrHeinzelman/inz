@@ -17,7 +17,6 @@ public class LayerTest5 {
         float[] S = new float[]{1,0,0};
         L1.rnd();
 
-
         L1.setName("Layer1");
 
 
@@ -26,7 +25,7 @@ public class LayerTest5 {
             L1.nForward();
             //System.out.println(L1);
 
-            System.out.println("Y: " + Arrays.toString( L1.getY() ) +", Z: "+ Arrays.toString( L1.getZ() ));
+            //System.out.println("Y: " + Arrays.toString( L1.getY() ) +", Z: "+ Arrays.toString( L1.getZ() ));
             float[] S_Z = Tools.vectorSubstSsubZ(S, L1.getZ());
             //System.out.println(tools.toStr(S_Z));
             L1.nBackward(S_Z);

@@ -26,6 +26,62 @@ public class Tools {
     private float[][] trainX=null;
     private float[][] testX=null;
 
+    private float[][][] trainAryX=null;
+    private float[][][] testAryX=null;
+
+    public  void prepareDataAsFlatArray( int percent ){
+
+        try {
+            trainYfile =  loadBin( path + trainYname,  8, percent*600 ); // offset=8, size=percent*600  // OK
+            testYfile =  loadBin( path + testYname,   8, percent*100 );   // offset=8, size=percent*100 // OK
+
+            trainY = new float[percent*600][];
+            testY  = new float[percent*100][];
+            //train Y
+            for (int i=0;i<percent*600;i++){
+                trainY[i] = new float[]{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+                trainY[i][ trainYfile[i] ]=1.0f;
+            }
+            // test Y
+            for (int i=0;i<percent*100;i++){
+                testY[i] = new float[]{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
+                testY[i][ testYfile[i] ]=1.0f;
+            }
+
+
+            byte[] trainXfile = loadBin(path + trainXname, 16, percent * 784 * 600);// offset=16 size=percent*784*600
+            trainAryX=new float[percent*600][28][28];
+            for (int i=0;i<percent*100;i++) {
+                int off=i*784;
+                for (int j=0;j<28;j++){
+                    for (int k=0;k<28;k++) {
+                        trainAryX[i][j][k] = Byte.toUnsignedInt(trainXfile[off + j*28 + k]) / 16;///256.0f; //0-1
+                    }
+                }
+            }
+
+            byte[] testXfile =   loadBin( path + testXname,  16, percent*784*100 );   // offset=16, size=percent*784*100
+            testAryX=new float[percent*100][28][28];
+            for (int i=0;i<percent*100;i++) {
+                int off=i*784;
+                for (int j=0;j<28;j++){
+                    for (int k=0;k<28;k++) {
+                        testAryX[i][j][k] = Byte.toUnsignedInt(trainXfile[off + j*28 + k]) / 16;///256.0f; //0-1
+                    }
+                }
+            }
+
+            // show data:
+            //for ( int i=0;i<100;i++ ) {
+            //    saveVectorAsImg( trainX[i], trainYfile[i] +"_key_is_" + i );
+            //}
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
     public  void prepareData( int percent ){
 
         try {
@@ -126,8 +182,11 @@ public class Tools {
         return testX;
     }
 
+    public float[][][] getTrainAryX() { return trainAryX; }
 
-    public int getIndexMaxFloat( float[] floats ){
+    public float[][][] getTestAryX() { return testAryX; }
+
+    public int getIndexMaxFloat(float[] floats ){
         int maxI=0;
         float val=floats[0];
             for ( int i=1;i<floats.length; i++ ){

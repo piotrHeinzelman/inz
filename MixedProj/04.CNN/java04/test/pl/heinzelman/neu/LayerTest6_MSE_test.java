@@ -3,6 +3,7 @@ package pl.heinzelman.neu;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
 import pl.heinzelman.tools.Tools;
 
 import javax.tools.Tool;
@@ -44,6 +45,9 @@ public class LayerTest6_MSE_test {
                 //System.out.println("Y: " + Arrays.toString( L1.getY() ) +", Z: "+ Arrays.toString( L1.getZ() ));
                 MSE += Tools.meanSquareError(S[i], L1.getZ());
                 float[] S_Z = Tools.vectorSubstSsubZ(S[i], L1.getZ());
+
+                System.out.println("Y: " + Arrays.toString( L1.getY() ) +", Z: "+ Arrays.toString( L1.getZ() ));
+                System.out.println("S_Z: " +  Arrays.toString(  S_Z ));
                 L1.nBackward(S_Z);
             }
             MSEdata[epoch]=MSE/X.length;

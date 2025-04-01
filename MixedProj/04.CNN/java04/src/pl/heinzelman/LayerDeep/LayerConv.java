@@ -39,7 +39,8 @@ import java.util.Random;
 //
 //           out[n][c] = out[ n*c ] = Fnc * Xc                       separated multiply X & filter
 //                       out[n]     = SUM by c ( out[n][c] )  +bn    mass add filter outputs
-
+// bias is OUTPUT SIZE ! ( ysize )
+// Filter if Any SIZE !!!
 
 public class LayerConv {
     protected String name;
@@ -47,7 +48,7 @@ public class LayerConv {
     protected Neuron2D[] biases;
 
     protected float[][][] X;
-    protected float[][][] dX;
+
     protected float[][][] Y;
     protected int filterNum; // 6  ( input channel * filterForChannel )  for (n) for (c) filters(  n*channels + c ) // n: filterForChannel = output size // c: channel = input size
     protected int filterForChannel; // output channel
@@ -65,7 +66,7 @@ public class LayerConv {
         this.padding = ( padding==null ) ? 0 : padding;
         this.stride = (stride==null) ? 1 : stride;
     }
-    private void initFilters(){
+    public void initFilters(){
         this.filters = new Neuron2D[ filterNum ];
         Random rand = new Random();
         float max=getMaxRand();
@@ -75,22 +76,21 @@ public class LayerConv {
         }
         this.biases = new Neuron2D[ filterForChannel ];
         for ( int i=0;i<filterForChannel;i++ ){
-            biases[i] = new Neuron2D( filterSize, this );
+            biases[i] = new Neuron2D( ysize, this );
         }
     }
     protected void initAry(){
         X  = new float[ channels ][ xsize ][ xsize ];
-        dX = new float[ channels ][ xsize ][ xsize ];
     }
 
     public void setX(float[][][] _x ) {
-        if ( padding!=0 ) { _x = Conv.extendAry( _x, padding ); }
+        //if ( padding!=0 ) { _x = Conv.extendAry( _x, padding ); }
         this.channels= _x.length;
         this.filterNum=filterForChannel*channels;
         this.xsize=_x[0].length;
         this.ysize = getYSize();
         initAry();
-        initFilters();
+        // initFilters();
 
         for (int n = 0; n < channels; n++) {
             for (int x = 0; x < xsize; x++) {
@@ -109,9 +109,11 @@ public class LayerConv {
         float[][][] FtmpOUT = new float[filterNum][][];
 
        // MASS multiply Fnc * Xc
-       for ( int fnum=0;fnum<filterNum; fnum++ ){   //System.out.println( "filternum: " + fnum + ", channelNum:" + fnum%filterForChannel + ", filterClass: " + fnum/filterForChannel );
-            FtmpOUT[ fnum ] = ConvolutionFilterTimesXc( filters[fnum], X[ fnum%channels ] );
-        }
+       for ( int f=0;f<filterForChannel; f++ ) {
+           for ( int c=0;c<channels; c++) {
+               FtmpOUT[f*channels+c] = ConvolutionFilterTimesXc(filters[f], X[c]);
+           }
+       }
 
        // by set of filter ( output channel )
         for ( int f=0;f<filterForChannel;f++ ) {
@@ -164,7 +166,7 @@ public class LayerConv {
 
                 // print('outputDelta SUM: for all channel:  SEND FORWARD ')
                 // print( signal.convolve2d( delta, f, "full" ) )
-                float[][] OUTDeltafc = Conv.fullConv( dLdO[f], filters[ f*channels + c ].getRot180() ); // !!! ?
+                float[][] OUTDeltafc = Conv.fullConv( dLdO[f], filters[ f*channels + c ].getRot180() , 1 /* stride ! */ ); // !!! ?
                 dOUTc = Tools.aryAdd( dOUTc, OUTDeltafc );
 
 

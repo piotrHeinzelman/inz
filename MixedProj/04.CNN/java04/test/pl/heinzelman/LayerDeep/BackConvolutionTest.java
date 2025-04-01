@@ -26,11 +26,18 @@ public class BackConvolutionTest {
 
         //filterW11.setBias( 0f );
 
-        LayerConv layerConv= new LayerConv(2,1,null,null);
+        LayerConv layerConv= new LayerConv(2,1,null,1);
         layerConv.setX( X );
+        layerConv.initFilters();
         layerConv.filters[0]=filterW11;
 
         float[][][] Z = layerConv.Forward();
+        float[][][] OUTPUT_DELTA = layerConv.Backward(delta);
+
+        System.out.println( "Z:\n"+Tools.AryToString( Z ) );
+        System.out.println( "OutputDelta:\n"+ Tools.AryToString( OUTPUT_DELTA ) );
+
+        //if (true) return;
         /*
             System.out.println( Tools.AryToString( Z ) );
             [ 37.0, 47.0,]
@@ -41,10 +48,6 @@ public class BackConvolutionTest {
         Assertions.assertTrue( Math.pow(( Z[0][1][0] - 67f ), 2 ) < 0.0001f );
         Assertions.assertTrue( Math.pow(( Z[0][1][1] - 77f ), 2 ) < 0.0001f );
 
-        float[][][] OUTPUT_DELTA = layerConv.Backward(delta);
-
-        System.out.println( Tools.AryToString( layerConv.dX ) );
-        System.out.println( Tools.AryToString( OUTPUT_DELTA ) );
 
         //  UPDATE WEIGHT :- ) !!!
         /*
@@ -67,20 +70,15 @@ public class BackConvolutionTest {
          */
 
 
-        //System.out.println( layerConv );
-
-        //float[][][] OUT = layerPoolingAvg.Backward( Z );
-
-        //Assertions.assertTrue( Z[0][0][0] - 22f < 0.0001f );
-        //Assertions.assertTrue( Z[0][2][2] - 13f < 0.0001f );
-        //Assertions.assertTrue( Z[0][0][1] - 23f < 0.0001f );
-        //Assertions.assertTrue( Z[0][0][2] - 11f < 0.0001f );
-
-
-        System.out.println(Tools.AryToString( X ));
-        //System.out.println( layerPoolingAvg.dX );
-        System.out.println(Tools.AryToString( Z ));
-        //System.out.println(Tools.AryToString( OUT ));
+        /*
+        [ 0.1, 0.4, 0.4 ]
+        [ 0.6, 2.4, 2.4 ]
+        [ 0.9, 3.6, 3.2 ]
+         */
+        Assertions.assertTrue( OUTPUT_DELTA[0][0][0] - .1f < 0.0001f );
+        Assertions.assertTrue( OUTPUT_DELTA[0][0][1] - .4f < 0.0001f );
+        Assertions.assertTrue( OUTPUT_DELTA[0][0][2] - .4f < 0.0001f );
+        Assertions.assertTrue( OUTPUT_DELTA[0][2][2] - 3.2f < 0.0001f );
 
     }
 

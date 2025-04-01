@@ -106,7 +106,7 @@ public class Layer {
 
 
     public void nBackward( float[] Ein ){ // S-Z or Ein
-        for ( int i=0;i<neurons.length;i++ ){ Eout[i]=0.0f; }
+        for ( int n=0;n<Eout.length;n++ ){ Eout[n]=0.0f; }
         for ( int n=0; n< neurons.length; n++ ){
             neurons[n].Backward( Ein[n] * dFofZ[n] );
         }

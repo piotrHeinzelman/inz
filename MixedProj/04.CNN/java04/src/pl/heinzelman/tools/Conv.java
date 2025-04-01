@@ -48,9 +48,9 @@ public class Conv {
 
 
 
-    public static float[][] fullConv( float[][] X, float[][] F ){
+    public static float[][] fullConv( float[][] X, float[][] F , int stride){
         int padding = F.length-1;
-        return  conv (  extendAry( X , padding ) , F,  0 , 1 ) ;
+        return  conv (  extendAry( X , padding ) , F,  0 , stride ) ;
     }
 
     public static float[][] conv( float[][] X, float[][] F, float bias ){
