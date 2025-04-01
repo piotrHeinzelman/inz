@@ -66,7 +66,7 @@ public class LayerConv {
         this.padding = ( padding==null ) ? 0 : padding;
         this.stride = (stride==null) ? 1 : stride;
     }
-    public void initFilters(){
+    private void initFilters(){
         this.filters = new Neuron2D[ filterNum ];
         Random rand = new Random();
         float max=getMaxRand();
@@ -79,18 +79,31 @@ public class LayerConv {
             biases[i] = new Neuron2D( ysize, this );
         }
     }
-    protected void initAry(){
+    private void initAry(){
         X  = new float[ channels ][ xsize ][ xsize ];
     }
 
-    public void setX(float[][][] _x ) {
+
+    public void setUpByX(float[][][] _x ) {
         //if ( padding!=0 ) { _x = Conv.extendAry( _x, padding ); }
         this.channels= _x.length;
         this.filterNum=filterForChannel*channels;
         this.xsize=_x[0].length;
         this.ysize = getYSize();
         initAry();
-        // initFilters();
+        initFilters();
+    }
+
+
+
+    public void setX(float[][][] _x ) {
+       //     // if ( padding!=0 ) { _x = Conv.extendAry( _x, padding ); }
+       //     this.channels= _x.length;
+       //     this.filterNum=filterForChannel*channels;
+       //     this.xsize=_x[0].length;
+       //     this.ysize = getYSize();
+       //     initAry();
+       //     // initFilters();
 
         for (int n = 0; n < channels; n++) {
             for (int x = 0; x < xsize; x++) {
@@ -117,9 +130,14 @@ public class LayerConv {
 
        // by set of filter ( output channel )
         for ( int f=0;f<filterForChannel;f++ ) {
-            // init bias
-            float[][] b = biases[f].getMyWeight();
-                Y[f]=b;
+            // init bias // copy bias to Y[f]
+            float[][] bTMP = biases[f].getMyWeight();
+            int biasSize = bTMP.length;
+            for (int x=0; x<biasSize; x++){
+                for (int y=0; x<biasSize; x++) {
+                    Y[f][x][y] = bTMP[x][y];
+                }
+            }
 
             // sum FOUT
             for ( int c=0; c<channels; c++ ){

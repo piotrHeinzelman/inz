@@ -27,8 +27,8 @@ public class BackConvolutionTest {
         //filterW11.setBias( 0f );
 
         LayerConv layerConv= new LayerConv(2,1,null,1);
+        layerConv.setUpByX( X );
         layerConv.setX( X );
-        layerConv.initFilters();
         layerConv.filters[0]=filterW11;
 
         float[][][] Z = layerConv.Forward();

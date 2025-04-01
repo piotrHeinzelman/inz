@@ -157,9 +157,9 @@ public class MultiLayeredConvolutionTest {
         //System.out.println( filters[ 1*3 + 2 ] );
 
         LayerConv layerConv = new LayerConv(3, 2, 0, 1 );
+        layerConv.setUpByX( X );
         layerConv.setX( X );
         layerConv.filters = createFilters();
-        layerConv.initFilters();
 
         layerConv.biases[0].setWm(0,0,0);
         layerConv.biases[0].setWm(0,1,0);

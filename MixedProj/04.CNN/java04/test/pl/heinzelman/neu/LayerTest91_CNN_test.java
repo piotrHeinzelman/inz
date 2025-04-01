@@ -21,8 +21,8 @@ public class LayerTest91_CNN_test {
         X[0][3] = new float[]{ 16,17,18,19,20 };
         X[0][4] = new float[]{ 21,22,23,24,25 };
 
+        LCNN1.setUpByX( X );
         LCNN1.setX( X );
-        LCNN1.initFilters();
 
         System.out.println(  LCNN1 );
         float[][][] Z = LCNN1.Forward();
@@ -52,8 +52,8 @@ public class LayerTest91_CNN_test {
         allX[2]=x2;
 
         LayerConv layerConv = new LayerConv( 1, 3, null, null );
+                  layerConv.setUpByX( allX );
                   layerConv.setX( allX );
-                  layerConv.initFilters();
 
         //          layerConv.getNeuron(0 ).setWm(0,0,5.0f );
         //          layerConv.getNeuron(1 ).setWm(0,0,10.0f );
