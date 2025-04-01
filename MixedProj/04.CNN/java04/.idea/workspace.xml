@@ -14,8 +14,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="JUnit5 Test Class" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -91,63 +91,64 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;JUnit.All in nweb.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BackConvolutionTest.AvgPoolingTes.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BackConvolutionTest.BackConvolutionTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerDeepTest.creationConvolutionTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerDeepTest.creationConvolutionTest2.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerDeepTest.creationTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest2.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest3.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest4.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest5.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest6.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest6_CrossEntropyBinary_test.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest6_CrossEntropy_Multiclass_test.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest6_MSE_test.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest6_MSE_test.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest8_CrossEntropy_Multiclass_test.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest8_CrossEntropy_Multiclass_test.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest91_CNN_test.X3_F3_forward_conv.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest91_CNN_test.X3_F3_forward_maxPool.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest91_CNN_test.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest91_CNN_test.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest9_Sig_CrossEntropyBinary_test.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MultiLayeredConvolutionTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MultiLayeredConvolutionTest.show.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PoolingTest.AvgPoolingTes.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PoolingTest.MaxPoolingTes.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ReLUTest.ReLUTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ToolsTest.conv.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ToolsTest.convRGB.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.convTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.convTest.paddingTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.convTest.paddingTest2.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.convTest.paddingTest3.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.randTest.randTest.executor&quot;: &quot;Run&quot;,
-    &quot;LombokPluginIS_LOMBOK_JPS_FIX_ENABLED&quot;: &quot;true&quot;,
-    &quot;LombokPluginIS_LOMBOK_VERSION_CHECK_Enabled&quot;: &quot;true&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;TestNG.Task_CNN.prepare.executor&quot;: &quot;Run&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/john/opt/Java23&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.runner&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Application.Main.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.All in nweb.executor": "Run",
+    "JUnit.BackConvolutionTest.AvgPoolingTes.executor": "Run",
+    "JUnit.BackConvolutionTest.BackConvolutionTest.executor": "Run",
+    "JUnit.LayerDeepTest.creationConvolutionTest.executor": "Run",
+    "JUnit.LayerDeepTest.creationConvolutionTest2.executor": "Run",
+    "JUnit.LayerDeepTest.creationTest.executor": "Run",
+    "JUnit.LayerFlattenTest.forward.executor": "Run",
+    "JUnit.LayerTest.forwardTest.executor": "Run",
+    "JUnit.LayerTest2.forwardTest.executor": "Run",
+    "JUnit.LayerTest3.forwardTest.executor": "Run",
+    "JUnit.LayerTest4.forwardTest.executor": "Run",
+    "JUnit.LayerTest5.forwardTest.executor": "Run",
+    "JUnit.LayerTest6.forwardTest.executor": "Run",
+    "JUnit.LayerTest6_CrossEntropyBinary_test.forwardTest.executor": "Run",
+    "JUnit.LayerTest6_CrossEntropy_Multiclass_test.forwardTest.executor": "Run",
+    "JUnit.LayerTest6_MSE_test.executor": "Run",
+    "JUnit.LayerTest6_MSE_test.forwardTest.executor": "Run",
+    "JUnit.LayerTest8_CrossEntropy_Multiclass_test.executor": "Run",
+    "JUnit.LayerTest8_CrossEntropy_Multiclass_test.forwardTest.executor": "Run",
+    "JUnit.LayerTest91_CNN_test.X3_F3_forward_conv.executor": "Run",
+    "JUnit.LayerTest91_CNN_test.X3_F3_forward_maxPool.executor": "Run",
+    "JUnit.LayerTest91_CNN_test.executor": "Run",
+    "JUnit.LayerTest91_CNN_test.forwardTest.executor": "Run",
+    "JUnit.LayerTest9_Sig_CrossEntropyBinary_test.forwardTest.executor": "Run",
+    "JUnit.MultiLayeredConvolutionTest.executor": "Run",
+    "JUnit.MultiLayeredConvolutionTest.show.executor": "Run",
+    "JUnit.PoolingTest.AvgPoolingTes.executor": "Run",
+    "JUnit.PoolingTest.MaxPoolingTes.executor": "Run",
+    "JUnit.ReLUTest.ReLUTest.executor": "Run",
+    "JUnit.ToolsTest.conv.executor": "Run",
+    "JUnit.ToolsTest.convRGB.executor": "Run",
+    "JUnit.convTest.executor": "Run",
+    "JUnit.convTest.paddingTest.executor": "Run",
+    "JUnit.convTest.paddingTest2.executor": "Run",
+    "JUnit.convTest.paddingTest3.executor": "Run",
+    "JUnit.randTest.randTest.executor": "Run",
+    "LombokPluginIS_LOMBOK_JPS_FIX_ENABLED": "true",
+    "LombokPluginIS_LOMBOK_VERSION_CHECK_Enabled": "true",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "TestNG.Task_CNN.prepare.executor": "Run",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/john/opt/Java23",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.runner"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -165,13 +166,13 @@
       <recent name="pl.heinzelman.neu" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="pl.heinzelman.tasks" />
       <recent name="pl.heinzelman.LayerDeep" />
+      <recent name="pl.heinzelman.tasks" />
       <recent name="pl.heinzelman.neu" />
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="TestNG.Task_CNN.prepare">
+  <component name="RunManager" selected="JUnit.LayerFlattenTest.forward">
     <configuration name="All in nweb" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
       <option name="PACKAGE_NAME" value="" />
@@ -196,17 +197,18 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="convTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="LayerFlattenTest.forward" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="pl.heinzelman.neu.*" />
+          <option name="PATTERN" value="pl.heinzelman.LayerDeep.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="pl.heinzelman.neu" />
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.neu.convTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="PACKAGE_NAME" value="pl.heinzelman.LayerDeep" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.LayerDeep.LayerFlattenTest" />
+      <option name="METHOD_NAME" value="forward" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -247,11 +249,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.LayerFlattenTest.forward" />
         <item itemvalue="TestNG.Task_CNN.prepare" />
         <item itemvalue="JUnit.All in nweb" />
         <item itemvalue="JUnit.BackConvolutionTest.BackConvolutionTest" />
         <item itemvalue="JUnit.convTest.paddingTest" />
-        <item itemvalue="JUnit.convTest" />
       </list>
     </recent_temporary>
   </component>
