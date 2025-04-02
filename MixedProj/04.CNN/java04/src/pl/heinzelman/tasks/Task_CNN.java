@@ -20,7 +20,7 @@ public class Task_CNN implements Task{
     private float[][] trainY;
 
 
-    private LayerConv layer1Conv = new LayerConv( 5 , 2 , null, null );
+    private LayerConv layer1Conv = new LayerConv( 5 , 20 , null, null );
     private LayerReLU layer2ReLU = new LayerReLU();
     private LayerPoolingMax layer3PoolingMax = new LayerPoolingMax(2, 2);
     private LayerFlatten layer4Flatten = new LayerFlatten();
@@ -34,12 +34,10 @@ public class Task_CNN implements Task{
 
     private float[][][] oneX = new float[1][28][28];
 
-    float Loss;
 
-    int numOfEpoch=5;
+    int numOfEpoch=50;
     float[] CSBin_data=new float[numOfEpoch];
 
-    @Test
     @Override
     public void prepare() {
         tools.prepareDataAsFlatArray(1 );
@@ -81,7 +79,7 @@ public class Task_CNN implements Task{
         //System.out.println(Arrays.toString( layer5X ));
         //System.out.println( layer5X.length );
 
-        layer10=new Layer( LType.sigmod , 64 ,288 ); layer10.setName("Layer10"); // n neurons
+        layer10=new Layer( LType.sigmod , 64 ,2880 ); layer10.setName("Layer10"); // n neurons
         layer10.rnd();
 
         layer11=new Layer( LType.sigmod , 64 ,64 ); layer11.setName("Layer11"); // n neurons
@@ -93,43 +91,102 @@ public class Task_CNN implements Task{
     }
 
 
-    private forwardAndLearn(  )
 
-
-
-    @Test
-    @Override
-    public void run() {
-        prepare();
-
-
-
-
-        // FORWARD
-        int i=5;
-
-        oneX[0] = trainX[i];
-        layer1Conv.setX( oneX );
+    private float[] forwardNet( float[][][] X ){
+        layer1Conv.setX( X );
         layer2ReLU.setX( layer1Conv.Forward() );
         layer3PoolingMax.setX( layer2ReLU.Forward() );
-        layer10.setX( layer4Flatten.Forward( layer3PoolingMax.Forward() ) );
+        float[] FLAT = layer4Flatten.Forward(layer3PoolingMax.Forward());
+        //System.out.println( FLAT.length);
+        layer10.setX( FLAT );
         layer10.nForward();
         layer11.setX( layer10.getZ() );
         layer11.nForward();
         layer12.setX( layer11.getZ() );
         layer12.nForward();
+        return layer12.getZ();
+    }
 
-        float[] Z = layer12.getZ();
-        float[] S_Z = tools.vectorSubstSsubZ( trainY[ i ], Z );
-            // System.out.println( Arrays.toString( trainY[ i ] ));
-            // System.out.println( Arrays.toString( Z ));
-            // System.out.println( Arrays.toString( S_Z ));
+
+
+    private float forwardAndLearn( float[][][] X , float[] target ){
+
+        float[] Z = forwardNet( X );
+        float[] S_Z = tools.vectorSubstSsubZ( target, Z );
+        // System.out.println( Arrays.toString( trainY[ i ] ));
+        // System.out.println( Arrays.toString( Z ));
+        // System.out.println( Arrays.toString( S_Z ));
 
         layer12.nBackward( S_Z );
-        Loss += Tools.crossEntropyMulticlassError( layer12.getZ() );
+        float Loss = Tools.crossEntropyMulticlassError( layer12.getZ() );
         layer11.nBackward( layer12.getEout() );
         layer10.nBackward( layer11.getEout() );
         layer1Conv.Backward(layer2ReLU.Backward(layer3PoolingMax.Backward(layer4Flatten.Backward(layer10.getEout()))));
+        return Loss;
+    }
+
+
+
+
+    @Override
+    public void run() {
+        //prepare();
+
+        // FORWARD
+        //int i=5;
+        //oneX[0] = trainX[i];
+        //forwardAndLearn( oneX , trainY[ i ] );
+
+
+
+            int step = 1;
+            for (int epoch = 0; epoch < numOfEpoch; epoch++) {
+                step++;
+                float Loss=0f;
+                for (int index = 0; index < trainX.length; index++) {
+
+                    // ONE CYCLE
+                    int ind_ex = (index * step) % trainX.length;
+
+                    oneX[0] = trainX[ind_ex];
+                    Loss+=forwardAndLearn(oneX, trainY[ind_ex]);
+
+                }
+                CSBin_data[epoch]=Loss/trainX.length;
+            }
+            System.out.println( "CSBin_data: " + Arrays.toString( CSBin_data ));
+
+
+        // check accuracy
+        int len = testX.length;
+        int accuracy = 0;
+        for (int i = 0; i < len; i++) {
+
+            oneX[0] = trainX[i];
+            float[] Z = forwardNet(oneX);
+
+            int netClassId = tools.getIndexMaxFloat( Z );
+            int fileClassId = tools.getIndexMaxFloat( testY[i] );
+            if (fileClassId == netClassId) {
+                accuracy++;
+            }
+        }
+        System.out.println(100.0f * accuracy / len + "%");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // System.out.println( Tools.AryToString( backward ));
 
         /*

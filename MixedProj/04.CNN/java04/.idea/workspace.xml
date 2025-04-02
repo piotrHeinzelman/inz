@@ -173,27 +173,24 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="TestNG.Task_CNN.run">
-    <configuration name="All in nweb" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.Main" />
       <module name="nweb" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pl.heinzelman.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BackConvolutionTest.BackConvolutionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="All in nweb" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="pl.heinzelman.LayerDeep.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="pl.heinzelman.LayerDeep" />
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.LayerDeep.BackConvolutionTest" />
-      <option name="METHOD_NAME" value="BackConvolutionTest" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -252,11 +249,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="TestNG.Task_CNN.run" />
         <item itemvalue="TestNG.Task_CNN.prepare" />
         <item itemvalue="JUnit.All in nweb" />
         <item itemvalue="JUnit.LayerFlattenTest.forward" />
-        <item itemvalue="JUnit.BackConvolutionTest.BackConvolutionTest" />
       </list>
     </recent_temporary>
   </component>
