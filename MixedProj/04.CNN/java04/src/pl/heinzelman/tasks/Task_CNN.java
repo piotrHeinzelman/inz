@@ -20,7 +20,7 @@ public class Task_CNN implements Task{
     private float[][] trainY;
 
 
-    private LayerConv layer1Conv = new LayerConv( 5 , 20 , null, null );
+    private LayerConv layer1Conv = new LayerConv( 5 , 10 , null, null );
     private LayerReLU layer2ReLU = new LayerReLU();
     private LayerPoolingMax layer3PoolingMax = new LayerPoolingMax(2, 2);
     private LayerFlatten layer4Flatten = new LayerFlatten();
@@ -35,12 +35,13 @@ public class Task_CNN implements Task{
     private float[][][] oneX = new float[1][28][28];
 
 
-    int numOfEpoch=50;
+    int numOfEpoch=750;
     float[] CSBin_data=new float[numOfEpoch];
+
 
     @Override
     public void prepare() {
-        tools.prepareDataAsFlatArray(1 );
+        tools.prepareDataAsFlatArray( 1 );
 
         testX = tools.getTestAryX();
         testY = tools.getTestY();
@@ -79,7 +80,7 @@ public class Task_CNN implements Task{
         //System.out.println(Arrays.toString( layer5X ));
         //System.out.println( layer5X.length );
 
-        layer10=new Layer( LType.sigmod , 64 ,2880 ); layer10.setName("Layer10"); // n neurons
+        layer10=new Layer( LType.sigmod , 64 ,1440 ); layer10.setName("Layer10"); // n neurons
         layer10.rnd();
 
         layer11=new Layer( LType.sigmod , 64 ,64 ); layer11.setName("Layer11"); // n neurons
@@ -100,9 +101,10 @@ public class Task_CNN implements Task{
         //System.out.println( FLAT.length);
         layer10.setX( FLAT );
         layer10.nForward();
-        layer11.setX( layer10.getZ() );
-        layer11.nForward();
-        layer12.setX( layer11.getZ() );
+        //layer11.setX( layer10.getZ() );
+        //layer11.nForward();
+        //layer12.setX( layer11.getZ() );
+        layer12.setX( layer10.getZ() );
         layer12.nForward();
         return layer12.getZ();
     }
@@ -119,8 +121,9 @@ public class Task_CNN implements Task{
 
         layer12.nBackward( S_Z );
         float Loss = Tools.crossEntropyMulticlassError( layer12.getZ() );
-        layer11.nBackward( layer12.getEout() );
-        layer10.nBackward( layer11.getEout() );
+        //layer11.nBackward( layer12.getEout() );
+        //layer10.nBackward( layer11.getEout() );
+        layer10.nBackward( layer12.getEout() );
         layer1Conv.Backward(layer2ReLU.Backward(layer3PoolingMax.Backward(layer4Flatten.Backward(layer10.getEout()))));
         return Loss;
     }

@@ -14,8 +14,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -99,6 +99,8 @@
     "JUnit.All in nweb.executor": "Run",
     "JUnit.BackConvolutionTest.AvgPoolingTes.executor": "Run",
     "JUnit.BackConvolutionTest.BackConvolutionTest.executor": "Run",
+    "JUnit.BackConvolutionTest.BackConvolutionTest2.executor": "Run",
+    "JUnit.CNN_test.BackConvolutionTest2.executor": "Run",
     "JUnit.LayerDeepTest.creationConvolutionTest.executor": "Run",
     "JUnit.LayerDeepTest.creationConvolutionTest2.executor": "Run",
     "JUnit.LayerDeepTest.creationTest.executor": "Run",
@@ -187,15 +189,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="All in nweb" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="nweb" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="LayerFlattenTest.forward" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="BackConvolutionTest.BackConvolutionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
       <extension name="coverage">
         <pattern>
@@ -204,8 +198,40 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="pl.heinzelman.LayerDeep" />
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.LayerDeep.LayerFlattenTest" />
-      <option name="METHOD_NAME" value="forward" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.LayerDeep.BackConvolutionTest" />
+      <option name="METHOD_NAME" value="BackConvolutionTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BackConvolutionTest.BackConvolutionTest2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="nweb" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pl.heinzelman.LayerDeep.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="pl.heinzelman.LayerDeep" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.LayerDeep.BackConvolutionTest" />
+      <option name="METHOD_NAME" value="BackConvolutionTest2" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CNN_test.BackConvolutionTest2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="nweb" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pl.heinzelman.LayerDeep.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="pl.heinzelman.LayerDeep" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.LayerDeep.CNN_test" />
+      <option name="METHOD_NAME" value="BackConvolutionTest2" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -229,31 +255,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Task_CNN.run" type="TestNG" temporary="true" nameIsGenerated="true">
-      <module name="nweb" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="pl.heinzelman.tasks.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="pl.heinzelman.tasks" />
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.tasks.Task_CNN" />
-      <option name="METHOD_NAME" value="run" />
-      <option name="TEST_OBJECT" value="METHOD" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="TestNG.Task_CNN.run" />
+        <item itemvalue="JUnit.CNN_test.BackConvolutionTest2" />
+        <item itemvalue="JUnit.BackConvolutionTest.BackConvolutionTest2" />
         <item itemvalue="TestNG.Task_CNN.prepare" />
-        <item itemvalue="JUnit.All in nweb" />
-        <item itemvalue="JUnit.LayerFlattenTest.forward" />
+        <item itemvalue="JUnit.BackConvolutionTest.BackConvolutionTest" />
       </list>
     </recent_temporary>
   </component>
@@ -281,6 +289,17 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/pl/heinzelman/tools/Tools.java</url>
+          <line>148</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand>

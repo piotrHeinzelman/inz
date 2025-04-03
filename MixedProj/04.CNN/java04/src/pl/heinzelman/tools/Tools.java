@@ -143,6 +143,26 @@ public class Tools {
     }
 
 
+    public void saveVectorAsImg( float[][] matrix, String fileName ){
+        int width=matrix.length;
+        int height=matrix[0].length;
+        BufferedImage image = new BufferedImage( width , height , TYPE_BYTE_GRAY );
+
+        //File file = new File("image"+nameSuffix+".png");
+        File file = new File(fileName+".png");
+        for ( int i=0; i<height; i++){
+            for (int j=0;j<width;j++){
+                float aDouble = (matrix[i][j])*254;
+                aDouble=aDouble*255;
+                image.setRGB( j, i, (int) aDouble);
+            }
+        }
+        try {
+            ImageIO.write(image ,  "png", file );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void saveVectorAsImg( float[] doubles, String nameSuffix ){
         int width=28;

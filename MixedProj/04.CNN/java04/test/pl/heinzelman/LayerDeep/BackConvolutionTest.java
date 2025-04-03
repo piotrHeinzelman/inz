@@ -80,6 +80,8 @@ public class BackConvolutionTest {
         Assertions.assertTrue( OUTPUT_DELTA[0][0][2] - .4f < 0.0001f );
         Assertions.assertTrue( OUTPUT_DELTA[0][2][2] - 3.2f < 0.0001f );
 
+        System.out.println( layerConv );
     }
+
 
 }
