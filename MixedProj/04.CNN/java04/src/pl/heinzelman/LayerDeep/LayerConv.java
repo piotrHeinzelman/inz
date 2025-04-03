@@ -135,7 +135,7 @@ public class LayerConv {
             int biasSize = bTMP.length;
             for (int x=0; x<biasSize; x++){
                 for (int y=0; x<biasSize; x++) {
-                    Y[f][x][y] = bTMP[x][y];
+                    Y[f][x][y] = 0 ; //bTMP[x][y];
                 }
             }
 
@@ -143,7 +143,7 @@ public class LayerConv {
             for ( int c=0; c<channels; c++ ){
                 for (int x = 0; x < ysize; x++) {
                     for (int y = 0; y < ysize; y++) {
-                        Y[f][x][y] += FtmpOUT[ f*channels +c ][x][y];
+                        Y[f][x][y] += ( FtmpOUT[ f*channels +c ][x][y] );
                     }
                 }
             }
@@ -164,7 +164,7 @@ public class LayerConv {
                     for (int y=0;y<filterSize;y++) {
                         // every channel (c)
                         // target output[i][j]
-                        OUT[i][j] += ((Xc[ i*stride + x ][ j*stride + y ]) * (W[x][y]));
+                        OUT[i][j] += (( Xc[ i*stride + x ][ j*stride + y ]) * (W[x][y]) );
                     }
                 }
 
