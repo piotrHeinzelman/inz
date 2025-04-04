@@ -13,6 +13,5 @@ public class Main {
         task = new Task_CNN();
         task.doTask();
     }
-
 }
 

@@ -8,6 +8,7 @@ import pl.heinzelman.neu.LType;
 import pl.heinzelman.neu.Layer;
 import pl.heinzelman.tools.Tools;
 
+import javax.tools.Tool;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
@@ -23,7 +24,7 @@ public class Task_CNN implements Task{
     private float[][][] trainXX;
 
 
-    private LayerConv layer1Conv = new LayerConv( 5 , 10 , null, null );
+    private LayerConv layer1Conv = new LayerConv( 5 , 20 , null, null );
     private LayerReLU layer2ReLU = new LayerReLU();
     private LayerPoolingMax layer3PoolingMax = new LayerPoolingMax(2, 2);
     private LayerFlatten layer4Flatten = new LayerFlatten();
@@ -38,26 +39,29 @@ public class Task_CNN implements Task{
 
     private Tools tools = new Tools();
 
-    int numOfEpoch=50;
+    int numOfEpoch=500;
     float[] CSBin_data=new float[numOfEpoch];
 
     @Override
     public void prepare() {
 
-        int dataSize = 5;
+        int dataSize = 1;
         tools.prepareDataAsFlatArray( dataSize );
 
         testXX = tools.getTestAryX();
         trainXX = tools.getTrainAryX();
 
-        tools.prepareData(dataSize );
+        tools.prepareData( dataSize );
 
         testX = tools.getTestX();
         testY = tools.getTestY();
         trainX = tools.getTrainX();
         trainY = tools.getTrainY();
 
-        layer1=new Layer( LType.sigmod , 64 ,784 ); layer1.setName("Layer1"); // n neurons
+
+
+        layer1=new Layer( LType.sigmod , 64 ,2880 ); layer1.setName("Layer1"); // n neurons
+        //layer1=new Layer( LType.sigmod , 64 ,784 ); layer1.setName("Layer1"); // n neurons
         layer1.rnd();
 
         layer2=new Layer( LType.sigmod , 64 ,64 ); layer2.setName("Layer2"); // n neurons
@@ -72,6 +76,7 @@ public class Task_CNN implements Task{
         float[][][] oneX = new float[1][28][28];
         oneX[0] = trainXX[0]; // extract One X
         layer1Conv.setUpByX( oneX );
+        //System.out.println( "oneX" +  Tools.AryToString( oneX ));
 
         //System.out.println( layer1Conv );
         //System.out.println( layer2ReLU );
@@ -96,27 +101,56 @@ public class Task_CNN implements Task{
                 for ( int index = 0; index < trainX.length; index++ ) {
 
                     // ONE CYCLE
-                    int ind_ex = /*index; //*/ (index*step) % trainX.length;
+                    int ind_ex = /*index; //*/ (index * step) % trainX.length;
 
                     float[][][] oneX = new float[1][][];
 
-                    oneX[0]=trainXX[ind_ex];
+                    oneX[0] = trainXX[ind_ex];
                     //System.out.println( Tools.AryToString( oneX ));
                     //System.out.println(  Arrays.toString( trainY[ind_ex] ) );
                     //System.out.println(  Arrays.toString( trainX[ind_ex] ) );
-// --->
-                    layer1.setX( trainX[ ind_ex ] );
+
+                    layer1Conv.setX(oneX);
+                    // System.out.println( "Ysize:" + layer1Conv.Forward().length * layer1Conv.Forward()[0].length* layer1Conv.Forward()[0].length );
+                    layer2ReLU.setX(layer1Conv.Forward());
+                    layer3PoolingMax.setX(layer2ReLU.Forward());
+                    float[] CX = layer4Flatten.Forward(layer3PoolingMax.Forward());
+                    //System.out.println("SIZE: " + CX.length);
+
+                    //if (index==1) { tools.saveVectorAsImg( CX , "cx" ); }
+                    //if (true) throw new RuntimeException("!");
+// --->1
+                    layer1.setX(CX);
+                    // layer1.setX( trainX[ ind_ex ] );
                     layer1.nForward();
-                    layer2.setX( layer1.getZ() );
+                    layer2.setX(layer1.getZ());
                     layer2.nForward();
-                    layer3.setX( layer2.getZ() );
+                    layer3.setX(layer2.getZ());
                     layer3.nForward();
 
-                    float[] S_Z = tools.vectorSubstSsubZ( trainY[ ind_ex ], layer3.getZ() );
-                    layer3.nBackward( S_Z );
-                    Loss += Tools.crossEntropyMulticlassError( layer3.getZ() );
-                    layer2.nBackward( layer3.getEout() );
-                    layer1.nBackward( layer2.getEout() );
+                    float[] S_Z = tools.vectorSubstSsubZ(trainY[ind_ex], layer3.getZ());
+                    layer3.nBackward(S_Z);
+                    Loss += Tools.crossEntropyMulticlassError(layer3.getZ());
+                    layer2.nBackward(layer3.getEout());
+                    layer1.nBackward(layer2.getEout());
+                    float[] FC_Eout = layer1.getEout();
+
+// --- TRAIN ---
+                    // if (index==1 || true) { tools.saveVectorAsImg( CX , "cx" ); }
+                    float[][][] delta4 = layer4Flatten.Backward(FC_Eout);
+                    float[][][] delta3 = layer3PoolingMax.Backward(delta4);
+                    float[][][] delta2 = layer2ReLU.Backward(delta3);
+                    float[][][] delta = layer1Conv.Backward(delta2);
+
+                    if (false) {
+                        if (index == 1 || true) {
+                            tools.saveVectorAsImg(delta4[0], "delta4");
+                            tools.saveVectorAsImg(delta3[0], "delta3");
+                            tools.saveVectorAsImg(delta2[0], "delta2");
+                            tools.saveVectorAsImg(delta[0], "delta");
+                        }
+                    if (true) throw new RuntimeException("!");
+                    }
                 }
                 CSBin_data[epoch]=Loss/trainX.length;
 
@@ -125,11 +159,21 @@ public class Task_CNN implements Task{
             System.out.println( Arrays.toString( layer3.getX()));
             System.out.println( Arrays.toString( layer3.getZ()));
 
+            float[][][] oneX = new float[1][][];
             // check accuracy
             int len = testX.length;
             int accuracy = 0;
             for (int i = 0; i < len; i++) {
-                layer1.setX( testX[i] );
+
+                oneX[0]=trainXX[i];
+// ----------->
+                layer1Conv.setX( oneX );
+                layer2ReLU.setX( layer1Conv.Forward() );
+                layer3PoolingMax.setX( layer2ReLU.Forward() );
+                float[] CX = layer4Flatten.Forward(layer3PoolingMax.Forward());
+// ---------->
+                layer1.setX( CX );
+                // layer1.setX( testX[i] );
                 layer1.nForward();
                 layer2.setX( layer1.getZ() );
                 layer2.nForward();
@@ -145,129 +189,4 @@ public class Task_CNN implements Task{
             System.out.println(100.0f * accuracy / len + "%");
         }
     }
-
-
-    private float forwardAndLearn( float[][][] X , float[] target ){
-
-        float[] Z = forwardNet( X );
-        float[] S_Z = tools.vectorSubstSsubZ( target, Z );
-        // System.out.println( Arrays.toString( trainY[ i ] ));
-        // System.out.println( Arrays.toString( Z ));
-        // System.out.println( Arrays.toString( S_Z ));
-
-        layer3.nBackward( S_Z );
-        float Loss = Tools.crossEntropyMulticlassError( layer3.getZ() );
-        //layer11.nBackward( layer12.getEout() );
-        //layer10.nBackward( layer11.getEout() );
-        layer2.nBackward( layer3.getEout() );
-        layer1Conv.Backward(layer2ReLU.Backward(layer3PoolingMax.Backward(layer4Flatten.Backward(layer2.getEout()))));
-        return Loss;
-    }
-
-    private float[] forwardNet( float[][][] X ){
-        layer1Conv.setX( X );
-        layer2ReLU.setX( layer1Conv.Forward() );
-        layer3PoolingMax.setX( layer2ReLU.Forward() );
-        float[] FLAT = layer4Flatten.Forward(layer3PoolingMax.Forward());
-        //System.out.println( FLAT.length);
-        layer1.setX( FLAT );
-        layer1.nForward();
-        //layer11.setX( layer10.getZ() );
-        //layer11.nForward();
-        //layer12.setX( layer11.getZ() );
-        layer2.setX( layer1.getZ() );
-        layer2.nForward();
-        layer3.setX(layer2.getZ() );
-        layer3.nForward();
-        return layer3.getZ();
-    }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ******************************************************
-// ******************************************************
-// ******************************************************
-// ******************************************************
-// ******************************************************
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-    @Override
-    public void run() {
-        //prepare();
-
-        // FORWARD
-        //int i=5;
-        //oneX[0] = trainX[i];
-        //forwardAndLearn( oneX , trainY[ i ] );
-
-
-
-            int step = 1;
-            for (int epoch = 0; epoch < numOfEpoch; epoch++) {
-                step++;
-                float Loss=0f;
-                for (int index = 0; index < trainX.length; index++) {
-
-                    // ONE CYCLE
-                    int ind_ex = (index * step) % trainX.length;
-
-                    oneX[0] = trainX[ind_ex];
-                    Loss+=forwardAndLearn(oneX, trainY[ind_ex]);
-
-                }
-                CSBin_data[epoch]=Loss/trainX.length;
-            }
-            System.out.println( "CSBin_data: " + Arrays.toString( CSBin_data ));
-
-
-        // check accuracy
-        int len = testX.length;
-        int accuracy = 0;
-        for (int i = 0; i < len; i++) {
-
-            oneX[0] = trainX[i];
-            float[] Z = forwardNet(oneX);
-
-            int netClassId = tools.getIndexMaxFloat( Z );
-            int fileClassId = tools.getIndexMaxFloat( testY[i] );
-            if (fileClassId == netClassId) {
-                accuracy++;
-            }
-        }
-        System.out.println(100.0f * accuracy / len + "%");
-*/

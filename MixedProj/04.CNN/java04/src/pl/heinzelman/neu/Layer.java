@@ -219,6 +219,17 @@ public class Layer {
             sum += s[i] * Math.log ( z[i] ) + ( 1-s[i]) *Math.log (1-z[i]);
         }
         return sum/( s.length );
+        // dBCD/dyi = 1/n (( 1-ytarget ) / ( 1-yi ) - ytrue / yi )
+    }
+
+    public float[] BinaryCrossEntropy_prime( float[] s, float[] z ){ // s(yi) - target class : z(p) - reply of net : , yi = true label (0 or 1)
+        // dBCD/dyi = 1/n (( 1-ytarget ) / ( 1-yi ) - ytrue / yi )
+        float[] out = new float[ s.length ];
+        float oneOverN=1/s.length;
+        for ( int i=0;i<s.length;i++ ){
+            out[i] = oneOverN * (( 1-z[i] )/( 1-s[i] )-( z[i]/s[i] ));
+        }
+        return out;
     }
 
 }

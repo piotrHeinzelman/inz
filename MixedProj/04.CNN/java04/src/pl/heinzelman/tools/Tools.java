@@ -55,7 +55,7 @@ public class Tools {
                 int off=i*784;
                 for (int j=0;j<28;j++){
                     for (int k=0;k<28;k++) {
-                        trainAryX[i][j][k] = Byte.toUnsignedInt(trainXfile[off + j*28 + k]) / 16;///256.0f; //0-1
+                        trainAryX[i][j][k] = Byte.toUnsignedInt(trainXfile[off + j*28 + k]) / 256f;///256.0f; //0-1
                     }
                 }
             }
@@ -66,7 +66,7 @@ public class Tools {
                 int off=i*784;
                 for (int j=0;j<28;j++){
                     for (int k=0;k<28;k++) {
-                        testAryX[i][j][k] = Byte.toUnsignedInt(trainXfile[off + j*28 + k]) / 16;///256.0f; //0-1
+                        testAryX[i][j][k] = Byte.toUnsignedInt(trainXfile[off + j*28 + k]) / 256f;///256.0f; //0-1
                     }
                 }
             }
