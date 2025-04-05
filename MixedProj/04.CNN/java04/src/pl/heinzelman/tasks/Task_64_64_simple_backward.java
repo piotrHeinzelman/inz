@@ -25,7 +25,7 @@ public class Task_64_64_simple_backward implements Task{
 
     @Override
     public void prepare() {
-        tools.prepareData(50 );
+        tools.prepareData(1 );
 
         testX = tools.getTestX();
         testY = tools.getTestY();
@@ -65,9 +65,17 @@ public class Task_64_64_simple_backward implements Task{
                     layer3.setX( layer2.getZ() );
                     layer3.nForward();
 
+                    System.out.println( "trainX[ ind_ex ]:" + Arrays.toString(  trainX[ ind_ex ] ));
+                    System.out.println( "layer3.getZ()" + Arrays.toString(  layer3.getZ() ));
+
                     float[] S_Z = tools.vectorSubstSsubZ( trainY[ ind_ex ], layer3.getZ() );
-                    layer3.nBackward( S_Z );
                     Loss += Tools.crossEntropyMulticlassError( layer3.getZ() );
+
+                    float[] gradientSM = tools.gradientSoftMax( trainY[ ind_ex ], layer3.getZ() );
+
+                    System.out.println( " S_Z: "+Arrays.toString( S_Z ) );
+                    System.out.println( " gradientSM: "+Arrays.toString( gradientSM ) );
+                    layer3.nBackward( gradientSM );
                     layer2.nBackward( layer3.getEout() );
                     layer1.nBackward( layer2.getEout() );
                 }

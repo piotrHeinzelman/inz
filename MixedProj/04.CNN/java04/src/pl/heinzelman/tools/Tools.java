@@ -232,6 +232,15 @@ public class Tools {
         return out;
     }
 
+    public static float[] gradientSoftMax( float[] s, float[] z ){
+        float[] out = new float[ z.length];
+        for ( int i=0;i<z.length; i++ ){
+            if ( s[i]==0 ) { out [i]=0; }
+            else { out[i] = ( -1 / z[i] ); }
+        }
+        return out;
+    }
+
 
 
     public static float meanSquareError( float[] s, float[]z ){

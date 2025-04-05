@@ -227,7 +227,7 @@ public class Layer {
         float[] out = new float[ s.length ];
         float oneOverN=1/s.length;
         for ( int i=0;i<s.length;i++ ){
-            out[i] = oneOverN * (( 1-z[i] )/( 1-s[i] )-( z[i]/s[i] ));
+            out[i] = oneOverN * (( 1-s[i] )/( 1-z[i] )-( s[i]/z[i] ));
         }
         return out;
     }
