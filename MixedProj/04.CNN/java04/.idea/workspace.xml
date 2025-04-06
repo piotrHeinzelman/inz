@@ -91,69 +91,80 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;JUnit.All in nweb.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BackConvolutionTest.AvgPoolingTes.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BackConvolutionTest.BackConvolutionTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BackConvolutionTest.BackConvolutionTest2.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CNN_2_test.myTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CNN_test.BackConvolutionTest2.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerDeepTest.creationConvolutionTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerDeepTest.creationConvolutionTest2.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerDeepTest.creationTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerFlattenTest.forward.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest2.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest3.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest4.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest5.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest6.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest6_CrossEntropyBinary_test.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest6_CrossEntropy_Multiclass_test.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest6_MSE_test.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest6_MSE_test.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest8_CrossEntropy_Multiclass_test.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest8_CrossEntropy_Multiclass_test.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest91_CNN_test.X3_F3_forward_conv.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest91_CNN_test.X3_F3_forward_maxPool.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest91_CNN_test.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest91_CNN_test.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.LayerTest9_Sig_CrossEntropyBinary_test.forwardTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MultiLayeredConvolutionTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.MultiLayeredConvolutionTest.show.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PoolingTest.AvgPoolingTes.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.PoolingTest.MaxPoolingTes.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ReLUTest.ReLUTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ToolsTest.conv.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ToolsTest.convRGB.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.convTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.convTest.paddingTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.convTest.paddingTest2.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.convTest.paddingTest3.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.randTest.randTest.executor&quot;: &quot;Run&quot;,
-    &quot;LombokPluginIS_LOMBOK_JPS_FIX_ENABLED&quot;: &quot;true&quot;,
-    &quot;LombokPluginIS_LOMBOK_VERSION_CHECK_Enabled&quot;: &quot;true&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;TestNG.Task_CNN.prepare.executor&quot;: &quot;Run&quot;,
-    &quot;TestNG.Task_CNN.run.executor&quot;: &quot;Run&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/john/INZ/some/CNN/src/cnn/CNN.java&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.runner&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Application.CnnApplication.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.All in nweb.executor": "Run",
+    "JUnit.BackConvolutionTest.AvgPoolingTes.executor": "Run",
+    "JUnit.BackConvolutionTest.BackConvolutionTest.executor": "Run",
+    "JUnit.BackConvolutionTest.BackConvolutionTest2.executor": "Run",
+    "JUnit.CNN.elementTest.executor": "Run",
+    "JUnit.CNN.testTrain.executor": "Run",
+    "JUnit.CNN_2_test.myTest.executor": "Run",
+    "JUnit.CNN_test.BackConvolutionTest2.executor": "Run",
+    "JUnit.CnnApplication.main (1).executor": "Run",
+    "JUnit.CnnApplication.main.executor": "Run",
+    "JUnit.LayerDeepTest.creationConvolutionTest.executor": "Run",
+    "JUnit.LayerDeepTest.creationConvolutionTest2.executor": "Run",
+    "JUnit.LayerDeepTest.creationTest.executor": "Run",
+    "JUnit.LayerFlattenTest.forward.executor": "Run",
+    "JUnit.LayerTest.forwardTest.executor": "Run",
+    "JUnit.LayerTest2.forwardTest.executor": "Run",
+    "JUnit.LayerTest3.forwardTest.executor": "Run",
+    "JUnit.LayerTest4.forwardTest.executor": "Run",
+    "JUnit.LayerTest5.forwardTest.executor": "Run",
+    "JUnit.LayerTest6.forwardTest.executor": "Run",
+    "JUnit.LayerTest6_CrossEntropyBinary_test.forwardTest.executor": "Run",
+    "JUnit.LayerTest6_CrossEntropy_Multiclass_test.forwardTest.executor": "Run",
+    "JUnit.LayerTest6_MSE_test.executor": "Run",
+    "JUnit.LayerTest6_MSE_test.forwardTest.executor": "Run",
+    "JUnit.LayerTest8_CrossEntropy_Multiclass_test.executor": "Run",
+    "JUnit.LayerTest8_CrossEntropy_Multiclass_test.forwardTest.executor": "Run",
+    "JUnit.LayerTest91_CNN_test.X3_F3_forward_conv.executor": "Run",
+    "JUnit.LayerTest91_CNN_test.X3_F3_forward_maxPool.executor": "Run",
+    "JUnit.LayerTest91_CNN_test.executor": "Run",
+    "JUnit.LayerTest91_CNN_test.forwardTest.executor": "Run",
+    "JUnit.LayerTest9_Sig_CrossEntropyBinary_test.forwardTest.executor": "Run",
+    "JUnit.MultiLayeredConvolutionTest.executor": "Run",
+    "JUnit.MultiLayeredConvolutionTest.show.executor": "Run",
+    "JUnit.PoolingTest.AvgPoolingTes.executor": "Run",
+    "JUnit.PoolingTest.MaxPoolingTes.executor": "Run",
+    "JUnit.ReLUTest.ReLUTest.executor": "Run",
+    "JUnit.Teacher.test (1).executor": "Run",
+    "JUnit.Teacher.test.executor": "Run",
+    "JUnit.ToolsTest.conv.executor": "Run",
+    "JUnit.ToolsTest.convRGB.executor": "Run",
+    "JUnit.convTest.executor": "Run",
+    "JUnit.convTest.paddingTest.executor": "Run",
+    "JUnit.convTest.paddingTest2.executor": "Run",
+    "JUnit.convTest.paddingTest3.executor": "Run",
+    "JUnit.randTest.randTest.executor": "Run",
+    "LombokPluginIS_LOMBOK_JPS_FIX_ENABLED": "true",
+    "LombokPluginIS_LOMBOK_VERSION_CHECK_Enabled": "true",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "TestNG.Task_CNN.prepare.executor": "Run",
+    "TestNG.Task_CNN.run.executor": "Run",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/john/INZ/inz/MixedProj/04.CNN/java04/test/pl/heinzelman/Old/CNN.sources",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.runner"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/test/pl/heinzelman/Old/CNN.sources" />
+      <recent name="$PROJECT_DIR$/test/pl/heinzelman/Old" />
+    </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
@@ -190,68 +201,66 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="BackConvolutionTest.BackConvolutionTest2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CnnApplication.main (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="pl.heinzelman.LayerDeep.*" />
+          <option name="PATTERN" value="pl.heinzelman.Old.CNN.sources.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="pl.heinzelman.LayerDeep" />
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.LayerDeep.BackConvolutionTest" />
-      <option name="METHOD_NAME" value="BackConvolutionTest2" />
+      <option name="PACKAGE_NAME" value="pl.heinzelman.Old.CNN.sources" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.Old.CNN.sources.CnnApplication" />
+      <option name="METHOD_NAME" value="main" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CNN_2_test.myTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CnnApplication.main" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="pl.heinzelman.LayerDeep.*" />
+          <option name="PATTERN" value="pl.heinzelman.Old.CNN.sources.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="pl.heinzelman.LayerDeep" />
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.LayerDeep.CNN_2_test" />
-      <option name="METHOD_NAME" value="myTest" />
+      <option name="PACKAGE_NAME" value="pl.heinzelman.Old.CNN.sources" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.Old.CNN.sources.CnnApplication" />
+      <option name="METHOD_NAME" value="main([Ljava.lang.String;)" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CNN_test.BackConvolutionTest2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Teacher.test (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="pl.heinzelman.LayerDeep.*" />
+          <option name="PATTERN" value="pl.heinzelman.Old.CNN.sources.net.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="pl.heinzelman.LayerDeep" />
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.LayerDeep.CNN_test" />
-      <option name="METHOD_NAME" value="BackConvolutionTest2" />
+      <option name="PACKAGE_NAME" value="pl.heinzelman.Old.CNN.sources.net" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.Old.CNN.sources.net.Teacher" />
+      <option name="METHOD_NAME" value="test" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Task_CNN.prepare" type="TestNG" temporary="true" nameIsGenerated="true">
+    <configuration name="Teacher.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="pl.heinzelman.tasks.*" />
+          <option name="PATTERN" value="pl.heinzelman.Old.CNN.sources.net.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="pl.heinzelman.tasks" />
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.tasks.Task_CNN" />
-      <option name="METHOD_NAME" value="prepare" />
-      <option name="TEST_OBJECT" value="METHOD" />
-      <properties />
-      <listeners />
+      <option name="PACKAGE_NAME" value="pl.heinzelman.Old.CNN.sources.net" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.Old.CNN.sources.net.Teacher" />
+      <option name="METHOD_NAME" value="test(int)" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -259,10 +268,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.CNN_2_test.myTest" />
-        <item itemvalue="JUnit.CNN_test.BackConvolutionTest2" />
-        <item itemvalue="JUnit.BackConvolutionTest.BackConvolutionTest2" />
-        <item itemvalue="TestNG.Task_CNN.prepare" />
+        <item itemvalue="JUnit.Teacher.test (1)" />
+        <item itemvalue="JUnit.CnnApplication.main (1)" />
+        <item itemvalue="JUnit.Teacher.test" />
+        <item itemvalue="JUnit.CnnApplication.main" />
       </list>
     </recent_temporary>
   </component>

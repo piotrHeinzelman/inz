@@ -57,7 +57,7 @@ public class CNN_test {
 
         float[][] flat5X=new float [4][layer5x.length];
         flat5X[0]=layer5x;
-        tools.saveVectorAsImg( flat5X, "C:\\Users\\PiotrH\\Desktop\\pict\\Y03" );
+        //tools.saveVectorAsImg( flat5X, "C:\\Users\\PiotrH\\Desktop\\pict\\Y03" );
 
         /*
         float[] FLAT = layer4Flatten.Forward(layer3PoolingMax.Forward());

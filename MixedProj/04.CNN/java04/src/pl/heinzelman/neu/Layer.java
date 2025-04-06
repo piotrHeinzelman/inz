@@ -54,10 +54,10 @@ public class Layer {
 
     public void rnd(){
         Random random=new Random();
-        float normalization=1;//this.X.length/5.0f;
+        float normalization=X.length;//this.X.length/5.0f;
         for ( Neuron neu : neurons ) {
             for ( int m=0; m<X.length; m++ ) {
-                neu.setWm( m , (float)( -1.0f+2.0f*random.nextFloat() / normalization )  );
+                neu.setWm( m , (float)(  ( -1.0f+2.0f*random.nextFloat()) / normalization )  );
             }
             //System.out.println( neu );
         }
@@ -68,13 +68,12 @@ public class Layer {
         switch (lType) {
             case sigmod:
             case sigmod_CrossEntropy_Binary:{
+                for (int m=0;m<Eout.length;m++){ Eout[m]=0; }
                 for (int n = 0; n < neurons.length; n++) {
                     Y[n] = neurons[n].Forward(X);
                     Z[n] = F(Y[n]);
                     dFofZ[n] = dF(Z[n]);
-
                 }
-                for (int m=0;m<Eout.length;m++){ Eout[m]=0; }
                 return Z;
             }
 
@@ -82,19 +81,20 @@ public class Layer {
             case softmaxMultiClass: {
                 int len = neurons.length;
                 float sum = 0.0f;
-                float max = Y[0] = neurons[0].Forward(X);
-                for (int i=1;i<len;i++){
-                    dFofZ[i] = 1;
-                    Y[i]=neurons[i].Forward(X);
+                float max = 0.0f; //Y[0] = neurons[0].Forward(X);
+                for (int i=0;i<len;i++){
+                    dFofZ[i] = 1f;
+                    Y[i]=neurons[i].Forward(X); //W[i]*X[i]+b
                     if (Y[i]>max) { max=Y[i]; }
                 }
-                for (int i = 0; i < len; i++) {
+                for (int i=0; i<len; i++) {
                     Y[i] = (float) Math.exp( Y[i]-max );
                     sum += Y[i];
                 }
                 for (int i = 0; i < len; i++) {
                     Z[i] = Y[i] / sum;
                 }
+                for (int m=0;m<Eout.length;m++){ Eout[m]=0; }
                 return Z;
             }
 
@@ -104,12 +104,23 @@ public class Layer {
         }
     }
 
-
     public void nBackward( float[] Ein ){ // S-Z or Ein
-        for ( int n=0;n<Eout.length;n++ ){ Eout[n]=0.0f; }
+        for ( int m=0;m<Eout.length;m++ ){ Eout[m]=0.0f;}
         for ( int n=0; n< neurons.length; n++ ){
             neurons[n].Backward( Ein[n] * dFofZ[n] );
         }
+        // https://www.youtube.com/watch?v=AbLvJVwySEo
+        // backward of softmaxMulticlass
+        // if i=k  dx/de    = yi(1-yi)
+        // else             = -yi*yk
+        //
+        // py:
+        // n = np.size (output)
+        // tmp = np.tile ( output, n )
+        // return np.dot( tmp * (np.identity(n) - np.transpose(tmp)), output )
+
+
+	// https://www.youtube.com/watch?v=pauPCy_s0Ok
     }
 
     private float F ( float y ){
@@ -132,6 +143,9 @@ public class Layer {
             case linear:
             case sigmod_CrossEntropy_Binary:
             default: { df=1; break; }
+            case softmaxMultiClass:
+                df = 1;//(-z);//(s-z)
+                break;
         }
         return df;
     }
@@ -169,6 +183,15 @@ public class Layer {
     //@Deprecated
     public float[] getNeuronWeight( int i ){
         return neurons[i].getMyWeight();
+    }
+
+    public Neuron getNeuron(int i) {
+        return neurons[i];
+    }
+    public void setAllWeight( float[][] w ){
+        for (int i=0;i<neurons.length;i++){
+            neurons[i].setWeights( w[i] );
+        }
     }
 
     //@Deprecated
@@ -225,9 +248,9 @@ public class Layer {
     public float[] BinaryCrossEntropy_prime( float[] s, float[] z ){ // s(yi) - target class : z(p) - reply of net : , yi = true label (0 or 1)
         // dBCD/dyi = 1/n (( 1-ytarget ) / ( 1-yi ) - ytrue / yi )
         float[] out = new float[ s.length ];
-        float oneOverN=1/s.length;
+        float oneOverN=1.0f/s.length;
         for ( int i=0;i<s.length;i++ ){
-            out[i] = oneOverN * (( 1-s[i] )/( 1-z[i] )-( s[i]/z[i] ));
+            out[i] = oneOverN * (( 1.0f-s[i] )/( 1.0f-z[i] )-( s[i]/z[i] ));
         }
         return out;
     }

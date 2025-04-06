@@ -48,5 +48,10 @@ public class Neuron {
     //@Deprecated
     public float[] getMyWeight() { return W; }
 
+    public void setWeights(float [] w){
+        for (int i=0;i<W.length;i++){
+            W[i]=w[i];
+        }
+    }
 
 }

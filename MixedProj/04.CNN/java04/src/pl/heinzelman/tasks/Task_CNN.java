@@ -34,12 +34,11 @@ public class Task_CNN implements Task{
 
 
     private Layer layer1;
-    private Layer layer2;
     private Layer layer3;
 
     private Tools tools = new Tools();
 
-    int numOfEpoch=500;
+    int numOfEpoch=150;
     float[] CSBin_data=new float[numOfEpoch];
 
     @Override
@@ -60,14 +59,10 @@ public class Task_CNN implements Task{
 
 
 
-        layer1=new Layer( LType.sigmod , 64 ,2880 ); layer1.setName("Layer1"); // n neurons
-        //layer1=new Layer( LType.sigmod , 64 ,784 ); layer1.setName("Layer1"); // n neurons
+        layer1=new Layer( LType.sigmod , 10 ,2880 ); layer1.setName("Layer1"); // n neurons
         layer1.rnd();
 
-        layer2=new Layer( LType.sigmod , 64 ,64 ); layer2.setName("Layer2"); // n neurons
-        layer2.rnd();
-
-        layer3=new Layer( LType.softmaxMultiClass , 10 ,64 ); layer3.setName("Layer3"); // n neurons
+        layer3=new Layer( LType.softmaxMultiClass , 10 ,10 ); layer3.setName("Layer3"); // n neurons
         layer3.rnd();
 
 
@@ -76,14 +71,23 @@ public class Task_CNN implements Task{
         float[][][] oneX = new float[1][28][28];
         oneX[0] = trainXX[0]; // extract One X
         layer1Conv.setUpByX( oneX );
-        //System.out.println( "oneX" +  Tools.AryToString( oneX ));
 
-        //System.out.println( layer1Conv );
-        //System.out.println( layer2ReLU );
-        //System.out.println( layer3PoolingMax );
-        //System.out.println( layer4Flatten );
-        //System.out.println(Arrays.toString( layer5X ));
-        //System.out.println( layer5X.length );
+        layer1Conv.setX( oneX );
+        float[][][] ZConv = layer1Conv.Forward();
+        layer2ReLU.setX( ZConv );
+        float[][][] ZReLU = layer2ReLU.Forward();
+        layer3PoolingMax.setX( ZReLU );
+        float[][][] ZPool = layer3PoolingMax.Forward();
+        float[] Zout = layer4Flatten.Forward( ZPool );
+
+        // System.out.println( "SIZE: " + Zout.length );
+
+        // System.out.println( layer1Conv );
+        // System.out.println( layer2ReLU );
+        // System.out.println( layer3PoolingMax );
+        // System.out.println( layer4Flatten );
+        // System.out.println(Arrays.toString( layer5X ));
+        // System.out.println( layer5X.length );
 
         // ****************************
 
@@ -92,7 +96,9 @@ public class Task_CNN implements Task{
     @Override
     public void run() {
 
-        for (int cycle=0;cycle<1;cycle++) {
+
+
+        for (int cycle=0;cycle<10;cycle++) {
 
             float Loss = 0.0f;
             int step=1;
@@ -120,30 +126,39 @@ public class Task_CNN implements Task{
                     //if (index==1) { tools.saveVectorAsImg( CX , "cx" ); }
                     //if (true) throw new RuntimeException("!");
 // --->1
-                    layer1.setX(CX);
-                    // layer1.setX( trainX[ ind_ex ] );
+
+                    layer1.setX( CX );
                     layer1.nForward();
-                    layer2.setX(layer1.getZ());
-                    layer2.nForward();
-                    layer3.setX(layer2.getZ());
+
+                    layer3.setX( layer1.getZ() );
                     layer3.nForward();
 
-                    float[] S_Z = tools.vectorSubstSsubZ(trainY[ind_ex], layer3.getZ());
+                    //System.out.println( layer3 );
+                    //if (true) throw new RuntimeException("!");
+
+
+                    float[] Z = layer3.getZ();
+
+                    float[] S_Z = tools.vectorSubstSsubZ(trainY[ind_ex], Z );
                     layer3.nBackward(S_Z);
-                    Loss += Tools.crossEntropyMulticlassError(layer3.getZ());
-                    layer2.nBackward(layer3.getEout());
-                    layer1.nBackward(layer2.getEout());
-                    float[] FC_Eout = layer1.getEout();
+
+                    Loss += Tools.crossEntropyMulticlassError( Z );
+                    float[] CE_Eout = layer3.getEout();
+
+                    layer1.nBackward( CE_Eout );
+
+                    // System.out.println( Arrays.toString( FC_Eout ) );
 
 // --- TRAIN ---
                     // if (index==1 || true) { tools.saveVectorAsImg( CX , "cx" ); }
-                    float[][][] delta4 = layer4Flatten.Backward(FC_Eout);
+                    float[][][] delta4 = layer4Flatten.Backward( layer1.getEout() );
                     float[][][] delta3 = layer3PoolingMax.Backward(delta4);
                     float[][][] delta2 = layer2ReLU.Backward(delta3);
                     float[][][] delta = layer1Conv.Backward(delta2);
 
                     if (false) {
                         if (index == 1 || true) {
+                            tools.saveVectorAsImg(delta4[0], "FC_Eout");
                             tools.saveVectorAsImg(delta4[0], "delta4");
                             tools.saveVectorAsImg(delta3[0], "delta3");
                             tools.saveVectorAsImg(delta2[0], "delta2");
@@ -155,9 +170,7 @@ public class Task_CNN implements Task{
                 CSBin_data[epoch]=Loss/trainX.length;
 
             }
-            System.out.println( Arrays.toString( layer1.getNeuronWeight(0)));
-            System.out.println( Arrays.toString( layer3.getX()));
-            System.out.println( Arrays.toString( layer3.getZ()));
+
 
             float[][][] oneX = new float[1][][];
             // check accuracy
@@ -172,12 +185,7 @@ public class Task_CNN implements Task{
                 layer3PoolingMax.setX( layer2ReLU.Forward() );
                 float[] CX = layer4Flatten.Forward(layer3PoolingMax.Forward());
 // ---------->
-                layer1.setX( CX );
-                // layer1.setX( testX[i] );
-                layer1.nForward();
-                layer2.setX( layer1.getZ() );
-                layer2.nForward();
-                layer3.setX( layer2.getZ() );
+                layer3.setX( CX );
                 layer3.nForward();
 
                 int netClassId = tools.getIndexMaxFloat( layer3.getZ() );

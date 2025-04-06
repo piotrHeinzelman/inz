@@ -66,5 +66,12 @@ public Neuron2D( int m, LayerConv parent ) {
     return Rot180;
     }
 
+    public void setW(float[][] w) {
+        for ( int i=0;i<W.length;i++ ){
+            for ( int j=0;j<W.length;j++ ) {
+            W[i][j] = w[i][j];
+            }
+        }
 
+    }
 }

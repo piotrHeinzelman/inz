@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 //https://www.youtube.com/watch?v=Lakz2MoHy6o
-class ToolsTest {
+class ToolsTwoTest {
 
     @Test
     void conv() {

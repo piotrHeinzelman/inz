@@ -20,7 +20,7 @@ public class Task_64_64_simple_backward implements Task{
 
     private Tools tools = new Tools();
 
-    int numOfEpoch=500;
+    int numOfEpoch=1300;
     float[] CSBin_data=new float[numOfEpoch];
 
     @Override
@@ -65,18 +65,19 @@ public class Task_64_64_simple_backward implements Task{
                     layer3.setX( layer2.getZ() );
                     layer3.nForward();
 
-                    System.out.println( "trainX[ ind_ex ]:" + Arrays.toString(  trainX[ ind_ex ] ));
-                    System.out.println( "layer3.getZ()" + Arrays.toString(  layer3.getZ() ));
+                    //System.out.println( "trainX[ ind_ex ]:" + Arrays.toString(  trainX[ ind_ex ] ));
+                    //System.out.println( "layer3.getZ()" + Arrays.toString(  layer3.getZ() ));
 
                     float[] S_Z = tools.vectorSubstSsubZ( trainY[ ind_ex ], layer3.getZ() );
                     Loss += Tools.crossEntropyMulticlassError( layer3.getZ() );
 
-                    float[] gradientSM = tools.gradientSoftMax( trainY[ ind_ex ], layer3.getZ() );
+                    //float[] gradientSM = tools.gradientSoftMax( trainY[ ind_ex ], layer3.getZ() );
 
-                    System.out.println( " S_Z: "+Arrays.toString( S_Z ) );
-                    System.out.println( " gradientSM: "+Arrays.toString( gradientSM ) );
-                    layer3.nBackward( gradientSM );
+                    //System.out.println( " S_Z: "+Arrays.toString( S_Z ) );
+                    //System.out.println( " gradientSM: "+Arrays.toString( gradientSM ) );
+                    layer3.nBackward( S_Z );
                     layer2.nBackward( layer3.getEout() );
+                    // if  ( ind_ex==5 && epoch%100==0 ) System.out.println( " layer3.getEout() "+Arrays.toString( layer3.getEout() ) );
                     layer1.nBackward( layer2.getEout() );
                 }
                 CSBin_data[epoch]=Loss/trainX.length;

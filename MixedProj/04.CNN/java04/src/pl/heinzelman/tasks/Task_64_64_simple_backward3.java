@@ -5,6 +5,7 @@ import pl.heinzelman.neu.Layer;
 import pl.heinzelman.tools.Tools;
 
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 public class Task_64_64_simple_backward3 implements Task{
 
@@ -43,7 +44,7 @@ public class Task_64_64_simple_backward3 implements Task{
             System.out.println(tools.getIndexMaxFloat(testY[i]));
         }
 
-        int numOfEpoch=500;
+        int numOfEpoch=300;
         float[] CSBin_data=new float[numOfEpoch];
         int goals0;
 

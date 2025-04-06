@@ -135,7 +135,7 @@ public class LayerConv {
             int biasSize = bTMP.length;
             for (int x=0; x<biasSize; x++){
                 for (int y=0; x<biasSize; x++) {
-                    Y[f][x][y] = 0 ; //bTMP[x][y];
+                    Y[f][x][y] = bTMP[x][y];
                 }
             }
 
