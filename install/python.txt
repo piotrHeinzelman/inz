@@ -3,3 +3,8 @@ sudo pacman -S python-numpy
 sudo pacman -S python-conda
 sudo pacman -S python-cuda
 
+virtual
+driver:
+NVidia driver open kernel metapackage nvidia-driver-550-open
+pip install tensorflow[and-cuda]
+
