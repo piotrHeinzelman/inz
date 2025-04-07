@@ -60,10 +60,8 @@ public class Task_CNN implements Task{
 
 
         layer1=new Layer( LType.sigmod , 10 ,2880 ); layer1.setName("Layer1"); // n neurons
-        layer1.rnd();
 
         layer3=new Layer( LType.softmaxMultiClass , 10 ,10 ); layer3.setName("Layer3"); // n neurons
-        layer3.rnd();
 
 
         // ****************************

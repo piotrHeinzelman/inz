@@ -44,22 +44,19 @@ public class Layer {
         dFofZ = new float[n];
         //Ein = new float[n];
         Eout = new float[m];
+        rnd();
     }
 
 
-    public void setWmn( int n, int m, float wji ){
-        neurons[n].setWm( m, wji );
-    }
 
 
-    public void rnd(){
+    private void rnd(){
         Random random=new Random();
         float normalization=X.length;//this.X.length/5.0f;
         for ( Neuron neu : neurons ) {
             for ( int m=0; m<X.length; m++ ) {
                 neu.setWm( m , (float)(  ( -1.0f+2.0f*random.nextFloat()) / normalization )  );
             }
-            //System.out.println( neu );
         }
     }
 
@@ -77,27 +74,6 @@ public class Layer {
                 return Z;
             }
 
-
-            case softmaxMultiClass: {
-                int len = neurons.length;
-                float sum = 0.0f;
-                float max = 0.0f; //Y[0] = neurons[0].Forward(X);
-                for (int i=0;i<len;i++){
-                    dFofZ[i] = 1f;
-                    Y[i]=neurons[i].Forward(X); //W[i]*X[i]+b
-                    if (Y[i]>max) { max=Y[i]; }
-                }
-                for (int i=0; i<len; i++) {
-                    Y[i] = (float) Math.exp( Y[i]-max );
-                    sum += Y[i];
-                }
-                for (int i = 0; i < len; i++) {
-                    Z[i] = Y[i] / sum;
-                }
-                for (int m=0;m<Eout.length;m++){ Eout[m]=0; }
-                return Z;
-            }
-
             default: {
                 return Z;
             }
@@ -106,6 +82,11 @@ public class Layer {
 
     public void nBackward( float[] Ein ){ // S-Z or Ein
         for ( int m=0;m<Eout.length;m++ ){ Eout[m]=0.0f;}
+        if ( lType==LType.sigmod_CrossEntropy_Binary ){
+            //
+            System.out.println( Arrays.toString( Y ) );
+            return;
+        }
         for ( int n=0; n< neurons.length; n++ ){
             neurons[n].Backward( Ein[n] * dFofZ[n] );
         }
@@ -119,8 +100,7 @@ public class Layer {
         // tmp = np.tile ( output, n )
         // return np.dot( tmp * (np.identity(n) - np.transpose(tmp)), output )
 
-
-	// https://www.youtube.com/watch?v=pauPCy_s0Ok
+	    // https://www.youtube.com/watch?v=pauPCy_s0Ok
     }
 
     private float F ( float y ){
@@ -176,6 +156,10 @@ public class Layer {
     }
 
     public void setName(String name) { this.name = name; }
+    public void setWmn( int n, int m, float wji ){
+        neurons[n].setWm( m, wji );
+    }
+
 
     //@Deprecated
     public float[] getY() { return Y; }

@@ -13,7 +13,6 @@ public class LayerTest8_CrossEntropy_Multiclass_test {
         Tools tools = new Tools();
 
         Layer L1 = new Layer(LType.softmaxMultiClass, 4,3); // 4 neurons, 3 inputs
-        L1.rnd();
         L1.setName("Layer1");
 
         float[][] X = new float[4][]; // x1, x2, x3, x4, x[0] = {1,2}

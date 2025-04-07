@@ -5,39 +5,36 @@ from scipy import signal
 #from layer import Layer
 
 
-
-
-
 ident = [ 0, 1, 0, 0 ]
 # ident = np.reshape( (1,3),ident )
 
-
 x = [0.1,0.2,0.3,0.4]
-output_gradient = [0.5,0.6,0.7,.8]
+output_gradient = [ 0.5,0.6,0.7,0.8 ]
 # x = np.reshape(x, (3,3) )
 print ("X:")
 print( x )
+print()
 
-tmp  = np.exp( x )
-output = tmp / np.sum(tmp)
+_tm  = np.exp( x )
+output = _tm / np.sum(_tm)
 
-print( "tmp:")
-print( tmp )
-
-
-print("Output:")
-print ( output )
+print( "Output:" )
+print( output )
+print()
 
 
 n = np.size( output )
-print("n:")
-print(n)
+temp = np.reshape(  np.tile( output , n ) , (4,4))
+# print("temp:")
+# print(temp)
 
-temp = np.tile( output , n )
-print("temp:")
-print(temp)
+# print ("np.identity(n)  - np.transpose(temp)")
+# print ( np.identity(n)  - np.transpose(temp) )
 
-ret = np.dot ( tmp * ( np.identity(n)  - np.transpose(tmp)) , output_gradient )
+# print ("temp * ( np.identity(n)  - np.transpose(temp))")
+# print ( temp * ( np.identity(n)  - np.transpose(temp)) )
+
+ret = np.dot ( temp * ( np.identity(n)  - np.transpose(temp)) , output_gradient )
 
 print ("ret:")
 print ( ret )

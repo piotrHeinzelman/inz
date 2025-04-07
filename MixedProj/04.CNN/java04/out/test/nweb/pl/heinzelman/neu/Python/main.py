@@ -4,63 +4,39 @@ import numpy as np
 from scipy import signal
 #from layer import Layer
 
-# class Convolutional(Layer):
-class Convolutional():
-    def __init__(self, input_shape, kernel_size, depth):
-        input_depth, input_height, input_width = input_shape
-        self.depth = depth
-        self.input_shape = input_shape
-        self.input_depth = input_depth
-        self.output_shape = (depth, input_height - kernel_size + 1, input_width - kernel_size + 1)
-        self.kernels_shape = (depth, input_depth, kernel_size, kernel_size)
-        self.kernels = np.random.randn(*self.kernels_shape)
-        self.biases = np.random.randn(*self.output_shape)
 
-    def forward(self, input):
-        self.input = input
-        self.output = np.copy(self.biases)
-        for i in range(self.depth):
-            for j in range(self.input_depth):
-                self.output[i] += signal.correlate2d(self.input[j], self.kernels[i, j], "valid")
-        return self.output
+ident = [ 0, 1, 0, 0 ]
+# ident = np.reshape( (1,3),ident )
 
-    def backward(self, output_gradient, learning_rate):
-        kernels_gradient = np.zeros(self.kernels_shape)
-        input_gradient = np.zeros(self.input_shape)
-
-        for i in range(self.depth):
-            for j in range(self.input_depth):
-                kernels_gradient[i, j] = signal.correlate2d(self.input[j], output_gradient[i], "valid")
-                input_gradient[j] += signal.convolve2d(output_gradient[i], self.kernels[i, j], "full")
-
-        self.kernels -= learning_rate * kernels_gradient
-        self.biases -= learning_rate * output_gradient
-        return input_gradient
-
-x=[1,2,3,4,5,6,7,8,9]
-x = np.reshape(x, (3,3) )
-print(x	)
-
-f = [1,2,3,4]
-f = np.reshape(f,(2,2))
-print(f)
-
+x = [0.1,0.2,0.3,0.4]
+output_gradient = [ 0.5,0.6,0.7,0.8 ]
+# x = np.reshape(x, (3,3) )
+print ("X:")
+print( x )
 print()
-print('FORWARD: one flat layer (add all layer & bias)')
-print( signal.correlate2d( x , f , "valid"  ) )
+
+_tm  = np.exp( x )
+output = _tm / np.sum(_tm)
+
+print( "Output:" )
+print( output )
 print()
 
 
-delta=[.1, .2, .3, .8 ]
-delta=np.reshape(delta,(2,2))
+n = np.size( output )
+temp = np.reshape(  np.tile( output , n ) , (4,4))
+# print("temp:")
+# print(temp)
 
-print('Kernel gradient SUM: every channel: UPDATE WEIGHT ')
-print( signal.correlate2d( x, delta, "valid") )
-print()
+# print ("np.identity(n)  - np.transpose(temp)")
+# print ( np.identity(n)  - np.transpose(temp) )
 
-print('outputDelta SUM: for all channel:  SEND FORWARD ')
-print( signal.convolve2d( delta, f, "full" ) )
-print()
+# print ("temp * ( np.identity(n)  - np.transpose(temp))")
+# print ( temp * ( np.identity(n)  - np.transpose(temp)) )
 
-print('bias update: = delta for channel/filter')
-print( delta )
+ret = np.dot ( temp * ( np.identity(n)  - np.transpose(temp)) , output_gradient )
+
+print ("ret:")
+print ( ret )
+
+

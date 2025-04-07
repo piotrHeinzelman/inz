@@ -35,7 +35,6 @@ public class Task_64_64_simple_backward3 implements Task{
 
 
         Layer layer1=new Layer( LType.softmaxMultiClass , 10 ,784 ); layer1.setName("Layer1"); // n neurons
-        layer1.rnd();
 
         if ( false ) {
             int i = 1;

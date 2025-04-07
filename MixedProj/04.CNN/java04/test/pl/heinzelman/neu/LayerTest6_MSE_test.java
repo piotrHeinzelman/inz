@@ -17,7 +17,6 @@ public class LayerTest6_MSE_test {
         Tools tools = new Tools();
 
         Layer L1 = new Layer(LType.sigmod, 3,2); // 3 neurons, 2 inputs
-        L1.rnd();
         L1.setName("Layer1");
 
         float[][] X = new float[4][]; // x1, x2, x3, x4, x[0] = {1,2}

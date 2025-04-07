@@ -15,7 +15,6 @@ public class LayerTest5 {
         Layer L1 = new Layer(LType.sigmod_CrossEntropy_Binary, 3,2); // 3 neurons, 2 inputs
         float[] X = new float[]{1,2};
         float[] S = new float[]{1,0,0};
-        L1.rnd();
 
         L1.setName("Layer1");
 

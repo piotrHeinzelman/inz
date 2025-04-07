@@ -33,13 +33,10 @@ public class Task_64_64_simple_backward implements Task{
         trainY = tools.getTrainY();
 
         layer1=new Layer( LType.sigmod , 64 ,784 ); layer1.setName("Layer1"); // n neurons
-        layer1.rnd();
 
         layer2=new Layer( LType.sigmod , 64 ,64 ); layer2.setName("Layer2"); // n neurons
-        layer2.rnd();
 
         layer3=new Layer( LType.softmaxMultiClass , 10 ,64 ); layer3.setName("Layer3"); // n neurons
-        layer3.rnd();
 
     }
 

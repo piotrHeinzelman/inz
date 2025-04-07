@@ -13,8 +13,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="JUnit5 Test Class" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -121,6 +121,7 @@
     "JUnit.LayerTest6_CrossEntropy_Multiclass_test.forwardTest.executor": "Run",
     "JUnit.LayerTest6_MSE_test.executor": "Run",
     "JUnit.LayerTest6_MSE_test.forwardTest.executor": "Run",
+    "JUnit.LayerTest7_CrossEntropyBinary_test.forwardTest.executor": "Run",
     "JUnit.LayerTest8_CrossEntropy_Multiclass_test.executor": "Run",
     "JUnit.LayerTest8_CrossEntropy_Multiclass_test.forwardTest.executor": "Run",
     "JUnit.LayerTest91_CNN_test.X3_F3_forward_conv.executor": "Run",
@@ -133,6 +134,7 @@
     "JUnit.PoolingTest.AvgPoolingTes.executor": "Run",
     "JUnit.PoolingTest.MaxPoolingTes.executor": "Run",
     "JUnit.ReLUTest.ReLUTest.executor": "Run",
+    "JUnit.SigmoidMultiClass.Sigmoid_multiclass_test.executor": "Run",
     "JUnit.Teacher.test (1).executor": "Run",
     "JUnit.Teacher.test.executor": "Run",
     "JUnit.ToolsTest.conv.executor": "Run",
@@ -181,85 +183,88 @@
       <recent name="pl.heinzelman.neu" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="pl.heinzelman.neu" />
       <recent name="pl.heinzelman.LayerDeep" />
       <recent name="pl.heinzelman.tasks" />
-      <recent name="pl.heinzelman.neu" />
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.Main" />
+  <component name="RunManager" selected="JUnit.SigmoidMultiClass.Sigmoid_multiclass_test">
+    <configuration name="LayerTest5.forwardTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="pl.heinzelman.*" />
+          <option name="PATTERN" value="pl.heinzelman.neu.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CnnApplication.main (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="nweb" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="pl.heinzelman.Old.CNN.sources.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="pl.heinzelman.Old.CNN.sources" />
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.Old.CNN.sources.CnnApplication" />
-      <option name="METHOD_NAME" value="main" />
+      <option name="PACKAGE_NAME" value="pl.heinzelman.neu" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.neu.LayerTest5" />
+      <option name="METHOD_NAME" value="forwardTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CnnApplication.main" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="LayerTest6_MSE_test.forwardTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="pl.heinzelman.Old.CNN.sources.*" />
+          <option name="PATTERN" value="pl.heinzelman.neu.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="pl.heinzelman.Old.CNN.sources" />
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.Old.CNN.sources.CnnApplication" />
-      <option name="METHOD_NAME" value="main([Ljava.lang.String;)" />
+      <option name="PACKAGE_NAME" value="pl.heinzelman.neu" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.neu.LayerTest6_MSE_test" />
+      <option name="METHOD_NAME" value="forwardTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Teacher.test (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="LayerTest7_CrossEntropyBinary_test.forwardTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="pl.heinzelman.Old.CNN.sources.net.*" />
+          <option name="PATTERN" value="pl.heinzelman.neu.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="pl.heinzelman.Old.CNN.sources.net" />
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.Old.CNN.sources.net.Teacher" />
-      <option name="METHOD_NAME" value="test" />
+      <option name="PACKAGE_NAME" value="pl.heinzelman.neu" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.neu.LayerTest7_CrossEntropyBinary_test" />
+      <option name="METHOD_NAME" value="forwardTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Teacher.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="LayerTest9_Sig_CrossEntropyBinary_test.forwardTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="pl.heinzelman.Old.CNN.sources.net.*" />
+          <option name="PATTERN" value="pl.heinzelman.neu.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="pl.heinzelman.Old.CNN.sources.net" />
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.Old.CNN.sources.net.Teacher" />
-      <option name="METHOD_NAME" value="test(int)" />
+      <option name="PACKAGE_NAME" value="pl.heinzelman.neu" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.neu.LayerTest9_Sig_CrossEntropyBinary_test" />
+      <option name="METHOD_NAME" value="forwardTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SigmoidMultiClass.Sigmoid_multiclass_test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="nweb" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pl.heinzelman.LayerDeep.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="pl.heinzelman.LayerDeep" />
+      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.LayerDeep.SigmoidMultiClass" />
+      <option name="METHOD_NAME" value="Sigmoid_multiclass_test" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -267,11 +272,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.Teacher.test (1)" />
-        <item itemvalue="JUnit.CnnApplication.main (1)" />
-        <item itemvalue="JUnit.Teacher.test" />
-        <item itemvalue="JUnit.CnnApplication.main" />
+        <item itemvalue="JUnit.SigmoidMultiClass.Sigmoid_multiclass_test" />
+        <item itemvalue="JUnit.LayerTest5.forwardTest" />
+        <item itemvalue="JUnit.LayerTest7_CrossEntropyBinary_test.forwardTest" />
+        <item itemvalue="JUnit.LayerTest9_Sig_CrossEntropyBinary_test.forwardTest" />
+        <item itemvalue="JUnit.LayerTest6_MSE_test.forwardTest" />
       </list>
     </recent_temporary>
   </component>
