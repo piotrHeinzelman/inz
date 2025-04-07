@@ -17,7 +17,7 @@ public class SigmoidMultiClass {
 
         float[] output_gradient = new float[]{ 0.5f, 0.6f, 0.7f, 0.8f };
 
-        LayerSoftmaxMultiClass layer = new LayerSoftmaxMultiClass( 4 , 4);
+        LayerSoftmaxMultiClass layer = new LayerSoftmaxMultiClass( 4 );
         float[] Y = layer.nForward( X );
         //System.out.println( "Y: "+Arrays.toString( Y ) );
 

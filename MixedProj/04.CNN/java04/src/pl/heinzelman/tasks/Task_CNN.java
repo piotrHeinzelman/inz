@@ -20,7 +20,7 @@ public class Task_CNN implements Task{
     private float[][][] trainXX;
 
 
-    private LayerConv layer1Conv = new LayerConv( 5 , 20 , null, null );
+    private LayerConv layer1Conv = new LayerConv( 5 , 8 , null, null );
     private LayerReLU layer2ReLU = new LayerReLU();
     private LayerPoolingMax layer3PoolingMax = new LayerPoolingMax(2, 2);
     private LayerFlatten layer4Flatten = new LayerFlatten();
@@ -50,7 +50,8 @@ public class Task_CNN implements Task{
         trainX = tools.getTrainX();
         trainY = tools.getTrainY();
 
-        layerFC =new LayerSigmoidFullConn( 2880, 10 ); layerFC.setName("Layer1"); // n neurons
+        //layerFC =new LayerSigmoidFullConn( 2880, 10 ); layerFC.setName("Layer1"); // n neurons
+        layerFC =new LayerSigmoidFullConn( 1152, 10 ); layerFC.setName("Layer1"); // n neurons
         layerSoftmax =new LayerSoftmaxMultiClass( 10 ); layerSoftmax.setName("Layer3"); // n neurons
 
         // ****************************
@@ -83,7 +84,7 @@ public class Task_CNN implements Task{
     @Override
     public void run() {
 
-        for (int cycle=0;cycle<10;cycle++) {
+        for (int cycle=0;cycle<20;cycle++) {
 
             float Loss = 0.0f;
             int step=1;
@@ -104,19 +105,15 @@ public class Task_CNN implements Task{
 
 // ---> 1
 
-                    layerFC.nForward( CX );
-                    float[] CxX = layerFC.getZ();
-                    layerSoftmax.nForward( CxX );
-
-                    float[] Z = layerSoftmax.getZ();
+                    float[] CxX = layerFC.nForward( CX );
+                    float[] Z = layerSoftmax.nForward( CxX );
 
                     float[] S_Z = tools.vectorSubstSsubZ(trainY[ind_ex], Z );
-                    layerSoftmax.nBackward(S_Z);
+                    float[] eOUT = layerSoftmax.nBackward(S_Z);
 
                     Loss += Tools.crossEntropyMulticlassError( Z );
-                    float[] CE_Eout = layerSoftmax.getEout();
 
-                    layerFC.nBackward( CE_Eout );
+                    layerFC.nBackward( eOUT );
 
 // --- TRAIN --- >
 

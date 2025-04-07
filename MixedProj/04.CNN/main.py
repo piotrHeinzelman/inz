@@ -28,7 +28,7 @@ if physical_devices:
 
 # params
 epochs = 500
-percent = 1
+percent = 100
 num_classes = 10
 
 
@@ -126,7 +126,7 @@ model.compile(optimizer='adam',
 
 start=time.time()
 
-model.fit(trainX, trainY, epochs=epochs, verbose=1)
+model.fit(trainX, trainY, epochs=epochs, verbose=0)
 
 end=time.time()
 d=end-start
