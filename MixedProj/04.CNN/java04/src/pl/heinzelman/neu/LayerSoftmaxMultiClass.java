@@ -33,13 +33,13 @@ public class LayerSoftmaxMultiClass {
     private  float tmp[][];
 
     public LayerSoftmaxMultiClass() {}
-    public LayerSoftmaxMultiClass( int m, int n ) { // m - number of inputs  = input  size X[m]
-                                                    // n - number of neurons & output size Y[n], Z[n]
-        X = new float[m];
+    public LayerSoftmaxMultiClass( int n ) { // n - number of inputs  = input  size X[m]
+                                             // n - number of neurons & output size Y[n], Z[n]
+        X = new float[n];
         Y = new float[n];
         Z = new float[n];
         dFofZ= new float[n][n];
-        Eout = new float[m];
+        Eout = new float[n];
         tmp  = new float[n][n];
     }
 
@@ -52,11 +52,11 @@ public class LayerSoftmaxMultiClass {
         for ( int i=0;i<len;i++ ){ // find MAX
             if (X[i]>max) { max=X[i]; }
         }
-        for (int i=0; i<len; i++) {  // Yi = e^Xi
+        for ( int i=0; i<len; i++ ) {  // Yi = e^Xi
             Y[i] = (float) Math.exp( X[i]-max );
             sum += Y[i];
         }
-        for (int i = 0; i < len; i++) { // Yi = Yi/sum
+        for ( int i = 0; i < len; i++ ) { // Yi = Yi/sum
             Z[i] = Y[i] / sum;
         }
         return Z;

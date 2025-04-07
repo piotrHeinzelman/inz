@@ -2,6 +2,7 @@ package pl.heinzelman.tasks;
 
 import pl.heinzelman.neu.LType;
 import pl.heinzelman.neu.Layer;
+import pl.heinzelman.neu.LayerSigmoidFullConn;
 import pl.heinzelman.tools.Tools;
 
 import java.util.Arrays;
@@ -18,7 +19,8 @@ public class Task2x3_simple_backward implements Task{
     public void run() {
 
 
-        Layer layer1=new Layer( LType.sigmod , 3 ,2 ); layer1.setName("Layer1");
+        //Layer layer1=new Layer( LType.sigmod , 3 ,2 ); layer1.setName("Layer1");
+        LayerSigmoidFullConn layer1=new LayerSigmoidFullConn( 2, 3 ); layer1.setName("Layer1");
 
         // first neu
         layer1.setWmn( 0, 0, 1 );
@@ -33,14 +35,13 @@ public class Task2x3_simple_backward implements Task{
         layer1.setWmn( 2, 1, 1 );
 
         float[] firstX = new float[]{1,2};
-        layer1.setX( firstX );
-        layer1.nForward();
+        layer1.nForward( firstX );
 
         float[] XforL2 = layer1.getZ();
 
 
         // 3*neu / 2*weight
-        Layer layer2 = new Layer( LType.sigmod , 2 ,3  );  layer2.setName("Layer2");
+        LayerSigmoidFullConn layer2 = new LayerSigmoidFullConn( 3, 2 );  layer2.setName("Layer2");
         // first neu
         layer2.setWmn( 0, 0,  1 );
         layer2.setWmn( 0, 1, -1 );
@@ -51,9 +52,8 @@ public class Task2x3_simple_backward implements Task{
         layer2.setWmn( 1, 1,  1 );
         layer2.setWmn( 1, 2, -1 );
 
-        layer2.setX( XforL2 );
         System.out.println( "XforL2"+XforL2 );
-        layer2.nForward();
+        layer2.nForward(XforL2);
 
         float[] s = new float[]{1,0};
         float[] s_z = Tools.vectorSubstSsubZ(s, layer2.getZ());

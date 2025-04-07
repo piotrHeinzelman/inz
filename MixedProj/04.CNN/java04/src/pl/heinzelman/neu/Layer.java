@@ -21,7 +21,7 @@ import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 //Weight
 //dF(Z)*E
 
-public class Layer {
+public class Layer implements LayerParent {
     private String name;
     private  LType lType;
     private  Neuron[] neurons;

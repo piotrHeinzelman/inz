@@ -4,13 +4,9 @@ import pl.heinzelman.LayerDeep.LayerConv;
 import pl.heinzelman.LayerDeep.LayerFlatten;
 import pl.heinzelman.LayerDeep.LayerPoolingMax;
 import pl.heinzelman.LayerDeep.LayerReLU;
-import pl.heinzelman.neu.LType;
-import pl.heinzelman.neu.Layer;
+import pl.heinzelman.neu.LayerSigmoidFullConn;
+import pl.heinzelman.neu.LayerSoftmaxMultiClass;
 import pl.heinzelman.tools.Tools;
-
-import javax.tools.Tool;
-import java.awt.image.BufferedImage;
-import java.util.Arrays;
 
 public class Task_CNN implements Task{
 
@@ -30,11 +26,8 @@ public class Task_CNN implements Task{
     private LayerFlatten layer4Flatten = new LayerFlatten();
 
 
-
-
-
-    private Layer layer1;
-    private Layer layer3;
+    private LayerSigmoidFullConn layerFC;
+    private LayerSoftmaxMultiClass layerSoftmax;
 
     private Tools tools = new Tools();
 
@@ -57,12 +50,8 @@ public class Task_CNN implements Task{
         trainX = tools.getTrainX();
         trainY = tools.getTrainY();
 
-
-
-        layer1=new Layer( LType.sigmod , 10 ,2880 ); layer1.setName("Layer1"); // n neurons
-
-        layer3=new Layer( LType.softmaxMultiClass , 10 ,10 ); layer3.setName("Layer3"); // n neurons
-
+        layerFC =new LayerSigmoidFullConn( 2880, 10 ); layerFC.setName("Layer1"); // n neurons
+        layerSoftmax =new LayerSoftmaxMultiClass( 10 ); layerSoftmax.setName("Layer3"); // n neurons
 
         // ****************************
 
@@ -94,8 +83,6 @@ public class Task_CNN implements Task{
     @Override
     public void run() {
 
-
-
         for (int cycle=0;cycle<10;cycle++) {
 
             float Loss = 0.0f;
@@ -110,46 +97,30 @@ public class Task_CNN implements Task{
                     float[][][] oneX = new float[1][][];
 
                     oneX[0] = trainXX[ind_ex];
-                    //System.out.println( Tools.AryToString( oneX ));
-                    //System.out.println(  Arrays.toString( trainY[ind_ex] ) );
-                    //System.out.println(  Arrays.toString( trainX[ind_ex] ) );
-
                     layer1Conv.setX(oneX);
-                    // System.out.println( "Ysize:" + layer1Conv.Forward().length * layer1Conv.Forward()[0].length* layer1Conv.Forward()[0].length );
                     layer2ReLU.setX(layer1Conv.Forward());
                     layer3PoolingMax.setX(layer2ReLU.Forward());
                     float[] CX = layer4Flatten.Forward(layer3PoolingMax.Forward());
-                    //System.out.println("SIZE: " + CX.length);
 
-                    //if (index==1) { tools.saveVectorAsImg( CX , "cx" ); }
-                    //if (true) throw new RuntimeException("!");
-// --->1
+// ---> 1
 
-                    layer1.setX( CX );
-                    layer1.nForward();
+                    layerFC.nForward( CX );
+                    float[] CxX = layerFC.getZ();
+                    layerSoftmax.nForward( CxX );
 
-                    layer3.setX( layer1.getZ() );
-                    layer3.nForward();
-
-                    //System.out.println( layer3 );
-                    //if (true) throw new RuntimeException("!");
-
-
-                    float[] Z = layer3.getZ();
+                    float[] Z = layerSoftmax.getZ();
 
                     float[] S_Z = tools.vectorSubstSsubZ(trainY[ind_ex], Z );
-                    layer3.nBackward(S_Z);
+                    layerSoftmax.nBackward(S_Z);
 
                     Loss += Tools.crossEntropyMulticlassError( Z );
-                    float[] CE_Eout = layer3.getEout();
+                    float[] CE_Eout = layerSoftmax.getEout();
 
-                    layer1.nBackward( CE_Eout );
+                    layerFC.nBackward( CE_Eout );
 
-                    // System.out.println( Arrays.toString( FC_Eout ) );
+// --- TRAIN --- >
 
-// --- TRAIN ---
-                    // if (index==1 || true) { tools.saveVectorAsImg( CX , "cx" ); }
-                    float[][][] delta4 = layer4Flatten.Backward( layer1.getEout() );
+                    float[][][] delta4 = layer4Flatten.Backward( layerFC.getEout() );
                     float[][][] delta3 = layer3PoolingMax.Backward(delta4);
                     float[][][] delta2 = layer2ReLU.Backward(delta3);
                     float[][][] delta = layer1Conv.Backward(delta2);
@@ -183,10 +154,11 @@ public class Task_CNN implements Task{
                 layer3PoolingMax.setX( layer2ReLU.Forward() );
                 float[] CX = layer4Flatten.Forward(layer3PoolingMax.Forward());
 // ---------->
-                layer3.setX( CX );
-                layer3.nForward();
+                layerFC.nForward( CX );
+                float[] CxX = layerFC.getZ();
+                layerSoftmax.nForward(CxX);
 
-                int netClassId = tools.getIndexMaxFloat( layer3.getZ() );
+                int netClassId = tools.getIndexMaxFloat( layerSoftmax.getZ() );
                 int fileClassId = tools.getIndexMaxFloat( testY[i] );
                 if (fileClassId == netClassId) {
                     accuracy++;

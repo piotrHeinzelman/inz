@@ -2,6 +2,7 @@ package pl.heinzelman.tasks;
 
 import pl.heinzelman.neu.LType;
 import pl.heinzelman.neu.Layer;
+import pl.heinzelman.neu.LayerSigmoidFullConn;
 import pl.heinzelman.tools.Tools;
 
 import java.util.Arrays;
@@ -18,7 +19,8 @@ public class Task3x1CrossEntropy implements Task{
     public void run() {
 
 
-        Layer layer1=new Layer( LType.sigmod , 3 ,2 );
+        //Layer layer1=new Layer( LType.sigmod , 3 ,2 );
+        LayerSigmoidFullConn layer1=new LayerSigmoidFullConn( 2, 3 );
         layer1.setName( "Layer: 1" );
 
         // first neu
@@ -34,8 +36,7 @@ public class Task3x1CrossEntropy implements Task{
         layer1.setWmn( 2, 1, 1 );
 
         float[] firstX = new float[]{1,2};
-        layer1.setX( firstX );
-        layer1.nForward();
+        layer1.nForward( firstX );
 
         float[] XforL2 = layer1.getZ();
 
