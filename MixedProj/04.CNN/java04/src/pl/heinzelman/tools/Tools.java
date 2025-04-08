@@ -107,7 +107,7 @@ public class Tools {
             for (int i=0;i<percent*100;i++) {
                 int off=i*784;
                 for (int j=0;j<784;j++){
-                    trainX[i][j]=Byte.toUnsignedInt( trainXfile[off+j] )/16;///256.0f; //0-1
+                    trainX[i][j]=Byte.toUnsignedInt( trainXfile[off+j] )/254.0f;///256.0f; //0-1
                     //System.out.println( trainX[i][j] );
                 }
             }
@@ -117,7 +117,7 @@ public class Tools {
             for (int i=0;i<percent*100;i++) {
                 int off=i*784;
                 for (int j=0;j<784;j++){
-                    testX[i][j]=Byte.toUnsignedInt( testXfile[off+j] )/16;///256.0f;
+                    testX[i][j]=Byte.toUnsignedInt( testXfile[off+j] )/254.0f;///256.0f;
                 }
             }
 
@@ -208,9 +208,9 @@ public class Tools {
 
     public int getIndexMaxFloat(float[] floats ){
         int maxI=0;
-        float val=floats[0];
+        float val=0f + floats[0];
             for ( int i=1;i<floats.length; i++ ){
-                if ( floats[i]>val ) { val=floats[i]; maxI=i; }
+                if ( 0f+floats[i] > val ) { val=floats[i]; maxI=i; }
             }
         return maxI;
     }

@@ -41,17 +41,17 @@ public class LayerSigmoidFullConn implements LayerParent {
 
     private void rnd(){
         Random random=new Random();
-        float normalization=X.length;
+        float normalization=0.1f*X.length;
         for ( Neuron neu : neurons ) {
             for ( int m=0; m<X.length; m++ ) {
-                neu.setWm( m , (float)(  ( -1.0f+2.0f*random.nextFloat()) / normalization )  );
+                neu.setWm( m ,  (  ( -1.0f+2.0f*random.nextFloat()) / normalization )  );
             }
         }
     }
 
 
     public float[] nForward( float[] _x ) {
-        for (int m=0;m<Eout.length;m++){ X[m]=_x[m]; Eout[m]=0; }
+        for (int m=0;m<X.length;m++){ X[m]=_x[m]; Eout[m]=0; }
         for (int n = 0; n < neurons.length; n++) {
             Y[n] = neurons[n].Forward(X);
             Z[n] = F(Y[n]);
@@ -60,11 +60,12 @@ public class LayerSigmoidFullConn implements LayerParent {
         return Z;
     }
 
-    public void nBackward( float[] Ein ){ // S-Z or Ein
+    public float[] nBackward( float[] Ein ){ // S-Z or Ein
         for ( int m=0;m<Eout.length;m++ ){ Eout[m]=0.0f;}
         for ( int n=0; n<neurons.length; n++ ){
             neurons[n].Backward( Ein[n] * dFofZ[n] );
         }
+        return Eout;
     }
 
     private float F ( float y ){

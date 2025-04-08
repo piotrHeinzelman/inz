@@ -6,7 +6,7 @@ public class Neuron {
     private float bias=0;
     private final float[] W;
     private final LayerParent parent;
-    private final static float mu=0.001f;
+    private final static float mu=0.005f;
 
     public void setBias( float b ) { this.bias=b; }
     public float getBias(){ return bias; }
