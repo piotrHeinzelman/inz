@@ -31,7 +31,7 @@ public class Teacher   {
     private static float[][][] trainXX;
     private Tools tools = new Tools();
 
-    private static boolean newImplementation = true;
+    private static boolean newImplementation = !true;
 
 
     private static LayerSigmoidFullConn   mySigm = new LayerSigmoidFullConn( 13*13*8 , 10 );
@@ -117,7 +117,10 @@ public class Teacher   {
             float[][] gradient=Mat.v_zeros(10);
             gradient[0][correct_label]=-1/out_l[0][correct_label];
 
+            // gradient[0][0,0,0... -1/out[target] ... 0,0 ]
+
             backward_( gradient );
+            //System.out.println( Arrays.toString( gradient[0] ));
 
             //float[][][] sm_gradient=softmax.backprop(gradient,learn_rate);
             //float[][][] mp_gradient=pool.backprop(sm_gradient);
@@ -153,6 +156,9 @@ public class Teacher   {
         float[][][] sm_gradient=softmax.backprop(gradient,learn_rate);
         float[][][] mp_gradient=pool.backprop(sm_gradient);
         conv.backprop(mp_gradient, learn_rate);
+
+        //System.out.println( Tools.AryToString( mp_gradient ));
+        //if (true) throw new RuntimeException("?");
     }
 
     public static float[][] forward_( float[][] pxl ){

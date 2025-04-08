@@ -2,6 +2,8 @@
 package pl.heinzelman.yyy.net;
 
 
+import pl.heinzelman.tools.Tools;
+
 public class Convolution {
 
 
@@ -49,11 +51,14 @@ public class Convolution {
                     // d_L_d_filter(kth filter) = d_L_d_filter(kth filter)+ d_L_d_out(k,i,j)* sub_image(3,3)i,j
                     //       [3] X [3]          =       [3] X [3]         +     gradient    *      [3] X [3]
                     //see article as to how this gradient is computed.
-                    d_L_d_filters[k]=Mat.mm_add(d_L_d_filters[k], Mat.m_scale(region,d_L_d_out[k][i-1][j-1]));
+                    d_L_d_filters[k]=Mat.mm_add(d_L_d_filters[k], Mat.m_scale(region,d_L_d_out[k][i][j]));
                 }
             }
         }
-        
+
+        System.out.println( "d_L_d_filters[0]: " + Tools.AryToString( d_L_d_filters[0] ));
+        //System.out.println( "d_L_d_out[0]: "     + Tools.AryToString( d_L_d_out[0] ));
+
         //update the filter matrix with the gradient matrix obtained above.
         for(int m=0;m<filters.length;m++){
           // [3] X [3]  =   [3] X [3] + -lr * [3] X [3]   

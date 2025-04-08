@@ -197,9 +197,10 @@ public class LayerConv {
                 //System.out.println( "Updated Filter:" + filters[ f*channels + c ].toString() );
             }
             dOUT[c] = dOUTc;
+            System.out.println( "dOUT: " + Tools.AryToString( dOUT ) );
         }
         for (int f=0;f<filterForChannel;f++){
-            biases[f].trainW( dLdO[f] );
+            if (false ) biases[f].trainW( dLdO[f] );
         }
 
         return dOUT;

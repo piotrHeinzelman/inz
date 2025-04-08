@@ -6,6 +6,8 @@ import pl.heinzelman.tools.Tools;
 import pl.heinzelman.yyy.net.Convolution;
 import pl.heinzelman.yyy.net.Teacher;
 
+import java.util.Arrays;
+
 
 public class CnnApplication {
 
@@ -27,12 +29,9 @@ public class CnnApplication {
 		X[0][3] = new float[]{ .6f, .7f, .8f, .9f, .2f };
 		X[0][4] = new float[]{ .1f, .2f, .3f, .4f, .5f };
 
-
-
-
 		Convolution conv = new Convolution();
 		float[][][] C = conv.forward (X[0], filters, 2) ;
-		System.out.println(Tools.AryToString( C ));
+//System.out.println(Tools.AryToString( C ));
 
 		LayerConv myConv = new LayerConv( 3 , 2 , null , null );
 		myConv.setUpByX( X );
@@ -40,7 +39,33 @@ public class CnnApplication {
 		myConv.getNeuron(0).setW( filters[0] );
 		myConv.getNeuron(1).setW( filters[1] );
 		float[][][] myC = myConv.Forward();
-		System.out.println(Tools.AryToString( myC ));
+//System.out.println(Tools.AryToString( myC ));
+
+
+
+
+		float[][][] gradient = new float[2][3][3];
+		gradient[0][0] = new float[]{ -.2f, -.1f, .0f };
+		gradient[0][1] = new float[]{ -.4f, -.2f, .1f };
+		gradient[0][2] = new float[]{ -.6f, -.4f, .2f };
+
+		gradient[1][0] = new float[]{ .2f, -.7f, .6f };
+		gradient[1][1] = new float[]{ .4f, .2f, -.5f };
+		gradient[1][2] = new float[]{ .1f, .3f, .2f };
+
+// System.out.println( Tools.AryToString( gradient ));
+
+		conv.backprop( gradient, 0.01f );
+// System.out.println( Tools.AryToString(  conv.filters ));
+
+		myConv.Backward( gradient );
+// System.out.println( Tools.AryToString( myConv.getNeuron(0).getMyWeight() ));
+// System.out.println( Tools.AryToString( myConv.getNeuron(1).getMyWeight() ));
+
+
+
+
+
 
 	}
 
