@@ -1,8 +1,14 @@
 package pl.heinzelman.yyy.net;
 
+import pl.heinzelman.LayerDeep.LayerConv;
+import pl.heinzelman.LayerDeep.LayerFlatten;
+import pl.heinzelman.LayerDeep.LayerPoolingMax;
+import pl.heinzelman.LayerDeep.LayerReLU;
 import pl.heinzelman.neu.LayerSigmoidFullConn;
 import pl.heinzelman.neu.LayerSoftmaxMultiClass;
 import pl.heinzelman.tools.Tools;
+
+import java.util.Arrays;
 
 public class Teacher   {
 
@@ -25,10 +31,17 @@ public class Teacher   {
     private static float[][][] trainXX;
     private Tools tools = new Tools();
 
+    private static boolean newImplementation = true;
 
 
-    LayerSigmoidFullConn   mySigm = new LayerSigmoidFullConn( 13*13*8 , 10 );
-    LayerSoftmaxMultiClass mySoftmax = new LayerSoftmaxMultiClass(10 );
+    private static LayerSigmoidFullConn   mySigm = new LayerSigmoidFullConn( 13*13*8 , 10 );
+    private static LayerSoftmaxMultiClass mySoftmax = new LayerSoftmaxMultiClass(10 );
+    private static LayerConv myConv = new LayerConv( 3, 8, null, null );
+    private static LayerReLU myReLU = new LayerReLU();
+    private static LayerPoolingMax myMax = new LayerPoolingMax(2, 2);
+    private static LayerFlatten myFlatten = new LayerFlatten();
+
+
 
     public static float[][][] init_filters(int size) {
         float[][][] result = new float[size][3][3];
@@ -64,6 +77,12 @@ public class Teacher   {
         trainX = tools.getTrainX();
         trainY = tools.getTrainY();
 
+
+        float[][][] oneX = new float[1][][];
+        oneX[0]=trainXX[0]; // one channel;
+        myConv.setUpByX( oneX );
+
+
         //System.out.println( tools.getIndexMaxFloat( trainY[0] ));
         //System.out.println( Tools.AryToString( trainXX[0] ));
         //if (true) throw new RuntimeException("?");
@@ -98,6 +117,12 @@ public class Teacher   {
 
 
             out_l = forward_ ( pxl );
+            // System.out.println( "outF[0]: " + Tools.AryToString(  out_l ) + " - " + Mat.v_argmax( out_l )) ;
+            // System.out.println( "out_l[0][correct_label]: " + out_l[0][correct_label] );
+// --->
+
+
+
             /*
             // perform convolution 28*28 --> 8x26x26
             float[][][] out = conv.forward(pxl, filters, filterNum);
@@ -138,6 +163,21 @@ public class Teacher   {
 
 
     public static void backward_( float [][] gradient ){
+        // System.out.println( "gradient: " + Tools.AryToString( gradient ));
+        // System.out.println( "Arrays.toString gradient[0]: " + Arrays.toString( gradient[0] ));
+        if ( newImplementation ){
+            float[][][] oneX = new float[1][][];
+            // !!! ONLY ONE CHANNEL !!!
+            float[] eOut = mySoftmax.nBackward( gradient[0] );
+            mySigm.nBackward( eOut );
+            float[] eOut2 = mySigm.getEout();
+            float[][][] eOutTensor = myFlatten.Backward( eOut2 );
+            float[][][] eOutTensor2 = myMax.Backward( eOutTensor );
+            float[][][] eOutTensor3 = myReLU.Backward( eOutTensor2 );
+            float[][][] eOutTensor4 = myConv.Backward( eOutTensor3 );
+            return;
+        }
+
         float learn_rate=0.005f;
         float[][][] sm_gradient=softmax.backprop(gradient,learn_rate);
         float[][][] mp_gradient=pool.backprop(sm_gradient);
@@ -145,14 +185,41 @@ public class Teacher   {
     }
 
     public static float[][] forward_( float[][] pxl ){
+        if ( newImplementation ){
+            float[][][] oneX = new float[1][][];
+            oneX[0]=pxl; // one channel;
+            myConv.setX( oneX );
+            float[][][] outTensor = myConv.Forward();
+
+            myReLU.setX( outTensor );
+            float[][][] outTensor2 = myReLU.Forward();
+
+            myMax.setX( outTensor2 );
+            float[][][] outTensor3 = myMax.Forward();
+
+            float[] flatX = myFlatten.Forward( outTensor3 );
+
+            float[] CxX = mySigm.nForward( flatX );
+            float[] out_l = mySoftmax.nForward( CxX );
+
+            float[][] outF = new float[1][];
+            outF[0]=out_l;
+
+            return outF;
+        }
+
+
         // perform convolution 28*28 --> 8x26x26
-        float[][][] out = conv.forward(pxl, filters, filterNum);
+        float[][][] out = conv.forward( pxl, filters, filterNum );
 
         // perform maximum pooling  8x26x26 --> 8x13x13
-        out = pool.forward(out);
+        out = pool.forward( out );
 
         // perform softmax operation  8*13*13 --> 10
-        float[][] out_l = softmax.forward(out);
+        float[][] out_l = softmax.forward( out );
+        // System.out.println( "OUT_L: " + Arrays.toString( out_l[0] ));
+        // System.out.println( "OUT_L: " + Tools.AryToString( out_l ));
+        // System.out.println( "outF[0]: " + Arrays.toString(  out_l[0] ));
         return out_l;
     }
 

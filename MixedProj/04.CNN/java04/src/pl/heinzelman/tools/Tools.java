@@ -338,7 +338,7 @@ public class Tools {
         if (X==null) return "";
         for (int i=0;i<X.length;i++){
             out.append("\n[" );
-            for ( int j=0;j<X.length;j++ ){
+            for ( int j=0;j<X[0].length;j++ ){
                 out.append( " "+X[i][j]+"," );
             }
             out.append("]");
