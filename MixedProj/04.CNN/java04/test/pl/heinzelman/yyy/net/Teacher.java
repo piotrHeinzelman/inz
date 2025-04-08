@@ -82,13 +82,6 @@ public class Teacher   {
         oneX[0]=trainXX[0]; // one channel;
         myConv.setUpByX( oneX );
 
-
-        //System.out.println( tools.getIndexMaxFloat( trainY[0] ));
-        //System.out.println( Tools.AryToString( trainXX[0] ));
-        //if (true) throw new RuntimeException("?");
-
-
-
         int label_counter = 0;
         float ce_loss=0;
         int accuracy=0;
@@ -111,29 +104,8 @@ public class Teacher   {
 
             correct_label = tools.getIndexMaxFloat( trainY[i] );
             pxl = trainXX[i];
-            //System.out.println( correct_label );
-
-            // if ( true ) throw new RuntimeException(" ! ");
-
 
             out_l = forward_ ( pxl );
-            // System.out.println( "outF[0]: " + Tools.AryToString(  out_l ) + " - " + Mat.v_argmax( out_l )) ;
-            // System.out.println( "out_l[0][correct_label]: " + out_l[0][correct_label] );
-// --->
-
-
-
-            /*
-            // perform convolution 28*28 --> 8x26x26
-            float[][][] out = conv.forward(pxl, filters, filterNum);
-
-            // perform maximum pooling  8x26x26 --> 8x13x13
-            out = pool.forward(out);
-
-            // perform softmax operation  8*13*13 --> 10
-            out_l = softmax.forward(out);
-            */
-
 
             // compute cross-entropy loss
             ce_loss += (float) -Math.log(out_l[0][correct_label]);
@@ -152,7 +124,6 @@ public class Teacher   {
             //conv.backprop(mp_gradient, learn_rate);
 
             if(  i % 100 == 99){
-                //System.out.println(" step: "+ i+ " loss: "+ce_loss/100.0+" accuracy: "+accuracy);
                 ce_loss=0;
                 acc_sum+=accuracy;
                 accuracy=0;
@@ -264,7 +235,5 @@ public class Teacher   {
         System.out.println("\n***************************************\n** TEST ** errors "+ ( sum-accuracy ) + "\n" );
         TT.printTable2( errors );
     }
-
-
 
 }

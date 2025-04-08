@@ -7,7 +7,7 @@ public class Convolution {
 
         public float[][] input; // shape --> [28] X [28]
 
-        public float[][][] filters; // shape --> [3] X [8] X [8]
+        public float[][][] filters; // shape --> [8] X [3] X [3]
 
 
 		public float[][] convolve3x3(float[][] image, float[][] filter) {
