@@ -66,19 +66,7 @@ public class Task_CNN implements Task{
         float[][][] ZReLU = layer2ReLU.Forward();
         layer3PoolingMax.setX( ZReLU );
         float[][][] ZPool = layer3PoolingMax.Forward();
-        float[] Zout = layer4Flatten.Forward( ZPool );
-
-        // System.out.println( "SIZE: " + Zout.length );
-
-        // System.out.println( layer1Conv );
-        // System.out.println( layer2ReLU );
-        // System.out.println( layer3PoolingMax );
-        // System.out.println( layer4Flatten );
-        // System.out.println(Arrays.toString( layer5X ));
-        // System.out.println( layer5X.length );
-
-        // ****************************
-
+        layer4Flatten.Forward( ZPool );
     }
 
     @Override

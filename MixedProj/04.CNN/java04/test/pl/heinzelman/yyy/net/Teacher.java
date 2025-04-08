@@ -96,6 +96,9 @@ public class Teacher   {
 
             // if ( true ) throw new RuntimeException(" ! ");
 
+
+            out_l = forward_ ( pxl );
+            /*
             // perform convolution 28*28 --> 8x26x26
             float[][][] out = conv.forward(pxl, filters, filterNum);
 
@@ -104,7 +107,7 @@ public class Teacher   {
 
             // perform softmax operation  8*13*13 --> 10
             out_l = softmax.forward(out);
-
+            */
 
 
             // compute cross-entropy loss
@@ -113,11 +116,16 @@ public class Teacher   {
 
             //BACKWARD PROPAGATION --- STOCHASTIC GRADIENT DESCENT
             //gradient of the cross entropy loss
+
             float[][] gradient=Mat.v_zeros(10);
             gradient[0][correct_label]=-1/out_l[0][correct_label];
-            float[][][] sm_gradient=softmax.backprop(gradient,learn_rate);
-            float[][][] mp_gradient=pool.backprop(sm_gradient);
-            conv.backprop(mp_gradient, learn_rate);
+
+            backward_( gradient );
+
+            //float[][][] sm_gradient=softmax.backprop(gradient,learn_rate);
+            //float[][][] mp_gradient=pool.backprop(sm_gradient);
+            //conv.backprop(mp_gradient, learn_rate);
+
             if(  i % 100 == 99){
                 //System.out.println(" step: "+ i+ " loss: "+ce_loss/100.0+" accuracy: "+accuracy);
                 ce_loss=0;
@@ -129,6 +137,24 @@ public class Teacher   {
     }
 
 
+    public static void backward_( float [][] gradient ){
+        float learn_rate=0.005f;
+        float[][][] sm_gradient=softmax.backprop(gradient,learn_rate);
+        float[][][] mp_gradient=pool.backprop(sm_gradient);
+        conv.backprop(mp_gradient, learn_rate);
+    }
+
+    public static float[][] forward_( float[][] pxl ){
+        // perform convolution 28*28 --> 8x26x26
+        float[][][] out = conv.forward(pxl, filters, filterNum);
+
+        // perform maximum pooling  8x26x26 --> 8x13x13
+        out = pool.forward(out);
+
+        // perform softmax operation  8*13*13 --> 10
+        float[][] out_l = softmax.forward(out);
+        return out_l;
+    }
 
     public static void test (int test_size  )   {
 
