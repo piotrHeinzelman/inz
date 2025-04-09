@@ -6,6 +6,8 @@ import pl.heinzelman.neu.LayerSigmoidFullConn;
 import pl.heinzelman.neu.LayerSoftmaxMultiClass;
 import pl.heinzelman.tools.Tools;
 
+import javax.tools.Tool;
+
 public class  Task_3 implements Task{
 
     private float[][] testX;
@@ -111,15 +113,18 @@ public class  Task_3 implements Task{
 
                     float[][] X = trainXX[ind_ex];
                     float[] trueZ = trainY[ind_ex];
+                    int trueIndexZ = tools.getIndexMaxFloat( trueZ );
 
                     float[] outZ = forward_( X );
 
                     float[] Z_S = tools.vectorSubstZsubS( outZ, trueZ );
+                            Z_S = new float[10];
+                            for ( int i=0;i<10;i++ ){ Z_S[i]=0; }
+                            Z_S[ trueIndexZ ] = -1/outZ[trueIndexZ];
 
-                                   backward_(Z_S);
+                            backward_(Z_S);
                     //Loss += Tools.meanSquareError( outZ, trueZ );
                     Loss += Tools.crossEntropyMulticlassError( outZ );
-
                 }
                 CSBin_data[epoch]=Loss/trainX.length;
             }
