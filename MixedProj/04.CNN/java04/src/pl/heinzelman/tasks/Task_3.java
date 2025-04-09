@@ -119,8 +119,8 @@ public class  Task_3 implements Task{
 
                     float[] Z_S = tools.vectorSubstZsubS( outZ, trueZ );
                             Z_S = new float[10];
-                            for ( int i=0;i<10;i++ ){ Z_S[i]=0; }
-                            Z_S[ trueIndexZ ] = -1/outZ[trueIndexZ];
+                            for ( int i=0;i<10;i++ ){ Z_S[i]=0.0f; }
+                            Z_S[ trueIndexZ ]=1.0f/outZ[trueIndexZ];
 
                             backward_(Z_S);
                     //Loss += Tools.meanSquareError( outZ, trueZ );
