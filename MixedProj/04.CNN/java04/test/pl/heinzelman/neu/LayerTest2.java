@@ -47,7 +47,7 @@ public class LayerTest2 {
         System.out.println( "Z: " + tools.toStr( Z2 ) );
         System.out.println( "S: " + tools.toStr( S ) );
 
-        float[] S_Z = tools.vectorSubstSsubZ( S , Z2 );
+        float[] S_Z = tools.vectorSubstZsubS( S , Z2 );
         System.out.println( "S-Z: " + tools.toStr( S_Z ) );
         L2.nBackward( S_Z  );
         float[] eout = L2.getEout();

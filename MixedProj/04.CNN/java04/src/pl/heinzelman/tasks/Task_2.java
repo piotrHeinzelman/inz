@@ -38,7 +38,7 @@ public class Task_2 implements Task{
         trainX = tools.getTrainX();
         trainY = tools.getTrainY();
 
-        System.out.println( testX[0].length );
+        //System.out.println( testX[0].length );
 
         layer1FC = new LayerSigmoidFullConn( 784, 64 ); layer1FC.setName("Layer1"); // n neurons
         layer2FC = new LayerSigmoidFullConn( 64, 10 ); layer2FC.setName("Layer2"); // n neurons
@@ -82,10 +82,10 @@ public class Task_2 implements Task{
 
                     float[] outZ = forward_( X );
 
-                    float[] S_Z = tools.vectorSubstSsubZ( trueZ, outZ );
+                    float[] Z_S = tools.vectorSubstZsubS( outZ, trueZ );
 
-                                   backward_(S_Z);
-                    //Loss += Tools.meanSquareError( trueZ, outZ );
+                                   backward_(Z_S);
+                    //Loss += Tools.meanSquareError( outZ, trueZ );
                     Loss += Tools.crossEntropyMulticlassError( outZ );
 
                 }

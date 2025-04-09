@@ -80,11 +80,11 @@ public class Task_1 implements Task{
 
                     float[] outZ = forward_( X );
 
-                    float[] S_Z = tools.vectorSubstSsubZ( trueZ, outZ );
-                    //float[] S_Z = Tools.gradientSoftMax( trueZ, outZ );
+                    float[] Z_S = tools.vectorSubstZsubS( outZ, trueZ );
+                    //float[] Z_S = Tools.gradientSoftMax( outZ, trueZ  );
 
-                                   backward_(S_Z);
-                    Loss += Tools.meanSquareError( trueZ, outZ );
+                                   backward_(Z_S);
+                    Loss += Tools.meanSquareError( outZ, trueZ );
                     //Loss += Tools.crossEntropyMulticlassError( outZ );
 
                 }

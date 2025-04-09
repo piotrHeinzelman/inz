@@ -1,7 +1,5 @@
 package pl.heinzelman.tasks;
 
-import pl.heinzelman.neu.LType;
-import pl.heinzelman.neu.Layer;
 import pl.heinzelman.neu.LayerSigmoidFullConn;
 import pl.heinzelman.tools.Tools;
 
@@ -56,9 +54,9 @@ public class Task2x3_simple_backward implements Task{
         layer2.nForward(XforL2);
 
         float[] s = new float[]{1,0};
-        float[] s_z = Tools.vectorSubstSsubZ(s, layer2.getZ());
-        layer2.nBackward( s_z );
-        System.out.println( "s: " + Arrays.toString( s_z ) );
+        float[] z_s = Tools.vectorSubstZsubS(layer2.getZ(), s);
+        layer2.nBackward( z_s );
+        System.out.println( "s: " + Arrays.toString( z_s ) );
 
         float[] eOut=layer2.getEout();
         layer1.nBackward( eOut );

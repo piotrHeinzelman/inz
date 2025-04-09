@@ -76,7 +76,7 @@ public class LayerSigmoidFullConn implements LayerParent {
 
     private float dF ( float z ){
         float df;
-        df = z*(1-z);
+        df = z*(1.0f-z);
         return df;
     }
 

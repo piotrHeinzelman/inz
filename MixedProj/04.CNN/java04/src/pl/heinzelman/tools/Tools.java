@@ -224,10 +224,10 @@ public class Tools {
     }
 
 
-    public static float[] vectorSubstSsubZ( float[] s, float[] z ){
+    public static float[] vectorSubstZsubS(float[] z, float[] s){
         float[] out = new float[ z.length];
         for ( int i=0;i<z.length; i++ ){
-            out[i] = ( s[i] - z[i] );
+            out[i] = ( z[i] - s[i] );
         }
         return out;
     }
@@ -243,19 +243,19 @@ public class Tools {
 
 
 
-    public static float meanSquareError( float[] s, float[]z ){
+    public static float meanSquareError( float[]z, float[] s ){
         float out = 0.0f;
         for ( int i=0;i<z.length; i++ ){
-            float delta = s[i] - z[i];
+            float delta = z[i] - s[i];
             out+=delta*delta;
         }
         return out;
     }
 
-    public static float crossEntropyBinaryError2input( float[] s, float[]z ){
+    public static float crossEntropyBinaryError2input( float[]z, float[] s ){
         float out = 0.0f;
         for ( int i=0;i<z.length; i++ ){
-            float delta = s[i] - z[i];
+            float delta = z[i] - s[i];
             out+=delta*delta;
         }
         return out;

@@ -176,6 +176,9 @@ public class LayerConv {
     public float[][][] Backward( float[][][] dLdO ) {
         float[][][] dOUT = new float[ channels ][xsize][xsize];
 
+        //System.out.println( channels );
+        //System.out.println( "filterForChannel: " + filterForChannel );
+
         for (int c=0;c<channels;c++){
             float [][] dOUTc = new float[ xsize ][ xsize ];
 
@@ -197,8 +200,11 @@ public class LayerConv {
                 //System.out.println( "Updated Filter:" + filters[ f*channels + c ].toString() );
             }
             dOUT[c] = dOUTc;
-            System.out.println( "dOUT: " + Tools.AryToString( dOUT ) );
+            //System.out.println( "dOUT: " + Tools.AryToString( dOUT ) );
         }
+
+        if (true) return null;
+
         for (int f=0;f<filterForChannel;f++){
             if (false ) biases[f].trainW( dLdO[f] );
         }

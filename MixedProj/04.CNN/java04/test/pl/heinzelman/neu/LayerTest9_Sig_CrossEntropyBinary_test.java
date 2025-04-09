@@ -5,7 +5,6 @@ import org.junit.Test;
 import pl.heinzelman.tools.Tools;
 
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
 
 public class LayerTest9_Sig_CrossEntropyBinary_test {
     @Test
@@ -47,7 +46,7 @@ public class LayerTest9_Sig_CrossEntropyBinary_test {
                 L2.nForward();
 
                 MSE2 += Tools.crossEntropyBinaryError2input( S[i], L2.getZ() );
-                float[] S_Z = Tools.vectorSubstSsubZ(S[i], L2.getZ());
+                float[] S_Z = Tools.vectorSubstZsubS(S[i], L2.getZ());
                 L2.nBackward( S_Z ) ;
                 //float[] SZ_lev1 = L2.getEout();
                 //MSE1 += Tools.crossEntropyBinaryError2input( L2.getEout(), L1.getZ());

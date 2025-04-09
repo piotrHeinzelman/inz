@@ -6,7 +6,7 @@ import pl.heinzelman.neu.LayerSigmoidFullConn;
 import pl.heinzelman.neu.LayerSoftmaxMultiClass;
 import pl.heinzelman.tools.Tools;
 
-public class Task_3 implements Task{
+public class  Task_3 implements Task{
 
     private float[][] testX;
     private float[][] testY;
@@ -47,7 +47,7 @@ public class Task_3 implements Task{
         testXX  = tools.getTestAryX();
 
 
-        System.out.println( testX[0].length );
+        //System.out.println( testX[0].length );
 
 
         float[][][] oneX = new float[1][28][28];
@@ -81,11 +81,14 @@ public class Task_3 implements Task{
     }
 
     public float[] backward_( float[] eIN ){
+        float[] L3eOUT = layer3SoftmaxMulticlass.nBackward( eIN );
+        float[] L2eOUT = layer2FC.nBackward( L3eOUT );
+        float[] eOUT = layer1FC.nBackward( L2eOUT );
+        float[][][] eOUTF    = layerFlatten.Backward( eOUT );
+                               layerConv.Backward( eOUTF );
 
-        float[] eOUT = layer1FC.nBackward(layer2FC.nBackward(layer3SoftmaxMulticlass.nBackward(eIN)));
-        float[][][] eOUTF = layerFlatten.Backward(eOUT);
-        //float[][][] eOUTConv = layerConv.Backward(eOUTF);
-        //return eOUTConv[0][0];
+        //System.out.println( eOUTF.length + " : "+ eOUTF[0].length + " : "+ eOUTF[0][0].length );
+
         return null;
     }
 
@@ -111,10 +114,10 @@ public class Task_3 implements Task{
 
                     float[] outZ = forward_( X );
 
-                    float[] S_Z = tools.vectorSubstSsubZ( trueZ, outZ );
+                    float[] Z_S = tools.vectorSubstZsubS( outZ, trueZ );
 
-                                   backward_(S_Z);
-                    //Loss += Tools.meanSquareError( trueZ, outZ );
+                                   backward_(Z_S);
+                    //Loss += Tools.meanSquareError( outZ, trueZ );
                     Loss += Tools.crossEntropyMulticlassError( outZ );
 
                 }
@@ -136,46 +139,3 @@ public class Task_3 implements Task{
 }
 
 
-
-    /*
-Loss: 138339.98
-test accuracy: 25.7%     (50)
-Loss: 138373.53
-test accuracy: 59.7%     (100)
-Loss: 138473.97
-test accuracy: 66.7%     (150)
-Loss: 138564.06
-test accuracy: 72.2%     (200)
-Loss: 138617.77
-test accuracy: 75.6%     (250)
-Loss: 138650.27
-test accuracy: 76.8%     (300)
-Loss: 138665.27
-test accuracy: 77.5%     (350)
-Loss: 138663.52
-test accuracy: 78.3%     (400)
-Loss: 138669.45
-test accuracy: 78.9%     (450)
-Loss: 138677.48
-test accuracy: 79.5%     (500)
-Loss: 138684.42
-test accuracy: 79.8%     (550)
-Loss: 138690.8
-test accuracy: 80.2%     (600)
-Loss: 138696.44
-test accuracy: 80.4%     (650)
-Loss: 138700.02
-test accuracy: 80.6%     (700)
-Loss: 138701.28
-test accuracy: 80.8%     (750)
-Loss: 138705.19
-test accuracy: 80.8%     (800)
-Loss: 138708.58
-test accuracy: 81.1%     (850)
-Loss: 138711.75
-test accuracy: 81.2%     (900)
-Loss: 138714.28
-test accuracy: 81.4%     (950)
-Loss: 138716.81
-test accuracy: 81.7%     (1000)
-     */

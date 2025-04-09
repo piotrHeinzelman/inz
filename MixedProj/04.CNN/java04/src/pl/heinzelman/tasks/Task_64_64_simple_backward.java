@@ -61,14 +61,14 @@ public class Task_64_64_simple_backward implements Task{
                     //System.out.println( "trainX[ ind_ex ]:" + Arrays.toString(  trainX[ ind_ex ] ));
                     //System.out.println( "layer3.getZ()" + Arrays.toString(  layer3.getZ() ));
 
-                    float[] S_Z = tools.vectorSubstSsubZ( trainY[ ind_ex ], layer3.getZ() );
+                    float[] Z_S = tools.vectorSubstZsubS( layer3.getZ(), trainY[ ind_ex ]);
                     Loss += Tools.crossEntropyMulticlassError( layer3.getZ() );
 
                     //float[] gradientSM = tools.gradientSoftMax( trainY[ ind_ex ], layer3.getZ() );
 
-                    //System.out.println( " S_Z: "+Arrays.toString( S_Z ) );
+                    //System.out.println( " Z_S: "+Arrays.toString( Z_S ) );
                     //System.out.println( " gradientSM: "+Arrays.toString( gradientSM ) );
-                    layer3.nBackward( S_Z );
+                    layer3.nBackward(Z_S);
                     layer2.nBackward( layer3.getEout() );
                     // if  ( ind_ex==5 && epoch%100==0 ) System.out.println( " layer3.getEout() "+Arrays.toString( layer3.getEout() ) );
                     layer1.nBackward( layer2.getEout() );

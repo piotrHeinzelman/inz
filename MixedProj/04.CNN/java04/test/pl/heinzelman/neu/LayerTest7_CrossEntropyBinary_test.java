@@ -39,7 +39,7 @@ public class LayerTest7_CrossEntropyBinary_test {
 
                 //System.out.println("Y: " + Arrays.toString( L1.getY() ) +", Z: "+ Arrays.toString( L1.getZ() ));
                 MSE += Tools.crossEntropyBinaryError2input(S[i], L1.getZ());
-                float[] S_Z = Tools.vectorSubstSsubZ(S[i], L1.getZ());
+                float[] S_Z = Tools.vectorSubstZsubS(S[i], L1.getZ());
                 L1.nBackward(S_Z) ;
                 //System.out.println( "x: " + Arrays.toString( L1.getX())  +", y: " + Arrays.toString( L1.getY())  + " : z:" + Arrays.toString( L1.getZ() ) );
             }

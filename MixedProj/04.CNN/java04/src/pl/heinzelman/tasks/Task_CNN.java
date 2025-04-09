@@ -96,8 +96,8 @@ public class Task_CNN implements Task{
                     float[] CxX = layerFC.nForward( CX );
                     float[] Z = layerSoftmax.nForward( CxX );
 
-                    float[] S_Z = tools.vectorSubstSsubZ(trainY[ind_ex], Z );
-                    float[] eOUT = layerSoftmax.nBackward(S_Z);
+                    float[] Z_S = tools.vectorSubstZsubS( Z, trainY[ind_ex]);
+                    float[] eOUT = layerSoftmax.nBackward(Z_S);
 
                     Loss += Tools.crossEntropyMulticlassError( Z );
 

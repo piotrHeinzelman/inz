@@ -55,10 +55,10 @@ System.out.println( "XforL2"+XforL2 );
 
         float[] s = new float[]{1,0};
 
-        float[] s_z = Tools.vectorSubstSsubZ(s, layer2.getZ());
+        float[] Z_S = Tools.vectorSubstZsubS(layer2.getZ(), s);
 
-        layer2.nBackward( s_z );
-System.out.println( "s:" + Arrays.toString( s_z ));
+        layer2.nBackward( Z_S );
+System.out.println( "s:" + Arrays.toString( Z_S ));
 
         float[] eOut=layer2.getEout();
         layer1.nBackward( eOut );

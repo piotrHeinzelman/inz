@@ -34,10 +34,13 @@ public class Neuron {
         float[] X = parent.getX();
         for ( int m=0; m<W.length; m++ ) {
             parent.getEout()[m] += ( W[m] * en_x_dFIznI );
-            W[m] += mu * en_x_dFIznI * X[m];
+            W[m] = W[m] - ( mu * en_x_dFIznI * X[m] );
         }
     }
 
+    public void Bias( float db ){
+        bias = bias - ( mu * db );
+    }
 
 
     @Override

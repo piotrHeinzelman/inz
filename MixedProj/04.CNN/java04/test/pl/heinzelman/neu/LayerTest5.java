@@ -4,8 +4,6 @@ package pl.heinzelman.neu;
 import org.junit.Test;
 import pl.heinzelman.tools.Tools;
 
-import java.util.Arrays;
-
 public class LayerTest5 {
     @Test
     public void forwardTest(){
@@ -25,7 +23,7 @@ public class LayerTest5 {
             //System.out.println(L1);
 
             //System.out.println("Y: " + Arrays.toString( L1.getY() ) +", Z: "+ Arrays.toString( L1.getZ() ));
-            float[] S_Z = Tools.vectorSubstSsubZ(S, L1.getZ());
+            float[] S_Z = Tools.vectorSubstZsubS(S, L1.getZ());
             //System.out.println(tools.toStr(S_Z));
             L1.nBackward(S_Z);
         }
