@@ -6,8 +6,6 @@ import pl.heinzelman.neu.LayerSigmoidFullConn;
 import pl.heinzelman.neu.LayerSoftmaxMultiClass;
 import pl.heinzelman.tools.Tools;
 
-import javax.tools.Tool;
-
 public class  Task_3 implements Task{
 
     private float[][] testX;
@@ -21,8 +19,7 @@ public class  Task_3 implements Task{
 
 
     private LayerSigmoidFullConn layer1FC;
-    private LayerSigmoidFullConn layer2FC;
-    private LayerSoftmaxMultiClass layer3SoftmaxMulticlass;
+    private LayerSoftmaxMultiClass layer2SoftmaxMulticlass;
 
     private LayerFlatten layerFlatten = new LayerFlatten();
     private LayerConv layerConv = new LayerConv( 3 , 8, null, null  );
@@ -56,9 +53,8 @@ public class  Task_3 implements Task{
         oneX[0] = trainXX[0];
         layerConv.setUpByX( oneX );
 
-        layer1FC = new LayerSigmoidFullConn( 26*26*8, 64 ); layer1FC.setName("Layer1"); // n neurons
-        layer2FC = new LayerSigmoidFullConn( 64, 10 ); layer2FC.setName("Layer2"); // n neurons
-        layer3SoftmaxMulticlass = new LayerSoftmaxMultiClass( 10 ); layer3SoftmaxMulticlass.setName("Layer3"); // n neurons
+        layer1FC = new LayerSigmoidFullConn( 26*26*8, 10 ); layer1FC.setName("Layer1"); // n neurons
+        layer2SoftmaxMulticlass = new LayerSoftmaxMultiClass( 10 ); layer2SoftmaxMulticlass.setName("Layer2Softmax"); // n neurons
 
         // ****************************
 
@@ -76,15 +72,13 @@ public class  Task_3 implements Task{
 
         float[] Xf = layerFlatten.Forward(Zconv);
         float[] Z1 = layer1FC.nForward( Xf );
-        float[] Z2 = layer2FC.nForward( Z1 );
-        float[] Z3 = layer3SoftmaxMulticlass.nForward( Z2 );
-        return Z3;
+        float[] Z2 = layer2SoftmaxMulticlass.nForward( Z1 );
+        return Z2;
 
     }
 
     public float[] backward_( float[] eIN ){
-        float[] L3eOUT = layer3SoftmaxMulticlass.nBackward( eIN );
-        float[] L2eOUT = layer2FC.nBackward( L3eOUT );
+        float[] L2eOUT = layer2SoftmaxMulticlass.nBackward( eIN );
         float[] eOUT = layer1FC.nBackward( L2eOUT );
         float[][][] eOUTF    = layerFlatten.Backward( eOUT );
                                layerConv.Backward( eOUTF );
