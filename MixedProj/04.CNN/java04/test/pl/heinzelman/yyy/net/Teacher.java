@@ -1,5 +1,6 @@
 package pl.heinzelman.yyy.net;
 
+import org.junit.jupiter.api.Test;
 import pl.heinzelman.LayerDeep.LayerConv;
 import pl.heinzelman.LayerDeep.LayerFlatten;
 import pl.heinzelman.LayerDeep.LayerPoolingMax;
@@ -8,16 +9,14 @@ import pl.heinzelman.neu.LayerSigmoidFullConn;
 import pl.heinzelman.neu.LayerSoftmaxMultiClass;
 import pl.heinzelman.tools.Tools;
 
-import java.util.Arrays;
-
 public class Teacher   {
 
     private final static FileReadr fileReadr = new FileReadr();
 
     //initialize layers
-    private static final Convolution conv=new Convolution();
-    private static final MaxPool pool=new MaxPool();
-    private static SoftMax softmax;
+    private static final _Convolution conv=new _Convolution();
+    private static final _MaxPool pool=new _MaxPool();
+    private static _SoftMax softmax;
     private static int filterNum;
     private static float[][][] filters;
 
@@ -54,11 +53,20 @@ public class Teacher   {
 
     public static void prepare( int filterNum_ ){
         filterNum = filterNum_;
-        softmax=new SoftMax(13*13*filterNum,10, filterNum );
+        softmax=new _SoftMax(13*13*filterNum,10, filterNum );
         // LayerSigmoidFullConn   mySigm = new LayerSigmoidFullConn( 13*13*8 , 10 );
         // LayerSoftmaxMultiClass mySoftmax = new LayerSoftmaxMultiClass(10 );
         filters = init_filters( filterNum_ );
 
+    }
+
+    @Test
+    public void start(){
+        prepare(8);
+        Teacher.train( 5000 );
+        Teacher.test( 1000 );
+        Teacher.train( 5000 );
+        Teacher.test( 1000 );
     }
 
     public static void train(int training_size  )   {

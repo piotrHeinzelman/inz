@@ -2,11 +2,8 @@ package pl.heinzelman.yyy;
 
 import org.junit.jupiter.api.Test;
 import pl.heinzelman.LayerDeep.LayerConv;
-import pl.heinzelman.tools.Tools;
-import pl.heinzelman.yyy.net.Convolution;
+import pl.heinzelman.yyy.net._Convolution;
 import pl.heinzelman.yyy.net.Teacher;
-
-import java.util.Arrays;
 
 
 public class CnnApplication {
@@ -29,7 +26,7 @@ public class CnnApplication {
 		X[0][3] = new float[]{ .6f, .7f, .8f, .9f, .2f };
 		X[0][4] = new float[]{ .1f, .2f, .3f, .4f, .5f };
 
-		Convolution conv = new Convolution();
+		_Convolution conv = new _Convolution();
 		float[][][] C = conv.forward (X[0], filters, 2) ;
 //System.out.println(Tools.AryToString( C ));
 
