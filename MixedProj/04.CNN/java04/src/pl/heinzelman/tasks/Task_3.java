@@ -30,17 +30,15 @@ public class  Task_3 implements Task{
     private static final _Convolution conv=new _Convolution();
     private static final _MaxPool pool=new _MaxPool();
     private static _SoftMax softmax;
-    private static int filterNum;
+    private static int filterNum = 8;
 
     private float[][][] filters;
     private float ce_loss;
     private float accuracy;
-    private float[][] out_l = new float[1][10];
+    private float[][] out_l ; //= new float[1][10];
 
-    @Override
     public void prepare() {
-
-        int dataSize = 10;
+        int dataSize = 100;
         tools.prepareData( dataSize );
 
         testX = tools.getTestX();
@@ -63,7 +61,6 @@ public class  Task_3 implements Task{
 
         // ****************************
 
-/* */   int filterNum = 8;
         softmax=new _SoftMax(13*13*filterNum,10, filterNum );
         filters = new float[ filterNum ][3][3];
         for (int k = 0; k < filterNum; k++) {
@@ -134,9 +131,9 @@ public class  Task_3 implements Task{
 
     public float[] _backward_( float[][] gradient ){
         float learn_rate=0.005f;
-        float[][][] sm_gradient=softmax.backprop(gradient,learn_rate);
-        float[][][] mp_gradient=pool.backprop(sm_gradient);
-        conv.backprop(mp_gradient, learn_rate);
+        float[][][] sm_gradient=softmax.backprop( gradient,learn_rate );
+        float[][][] mp_gradient=pool.backprop( sm_gradient );
+        conv.backprop( mp_gradient, learn_rate );
         return null;
     }
 
@@ -144,49 +141,121 @@ public class  Task_3 implements Task{
 
     @Override
     public void run() {
+
         prepare();
+        train(5000);
+        test(1000);
 
-        int epochNum=0;
-        for (int cycle=0;cycle<cyclesOfEpoch;cycle++) {
-            float Loss=0.0f;
-            int step=1;
+        train(5000);
+        test(1000);
 
-            ce_loss=0.0f;
-            accuracy=0.0f;
-            for (int epoch = 0; epoch < numOfEpoch; epoch++) {
-                step++; epochNum++; Loss=0.0f;
-                for ( int index = 0; index < trainX.length; index++ ) {
+        train(5000);
+        test(1000);
 
-                    // ONE CYCLE
-                    int ind_ex = /*index; //*/ (index * step) % trainX.length;
+        train(5000);
+        test(1000);
 
-                    float[][] X = trainXX[ind_ex];
-                    float[] trueZ = trainY[ind_ex];
-                    int trueIndexZ = tools.getIndexMaxFloat( trueZ );
+        train(5000);
+        test(1000);
 
-                    float[][] out_l = _forward_( X );
-
-                    float[][] Z_S = _calculateZ_S( out_l, trueZ ); //= tools.vectorSubstZsubS( outZ, trueZ );
-
-                            _backward_(Z_S);
-                    //Loss += Tools.meanSquareError( outZ, trueZ );
-                    Loss += Tools.crossEntropyMulticlassError( out_l[0] );
-                }
-                CSBin_data[epoch]=Loss/trainX.length;
-            }
-            System.out.println("Loss: " + Loss );
-
-            int acc = 0;
-            int sam = 0;
-            for (int i=0;i<testX.length;i++){
-                float[] Z = _forward_(testXX[i])[0];
-                float[] trueZ = testY[i];
-                if ( tools.getIndexMaxFloat( Z ) == tools.getIndexMaxFloat( trueZ ) ) { acc++; }
-                sam++;
-            }
-            System.out.println("test accuracy: " + 100.0f * acc / sam + "%     ("+epochNum+")");
-        }
+        train(5000);
+        test(1000);
     }
+
+    public void train( int training_size ){
+
+        int label_counter = 0;
+        float ce_loss=0;
+        int accuracy=0;
+        float acc_sum=0.0f;
+        float learn_rate=0.005f;
+
+
+
+        float[][] out_l = new float[1][10];
+        for (int i = 0; i < training_size; i++) {
+
+            label_counter++;
+
+            //FORWARD PROPAGATION
+            int ind_ex = i;
+
+            float[][] X = trainXX[ind_ex];
+            float[] trueZ = trainY[ind_ex];
+            int correct_label = tools.getIndexMaxFloat( trueZ );
+
+            out_l = _forward_ ( X );
+
+            // compute cross-entropy loss
+            ce_loss += (float) -Math.log(out_l[0][correct_label]);
+            accuracy += correct_label == _Mat.v_argmax(out_l) ? 1 : 0;
+
+            //BACKWARD PROPAGATION --- STOCHASTIC GRADIENT DESCENT
+            //gradient of the cross entropy loss
+
+            float[][] gradient=_Mat.v_zeros(10);
+            gradient[0][correct_label]=-1/out_l[0][correct_label];
+
+            // gradient[0][0,0,0... -1/out[target] ... 0,0 ]
+
+            _backward_( gradient );
+            //System.out.println( Arrays.toString( gradient[0] ));
+
+            //float[][][] sm_gradient=softmax.backprop(gradient,learn_rate);
+            //float[][][] mp_gradient=pool.backprop(sm_gradient);
+            //conv.backprop(mp_gradient, learn_rate);
+
+            if(  i % 100 == 99){
+                ce_loss=0;
+                acc_sum+=accuracy;
+                accuracy=0;
+            }
+        }
+        System.out.println("filters: "+ filterNum +", average accuracy:- "+acc_sum/training_size+"%\n\n");
+    }
+
+    public void test( int test_size ){
+        int[][] errors = new int[10][10];
+        int error = 0;
+
+        int label_counter = 0;
+        int accuracy=0;
+        int sum=0;
+
+        float[][] out_l = new float[1][10];
+        for (int i = 0; i < test_size; i++) {
+
+            label_counter++;
+            //FORWARD PROPAGATION
+
+            int ind_ex = i;
+
+            float[][] X = trainXX[ind_ex];
+            float[] trueZ = trainY[ind_ex];
+            int correct_label = tools.getIndexMaxFloat( trueZ );
+
+            // perform convolution 28*28 --> 8x26x26
+            float[][][] out = conv.forward(X, filters, filterNum);
+
+            // perform maximum pooling  8x26x26 --> 8x13x13
+            out = pool.forward(out);
+
+            // perform softmax operation  8*13*13 --> 10
+            out_l = softmax.forward(out);
+
+            // compute cross-entropy loss
+            int findClass = (int) _Mat.v_argmax(out_l);
+            if ( correct_label!=findClass ){
+                errors[correct_label][findClass]++;
+                error++;
+            } else { accuracy++;  }
+            //accuracy += correct_label == Mat.v_argmax(out_l) ? 1 : 0;
+            sum ++;
+        }
+        System.out.println("\n***************************************\n** TEST ** errors "+ ( sum-accuracy ) + "\n" );
+        TT.printTable2( errors );
+    }
+
 }
 
 

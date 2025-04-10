@@ -69,7 +69,7 @@ public class Teacher   {
         Teacher.test( 1000 );
     }
 
-    public static void train(int training_size  )   {
+    public static void train( int training_size  )   {
 
         Tools tools = new Tools();
         int dataSize = 100;

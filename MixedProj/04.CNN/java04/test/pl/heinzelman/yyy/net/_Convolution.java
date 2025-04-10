@@ -56,8 +56,8 @@ public class _Convolution {
             }
         }
 
-        System.out.println( "d_L_d_filters[0]: " + Tools.AryToString( d_L_d_filters[0] ));
-        //System.out.println( "d_L_d_out[0]: "     + Tools.AryToString( d_L_d_out[0] ));
+        // System.out.println( "d_L_d_filters[0]: " + Tools.AryToString( d_L_d_filters[0] ));
+        // System.out.println( "d_L_d_out[0]: "     + Tools.AryToString( d_L_d_out[0] ));
 
         //update the filter matrix with the gradient matrix obtained above.
         for(int m=0;m<filters.length;m++){
