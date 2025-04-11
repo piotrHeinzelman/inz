@@ -1,5 +1,6 @@
 package pl.heinzelman.neu;
 
+import pl.heinzelman.LayerDeep._Mat;
 import pl.heinzelman.tools.Tools;
 
 import javax.imageio.ImageIO;
@@ -60,6 +61,24 @@ public class LayerSoftmaxMultiClass {
             Z[i] = Y[i] / sum;
         }
         return Z;
+    }
+
+
+    public float[][] compute_gradient( float[][] Z, int correct_label ){
+        //BACKWARD PROPAGATION --- STOCHASTIC GRADIENT DESCENT
+        //gradient of the cross entropy loss
+
+        float[][] gradient = _Mat.v_zeros(10);
+        gradient[0][correct_label] = -1 / Z[0][correct_label];
+        return gradient;
+    }
+
+    public float delta_Loss( float[][] Z, int correct_label ) {
+        // compute cross-entropy loss
+        // not used
+        //ce_loss += (float) -Math.log(out_l[0][correct_label]);
+        float value_correctLabel = Z[0][correct_label];
+        return  (float) -Math.log( value_correctLabel );
     }
 
 

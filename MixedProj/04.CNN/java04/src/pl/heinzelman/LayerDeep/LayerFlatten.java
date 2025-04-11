@@ -34,7 +34,6 @@ public class LayerFlatten {
         for (int c=0;c<channels;c++){
             for (int i=0;i<xsize;i++){
                 for (int j=0;j<xsize;j++) {
-                    //System.out.println( (c*xsize*xsize) + (i*xsize) + j );
                     OUT[c][i][j] = delta[ (c*xsize*xsize) + (i*xsize) + j ];
                 }
             }

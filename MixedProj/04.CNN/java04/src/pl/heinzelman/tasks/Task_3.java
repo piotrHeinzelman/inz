@@ -107,7 +107,7 @@ public class  Task_3 implements Task{
         float acc_sum=0.0f;
         float learn_rate=0.005f;
 
-        float[][] out_l = new float[1][10];
+        float[][] Z = new float[1][10];
         for (int i = 0; i < training_size; i++) {
 
             label_counter++;
@@ -119,8 +119,8 @@ public class  Task_3 implements Task{
             float[] trueZ = trainY[ind_ex];
             int correct_label = tools.getIndexMaxFloat(trueZ);
 
-            out_l = forward_(X);
-            float[][] gradient = compute_gradient(out_l, correct_label);
+            Z = forward_(X);
+            float[][] gradient = layer2SoftmaxMulticlass.compute_gradient( Z, correct_label );
             backward_( gradient );
 
             //if(  i % 100 == 99){
@@ -134,19 +134,7 @@ public class  Task_3 implements Task{
     }
 
 
-    public float[][] compute_gradient( float[][] out_l, int correct_label){
-        // compute cross-entropy loss
-        // not used
-        ce_loss += (float) -Math.log(out_l[0][correct_label]);
-        // not used
-        accuracy += correct_label == _Mat.v_argmax(out_l) ? 1 : 0;
 
-        //BACKWARD PROPAGATION --- STOCHASTIC GRADIENT DESCENT
-        //gradient of the cross entropy loss
-        float[][] gradient = _Mat.v_zeros(10);
-        gradient[0][correct_label] = -1 / out_l[0][correct_label];
-        return gradient;
-    }
 
     public void test( int test_size ){
         int filterNum = 8;
