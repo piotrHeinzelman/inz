@@ -202,7 +202,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CNN_3_class">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="pl.heinzelman.Main" />
       <module name="nweb" />
@@ -281,11 +281,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.CNN_3_class" />
         <item itemvalue="JUnit.CNN_3_class.LossTest" />
         <item itemvalue="JUnit.CNN_3_class.argmaxTest" />
         <item itemvalue="JUnit.CNN_3_class.gradientTest" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>

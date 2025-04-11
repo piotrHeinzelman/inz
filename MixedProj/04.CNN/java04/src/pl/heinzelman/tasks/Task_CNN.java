@@ -10,64 +10,80 @@ import pl.heinzelman.tools.Tools;
 
 public class Task_CNN implements Task{
 
-    private float[][] testX;
     private float[][] testY;
-    private float[][] trainX;
     private float[][] trainY;
-
 
     private float[][][] testXX;
     private float[][][] trainXX;
-
 
     private LayerConv layer1Conv = new LayerConv( 5 , 8 , null, null );
     private LayerReLU layer2ReLU = new LayerReLU();
     private LayerPoolingMax layer3PoolingMax = new LayerPoolingMax(2, 2);
     private LayerFlatten layer4Flatten = new LayerFlatten();
 
-
-    private LayerSigmoidFullConn layerFC;
-    private LayerSoftmaxMultiClass layerSoftmax;
+    private LayerSigmoidFullConn layer5FC = new LayerSigmoidFullConn( 4608, 10 ); //13*13*8 //1152 //26*26*8
+    private LayerSoftmaxMultiClass layer6SoftmaxMulticlass = new LayerSoftmaxMultiClass( 10 );
 
     private Tools tools = new Tools();
+    float[][][] oneX = new float[1][][];
+    float[][] out1x10 = new float[1][10];
 
-    int numOfEpoch=150;
+    int numOfEpoch=5;
     float[] CSBin_data=new float[numOfEpoch];
+
+    private float ce_loss=0.0f;
+    private int accuracy=0;
 
     @Override
     public void prepare() {
-
-        int dataSize = 1;
+        int dataSize = 10;
         tools.prepareDataAsFlatArray( dataSize );
 
         testXX = tools.getTestAryX();
         trainXX = tools.getTrainAryX();
 
         tools.prepareData( dataSize );
-
-        testX = tools.getTestX();
         testY = tools.getTestY();
-        trainX = tools.getTrainX();
         trainY = tools.getTrainY();
-
-        //layerFC =new LayerSigmoidFullConn( 2880, 10 ); layerFC.setName("Layer1"); // n neurons
-        layerFC =new LayerSigmoidFullConn( 1152, 10 ); layerFC.setName("Layer1"); // n neurons
-        layerSoftmax =new LayerSoftmaxMultiClass( 10 ); layerSoftmax.setName("Layer3"); // n neurons
 
         // ****************************
 
-        float[][][] oneX = new float[1][28][28];
         oneX[0] = trainXX[0]; // extract One X
         layer1Conv.setUpByX( oneX );
-
-        layer1Conv.setX( oneX );
-        float[][][] ZConv = layer1Conv.Forward();
-        layer2ReLU.setX( ZConv );
-        float[][][] ZReLU = layer2ReLU.Forward();
-        layer3PoolingMax.setX( ZReLU );
-        float[][][] ZPool = layer3PoolingMax.Forward();
-        layer4Flatten.Forward( ZPool );
     }
+
+
+    private float[][] _forward( float[][][] oneX ){
+
+        layer1Conv.setX(oneX);
+        float[][][] Z1 = layer1Conv.Forward();
+        //                 layer2ReLU.setX( Z1 );
+        //float[][][] Z2 = layer2ReLU.Forward();
+        //                 layer3PoolingMax.setX( Z2 );
+        //float[][][] Z3 = layer3PoolingMax.Forward();
+
+        float[][][] Z3 = Z1;
+
+        float[] CX = layer4Flatten.Forward( Z3 );
+        float[] CxX = layer5FC.nForward( CX );
+        float[] Z = layer6SoftmaxMulticlass.nForward( CxX );
+
+        // convert out to [1][10]
+        out1x10[0]=Z;
+        return out1x10;
+    }
+
+    private float[][][] _backward( float[][] gradient ){
+        float[] Z_S = layer6SoftmaxMulticlass.nBackward(gradient[0]);
+        float[] Z_S1 = layer5FC.nBackward(Z_S);
+        float[][][] Z_S2 = layer4Flatten.Backward(Z_S1);
+        // float[][][] Z_S3 = layer3PoolingMax.Backward(Z_S2);
+        // float[][][] Z_S4 = layer2ReLU.Backward(Z_S3);
+        float[][][] Z_S4 = Z_S2;
+        return             layer1Conv.Backward( Z_S4 ) ;
+    }
+
+
 
     @Override
     public void run() {
@@ -75,75 +91,40 @@ public class Task_CNN implements Task{
         for (int cycle=0;cycle<20;cycle++) {
 
             float Loss = 0.0f;
+            float Loss2 = 0.0f;
             int step=1;
             for (int epoch = 0; epoch < numOfEpoch; epoch++) {
                 step++;
-                for ( int index = 0; index < trainX.length; index++ ) {
+                for ( int index = 0; index < trainXX.length; index++ ) {
 
                     // ONE CYCLE
-                    int ind_ex = /*index; //*/ (index * step) % trainX.length;
+                    int ind_ex = /*index; //*/ (index * step) % trainXX.length;
 
-                    float[][][] oneX = new float[1][][];
 
                     oneX[0] = trainXX[ind_ex];
-                    layer1Conv.setX(oneX);
-                    layer2ReLU.setX(layer1Conv.Forward());
-                    layer3PoolingMax.setX(layer2ReLU.Forward());
-                    float[] CX = layer4Flatten.Forward(layer3PoolingMax.Forward());
+                    int correct_label = tools.getIndexMaxFloat( trainY[0] );
 
-// ---> 1
+                    float[][] Z = _forward( oneX );
+                    float[][] gradient = layer6SoftmaxMulticlass.compute_gradient( Z, correct_label );
+                   Loss += layer6SoftmaxMulticlass.delta_Loss( Z, correct_label );
+                   Loss2 += Tools.crossEntropyMulticlassError( Z[0] );
 
-                    float[] CxX = layerFC.nForward( CX );
-                    float[] Z = layerSoftmax.nForward( CxX );
-
-                    float[] Z_S = tools.vectorSubstZsubS( Z, trainY[ind_ex]);
-                    float[] eOUT = layerSoftmax.nBackward(Z_S);
-
-                    Loss += Tools.crossEntropyMulticlassError( Z );
-
-                    layerFC.nBackward( eOUT );
-
-// --- TRAIN --- >
-
-                    float[][][] delta4 = layer4Flatten.Backward( layerFC.getEout() );
-                    float[][][] delta3 = layer3PoolingMax.Backward(delta4);
-                    float[][][] delta2 = layer2ReLU.Backward(delta3);
-                    float[][][] delta = layer1Conv.Backward(delta2);
-
-                    if (false) {
-                        if (index == 1 || true) {
-                            tools.saveVectorAsImg(delta4[0], "FC_Eout");
-                            tools.saveVectorAsImg(delta4[0], "delta4");
-                            tools.saveVectorAsImg(delta3[0], "delta3");
-                            tools.saveVectorAsImg(delta2[0], "delta2");
-                            tools.saveVectorAsImg(delta[0], "delta");
-                        }
-                    if (true) throw new RuntimeException("!");
-                    }
+                    _backward( gradient );
                 }
-                CSBin_data[epoch]=Loss/trainX.length;
-
+                CSBin_data[epoch]=Loss/trainXX.length;
             }
 
 
             float[][][] oneX = new float[1][][];
             // check accuracy
-            int len = testX.length;
+            int len = testXX.length;
             int accuracy = 0;
             for (int i = 0; i < len; i++) {
-
-                oneX[0]=trainXX[i];
+                oneX[0]=testXX[i];
 // ----------->
-                layer1Conv.setX( oneX );
-                layer2ReLU.setX( layer1Conv.Forward() );
-                layer3PoolingMax.setX( layer2ReLU.Forward() );
-                float[] CX = layer4Flatten.Forward(layer3PoolingMax.Forward());
-// ---------->
-                layerFC.nForward( CX );
-                float[] CxX = layerFC.getZ();
-                layerSoftmax.nForward(CxX);
+                float[][] Z = _forward(oneX);
 
-                int netClassId = tools.getIndexMaxFloat( layerSoftmax.getZ() );
+                int netClassId = tools.getIndexMaxFloat( Z[0] );
                 int fileClassId = tools.getIndexMaxFloat( testY[i] );
                 if (fileClassId == netClassId) {
                     accuracy++;

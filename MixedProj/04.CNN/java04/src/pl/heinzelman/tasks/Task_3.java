@@ -32,7 +32,7 @@ public class  Task_3 implements Task{
 
     public void prepare() {
         int filterNum=8;
-        int dataSize = 100;
+        int dataSize =100;
         tools.prepareData( dataSize );
 
         testX = tools.getTestX();
@@ -66,12 +66,11 @@ public class  Task_3 implements Task{
         return out1x10;
     }
 
-    public float[] backward_( float[][] gradient ){
+    public float[][][] backward_( float[][] gradient ){
         float[] L2eOUT = layer2SoftmaxMulticlass.nBackward( gradient[0] );
         float[] eOUT = layer1FC.nBackward( L2eOUT );
         float[][][] eOUTF    = layerFlatten.Backward( eOUT );
-                               layerConv.Backward( eOUTF );
-        return null;
+        return layerConv.Backward( eOUTF );
     }
 
 
@@ -80,23 +79,91 @@ public class  Task_3 implements Task{
     @Override
     public void run() {
 
-        train(60000);
-        test(10000);
-
-        train(60000);
-        test(10000);
-
-        train(60000);
-        test(10000);
-
-        train(5000);
+        train(12000);
+        train(12000);
+        train(12000);
+        train(12000);
+        train(12000);
+        train(12000);
+        train(12000);
+        train(12000);
+        train(12000);
+        train(12000);
         test(1000);
 
-        train(5000);
+        train(6000);
+        train(12000);
+        train(18000);
+        train(24000);
+        train(30000);
+        train(36000);
+        train(42000);
+        train(48000);
+        train(54000);
+        train(60000);
         test(1000);
 
-        train(5000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
         test(1000);
+
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        test(1000);
+
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        test(1000);
+
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        test(1000);
+
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        test(1000);
+
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        train(60000);
+        test(1000);
+        test(10000);
+
 
     }
 
@@ -105,7 +172,9 @@ public class  Task_3 implements Task{
         int label_counter = 0;
         int accuracy=0;
         float acc_sum=0.0f;
-        float learn_rate=0.005f;
+        float learn_rate=0.001f;
+        float loss = 0.0f;
+        int sum=0;
 
         float[][] Z = new float[1][10];
         for (int i = 0; i < training_size; i++) {
@@ -121,8 +190,11 @@ public class  Task_3 implements Task{
 
             Z = forward_(X);
             float[][] gradient = layer2SoftmaxMulticlass.compute_gradient( Z, correct_label );
+            loss += layer2SoftmaxMulticlass.delta_Loss( Z, correct_label );
             backward_( gradient );
 
+            sum++;
+            if ( correct_label==tools.getIndexMaxFloat( Z[0] )){ accuracy++; }
             //if(  i % 100 == 99){
                 // System.out.println( "I: " + i + ", ce_loss: " + ce_loss );
             //    ce_loss=0;
@@ -130,6 +202,8 @@ public class  Task_3 implements Task{
             //    accuracy=0;
             //}
         }
+        System.out.println( "Loss: " + loss + ", accuracy: " + ( 100f*accuracy )/sum + "%         \tsize: " + training_size );
+        accuracy=0; sum=0;
         // System.out.println("Average accuracy:- "+acc_sum/training_size+"%\n\n");
     }
 

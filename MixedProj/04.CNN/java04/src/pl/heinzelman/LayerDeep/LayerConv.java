@@ -3,7 +3,6 @@ package pl.heinzelman.LayerDeep;
 import pl.heinzelman.tools.Conv;
 import pl.heinzelman.tools.Tools;
 
-import java.util.Arrays;
 import java.util.Random;
 
 //

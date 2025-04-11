@@ -61,8 +61,8 @@ def AlexNet():
       keras.layers.MaxPool2D(pool_size=(2,2), strides=(2,2)),
       keras.layers.Flatten(),
       keras.layers.Dense(64, activation='relu'),
-#      keras.layers.Dense(64, activation='relu'),
-#      keras.layers.Dropout(0.2),
+      keras.layers.Dense(64, activation='relu'),
+      keras.layers.Dropout(0.2),
       keras.layers.Dense(10, activation='softmax')
 ])
 
