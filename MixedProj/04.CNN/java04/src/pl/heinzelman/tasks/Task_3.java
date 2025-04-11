@@ -32,7 +32,7 @@ public class  Task_3 implements Task{
 
     public void prepare() {
         int filterNum=8;
-        int dataSize =100;
+        int dataSize =20;
         tools.prepareData( dataSize );
 
         testX = tools.getTestX();
@@ -79,105 +79,26 @@ public class  Task_3 implements Task{
     @Override
     public void run() {
 
-        train(12000);
-        train(12000);
-        train(12000);
-        train(12000);
-        train(12000);
-        train(12000);
-        train(12000);
-        train(12000);
-        train(12000);
-        train(12000);
-        test(1000);
+        for (int j=0;j<500;j++) {
 
-        train(6000);
-        train(12000);
-        train(18000);
-        train(24000);
-        train(30000);
-        train(36000);
-        train(42000);
-        train(48000);
-        train(54000);
-        train(60000);
-        test(1000);
+            for (int i = 0; i < 10; i++) train();
+            test();
 
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        test(1000);
-
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        test(1000);
-
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        test(1000);
-
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        test(1000);
-
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        test(1000);
-
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        train(60000);
-        test(1000);
-        test(10000);
-
+        }
 
     }
 
-    public void train( int training_size ){
+    public void train(){
 
         int label_counter = 0;
         int accuracy=0;
         float acc_sum=0.0f;
-        float learn_rate=0.001f;
+        float learn_rate=0.01f;
         float loss = 0.0f;
         int sum=0;
 
         float[][] Z = new float[1][10];
-        for (int i = 0; i < training_size; i++) {
+        for (int i = 0; i < trainXX.length; i++) {
 
             label_counter++;
 
@@ -202,7 +123,7 @@ public class  Task_3 implements Task{
             //    accuracy=0;
             //}
         }
-        System.out.println( "Loss: " + loss + ", accuracy: " + ( 100f*accuracy )/sum + "%         \tsize: " + training_size );
+        System.out.println( "Loss: " + loss + ", accuracy: " + ( 100f*accuracy )/sum + "%         \tsize: " + trainXX.length );
         accuracy=0; sum=0;
         // System.out.println("Average accuracy:- "+acc_sum/training_size+"%\n\n");
     }
@@ -210,7 +131,7 @@ public class  Task_3 implements Task{
 
 
 
-    public void test( int test_size ){
+    public void test(){
         int filterNum = 8;
         int[][] errors = new int[10][10];
         int error = 0;
@@ -220,7 +141,7 @@ public class  Task_3 implements Task{
         int sum=0;
 
         float[][] out_l;
-        for (int i = 0; i < test_size; i++) {
+        for (int i = 0; i < trainXX.length; i++) {
 
             label_counter++;
             //FORWARD PROPAGATION

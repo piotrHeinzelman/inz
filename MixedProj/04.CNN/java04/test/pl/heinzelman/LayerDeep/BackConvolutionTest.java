@@ -26,7 +26,7 @@ public class BackConvolutionTest {
 
         //filterW11.setBias( 0f );
 
-        LayerConv layerConv= new LayerConv(2,1,null,1);
+        LayerConv layerConv= new LayerConv(2,1,null,null);
         layerConv.setUpByX( X );
         layerConv.setX( X );
         layerConv.filters[0]=filterW11;

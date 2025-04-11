@@ -3,6 +3,7 @@ package pl.heinzelman.LayerDeep;
 import pl.heinzelman.tools.Conv;
 import pl.heinzelman.tools.Tools;
 
+import javax.tools.Tool;
 import java.util.Random;
 
 //
@@ -59,11 +60,11 @@ public class LayerConv {
     protected int xsize;
     protected int ysize;
 
-    public LayerConv( int filterSize, Integer filterForChannel, Integer padding, Integer stride ) {
+    public LayerConv( int filterSize, Integer _filterForChannel, Integer padding, Integer stride ) {
         this.filterSize = filterSize;
-        this.filterForChannel = filterForChannel;
+        this.filterForChannel = _filterForChannel;
         this.padding = ( padding==null ) ? 0 : padding;
-        this.stride = (stride==null) ? 1 : stride;
+        this.stride = ( stride==null ) ? 1 : stride;
     }
     private void initFilters(){
         this.filters = new Neuron2D[ filterNum ];
@@ -80,14 +81,14 @@ public class LayerConv {
     }
     private void initAry(){
         X  = new float[ channels ][ xsize ][ xsize ];
+        Y = new float[ filterForChannel ][ ysize ][ ysize ];
     }
-
 
     public void setUpByX(float[][][] _x ) {
         //if ( padding!=0 ) { _x = Conv.extendAry( _x, padding ); }
-        this.channels= _x.length;
-        this.filterNum=filterForChannel*channels;
-        this.xsize=_x[0].length;
+        this.channels = _x.length;
+        this.filterNum = filterForChannel*channels;
+        this.xsize = _x[0].length;
         this.ysize = getYSize();
         initAry();
         initFilters();
@@ -113,17 +114,17 @@ public class LayerConv {
         }
     }
 
-
-
-
     public float[][][] Forward() {
-        Y = new float[ filterForChannel ][ ysize ][ ysize ];
-        float[][][] FtmpOUT = new float[filterNum][][];
+        float[][][] Y_ = new float[filterForChannel][ysize][ysize];
+        float[][][] FtmpOUT = new float[filterNum][ysize][ysize];
 
        // MASS multiply Fnc * Xc
        for ( int f=0;f<filterForChannel; f++ ) {
            for ( int c=0;c<channels; c++) {
                FtmpOUT[f*channels+c] = ConvolutionFilterTimesXc(filters[f], X[c]);
+               // System.out.println( Tools.AryToString(  filters[f].getMyWeight() ));
+               // System.out.println( Tools.AryToString(  X[c] ));
+               //System.out.println( Tools.AryToString(  ConvolutionFilterTimesXc(filters[f], X[c]) ) );
            }
        }
 
@@ -134,7 +135,7 @@ public class LayerConv {
             int biasSize = bTMP.length;
             for (int x=0; x<biasSize; x++){
                 for (int y=0; x<biasSize; x++) {
-                    Y[f][x][y] = 0.0f;//bTMP[x][y];
+                    Y_[f][x][y] = 0.0f;//bTMP[x][y];
                 }
             }
 
@@ -142,12 +143,15 @@ public class LayerConv {
             for ( int c=0; c<channels; c++ ){
                 for (int x = 0; x < ysize; x++) {
                     for (int y = 0; y < ysize; y++) {
-                        Y[f][x][y] += ( FtmpOUT[ f*channels +c ][x][y] );
+                        Y_[f][x][y] += ( FtmpOUT[ f*channels +c ][x][y] );
                     }
                 }
             }
         }
-        return Y;
+        //System.out.println( Tools.AryToString( getNeuron(0).getMyWeight() ));
+        //System.out.println( Tools.AryToString( Y ));
+        //if (true) throw new RuntimeException("!");
+        return Y_;
     }
 
 

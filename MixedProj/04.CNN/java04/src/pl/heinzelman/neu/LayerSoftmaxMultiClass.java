@@ -69,7 +69,7 @@ public class LayerSoftmaxMultiClass {
         //gradient of the cross entropy loss
 
         float[][] gradient = _Mat.v_zeros(10);
-        gradient[0][correct_label] = -1 / Z[0][correct_label];
+        gradient[0][correct_label] = -1 / ( Z[0][correct_label] );
         return gradient;
     }
 

@@ -333,6 +333,17 @@ public class Tools {
     }
 
 
+    public static String AryToString( float[]X ){
+        StringBuffer out = new StringBuffer();
+        if (X==null) return "";
+        for (int i=0;i<X.length;i++){
+            out.append("\n[" );
+                out.append( " "+X[i]+"," );
+            out.append("]");
+        }
+        return out.toString();
+    }
+
     public static String AryToString( float[][]X ){
         StringBuffer out = new StringBuffer();
         if (X==null) return "";
