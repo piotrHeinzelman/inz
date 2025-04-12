@@ -1,3 +1,5 @@
+// https://www.youtube.com/watch?v=Pn7RK7tofPg
+// https://www.youtube.com/watch?v=vbUozbkMhI0
 
 // git@github.com:eliasyilma/CNN.git
 
@@ -10,8 +12,8 @@ public class Main {
     public static void main( String[] args ) {
         Task task;
         // task = new Task_64_64_simple_backward();
-        task = new Task_CNN();
-        //task = new Task_3();
+        // task = new Task_CNN();
+        task = new Task_2();
         task.doTask();
     }
 }

@@ -32,7 +32,7 @@ public class  Task_3 implements Task{
 
     public void prepare() {
         int filterNum=8;
-        int dataSize =20;
+        int dataSize =100;
         tools.prepareData( dataSize );
 
         testX = tools.getTestX();
@@ -79,7 +79,7 @@ public class  Task_3 implements Task{
     @Override
     public void run() {
 
-        for (int j=0;j<500;j++) {
+        for (int j=0;j<5;j++) {
 
             for (int i = 0; i < 10; i++) train();
             test();
