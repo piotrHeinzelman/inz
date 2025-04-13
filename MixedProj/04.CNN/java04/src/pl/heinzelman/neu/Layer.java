@@ -88,7 +88,7 @@ public class Layer implements LayerParent {
             return;
         }
         for ( int n=0; n< neurons.length; n++ ){
-            neurons[n].Backward( Ein[n] * dFofZ[n] );
+            neurons[n].Backward( Ein[n] * dFofZ[n], Ein[n]  );
         }
         // https://www.youtube.com/watch?v=AbLvJVwySEo
         // backward of softmaxMulticlass

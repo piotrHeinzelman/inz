@@ -32,7 +32,7 @@ public class  Task_3 implements Task{
 
     public void prepare() {
         int filterNum=8;
-        int dataSize =100;
+        int dataSize =1;
         tools.prepareData( dataSize );
 
         testX = tools.getTestX();
@@ -111,7 +111,7 @@ public class  Task_3 implements Task{
 
             Z = forward_(X);
             float[][] gradient = layer2SoftmaxMulticlass.compute_gradient( Z, correct_label );
-            loss += layer2SoftmaxMulticlass.delta_Loss( Z, correct_label );
+            loss += layer2SoftmaxMulticlass.delta_Loss( correct_label );
             backward_( gradient );
 
             sum++;

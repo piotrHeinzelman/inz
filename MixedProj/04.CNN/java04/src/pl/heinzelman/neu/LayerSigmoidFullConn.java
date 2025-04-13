@@ -63,7 +63,7 @@ public class LayerSigmoidFullConn implements LayerParent {
     public float[] nBackward( float[] Ein ){ // S-Z or Ein
         for ( int m=0;m<Eout.length;m++ ){ Eout[m]=0.0f;}
         for ( int n=0; n<neurons.length; n++ ){
-            neurons[n].Backward( Ein[n] * dFofZ[n] );
+            neurons[n].Backward( Ein[n] * dFofZ[n], Ein[n] );
         }
         return Eout;
     }
@@ -119,6 +119,26 @@ public class LayerSigmoidFullConn implements LayerParent {
         for (int i=0;i<neurons.length;i++){
             neurons[i].setWeights( w[i] );
         }
+    }
+
+    public float[] getdZ(  float [] target ){
+        // https://www.youtube.com/watch?v=vbUozbkMhI0
+        // dZ3 = (A3-Y)
+        //
+        float[] dZ = new float[Z.length];
+        for ( int i=0; i<Z.length; i++ ){
+            dZ[i] = ( Z[i] - target[i] );
+        }
+        return dZ;
+    }
+
+    public float[] getdZ(  int targetClass ){
+        float[] Vtarget = new float[Z.length];
+        for (int i=0;i<Z.length; i++){
+            Vtarget[i]=0.0f;
+        }
+        Vtarget[targetClass]=1.0f;
+        return getdZ( Vtarget );
     }
 
 }

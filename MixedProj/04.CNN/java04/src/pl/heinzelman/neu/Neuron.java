@@ -3,7 +3,7 @@ package pl.heinzelman.neu;
 import java.util.Arrays;
 
 public class Neuron {
-    private float bias=0;
+    private float bias=0.0f;
     private final float[] W;
     private final LayerParent parent;
     private final static float mu=0.005f;
@@ -29,7 +29,7 @@ public class Neuron {
         return res;
     }
 
-    public void Backward( float en_x_dFIznI ) {
+    public void Backward( float en_x_dFIznI , float eIn ) {
         // weights
         float[] X = parent.getX();
         for ( int m=0; m<W.length; m++ ) {

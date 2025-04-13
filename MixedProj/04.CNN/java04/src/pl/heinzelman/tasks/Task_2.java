@@ -82,13 +82,14 @@ public class Task_2 implements Task{
 
                     float[] outZ = forward_( X );
 
-                    //float[][] ZZ = new float[1][10];  ZZ[0]=outZ;
-                    //float[] Z_S = layer3SoftmaxMulticlass.compute_gradient( ZZ, tools.getIndexMaxFloat(trueZ) )[0];
-                    float[] Z_S = tools.vectorSubstZsubS( outZ, trueZ );
+                    float[][] ZZ = new float[1][10];  ZZ[0]=outZ;
+                    float[] Z_S = layer3SoftmaxMulticlass.compute_gradient( ZZ, tools.getIndexMaxFloat(trueZ) )[0];
+                    //float[] Z_S = tools.vectorSubstZsubS( outZ, trueZ );
 
                                    backward_(Z_S);
                     //Loss += Tools.meanSquareError( outZ, trueZ );
-                    Loss += Tools.crossEntropyMulticlassError( outZ );
+                    //Loss += Tools.crossEntropyMulticlassError( outZ );
+                    Loss += layer3SoftmaxMulticlass.delta_Loss( tools.getIndexMaxFloat( trueZ ));
 
                 }
                 CSBin_data[epoch]=Loss/trainX.length;

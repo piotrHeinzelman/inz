@@ -115,7 +115,7 @@ public class Task_CNN implements Task{
                     float[][] gradient = layer6SoftmaxMulticlass.compute_gradient( Z, correct_label );
                     //       gradient[0] = Tools.vectorSubstZsubS( Z[0], trainY[ind_ex] );
                            gradient[0] = Tools.gradientSoftMax( Z[0], trainY[ind_ex] );
-                   Loss  += layer6SoftmaxMulticlass.delta_Loss( Z, correct_label );
+                   Loss  += layer6SoftmaxMulticlass.delta_Loss( correct_label );
                    Loss2 += Tools.crossEntropyMulticlassError( Z[0] );
 
                     _backward( gradient );

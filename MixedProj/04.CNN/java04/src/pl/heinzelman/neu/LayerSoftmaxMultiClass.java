@@ -64,20 +64,44 @@ public class LayerSoftmaxMultiClass {
     }
 
 
+    // cost   _  m
+    // -1/m * \  [ yi *log (ai) + (1-yi)* log(1-ai) ]
+    //        /
+    //        - i=1         [] = LOSS,   -1/m SUM [] = COST
+
     public float[][] compute_gradient( float[][] Z, int correct_label ){
         //BACKWARD PROPAGATION --- STOCHASTIC GRADIENT DESCENT
         //gradient of the cross entropy loss
 
+        //public static float[] vectorSubstZsubS(float[] z, float[] s){
+            float[][] out = new float[1][ Z[0].length];
+            for ( int i=0;i<Z[0].length; i++ ){
+                if ( i==correct_label ) { out[0][i] = Z[0][i]-1.0f; }
+                         else           { out[0][i] = Z[0][i]; }
+                //out[0][i] = ( Z[i] ) ; if ( i==correct_label ) { Z[i]=Z[i]-1.0f; } //- S[i] );
+            }
+        if (true)    return out;
+        //}
+
+        //public static float[] gradientSoftMax( float[] S, float[] Z ){
+        //    float[][] out = new float[1][ Z[0].length];
+        //    for ( int i=0;i<Z[0].length; i++ ){
+        //        if ( S[i]==0 ) { out [i]=0; }
+        //        else { out[i] = ( -1 / S[i] ); }
+        //    }
+        //    return out;
+        //}
+
+
         float[][] gradient = _Mat.v_zeros(10);
-        gradient[0][correct_label] = -1 / ( Z[0][correct_label] );
+        gradient[0][correct_label] = -1.0f / (float) Math.log( Z[0][correct_label] );
         return gradient;
     }
 
-    public float delta_Loss( float[][] Z, int correct_label ) {
+    public float delta_Loss( int correct_label ) {
         // compute cross-entropy loss
         // not used
-        //ce_loss += (float) -Math.log(out_l[0][correct_label]);
-        float value_correctLabel = Z[0][correct_label];
+        float value_correctLabel = Z[correct_label];
         return  (float) -Math.log( value_correctLabel );
     }
 
