@@ -66,6 +66,7 @@ public class LayerConv {
         this.padding = ( padding==null ) ? 0 : padding;
         this.stride = ( stride==null ) ? 1 : stride;
     }
+
     private void initFilters(){
         this.filters = new Neuron2D[ filterNum ];
         Random rand = new Random();
@@ -79,6 +80,7 @@ public class LayerConv {
             biases[i] = new Neuron2D( ysize, this );
         }
     }
+
     private void initAry(){
         X  = new float[ channels ][ xsize ][ xsize ];
         Y = new float[ filterForChannel ][ ysize ][ ysize ];
@@ -93,8 +95,6 @@ public class LayerConv {
         initAry();
         initFilters();
     }
-
-
 
     public void setX(float[][][] _x ) {
        //     // if ( padding!=0 ) { _x = Conv.extendAry( _x, padding ); }
@@ -115,13 +115,16 @@ public class LayerConv {
     }
 
     public float[][][] Forward() {
+        System.out.println( filterForChannel + " : " +  ysize + " : " + xsize + " : " + filterNum );
+
+
         float[][][] Y_ = new float[filterForChannel][ysize][ysize];
         float[][][] FtmpOUT = new float[filterNum][ysize][ysize];
 
        // MASS multiply Fnc * Xc
        for ( int f=0;f<filterForChannel; f++ ) {
            for ( int c=0;c<channels; c++) {
-               FtmpOUT[f*channels+c] = ConvolutionFilterTimesXc(filters[f], X[c]);
+               FtmpOUT[f*channels+c] = ConvolutionFilterTimesXc( filters[f], X[c] );
                // System.out.println( Tools.AryToString(  filters[f].getMyWeight() ));
                // System.out.println( Tools.AryToString(  X[c] ));
                //System.out.println( Tools.AryToString(  ConvolutionFilterTimesXc(filters[f], X[c]) ) );
@@ -154,8 +157,6 @@ public class LayerConv {
         return Y_;
     }
 
-
-
     public float[][] ConvolutionFilterTimesXc(Neuron2D filter, float[][] Xc ) {
         float[][] W = filter.getMyWeight();
         float[][] OUT = new float[ysize][ysize];
@@ -167,10 +168,9 @@ public class LayerConv {
                     for (int y=0;y<filterSize;y++) {
                         // every channel (c)
                         // target output[i][j]
-                        OUT[i][j] += (( Xc[ i*stride + x ][ j*stride + y ]) * (W[x][y]) );
+                        OUT[i][j] += ( ( Xc[ i*stride + x ][ j*stride + y ]) * ( W[x][y] ) );
                     }
                 }
-
             }
         }
         return OUT;
@@ -189,7 +189,6 @@ public class LayerConv {
                 // print( signal.convolve2d( delta, f, "full" ) )
                 float[][] OUTDeltafc = Conv.fullConv( dLdO[f], filters[ f*channels + c ].getRot180() , 1 /* stride ! */ ); // !!! ?
                 dOUTc = Tools.aryAdd( dOUTc, OUTDeltafc );
-
 
                 // print('Kernel gradient SUM: every channel: UPDATE WEIGHT ')
                 // print( signal.correlate2d( x, delta, "valid") )
