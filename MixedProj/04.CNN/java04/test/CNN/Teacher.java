@@ -1,6 +1,7 @@
 package CNN;
 
 import pl.heinzelman.LayerDeep.LayerConv;
+import pl.heinzelman.neu.LayerSoftmaxMultiClass;
 import pl.heinzelman.tools.Tools2;
 
 public class Teacher   {
@@ -14,6 +15,7 @@ public class Teacher   {
 
     //initialize layers
     private final LayerConv myConv = new LayerConv( 3, 8, null, null );
+    private final LayerSoftmaxMultiClass myLayerSoftmax = new LayerSoftmaxMultiClass( 10 );
     private  final Convolution conv=new Convolution();
     private  final MaxPool pool=new MaxPool();
     private  SoftMax softmax;
@@ -40,12 +42,22 @@ public class Teacher   {
         filterNum = filterNum_;
         softmax=new SoftMax( 13*13*filterNum, 10, filterNum );
         filters = init_filters( filterNum_ );
+
+        float[][][] oneX = new float[1][][];
+        oneX[0] = tools.convertToSquare28x28( trainX[0] );
+        myConv.setUpByX( oneX );
+
     }
 
 
     public float[][] forward( float[][] pxl ){
         // perform convolution 28*28 --> 8x26x26
         float[][][] out = conv.forward( pxl, filters, filterNum );
+
+        //float[][][] oneX = new float[1][][];
+        //oneX[0]=pxl;
+        //myConv.setX( oneX );
+        //out = myConv.Forward();
 
         // perform maximum pooling  8x26x26 --> 8x13x13
         out = pool.forward( out );
@@ -60,6 +72,7 @@ public class Teacher   {
         float[][][] sm_gradient=softmax.backprop( gradient,learn_rate );
         float[][][] mp_gradient=pool.backprop( sm_gradient );
         conv.backprop( mp_gradient, learn_rate );
+        //myConv.Backward( mp_gradient );
     }
 
 
@@ -80,25 +93,15 @@ public class Teacher   {
             // importImage
             int correct_label=tools.getIndexMaxFloat( trainY[i] );
             float[][] pxl = tools.convertToSquare28x28( trainX[i] );
-// -->
+
             out_l = forward( pxl );
 
             // compute cross-entropy loss
             ce_loss += tools.getCeLoss_CNN( out_l, correct_label );
-            accuracy += correct_label == Mat.v_argmax(out_l) ? 1 : 0;
-
-            float[][] gradient = tools.gradientCNN( out_l, correct_label);
-
+            accuracy += correct_label == tools.getIndexMaxFloat(out_l[0]) ? 1:0;
+            float[][] gradient = myLayerSoftmax.gradientCNN( out_l, correct_label );
             backward( gradient, learn_rate );
-
-            //if( i % 100 == 99 ){
-            // System.out.println(" step: "+ i+ " loss: "+ce_loss/100.0+" accuracy: "+accuracy);
-            //    ce_loss=0;
-            //    acc_sum+=accuracy;
-            //    accuracy=0;
-            //}
         }
-        // System.out.println("filters: "+ filterNum +", average accuracy:- "+acc_sum/training_size+"%\n\n");
     }
 
 

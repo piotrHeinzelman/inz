@@ -115,7 +115,7 @@ public class LayerConv {
     }
 
     public float[][][] Forward() {
-        System.out.println( filterForChannel + " : " +  ysize + " : " + xsize + " : " + filterNum );
+        //System.out.println( "filterForChannel: " + filterForChannel + ", ysize: " +  ysize + " : " + xsize + " : " + filterNum );
 
 
         float[][][] Y_ = new float[filterForChannel][ysize][ysize];
