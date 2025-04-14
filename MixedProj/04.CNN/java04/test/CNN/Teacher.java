@@ -13,7 +13,7 @@ public class Teacher   {
 
 
     //initialize layers
-    private final LayerConv myConv = new LayerConv(3, 8, null, null);
+    private final LayerConv myConv = new LayerConv( 3, 8, null, null );
     private  final Convolution conv=new Convolution();
     private  final MaxPool pool=new MaxPool();
     private  SoftMax softmax;
@@ -21,7 +21,7 @@ public class Teacher   {
     private  float[][][] filters;
 
 
-    public  float[][][] init_filters(int size) {
+    public  float[][][] init_filters( int size ) {
         float[][][] result = new float[size][3][3];
         for (int k = 0; k < size; k++) {
             result[k] = Mat.m_random(3, 3);
@@ -38,28 +38,28 @@ public class Teacher   {
         testY = tools.getTestY();
 
         filterNum = filterNum_;
-        softmax=new SoftMax(13*13*filterNum,10, filterNum );
+        softmax=new SoftMax( 13*13*filterNum, 10, filterNum );
         filters = init_filters( filterNum_ );
     }
 
 
     public float[][] forward( float[][] pxl ){
         // perform convolution 28*28 --> 8x26x26
-        float[][][] out = conv.forward(pxl, filters, filterNum);
+        float[][][] out = conv.forward( pxl, filters, filterNum );
 
         // perform maximum pooling  8x26x26 --> 8x13x13
-        out = pool.forward(out);
+        out = pool.forward( out );
 
         // perform softmax operation  8*13*13 --> 10
-        float[][] out_l = softmax.forward(out);
+        float[][] out_l = softmax.forward( out );
         return out_l;
     }
 
 
     public void backward( float[][] gradient, float learn_rate ){
-        float[][][] sm_gradient=softmax.backprop(gradient,learn_rate);
-        float[][][] mp_gradient=pool.backprop(sm_gradient);
-        conv.backprop(mp_gradient, learn_rate);
+        float[][][] sm_gradient=softmax.backprop( gradient,learn_rate );
+        float[][][] mp_gradient=pool.backprop( sm_gradient );
+        conv.backprop( mp_gradient, learn_rate );
     }
 
 
@@ -84,24 +84,21 @@ public class Teacher   {
             out_l = forward( pxl );
 
             // compute cross-entropy loss
-            ce_loss += (float) -Math.log(out_l[0][correct_label]);
+            ce_loss += tools.getCeLoss_CNN( out_l, correct_label );
             accuracy += correct_label == Mat.v_argmax(out_l) ? 1 : 0;
 
-            //BACKWARD PROPAGATION --- STOCHASTIC GRADIENT DESCENT
-            //gradient of the cross entropy loss
-            float[][] gradient=Mat.v_zeros(10);
-            gradient[0][correct_label]=-1/out_l[0][correct_label];
+            float[][] gradient = tools.gradientCNN( out_l, correct_label);
 
             backward( gradient, learn_rate );
 
-            if(  i % 100 == 99){
-                //System.out.println(" step: "+ i+ " loss: "+ce_loss/100.0+" accuracy: "+accuracy);
-                ce_loss=0;
-                acc_sum+=accuracy;
-                accuracy=0;
-            }
+            //if( i % 100 == 99 ){
+            // System.out.println(" step: "+ i+ " loss: "+ce_loss/100.0+" accuracy: "+accuracy);
+            //    ce_loss=0;
+            //    acc_sum+=accuracy;
+            //    accuracy=0;
+            //}
         }
-        System.out.println("filters: "+ filterNum +", average accuracy:- "+acc_sum/training_size+"%\n\n");
+        // System.out.println("filters: "+ filterNum +", average accuracy:- "+acc_sum/training_size+"%\n\n");
     }
 
 

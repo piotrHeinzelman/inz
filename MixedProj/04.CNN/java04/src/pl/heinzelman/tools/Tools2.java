@@ -119,5 +119,21 @@ public class Tools2 {
         return out.toString();
     }
 
+    public float[][] gradientCNN( float[][] out_l, int correct_label ){
+
+        //BACKWARD PROPAGATION --- STOCHASTIC GRADIENT DESCENT
+        //gradient of the cross entropy loss
+
+        float[][] gradient=new float[1][10]; //Mat.v_zeros(10);
+        for (int i=0;i<10;i++){ gradient[0][i]=0.0f; }
+        gradient[0][correct_label]=-1/out_l[0][correct_label];
+        return gradient;
+    }
+
+    public float getCeLoss_CNN( float [][] out_l , int correct_label ){
+        //ce_loss += (float) -Math.log(out_l[0][correct_label]);
+        return (float) -Math.log(out_l[0][correct_label]);
+    }
+
 
 }
