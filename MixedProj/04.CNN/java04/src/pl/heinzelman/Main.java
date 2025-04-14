@@ -13,7 +13,7 @@ public class Main {
         Task task;
         //task = new Task_64_64_simple_backward();
         // task = new Task_CNN();
-        task = new Task_4();
+        task = new Task_2();
         task.doTask();
     }
 }

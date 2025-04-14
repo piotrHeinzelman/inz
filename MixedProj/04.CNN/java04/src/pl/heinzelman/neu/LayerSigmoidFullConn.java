@@ -41,10 +41,10 @@ public class LayerSigmoidFullConn implements LayerParent {
 
     private void rnd(){
         Random random=new Random();
-        float normalization=0.1f*X.length;
+        float normalization=X.length;
         for ( Neuron neu : neurons ) {
             for ( int m=0; m<X.length; m++ ) {
-                neu.setWm( m ,  (  ( -1.0f+2.0f*random.nextFloat()) / normalization )  );
+                neu.setWm( m , random.nextFloat() / normalization );
             }
         }
     }

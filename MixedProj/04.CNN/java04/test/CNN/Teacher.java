@@ -102,6 +102,8 @@ public class Teacher   {
             float[][] gradient = myLayerSoftmax.gradientCNN( out_l, correct_label );
             backward( gradient, learn_rate );
         }
+        System.out.println( ce_loss );
+        ce_loss=0.0f;
     }
 
 

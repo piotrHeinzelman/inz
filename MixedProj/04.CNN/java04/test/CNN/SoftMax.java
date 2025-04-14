@@ -1,5 +1,7 @@
 package CNN;
 
+import pl.heinzelman.tools.Tools;
+
 public class SoftMax {
     
 
@@ -19,7 +21,6 @@ public class SoftMax {
         weights = Mat.m_scale(Mat.m_random(input, output), 1.0f / input);
         bias = Mat.v_zeros(10);
         String s="aaa";
-        
     }
 
 
