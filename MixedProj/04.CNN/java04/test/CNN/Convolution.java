@@ -17,7 +17,7 @@ public class Convolution {
         for (int i = 1; i < image.length - 2; i++) {
             for (int j = 1; j < image[0].length - 2; j++) {
                 float[][] conv_region = Mat.m_sub(image, i - 1, i + 1, j - 1, j + 1);
-                result[i][j] = Mat.mm_elsum(conv_region, filter);
+                result[i-1][j-1] = Mat.mm_elsum(conv_region, filter);
             }
         }
         return result;

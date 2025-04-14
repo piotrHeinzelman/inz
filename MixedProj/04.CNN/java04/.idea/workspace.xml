@@ -112,6 +112,8 @@
     "JUnit.CNN_3_class.gradientTest.executor": "Run",
     "JUnit.CNN_test.BackConvolutionTest2.executor": "Run",
     "JUnit.CnnApplication.ConvTest.executor": "Run",
+    "JUnit.CnnApplication.executor": "Run",
+    "JUnit.CnnApplication.forwardTest.executor": "Run",
     "JUnit.CnnApplication.main (1).executor": "Run",
     "JUnit.CnnApplication.main.executor": "Run",
     "JUnit.CnnApplication.mainTest.executor": "Run",
@@ -220,19 +222,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CnnApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="pl.heinzelman.CNN.CnnApplication" />
-      <module name="nweb" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="pl.heinzelman.CNN.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="pl.heinzelman.Main" />
       <module name="nweb" />
@@ -246,15 +235,33 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="OLD.OOOLD.CnnApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="OLD.OOOLD.CnnApplication" />
+    <configuration name="CnnApplication" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="nweb" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="OLD.OOOLD.*" />
+          <option name="PATTERN" value="CNN.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="CNN" />
+      <option name="MAIN_CLASS_NAME" value="CNN.CnnApplication" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CnnApplication.forwardTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="nweb" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="CNN.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="CNN" />
+      <option name="MAIN_CLASS_NAME" value="CNN.CnnApplication" />
+      <option name="METHOD_NAME" value="forwardTest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -278,10 +285,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.CnnApplication.mainTest" />
+        <item itemvalue="JUnit.CnnApplication.forwardTest" />
+        <item itemvalue="JUnit.CnnApplication" />
         <item itemvalue="Application.Main" />
         <item itemvalue="Application.CNN.CnnApplication" />
-        <item itemvalue="Application.OLD.OOOLD.CnnApplication" />
-        <item itemvalue="Application.CnnApplication" />
       </list>
     </recent_temporary>
   </component>

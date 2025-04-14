@@ -106,14 +106,23 @@ public class Tools2 {
     public float[][] getTrainX() { return trainX; }
     public float[][] getTestX()  { return testX;  }
 
-    public static String AryToString( float[]X ){
+    public  String AryToString( float[]X ){
         return Arrays.toString( X );
     }
-    public static String AryToString( float[][]X ){
+    public  String AryToString( float[][]X ){
         StringBuffer out = new StringBuffer();
         out.append("[");
         for (int i=0;i<X.length;i++) {
             out.append(""+Arrays.toString( X[i])+"\n");
+        }
+        out.append("]");
+        return out.toString();
+    }
+    public  String AryToString( float[][][]X ){
+        StringBuffer out = new StringBuffer();
+        out.append("[");
+        for (int i=0;i<X.length;i++) {
+            out.append(i+": " + AryToString( X[i] ) + "\n");
         }
         out.append("]");
         return out.toString();
