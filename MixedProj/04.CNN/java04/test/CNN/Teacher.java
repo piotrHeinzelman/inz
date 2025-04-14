@@ -1,18 +1,27 @@
 package CNN;
 
+import pl.heinzelman.LayerDeep.LayerConv;
+import pl.heinzelman.tools.Tools2;
+
 public class Teacher   {
 
-    private final static FileReadr fileReadr = new FileReadr();
+    private Tools2 tools = new Tools2();
+    private float[][] trainX;
+    private float[][] trainY;
+    private float[][] testX;
+    private float[][] testY;
+
 
     //initialize layers
-    private static final Convolution conv=new Convolution();
-    private static final MaxPool pool=new MaxPool();
-    private static SoftMax softmax;
-    private static int filterNum;
-    private static float[][][] filters;
+    private final LayerConv myConv = new LayerConv(3, 8, null, null);
+    private  final Convolution conv=new Convolution();
+    private  final MaxPool pool=new MaxPool();
+    private  SoftMax softmax;
+    private  int filterNum;
+    private  float[][][] filters;
 
 
-    public static float[][][] init_filters(int size) {
+    public  float[][][] init_filters(int size) {
         float[][][] result = new float[size][3][3];
         for (int k = 0; k < size; k++) {
             result[k] = Mat.m_random(3, 3);
@@ -21,21 +30,45 @@ public class Teacher   {
     }
 
 
-    public static void prepare( int filterNum_ ){
+    public void prepare( int filterNum_ ){
+        tools.prepareData(100);
+        trainX = tools.getTrainX();
+        trainY = tools.getTrainY();
+        testX = tools.getTestX();
+        testY = tools.getTestY();
+
         filterNum = filterNum_;
         softmax=new SoftMax(13*13*filterNum,10, filterNum );
         filters = init_filters( filterNum_ );
     }
 
-    public static void train(int training_size  )   {
 
+    public float[][] forward( float[][] pxl ){
+        // perform convolution 28*28 --> 8x26x26
+        float[][][] out = conv.forward(pxl, filters, filterNum);
+
+        // perform maximum pooling  8x26x26 --> 8x13x13
+        out = pool.forward(out);
+
+        // perform softmax operation  8*13*13 --> 10
+        float[][] out_l = softmax.forward(out);
+        return out_l;
+    }
+
+
+    public void backward( float[][] gradient, float learn_rate ){
+        float[][][] sm_gradient=softmax.backprop(gradient,learn_rate);
+        float[][][] mp_gradient=pool.backprop(sm_gradient);
+        conv.backprop(mp_gradient, learn_rate);
+    }
+
+
+    public void train(int training_size  )   {
         int label_counter = 0;
         float ce_loss=0;
         int accuracy=0;
         float acc_sum=0.0f;
         float learn_rate=0.01f;
-
-
 
         float[][] out_l = new float[1][10];
         for (int i = 0; i < training_size; i++) {
@@ -45,18 +78,10 @@ public class Teacher   {
             //FORWARD PROPAGATION
 
             // importImage
-            int[][] X = fileReadr.getNextTrainX();
-            int correct_label=X[0][0];
-            float[][] pxl =  Tools.squareIntToSquareFLoat( X );
-
-            // perform convolution 28*28 --> 8x26x26
-            float[][][] out = conv.forward(pxl, filters, filterNum);
-
-            // perform maximum pooling  8x26x26 --> 8x13x13
-            out = pool.forward(out);
-
-            // perform softmax operation  8*13*13 --> 10
-            out_l = softmax.forward(out);
+            int correct_label=tools.getIndexMaxFloat( trainY[i] );
+            float[][] pxl = tools.convertToSquare28x28( trainX[i] );
+// -->
+            out_l = forward( pxl );
 
             // compute cross-entropy loss
             ce_loss += (float) -Math.log(out_l[0][correct_label]);
@@ -66,9 +91,9 @@ public class Teacher   {
             //gradient of the cross entropy loss
             float[][] gradient=Mat.v_zeros(10);
             gradient[0][correct_label]=-1/out_l[0][correct_label];
-            float[][][] sm_gradient=softmax.backprop(gradient,learn_rate);
-            float[][][] mp_gradient=pool.backprop(sm_gradient);
-            conv.backprop(mp_gradient, learn_rate);
+
+            backward( gradient, learn_rate );
+
             if(  i % 100 == 99){
                 //System.out.println(" step: "+ i+ " loss: "+ce_loss/100.0+" accuracy: "+accuracy);
                 ce_loss=0;
@@ -81,7 +106,7 @@ public class Teacher   {
 
 
 
-    public static void test (int test_size  )   {
+    public  void test (int test_size  )   {
 
         int[][] errors = new int[10][10];
         int error = 0;
@@ -97,18 +122,11 @@ public class Teacher   {
             //FORWARD PROPAGATION
 
             // importImage
-            int[][] X = fileReadr.getNextTrainX();
-            int correct_label = X[0][0];
-            float[][] pxl = Tools.squareIntToSquareFLoat(X);
+            int correct_label=tools.getIndexMaxFloat( testY[i] );
+            float[][] pxl = tools.convertToSquare28x28( testX[i] );
 
             // perform convolution 28*28 --> 8x26x26
-            float[][][] out = conv.forward(pxl, filters, filterNum);
-
-            // perform maximum pooling  8x26x26 --> 8x13x13
-            out = pool.forward(out);
-
-            // perform softmax operation  8*13*13 --> 10
-            out_l = softmax.forward(out);
+            out_l = forward( pxl );
 
             // compute cross-entropy loss
             int findClass = (int) Mat.v_argmax(out_l);

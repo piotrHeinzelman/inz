@@ -81,7 +81,7 @@ public class Tools2 {
         return bytesBuf;
     }
 
-    public static float[][] convertToSquare28x28( float[] vector ){
+    public float[][] convertToSquare28x28( float[] vector ){
         float[][] square = new float[28][28];
         for ( int y=0;y<28;y++ ){
             for ( int x=0;x<28;x++ ) {
