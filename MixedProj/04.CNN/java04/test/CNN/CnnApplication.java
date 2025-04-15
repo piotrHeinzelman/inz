@@ -4,6 +4,7 @@ import org.junit.Test;
 import pl.heinzelman.LayerDeep.LayerConv;
 import pl.heinzelman.LayerDeep.LayerFlatten;
 import pl.heinzelman.LayerDeep.LayerPoolingMax;
+import pl.heinzelman.neu.LayerNoActivateFullConn;
 import pl.heinzelman.neu.LayerSigmoidFullConn;
 import pl.heinzelman.neu.LayerSoftmaxMultiClass;
 import pl.heinzelman.tools.Tools;
@@ -21,7 +22,7 @@ public class CnnApplication {
 	private final LayerPoolingMax myPool = new LayerPoolingMax(2,2);
 
 	private final LayerFlatten myFlatten = new LayerFlatten();
-	private final LayerSigmoidFullConn myFC = new LayerSigmoidFullConn(13*13*2, 10);
+	private final LayerNoActivateFullConn myFC = new LayerNoActivateFullConn(13*13*2, 10);
 	private final LayerSoftmaxMultiClass mySoftmax = new LayerSoftmaxMultiClass( 10 );
 
 	private float[][][] filters = new float[ filterNum ][3][3];
@@ -53,12 +54,8 @@ public class CnnApplication {
 
 		// perform softmax operation  8*13*13 --> 10
 		// softmax.weights =
-		 float[][] out_l = softmax.forward( out );
-
-
-		System.out.println( "out_l:" + tools.AryToString( out_l ) );
-		System.out.println( "\r\n\r\n\r\n" );
-
+/* -> */ float[][] out_l = softmax.forward( out ); // <--
+System.out.println( "out_l:" + tools.AryToString( out_l ) );
 
 		myConv.setX( trainX );
 		float[][][] myOUT = myConv.Forward();
@@ -66,15 +63,14 @@ public class CnnApplication {
 		myOUT = myPool.Forward();
 		float[] flat = myFlatten.Forward( myOUT );
 
-		for (int j=0;j<13*13*2;j++){
-			for (int k=0;k<10;k++){
-				myFC.getNeuron(k).setWm( j,softmax.weights[j][k] );
-			}
-		}
+				for (int j=0;j<softmax.weights.length;j++){
+					for (int k=0;k<softmax.weights[0].length;k++){
+						myFC.getNeuron(k).setWm( j,softmax.weights[j][k] );
+					}
+				}
 		float[] Z = myFC.nForward(flat);
-		float[] SoftZ = mySoftmax.nForward(Z);
-
-		System.out.println( "myConv Z:" + tools.AryToString( SoftZ ) );
+				float[] SoftZ = mySoftmax.nForward(Z);
+System.out.println( "mySoftmax nForward:" + tools.AryToString( SoftZ ) );
 	}
 
 

@@ -26,8 +26,9 @@ public class SoftMax {
 
     public float[][] forward(float[][][] input) {
         //flattens the input to [8] X [13] X [13] to a [1] X [8*13*13] vector.
-        float[][] in = Mat.m_flatten(input);  //1X1342
+        float[][] in = Mat.m_flatten( input );  //1X1342
         output = new float[1][bias.length];    //1X10
+// equal System.out.println( "\n\nin: \n" + Tools.AryToString( in ) );
      // evaluate the total activation value --> t=[i][w]+[b] and cache the totals for backprop
      // [1] X [10] =  [1] X [1342]  * [1342] X [10] + [1] X [10]
         output = Mat.mm_add(Mat.mm_mult(in, weights), bias);
