@@ -1,7 +1,6 @@
 package pl.heinzelman.tasks;
 
 import pl.heinzelman.LayerDeep.*;
-import pl.heinzelman.neu.LayerSigmoidFullConn;
 import pl.heinzelman.neu.LayerSoftmaxMultiClass;
 import pl.heinzelman.tools.Tools;
 
@@ -18,8 +17,7 @@ public class  Task_3 implements Task{
     private LayerConv layerConv = new LayerConv( 3 , 8, null, null  );
     private LayerFlatten layerFlatten = new LayerFlatten();
     private LayerPoolingMax layerPoolMAX = new LayerPoolingMax(1,1);
-    private LayerSigmoidFullConn layer1FC = new LayerSigmoidFullConn( 26*26*8, 10 );
-    private LayerSoftmaxMultiClass layer2SoftmaxMulticlass = new LayerSoftmaxMultiClass( 10 );
+    private LayerSoftmaxMultiClass layer1SoftmaxMultiClass = new LayerSoftmaxMultiClass( 26*26*8, 10 );
 
     float[][][] oneX = new float[1][28][28];
     float[][] out1x10 = new float[1][10];
@@ -32,7 +30,7 @@ public class  Task_3 implements Task{
 
     public void prepare() {
         int filterNum=8;
-        int dataSize =1;
+        int dataSize =2;
         tools.prepareData( dataSize );
 
         testX = tools.getTestX();
@@ -58,17 +56,15 @@ public class  Task_3 implements Task{
         float[][][] Zconv = layerConv.Forward();
 
         float[] Xf = layerFlatten.Forward(Zconv);
-        float[] Z1 = layer1FC.nForward( Xf );
-        float[] Z2 = layer2SoftmaxMulticlass.nForward( Z1 );
+        float[] Z1 = layer1SoftmaxMultiClass.nForward( Xf );
 
         // convert out to [1][10]
-        out1x10[0]=Z2;
+        out1x10[0]=Z1;
         return out1x10;
     }
 
     public float[][][] backward_( float[][] gradient ){
-        float[] L2eOUT = layer2SoftmaxMulticlass.nBackward( gradient[0] );
-        float[] eOUT = layer1FC.nBackward( L2eOUT );
+        float[] eOUT = layer1SoftmaxMultiClass.nBackward( gradient[0] );
         float[][][] eOUTF    = layerFlatten.Backward( eOUT );
         return layerConv.Backward( eOUTF );
     }
@@ -79,11 +75,9 @@ public class  Task_3 implements Task{
     @Override
     public void run() {
 
-        for (int j=0;j<5;j++) {
-
+        for (int j=0;j<25;j++) {
             for (int i = 0; i < 10; i++) train();
             test();
-
         }
 
     }
@@ -110,8 +104,10 @@ public class  Task_3 implements Task{
             int correct_label = tools.getIndexMaxFloat(trueZ);
 
             Z = forward_(X);
-            float[][] gradient = layer2SoftmaxMulticlass.compute_gradient( Z, correct_label );
-            loss += layer2SoftmaxMulticlass.delta_Loss( correct_label );
+            // float[][] gradient = layer2SoftmaxMulticlass.compute_gradient( Z, correct_label );
+            float[][] gradient = layer1SoftmaxMultiClass.gradientCNN( Z, correct_label );
+// System.out.println( Tools.AryToString( gradient ) );
+            loss += layer1SoftmaxMultiClass.delta_Loss( correct_label );
             backward_( gradient );
 
             sum++;

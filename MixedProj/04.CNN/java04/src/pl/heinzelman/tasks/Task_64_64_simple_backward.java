@@ -1,7 +1,7 @@
 package pl.heinzelman.tasks;
 
 import pl.heinzelman.neu.LayerSigmoidFullConn;
-import pl.heinzelman.neu.LayerSoftmaxMultiClass;
+import pl.heinzelman.neu.LayerSoftmaxMultiClassONLYFORWARD;
 import pl.heinzelman.tools.Tools;
 
 import java.util.Arrays;
@@ -15,7 +15,7 @@ public class Task_64_64_simple_backward implements Task{
 
     private LayerSigmoidFullConn layer1;
     private LayerSigmoidFullConn layer2;
-    private LayerSoftmaxMultiClass layer3;
+    private LayerSoftmaxMultiClassONLYFORWARD layer3;
 
     private Tools tools = new Tools();
 
@@ -35,7 +35,7 @@ public class Task_64_64_simple_backward implements Task{
 
         layer2=new LayerSigmoidFullConn( 64 ,10 ); layer2.setName("Layer2"); // n neurons
 
-        layer3=new LayerSoftmaxMultiClass( 10 ); layer3.setName("Layer3"); // n neurons
+        layer3=new LayerSoftmaxMultiClassONLYFORWARD( 10 ); layer3.setName("Layer3"); // n neurons
 
     }
 

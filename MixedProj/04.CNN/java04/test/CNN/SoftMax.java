@@ -47,12 +47,17 @@ public class SoftMax {
         float[][] t_exp = Mat.v_exp(output);
         float S = Mat.v_sum(t_exp);
         float[][] d_L_d_inputs=null;
-        
+
+        //System.out.println( " d_L_d_out: " + Tools.AryToString( d_L_d_out ) );
+
         for (int i = 0; i < d_L_d_out[0].length; i++) {
             float grad = d_L_d_out[0][i];
             if (grad == 0) {
                 continue;
             }
+
+
+
             //gradient of the output layer w.r.t. the totals [1] X [10]
             float[][] d_out_d_t = Mat.v_scale(t_exp, -t_exp[0][i] / (S * S));
             d_out_d_t[0][i] = t_exp[0][i] * (S - t_exp[0][i]) / (S * S);

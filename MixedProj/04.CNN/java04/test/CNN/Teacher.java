@@ -1,7 +1,7 @@
 package CNN;
 
 import pl.heinzelman.LayerDeep.LayerConv;
-import pl.heinzelman.neu.LayerSoftmaxMultiClass;
+import pl.heinzelman.neu.LayerSoftmaxMultiClassONLYFORWARD;
 import pl.heinzelman.tools.Tools2;
 
 public class Teacher   {
@@ -15,7 +15,7 @@ public class Teacher   {
 
     //initialize layers
     private final LayerConv myConv = new LayerConv( 3, 8, null, null );
-    private final LayerSoftmaxMultiClass myLayerSoftmax = new LayerSoftmaxMultiClass( 10 );
+    private final LayerSoftmaxMultiClassONLYFORWARD myLayerSoftmax = new LayerSoftmaxMultiClassONLYFORWARD( 10 );
     private  final Convolution conv=new Convolution();
     private  final MaxPool pool=new MaxPool();
     private  SoftMax softmax;

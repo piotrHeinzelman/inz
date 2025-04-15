@@ -1,16 +1,9 @@
 package pl.heinzelman.neu;
 
 import pl.heinzelman.LayerDeep._Mat;
-import pl.heinzelman.tools.Tools;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
-
-import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
 // Forward
 // y = Neu[n]*X[]; /y is scalar, a number !
@@ -24,44 +17,176 @@ import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 //Weight
 //dF(Z)*E
 
-public class LayerSoftmaxMultiClass {
+public class LayerSoftmaxMultiClass implements LayerParent {
     private String name;
+    private  Neuron[] neurons;
     private  float X[];
     private  float Y[];
     private  float Z[];
     private  float dFofZ[][];
     private  float Eout[]; // S-Z for last
-    private  float tmp[][];
 
-    public LayerSoftmaxMultiClass() {}
-    public LayerSoftmaxMultiClass( int n ) { // n - number of inputs  = input  size X[m]
-                                             // n - number of neurons & output size Y[n], Z[n]
-        X = new float[n];
+    public LayerSoftmaxMultiClass( int m, int n ) { // m - number of inputs  = input  size X[m]
+                                                    // n - number of neurons & output size Y[n], Z[n]
+        this.neurons = new Neuron[n];
+        for (int i=0; i<n; i++){
+            this.neurons[i]=new Neuron( m, this );
+        }
+        X = new float[m];
         Y = new float[n];
         Z = new float[n];
-        dFofZ= new float[n][n];
-        Eout = new float[n];
-        tmp  = new float[n][n];
+        dFofZ = new float[n][m];
+        Eout = new float[m];
+        rnd();
     }
 
 
-    public float[] nForward( float[] X ) {
-        // OK !
-        int len=X.length;
+    private void rnd(){
+        Random random=new Random();
+        float normalization=X.length;
+        for ( Neuron neu : neurons ) {
+            for ( int m=0; m<X.length; m++ ) {
+                neu.setWm( m , random.nextFloat() / normalization );
+            }
+        }
+    }
+
+
+    public float[] nForward( float[] _x ) {
+        for (int m=0;m<X.length;m++){ X[m]=_x[m]; Eout[m]=0; }
+        for (int n = 0; n < neurons.length; n++) {
+            Y[n] = neurons[n].Forward( X );
+        }
+        // Softmax
+        int len=Y.length;
         float sum = 0.0f;
         float max = 0.0f;
         for ( int i=0;i<len;i++ ){ // find MAX
-            if (X[i]>max) { max=X[i]; }
+            if (Y[i]>max) { max=Y[i]; }
         }
-        for ( int i=0; i<len; i++ ) {  // Yi = e^Xi
-            Y[i] = (float) Math.exp( X[i]-max );
-            sum += Y[i];
+        for ( int i=0; i<len; i++ ) {  // Zi = e^Xi
+            Z[i] = (float) Math.exp( Y[i]-max );
+            sum += Z[i];
         }
         for ( int i = 0; i < len; i++ ) { // Yi = Yi/sum
-            Z[i] = Y[i] / sum;
+            Z[i] = Z[i] / sum;
         }
         return Z;
     }
+
+    public float[] nBackward( float[] Ein ){ // S-Z or Ein
+        for ( int m=0;m<Eout.length;m++ ){ Eout[m]=0.0f;}
+        for ( int n=0; n<neurons.length; n++ ){
+            neurons[n].Backward( Ein[n]  /*  * dFofZ[n] */, Ein[n] );
+        }
+        if ( true )return Eout;
+
+
+
+        for ( int m=0;m<Eout.length;m++ ){ Eout[m]=0.0f; } // reset EOUT
+        for ( int i=0;i<dFofZ.length;i++){
+            for ( int j=0;j<dFofZ.length;j++) {
+                dFofZ[i][j]=0.0f;
+            }
+        }
+
+        // https://www.youtube.com/watch?v=AbLvJVwySEo
+        // backward of softmaxMulticlass
+        // if i=k  dx/de    = yi(1-yi)
+        // else             = -yi*yk
+        //
+        // py:
+        // n = np.size (output)
+        // tmp = np.tile ( output, n )
+        // return np.dot( tmp * (np.identity(n) - np.transpose(tmp)), output )
+
+        // https://www.youtube.com/watch?v=pauPCy_s0Ok
+
+
+        // !!!!!!!!!!!!!!!!!
+        int len=X.length;
+        for ( int i=0;i<len;i++ ){
+            for ( int j=0;j<len;j++ ){
+                dFofZ[i][j] = -1.0f*(Z[i]*Z[j]);
+            }
+        }
+        for ( int i=0;i<len;i++ ){
+            dFofZ[i][i] = Z[i]*(1.0f-Z[i]);
+        }
+        //System.out.println( Tools.AryToString( dFofZ ));
+        for ( int i=0;i<len;i++ ){
+            for (int j=0;j<len;j++) {
+                Eout[i] += Ein[j] * dFofZ[i][j]; // sum= sum ( dFofZ[i][..] )
+            }
+        }
+        return Eout;
+    }
+
+    // getters / setters
+    public float[] getZ() { return Z; }
+    public float[] getX() { return X; }
+    public float[] getEout() { return Eout; }
+
+
+    @Override
+    public String toString() {
+        return "\nLayer{" + name + " : "+
+                "\nneurons=" + Arrays.toString(neurons) +
+                "\nX=" + Arrays.toString(X) +
+                "\nY=" + Arrays.toString(Y) +
+                "\nZ=" + Arrays.toString(Z) +
+                "\ndZ=" + Arrays.toString(dFofZ) +
+                '}';
+    }
+
+    public void setName(String name) { this.name = name; }
+    public void setWmn( int n, int m, float wji ){
+        neurons[n].setWm( m, wji );
+    }
+
+
+    //@Deprecated
+    public float[] getY() { return Y; }
+
+    //@Deprecated
+    public float[] getNeuronWeight( int i ){
+        return neurons[i].getMyWeight();
+    }
+
+    public Neuron getNeuron(int i) {
+        return neurons[i];
+    }
+    public void setAllWeight( float[][] w ){
+        for (int i=0;i<neurons.length;i++){
+            neurons[i].setWeights( w[i] );
+        }
+    }
+
+    public float[] getdZ(  float [] target ){
+        // https://www.youtube.com/watch?v=vbUozbkMhI0
+        // dZ3 = (A3-Y)
+        //
+        float[] dZ = new float[Z.length];
+        for ( int i=0; i<Z.length; i++ ){
+            dZ[i] = ( Z[i] - target[i] );
+        }
+        return dZ;
+    }
+
+    public float[] getdZ(  int targetClass ){
+        float[] Vtarget = new float[Z.length];
+        for (int i=0;i<Z.length; i++){
+            Vtarget[i]=0.0f;
+        }
+        Vtarget[targetClass]=1.0f;
+        return getdZ( Vtarget );
+    }
+
+
+
+
+
+
 
 
     // cost   _  m
@@ -74,12 +199,12 @@ public class LayerSoftmaxMultiClass {
         //gradient of the cross entropy loss
 
         //public static float[] vectorSubstZsubS(float[] z, float[] s){
-            float[][] out = new float[1][ Z[0].length];
-            for ( int i=0;i<Z[0].length; i++ ){
-                if ( i==correct_label ) { out[0][i] = Z[0][i]-1.0f; }
-                         else           { out[0][i] = Z[0][i]; }
-                //out[0][i] = ( Z[i] ) ; if ( i==correct_label ) { Z[i]=Z[i]-1.0f; } //- S[i] );
-            }
+        float[][] out = new float[1][ Z[0].length];
+        for ( int i=0;i<Z[0].length; i++ ){
+            if ( i==correct_label ) { out[0][i] = Z[0][i]-1.0f; }
+            else           { out[0][i] = Z[0][i]; }
+            //out[0][i] = ( Z[i] ) ; if ( i==correct_label ) { Z[i]=Z[i]-1.0f; } //- S[i] );
+        }
         if (true)    return out;
         //}
 
@@ -114,65 +239,18 @@ public class LayerSoftmaxMultiClass {
         for (int i=0;i<10;i++){ gradient[0][i]=0.0f; }
         gradient[0][correct_label]=-1/out_l[0][correct_label];
         return gradient;
-    }
 
-
-    public float[] nBackward( float[] Ein ){ // S-Z or Ein
-        for ( int m=0;m<Eout.length;m++ ){ Eout[m]=0.0f; } // reset EOUT
-        for ( int i=0;i<dFofZ.length;i++){
-            for ( int j=0;j<dFofZ.length;j++) {
-                dFofZ[i][j]=0.0f;
-            }
-        }
-
-        // https://www.youtube.com/watch?v=AbLvJVwySEo
-        // backward of softmaxMulticlass
-        // if i=k  dx/de    = yi(1-yi)
-        // else             = -yi*yk
+        // grad straty = (si-ki)
         //
-        // py:
-        // n = np.size (output)
-        // tmp = np.tile ( output, n )
-        // return np.dot( tmp * (np.identity(n) - np.transpose(tmp)), output )
-
-	    // https://www.youtube.com/watch?v=pauPCy_s0Ok
-
-        int len=tmp.length;
-        for ( int i=0;i<len;i++ ){
-            for ( int j=0;j<len;j++ ){
-               dFofZ[i][j] = -1.0f*(Z[i]*Z[j]);
-            }
-        }
-        for ( int i=0;i<len;i++ ){
-              dFofZ[i][i] = Z[i]*(1.0f-Z[i]);
-        }
-        //System.out.println( Tools.AryToString( dFofZ ));
-        for ( int i=0;i<len;i++ ){
-            for (int j=0;j<len;j++) {
-                Eout[i] += Ein[j] * dFofZ[i][j]; // sum= sum ( dFofZ[i][..] )
-            }
-        }
-        return Eout;
+        // dL/dwij = (si-ki) * xj : gdzie si = out_l[0][i],     if i==correctLabel k=1 else k=0
+        //           j=1
+        // ???????????????????????????
+        //for (int i=0;i<10;i++){ gradient[0][i]=Z[i]; }
+        //        gradient[0][correct_label]=(Z[correct_label]-1);
+        //return gradient;
     }
 
 
-    // getters / setters // dummy class ---------------------------------
-
-    public float[] getX() { return X; }
-    public float[] getY() { return Y; }
-    public float[] getZ() { return Z; }
-    public float[] getEout() { return Eout; }
 
 
-    @Override
-    public String toString() {
-        return "\nLayer{" + name + " : "+
-                "\nX=" + Arrays.toString(X) +
-                "\nY=" + Arrays.toString(Y) +
-                "\nZ=" + Arrays.toString(Z) +
-                "\ndZ=" + Arrays.toString(dFofZ) +
-                '}';
-    }
-
-    public void setName(String name) { this.name = name; }
 }

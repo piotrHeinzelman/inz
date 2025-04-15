@@ -1,10 +1,7 @@
 package pl.heinzelman.LayerDeep;
 
 import org.junit.jupiter.api.Test;
-import pl.heinzelman.neu.LType;
-import pl.heinzelman.neu.Layer;
-import pl.heinzelman.neu.LayerSoftmaxMultiClass;
-import pl.heinzelman.tools.Tools;
+import pl.heinzelman.neu.LayerSoftmaxMultiClassONLYFORWARD;
 
 import java.util.Arrays;
 
@@ -17,7 +14,7 @@ public class SigmoidMultiClass {
 
         float[] output_gradient = new float[]{ 0.5f, 0.6f, 0.7f, 0.8f };
 
-        LayerSoftmaxMultiClass layer = new LayerSoftmaxMultiClass( 4 );
+        LayerSoftmaxMultiClassONLYFORWARD layer = new LayerSoftmaxMultiClassONLYFORWARD( 4 );
         float[] Y = layer.nForward( X );
         //System.out.println( "Y: "+Arrays.toString( Y ) );
 

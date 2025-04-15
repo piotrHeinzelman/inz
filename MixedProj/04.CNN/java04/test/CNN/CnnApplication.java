@@ -4,10 +4,8 @@ import org.junit.Test;
 import pl.heinzelman.LayerDeep.LayerConv;
 import pl.heinzelman.LayerDeep.LayerFlatten;
 import pl.heinzelman.LayerDeep.LayerPoolingMax;
-import pl.heinzelman.neu.LayerNoActivateFullConn;
-import pl.heinzelman.neu.LayerSigmoidFullConn;
 import pl.heinzelman.neu.LayerSoftmaxMultiClass;
-import pl.heinzelman.tools.Tools;
+import pl.heinzelman.neu.LayerSoftmaxMultiClassONLYFORWARD;
 import pl.heinzelman.tools.Tools2;
 
 public class CnnApplication {
@@ -22,13 +20,13 @@ public class CnnApplication {
 	private final LayerPoolingMax myPool = new LayerPoolingMax(2,2);
 
 	private final LayerFlatten myFlatten = new LayerFlatten();
-	private final LayerNoActivateFullConn myFC = new LayerNoActivateFullConn(13*13*2, 10);
-	private final LayerSoftmaxMultiClass mySoftmax = new LayerSoftmaxMultiClass( 10 );
+	private final LayerSoftmaxMultiClass myFCSoftmax = new LayerSoftmaxMultiClass( 13*13*2, 10 );
 
 	private float[][][] filters = new float[ filterNum ][3][3];
 
+
 	@Test
-	public void forwardTest(){
+	public void forwardTest(){ // OK //
 		tools.prepareData( 100 );
 		float[] XX=tools.getTrainX()[0];
 		// System.out.println(XX.length + " : "  + Tools2.AryToString(  XX ));
@@ -53,9 +51,8 @@ public class CnnApplication {
 					out = pool.forward( out );
 
 		// perform softmax operation  8*13*13 --> 10
-		// softmax.weights =
-/* -> */ float[][] out_l = softmax.forward( out ); // <--
-System.out.println( "out_l:" + tools.AryToString( out_l ) );
+		float[][] out_l = softmax.forward( out ); // <--
+
 
 		myConv.setX( trainX );
 		float[][][] myOUT = myConv.Forward();
@@ -65,12 +62,50 @@ System.out.println( "out_l:" + tools.AryToString( out_l ) );
 
 				for (int j=0;j<softmax.weights.length;j++){
 					for (int k=0;k<softmax.weights[0].length;k++){
-						myFC.getNeuron(k).setWm( j,softmax.weights[j][k] );
+						myFCSoftmax.getNeuron(k).setWm( j,softmax.weights[j][k] );
 					}
 				}
-		float[] Z = myFC.nForward(flat);
-				float[] SoftZ = mySoftmax.nForward(Z);
-System.out.println( "mySoftmax nForward:" + tools.AryToString( SoftZ ) );
+		float[] SoftZ = myFCSoftmax.nForward(flat);
+
+		// FORWARD CORRECT --
+		//System.out.println( "out_l[0]: " + tools.AryToString( out_l[0] ) );
+		//System.out.println( "SoftZ   : "+ tools.AryToString( SoftZ ) );
+
+		float ce_loss = 0.0f; int accuracy=0;
+		int correct_label = 2;
+		// GRADIENT TEST // OK
+		ce_loss += tools.getCeLoss_CNN( out_l, correct_label );
+		accuracy += correct_label == tools.getIndexMaxFloat(out_l[0]) ? 1:0;
+
+		float[][] gradient = myFCSoftmax.gradientCNN( out_l, correct_label );
+
+		float[][] SoftZ_Dim = new float[1][]; SoftZ_Dim[0]=SoftZ;
+		float[][] gradient2 = myFCSoftmax.gradientCNN( SoftZ_Dim, correct_label );
+
+		float learn_rate = 0.01f;
+
+
+		// ************************************
+		// ***
+		// ***       backpropagate test !
+
+		float[][][] sm_gradient=softmax.backprop( gradient,learn_rate );
+		//float[][][] mp_gradient=pool.backprop( sm_gradient );
+		//conv.backprop( mp_gradient, learn_rate );
+
+/* -> */
+//System.out.println( sm_gradient.length + " :" +  Tools.AryToString( sm_gradient ) );
+
+		float[] myFCGradient = myFCSoftmax.nBackward( gradient[0] );
+
+		//float[][][] eOUTF    = myFlatten.Backward( eOUT );
+		//float[][][] backward = myConv.Backward(eOUTF);
+
+/* -> */
+
+System.out.println( " sm_gradient: " + tools.AryToString( sm_gradient ) );
+System.out.println( " myFCGradient: " + tools.AryToString( myFCGradient ) );
+
 	}
 
 
@@ -79,8 +114,9 @@ System.out.println( "mySoftmax nForward:" + tools.AryToString( SoftZ ) );
 
 		Teacher teacher = new Teacher();
 		teacher.prepare( 8 );
-
-
+		//teacher.train( 60000 );
+		//teacher.train( 60000 );
+		teacher.train( 100 );
 		teacher.train( 100 );
 		teacher.train( 100 );
 		teacher.train( 100 );

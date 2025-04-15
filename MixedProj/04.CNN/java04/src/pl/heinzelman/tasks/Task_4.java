@@ -1,11 +1,5 @@
 package pl.heinzelman.tasks;
 
-import pl.heinzelman.LayerDeep.LayerConv;
-import pl.heinzelman.LayerDeep.LayerFlatten;
-import pl.heinzelman.LayerDeep.LayerPoolingMax;
-import pl.heinzelman.neu.LayerSigmoidFullConn;
-import pl.heinzelman.neu.LayerSoftmaxMultiClass;
-import pl.heinzelman.tools.Tools;
 import pl.heinzelman.tools.Tools2;
 
 public class Task_4 implements Task{

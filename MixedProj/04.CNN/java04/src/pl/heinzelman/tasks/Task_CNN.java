@@ -5,7 +5,7 @@ import pl.heinzelman.LayerDeep.LayerFlatten;
 import pl.heinzelman.LayerDeep.LayerPoolingMax;
 import pl.heinzelman.LayerDeep.LayerReLU;
 import pl.heinzelman.neu.LayerSigmoidFullConn;
-import pl.heinzelman.neu.LayerSoftmaxMultiClass;
+import pl.heinzelman.neu.LayerSoftmaxMultiClassONLYFORWARD;
 import pl.heinzelman.tools.Tools;
 
 public class Task_CNN implements Task{
@@ -22,7 +22,7 @@ public class Task_CNN implements Task{
     private LayerFlatten layer4Flatten = new LayerFlatten();
 
     private LayerSigmoidFullConn layer5FC = new LayerSigmoidFullConn( 20*12*12, 10 ); //13*13*8 //1152 //26*26*8
-    private LayerSoftmaxMultiClass layer6SoftmaxMulticlass = new LayerSoftmaxMultiClass( 10 );
+    private LayerSoftmaxMultiClassONLYFORWARD layer6SoftmaxMulticlass = new LayerSoftmaxMultiClassONLYFORWARD( 10 );
 
     private Tools tools = new Tools();
     float[][][] oneX = new float[1][][];
