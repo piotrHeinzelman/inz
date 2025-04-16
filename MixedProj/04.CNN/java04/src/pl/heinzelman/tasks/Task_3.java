@@ -63,8 +63,8 @@ public class  Task_3 implements Task{
         return out1x10;
     }
 
-    public float[][][] backward_( float[][] gradient ){
-        float[] eOUT = layer1SoftmaxMultiClass.nBackward( gradient[0] );
+    public float[][][] backward_( float[] gradient ){
+        float[] eOUT = layer1SoftmaxMultiClass.nBackward( gradient );
         float[][][] eOUTF    = layerFlatten.Backward( eOUT );
         return layerConv.Backward( eOUTF );
     }
@@ -105,7 +105,7 @@ public class  Task_3 implements Task{
 
             Z = forward_(X);
             // float[][] gradient = layer2SoftmaxMulticlass.compute_gradient( Z, correct_label );
-            float[][] gradient = layer1SoftmaxMultiClass.gradientCNN( Z, correct_label );
+            float[] gradient = layer1SoftmaxMultiClass.gradientCNN( Z, correct_label );
 // System.out.println( Tools.AryToString( gradient ) );
             loss += layer1SoftmaxMultiClass.delta_Loss( correct_label );
             backward_( gradient );

@@ -97,14 +97,14 @@ public class LayerSoftmaxMultiClassONLYFORWARD {
         return  (float) -Math.log( value_correctLabel );
     }
 
-    public float[][] gradientCNN( float[][] out_l, int correct_label ){
+    public float[] gradientCNN( float[][] out_l, int correct_label ){
 
         //BACKWARD PROPAGATION --- STOCHASTIC GRADIENT DESCENT
         //gradient of the cross entropy loss
 
-        float[][] gradient=new float[1][10]; //Mat.v_zeros(10);
-        for (int i=0;i<10;i++){ gradient[0][i]=0.0f; }
-        gradient[0][correct_label]=-1/out_l[0][correct_label];
+        float[] gradient=new float[10]; //Mat.v_zeros(10);
+        for (int i=0;i<10;i++){ gradient[i]=0.0f; }
+        gradient[correct_label]=-1/out_l[0][correct_label];
         return gradient;
     }
 

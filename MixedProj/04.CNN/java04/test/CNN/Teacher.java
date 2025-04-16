@@ -68,7 +68,7 @@ public class Teacher   {
     }
 
 
-    public void backward( float[][] gradient, float learn_rate ){
+    public void backward( float[] gradient, float learn_rate ){
         float[][][] sm_gradient=softmax.backprop( gradient,learn_rate );
         float[][][] mp_gradient=pool.backprop( sm_gradient );
         conv.backprop( mp_gradient, learn_rate );
@@ -99,7 +99,7 @@ public class Teacher   {
             // compute cross-entropy loss
             ce_loss += tools.getCeLoss_CNN( out_l, correct_label );
             accuracy += correct_label == tools.getIndexMaxFloat(out_l[0]) ? 1:0;
-            float[][] gradient = myLayerSoftmax.gradientCNN( out_l, correct_label );
+            float[] gradient = myLayerSoftmax.gradientCNN( out_l, correct_label );
             backward( gradient, learn_rate );
         }
         System.out.println( ce_loss );

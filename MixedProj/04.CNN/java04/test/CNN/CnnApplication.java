@@ -77,10 +77,10 @@ public class CnnApplication {
 		ce_loss += tools.getCeLoss_CNN( out_l, correct_label );
 		accuracy += correct_label == tools.getIndexMaxFloat(out_l[0]) ? 1:0;
 
-		float[][] gradient = myFCSoftmax.gradientCNN( out_l, correct_label );
+		float[] gradient = myFCSoftmax.gradientCNN( out_l, correct_label );
 
 		float[][] SoftZ_Dim = new float[1][]; SoftZ_Dim[0]=SoftZ;
-		float[][] gradient2 = myFCSoftmax.gradientCNN( SoftZ_Dim, correct_label );
+		float[] gradient2 = myFCSoftmax.gradientCNN( SoftZ_Dim, correct_label );
 
 		// Gradiend  myFCSoftmax.gradientCNN( out_l, correct_label ); ** CORRECT **
 		// tools.echo(gradient2);
@@ -102,6 +102,7 @@ public class CnnApplication {
 		// ***
 		// ***       backpropagate test !
 
+
 		float[][][] sm_gradient=softmax.backprop( gradient,learn_rate );
 		//float[][][] mp_gradient=pool.backprop( sm_gradient );
 		//conv.backprop( mp_gradient, learn_rate );
@@ -109,12 +110,12 @@ public class CnnApplication {
 /* -> */
 
 
-		float[] myFCGradient = myFCSoftmax.nBackward( gradient[0] );
+		float[] myFCGradient = myFCSoftmax.nBackward( gradient );
 		float[][][] eOUTF    = myFlatten.Backward( myFCGradient );
-tools.echo( sm_gradient[0] );
-tools.echo( sm_gradient[1] );
-tools.echo( eOUTF[0] );
-tools.echo( eOUTF[1] );
+//tools.echo( sm_gradient[0] );
+//tools.echo( sm_gradient[1] );
+//tools.echo( eOUTF[0] );
+//tools.echo( eOUTF[1] );
 
 		//
 		//float[][][] backward = myConv.Backward(eOUTF);

@@ -40,9 +40,9 @@ public class SoftMax {
         return Mat.v_scale(totals, inv_activation_sum);
     }
 
-    public float[][][] backprop(float[][] d_L_d_out, float learning_rate) {
+    public float[][][] backprop(float[] d_L_d_out, float learning_rate) {
         //gradient of loss w.r.t. the total probabilites of the softmax layer.
-        float[][] d_L_d_t = new float[1][d_L_d_out[0].length];
+        float[][] d_L_d_t = new float[1][d_L_d_out.length];
         //repeat softmax probability computations (caching can be used to avoid this.)
         float[][] t_exp = Mat.v_exp(output);
         float S = Mat.v_sum(t_exp);
@@ -50,8 +50,8 @@ public class SoftMax {
 
         //System.out.println( " d_L_d_out: " + Tools.AryToString( d_L_d_out ) );
 
-        for (int i = 0; i < d_L_d_out[0].length; i++) {
-            float grad = d_L_d_out[0][i];
+        for (int i = 0; i < d_L_d_out.length; i++) {
+            float grad = d_L_d_out[i];
             if (grad == 0) {
                 continue;
             }
