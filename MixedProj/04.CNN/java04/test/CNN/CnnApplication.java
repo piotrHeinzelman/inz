@@ -35,13 +35,13 @@ public class CnnApplication {
 		int trainY = tools.getIndexMaxFloat(  tools.getTrainY()[0] );
 		myConv.setUpByX( trainX );
 
-		filters[0][0]= new float[]{-0.1f, 0.1f, -0.1f};
-		filters[0][1]= new float[]{ 0.1f, 0.2f,  0.1f};
-		filters[0][2]= new float[]{-0.2f, 0.3f, -0.2f};
+		filters[0][0]= new float[]{ -0.1f, 0.1f, -0.1f };
+		filters[0][1]= new float[]{  0.1f, 0.2f,  0.1f };
+		filters[0][2]= new float[]{ -0.2f, 0.3f, -0.2f };
 
-		filters[1][0]= new float[]{-0.4f,  0.2f, -0.3f};
-		filters[1][1]= new float[]{-0.5f, -0.5f, -0.2f};
-		filters[1][2]= new float[]{-0.6f,  0.3f, -0.6f};
+		filters[1][0]= new float[]{ -0.4f,  0.2f, -0.3f };
+		filters[1][1]= new float[]{ -0.5f, -0.5f, -0.2f };
+		filters[1][2]= new float[]{ -0.6f,  0.3f, -0.6f };
 
 		myConv.getNeuron(0).setW( filters[0] );
 		myConv.getNeuron(1).setW( filters[1] );
@@ -82,7 +82,20 @@ public class CnnApplication {
 		float[][] SoftZ_Dim = new float[1][]; SoftZ_Dim[0]=SoftZ;
 		float[][] gradient2 = myFCSoftmax.gradientCNN( SoftZ_Dim, correct_label );
 
+		// Gradiend  myFCSoftmax.gradientCNN( out_l, correct_label ); ** CORRECT **
+		// tools.echo(gradient2);
+		// tools.echo(gradient);
+
 		float learn_rate = 0.01f;
+
+
+
+
+
+
+
+
+
 
 
 		// ************************************
@@ -94,17 +107,22 @@ public class CnnApplication {
 		//conv.backprop( mp_gradient, learn_rate );
 
 /* -> */
-//System.out.println( sm_gradient.length + " :" +  Tools.AryToString( sm_gradient ) );
+
 
 		float[] myFCGradient = myFCSoftmax.nBackward( gradient[0] );
+		float[][][] eOUTF    = myFlatten.Backward( myFCGradient );
+tools.echo( sm_gradient[0] );
+tools.echo( sm_gradient[1] );
+tools.echo( eOUTF[0] );
+tools.echo( eOUTF[1] );
 
-		//float[][][] eOUTF    = myFlatten.Backward( eOUT );
+		//
 		//float[][][] backward = myConv.Backward(eOUTF);
 
 /* -> */
 
-System.out.println( " sm_gradient: " + tools.AryToString( sm_gradient ) );
-System.out.println( " myFCGradient: " + tools.AryToString( myFCGradient ) );
+//System.out.println( " sm_gradient: " + tools.AryToString( sm_gradient ) );
+//System.out.println( " myFCGradient: " + tools.AryToString( myFCGradient ) );
 
 	}
 
@@ -116,30 +134,30 @@ System.out.println( " myFCGradient: " + tools.AryToString( myFCGradient ) );
 		teacher.prepare( 8 );
 		//teacher.train( 60000 );
 		//teacher.train( 60000 );
-		teacher.train( 100 );
-		teacher.train( 100 );
-		teacher.train( 100 );
-		teacher.train( 100 );
-		teacher.train( 100 );
-		teacher.train( 100 );
-		teacher.train( 100 );
-		teacher.train( 100 );
-		teacher.train( 100 );
-		teacher.train( 100 );
-		teacher.train( 100 );
-		teacher.train( 100 );
-		teacher.train( 100 );
-		teacher.train( 100 );
-		teacher.train( 100 );
-		teacher.train( 100 );
-		teacher.train( 100 );
-		teacher.train( 100 );
-		teacher.train( 100 );
-		teacher.train( 100 );
-		teacher.train( 100 );
-		teacher.train( 100 );
-		teacher.train( 100 );
-		teacher.train( 100 );
+		teacher.train( 128 );
+		teacher.train( 128 );
+		teacher.train( 128 );
+		teacher.train( 128 );
+		teacher.train( 128 );
+		teacher.train( 128 );
+		teacher.train( 128 );
+		teacher.train( 128 );
+		teacher.train( 128 );
+		teacher.train( 128 );
+		teacher.train( 128 );
+		teacher.train( 128 );
+		teacher.train( 128 );
+		teacher.train( 128 );
+		teacher.train( 128 );
+		teacher.train( 128 );
+		teacher.train( 128 );
+		teacher.train( 128 );
+		teacher.train( 128 );
+		teacher.train( 128 );
+		teacher.train( 128 );
+		teacher.train( 128 );
+		teacher.train( 128 );
+		teacher.train( 128 );
 
 		teacher.test( 1000 );
 
