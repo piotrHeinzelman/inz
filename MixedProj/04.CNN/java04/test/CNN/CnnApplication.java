@@ -101,7 +101,7 @@ public class CnnApplication {
 		// ************************************
 		// ***
 		// ***       backpropagate test !
-
+		// E OUT of SOFTMAX CORRECT
 
 		float[][][] sm_gradient=softmax.backprop( gradient,learn_rate );
 		//float[][][] mp_gradient=pool.backprop( sm_gradient );
@@ -122,8 +122,12 @@ public class CnnApplication {
 
 /* -> */
 
-//System.out.println( " sm_gradient: " + tools.AryToString( sm_gradient ) );
-//System.out.println( " myFCGradient: " + tools.AryToString( myFCGradient ) );
+// System.out.println( " sm_gradient: " + tools.AryToString( sm_gradient ) );
+// System.out.println( " myFCGradient: " + tools.AryToString( eOUTF ) );
+// System.out.println( " softmax.weights[0]: " + tools.AryToString(softmax.weights[0] ) );
+// System.out.println( " myFCSoftmax.getNeuronWeight(0): " + tools.AryToString( myFCSoftmax.getNeuronWeight(0) ) );
+// System.out.println( " myFCSoftmax.getNeuronWeight(1): " + tools.AryToString( myFCSoftmax.getNeuronWeight(1) ) );
+// System.out.println( " myFCSoftmax.getNeuronWeight(2): " + tools.AryToString( myFCSoftmax.getNeuronWeight(2) ) );
 
 	}
 

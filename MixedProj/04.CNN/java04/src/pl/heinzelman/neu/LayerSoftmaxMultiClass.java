@@ -1,6 +1,7 @@
 package pl.heinzelman.neu;
 
 import pl.heinzelman.LayerDeep._Mat;
+import pl.heinzelman.tools.Tools2;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -22,8 +23,9 @@ public class LayerSoftmaxMultiClass implements LayerParent {
     private  Neuron[] neurons;
     private  float X[];
     private  float Y[];
+    private  float sum=0.0f;
     private  float Z[];
-    private  float dFofZ[][];
+    private  float dFofZ[];
     private  float Eout[]; // S-Z for last
 
     public LayerSoftmaxMultiClass( int m, int n ) { // m - number of inputs  = input  size X[m]
@@ -35,7 +37,7 @@ public class LayerSoftmaxMultiClass implements LayerParent {
         X = new float[m];
         Y = new float[n];
         Z = new float[n];
-        dFofZ = new float[n][m];
+        dFofZ = new float[n];
         Eout = new float[m];
         rnd();
     }
@@ -59,28 +61,61 @@ public class LayerSoftmaxMultiClass implements LayerParent {
         }
         // Softmax
         int len=Y.length;
-        float sum = 0.0f;
+        sum = 0.0f;
         float max = 0.0f;
         for ( int i=0;i<len;i++ ){ // find MAX
             if (Y[i]>max) { max=Y[i]; }
         }
         for ( int i=0; i<len; i++ ) {  // Zi = e^Xi
-            Z[i] = (float) Math.exp( Y[i]-max );
-            sum += Z[i];
+            Y[i] = (float) Math.exp( Y[i]/*-max*/ );
+            sum += Y[i];
         }
         for ( int i = 0; i < len; i++ ) { // Yi = Yi/sum
-            Z[i] = Z[i] / sum;
+            Z[i] = Y[i] / sum;
         }
         return Z;
     }
 
     public float[] nBackward( float[] Ein ){ // S-Z or Ein
         for ( int m=0;m<Eout.length;m++ ){ Eout[m]=0.0f;}
-        for ( int n=0; n<neurons.length; n++ ){
-            neurons[n].Backward( Ein[n]  /*  * dFofZ[n] */, Ein[n] );
-        }
-        if ( true )return Eout;
 
+        int i=0;
+        // find gradient
+        for ( ;i<Ein.length;i++ ){ if (Ein[i]!=0) break; }
+        float EinTrue =Ein[i];
+
+        // https://www.youtube.com/watch?v=AbLvJVwySEo
+        // backward of softmaxMulticlass
+        // if i=k  dx/de    = yi(1-yi)
+        // else             = -yi*yk
+        //
+        // https://www.youtube.com/watch?v=pauPCy_s0Ok
+
+        int len=Z.length;
+        for ( int j=0;j<len;j++ ){
+            dFofZ[j] = -1.0f*(Z[i]*Z[j]);
+        }
+            dFofZ[i] = Z[i]*(1.0f-Z[i]);
+
+        // dFofZ * Ein[target]
+        float[] dFofZ_x_EinI_True_I = new float[dFofZ.length];
+        for (int j=0;j<dFofZ.length;j++){ dFofZ_x_EinI_True_I[j] = dFofZ[j]*EinTrue; }
+
+
+//Tools2 t = new Tools2();
+//t.echo( "dFofZ_x_EinI_True_I: ",dFofZ_x_EinI_True_I);
+//t.echo( "mySum" , sum );
+//t.echo( "myGrad" , grad );
+//System.out.println( "some:" + some );
+// t.echo( "mydFofZ" , dFofZ );
+
+
+        for ( int n=0; n<neurons.length; n++ ){
+            neurons[n].Backward( dFofZ_x_EinI_True_I[n]  , Ein[n] ); // EN[i] * dFofZ
+            neurons[n].BackwardBias( dFofZ_x_EinI_True_I[n] );
+        }
+        return Eout;
+        /*
 
 
         for ( int m=0;m<Eout.length;m++ ){ Eout[m]=0.0f; } // reset EOUT
@@ -90,17 +125,7 @@ public class LayerSoftmaxMultiClass implements LayerParent {
             }
         }
 
-        // https://www.youtube.com/watch?v=AbLvJVwySEo
-        // backward of softmaxMulticlass
-        // if i=k  dx/de    = yi(1-yi)
-        // else             = -yi*yk
-        //
-        // py:
-        // n = np.size (output)
-        // tmp = np.tile ( output, n )
-        // return np.dot( tmp * (np.identity(n) - np.transpose(tmp)), output )
 
-        // https://www.youtube.com/watch?v=pauPCy_s0Ok
 
 
         // !!!!!!!!!!!!!!!!!
@@ -120,6 +145,7 @@ public class LayerSoftmaxMultiClass implements LayerParent {
             }
         }
         return Eout;
+        */
     }
 
     // getters / setters
@@ -250,6 +276,32 @@ public class LayerSoftmaxMultiClass implements LayerParent {
         //return gradient;
     }
 
+
+
+
+
+
+
+
+
+
+    public static float[] v_scale(float[] v, float scale) {
+        float[] scl = new float[v.length];
+        for (int i = 0; i < v.length; i++) {
+            scl[i] = (float) v[i] * scale;
+        }
+        return scl;
+    }
+
+    public static float[][] m_scale(float[][] mat, float scale) {
+        float[][] scl = new float[mat.length][mat[0].length];
+        for (int i = 0; i < mat.length; i++) {
+            for (int j = 0; j < mat[0].length; j++) {
+                scl[i][j] = (float) mat[i][j] * scale;
+            }
+        }
+        return scl;
+    }
 
 
 

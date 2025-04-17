@@ -150,9 +150,12 @@ public class Tools2 {
     public  void echo ( float[] v  ) { System.out.println( Tools.AryToString( v ) ); }
     public  void echo ( float[][] v  ) { System.out.println( Tools.AryToString( v ) ); }
     public  void echo ( float[][][] v  ) { System.out.println( Tools.AryToString( v ) ); }
+
+    public  void echo ( String name, Number n ) { System.out.println( name + " : " + n.toString() ); }
     public  void echo ( String name, float[] v  ) { System.out.println( name + " : " + Tools.AryToString( v ) ); }
     public  void echo ( String name, float[][] v  ) { System.out.println( name + " : " + Tools.AryToString( v ) ); }
     public  void echo ( String name, float[][][] v  ) { System.out.println( name + " : " + Tools.AryToString( v ) ); }
+
 }
 
 

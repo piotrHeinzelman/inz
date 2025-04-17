@@ -38,6 +38,11 @@ public class Neuron {
         }
     }
 
+    public void BackwardBias( float en_x_dFIznI ) {
+        // biases
+        bias = bias - ( mu * en_x_dFIznI );
+    }
+
     public void Bias( float db ){
         bias = bias - ( mu * db );
     }
