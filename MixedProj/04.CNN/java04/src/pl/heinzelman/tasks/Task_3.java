@@ -15,8 +15,8 @@ public class  Task_3 implements Task{
     private float[][][] trainXX;
 
     private LayerConv layerConv = new LayerConv( 3 , 8, null, null  );
-    private LayerFlatten layerFlatten = new LayerFlatten();
     private LayerPoolingMax layerPoolMAX = new LayerPoolingMax(1,1);
+    private LayerFlatten layerFlatten = new LayerFlatten();
     private LayerSoftmaxMultiClass layer1SoftmaxMultiClass = new LayerSoftmaxMultiClass( 26*26*8, 10 );
 
     float[][][] oneX = new float[1][28][28];
@@ -54,8 +54,10 @@ public class  Task_3 implements Task{
         oneX[0] = X;
         layerConv.setX( oneX );
         float[][][] Zconv = layerConv.Forward();
+            layerPoolMAX.setX(Zconv);
+        float[][][] Zmax = layerPoolMAX.Forward();
 
-        float[] Xf = layerFlatten.Forward(Zconv);
+        float[] Xf = layerFlatten.Forward(Zmax);
         float[] Z1 = layer1SoftmaxMultiClass.nForward( Xf );
 
         // convert out to [1][10]
@@ -66,7 +68,8 @@ public class  Task_3 implements Task{
     public float[][][] backward_( float[] gradient ){
         float[] eOUT = layer1SoftmaxMultiClass.nBackward( gradient );
         float[][][] eOUTF    = layerFlatten.Backward( eOUT );
-        return layerConv.Backward( eOUTF );
+        float[][][] maxOut = layerPoolMAX.Backward(eOUTF);
+        return layerConv.Backward( maxOut );
     }
 
 

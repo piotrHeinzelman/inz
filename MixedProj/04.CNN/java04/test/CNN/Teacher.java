@@ -1,6 +1,9 @@
 package CNN;
 
 import pl.heinzelman.LayerDeep.LayerConv;
+import pl.heinzelman.LayerDeep.LayerFlatten;
+import pl.heinzelman.LayerDeep.LayerPoolingMax;
+import pl.heinzelman.neu.LayerSoftmaxMultiClass;
 import pl.heinzelman.neu.LayerSoftmaxMultiClassONLYFORWARD;
 import pl.heinzelman.tools.Tools2;
 
@@ -15,7 +18,10 @@ public class Teacher   {
 
     //initialize layers
     private final LayerConv myConv = new LayerConv( 3, 8, null, null );
-    private final LayerSoftmaxMultiClassONLYFORWARD myLayerSoftmax = new LayerSoftmaxMultiClassONLYFORWARD( 10 );
+    //private final LayerSoftmaxMultiClassONLYFORWARD myLayerSoftmax = new LayerSoftmaxMultiClassONLYFORWARD( 10 );
+    private final LayerSoftmaxMultiClass myLayerSoftmax = new LayerSoftmaxMultiClass( 13*13*8, 10 );
+    private final LayerFlatten myFlatten = new LayerFlatten();
+    private final LayerPoolingMax myPoolMax = new LayerPoolingMax(2,2);
     private  final Convolution conv=new Convolution();
     private  final MaxPool pool=new MaxPool();
     private  SoftMax softmax;
@@ -51,28 +57,29 @@ public class Teacher   {
 
 
     public float[][] forward( float[][] pxl ){
-        // perform convolution 28*28 --> 8x26x26
-        float[][][] out = conv.forward( pxl, filters, filterNum );
+        float[][][] out ;
 
-        //float[][][] oneX = new float[1][][];
-        //oneX[0]=pxl;
-        //myConv.setX( oneX );
-        //out = myConv.Forward();
+        // myForward !
+        float[][][] oneX = new float[1][][];
+        oneX[0]=pxl;
+        myConv.setX( oneX );
+        out = myConv.Forward();
 
-        // perform maximum pooling  8x26x26 --> 8x13x13
-        out = pool.forward( out );
+              myPoolMax.setX(out);
+        out = myPoolMax.Forward();
 
-        // perform softmax operation  8*13*13 --> 10
-        float[][] out_l = softmax.forward( out );
+
+        float[][] out_l = new float[1][];
+        float[] flat = myFlatten.Forward( out );
+        out_l[0] = myLayerSoftmax.nForward( flat );
         return out_l;
     }
 
 
     public void backward( float[] gradient, float learn_rate ){
-        float[][][] sm_gradient=softmax.backprop( gradient,learn_rate );
-        float[][][] mp_gradient=pool.backprop( sm_gradient );
-        conv.backprop( mp_gradient, learn_rate );
-        //myConv.Backward( mp_gradient );
+        float[] floats = myLayerSoftmax.nBackward(gradient);
+        float[][][] sm_gradient = myFlatten.Backward(floats);
+        myConv.Backward( myPoolMax.Backward( sm_gradient ) );
     }
 
 
