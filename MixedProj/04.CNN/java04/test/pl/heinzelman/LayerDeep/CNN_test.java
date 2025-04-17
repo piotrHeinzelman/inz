@@ -29,8 +29,7 @@ public class CNN_test {
         oneX[0] = trainX[0]; // extract One X
         LayerConv layer1Conv = new LayerConv( 5 , 1 , null, null );
         layer1Conv.setUpByX( oneX );
-        layer1Conv.setX( oneX );
-        float[][][] layer2X = layer1Conv.Forward();
+        float[][][] layer2X = layer1Conv.Forward(oneX);
 
 //        tools.saveVectorAsImg( layer2X[0], "C:\\Users\\PiotrH\\Desktop\\pict\\X" );
 //        tools.saveVectorAsImg( layer1Conv.getNeuron(0).getMyWeight(), "C:\\Users\\PiotrH\\Desktop\\pict\\F" );
@@ -44,8 +43,7 @@ public class CNN_test {
 
 
         LayerPoolingMax layer3PoolingMax = new LayerPoolingMax(2,2);
-        layer3PoolingMax.setX( layer3x );
-        float[][][] layer4x = layer3PoolingMax.Forward();
+        float[][][] layer4x = layer3PoolingMax.Forward(layer3x);
 
 //        tools.saveVectorAsImg( layer4x[0], "C:\\Users\\PiotrH\\Desktop\\pict\\Y02" );
 

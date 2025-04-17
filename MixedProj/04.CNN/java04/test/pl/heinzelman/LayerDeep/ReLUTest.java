@@ -58,8 +58,7 @@ public class ReLUTest {
 
         LayerPoolingMax layerPoolingMax = new LayerPoolingMax(2, 2);
 
-        layerPoolingMax.setX( x0 );
-        float[][][] Z = layerPoolingMax.Forward();
+        float[][][] Z = layerPoolingMax.Forward( x0 );
         float[][][] OUT = layerPoolingMax.Backward( Z );
 
         Assertions.assertTrue( Z[0][0][0] - 22f < 0.0001f );

@@ -158,7 +158,6 @@ public class MultiLayeredConvolutionTest {
 
         LayerConv layerConv = new LayerConv(3, 2, 0, 1 );
         layerConv.setUpByX( X );
-        layerConv.setX( X );
         layerConv.filters = createFilters();
 
         layerConv.biases[0].setWm(0,0,0);
@@ -182,7 +181,7 @@ public class MultiLayeredConvolutionTest {
         layerConv.biases[1].setWm(2,2,1);
 
 
-        float[][][] forward = layerConv.Forward();
+        float[][][] forward = layerConv.Forward( X );
         //System.out.println( "FORWARD: " + Tools.AryToString( forward ));
 
         float[][][] backward = layerConv.Backward( forward );

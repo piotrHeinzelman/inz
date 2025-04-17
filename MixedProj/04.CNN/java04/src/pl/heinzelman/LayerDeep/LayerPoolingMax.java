@@ -33,7 +33,7 @@ public class LayerPoolingMax {
         dX = new float[ channels ][ xsize ][ xsize ];
     }
 
-    public void setX(float[][][] _x ) {
+    private void setX(float[][][] _x ) {
         this.channels= _x.length;
         this.xsize=_x[0].length;
         this.ysize = getYSize();
@@ -50,7 +50,8 @@ public class LayerPoolingMax {
 
     public void setName( String name ) { this.name = name; }
 
-    public float[][][] Forward () {
+    public float[][][] Forward ( float[][][] _x ) {
+        setX( _x );
         float[][][] Z = new float[channels][ysize][ysize];
             for (int c=0;c<channels;c++){
                 Z[c] = forwardChannel( c );

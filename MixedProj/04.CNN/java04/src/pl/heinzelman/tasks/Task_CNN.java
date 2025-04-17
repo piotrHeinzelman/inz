@@ -55,13 +55,11 @@ public class Task_CNN implements Task{
 
     private float[][] _forward( float[][][] oneX ){
 
-        layer1Conv.setX(oneX);
-        float[][][] Z1 = layer1Conv.Forward();
+        float[][][] Z1 = layer1Conv.Forward(oneX);
         //System.out.println( Z1.length + " : " + Z1[0].length + " : " + Z1[0][0].length );
                          layer2ReLU.setX( Z1 );
         float[][][] Z2 = layer2ReLU.Forward();
-                         layer3PoolingMax.setX( Z2 );
-        float[][][] Z3 = layer3PoolingMax.Forward();
+        float[][][] Z3 = layer3PoolingMax.Forward(Z2);
         // System.out.println( Z3.length + " : " + Z3[0].length + " : " + Z3[0][0].length );
         System.out.println( Tools.AryToString( Z1 ));
         //float[][][] Z3 = Z1;

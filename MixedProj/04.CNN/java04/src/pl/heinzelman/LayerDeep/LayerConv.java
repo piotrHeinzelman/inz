@@ -96,15 +96,8 @@ public class LayerConv {
         initFilters();
     }
 
-    public void setX(float[][][] _x ) {
-       //     // if ( padding!=0 ) { _x = Conv.extendAry( _x, padding ); }
-       //     this.channels= _x.length;
-       //     this.filterNum=filterForChannel*channels;
-       //     this.xsize=_x[0].length;
-       //     this.ysize = getYSize();
-       //     initAry();
-       //     // initFilters();
 
+    public float[][][] Forward( float[][][] _x  ) {
         for (int n = 0; n < channels; n++) {
             for (int x = 0; x < xsize; x++) {
                 for (int y = 0; y < xsize; y++) {
@@ -112,10 +105,6 @@ public class LayerConv {
                 }
             }
         }
-    }
-
-    public float[][][] Forward() {
-        //System.out.println( "filterForChannel: " + filterForChannel + ", ysize: " +  ysize + " : " + xsize + " : " + filterNum );
 
 
         float[][][] Y_ = new float[filterForChannel][ysize][ysize];

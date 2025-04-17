@@ -2,35 +2,26 @@ package pl.heinzelman.tasks;
 
 import pl.heinzelman.LayerDeep.*;
 import pl.heinzelman.neu.LayerSoftmaxMultiClass;
-import pl.heinzelman.tools.Tools;
+import pl.heinzelman.tools.Tools2;
 
 public class  Task_3 implements Task{
 
+    private Tools2 tools = new Tools2();
     private float[][] testX;
     private float[][] testY;
     private float[][] trainX;
     private float[][] trainY;
+    private int[][] errors = new int [10][10];
 
-    private float[][][] testXX;
-    private float[][][] trainXX;
 
-    private LayerConv layerConv = new LayerConv( 3 , 8, null, null  );
-    private LayerPoolingMax layerPoolMAX = new LayerPoolingMax(1,1);
-    private LayerFlatten layerFlatten = new LayerFlatten();
-    private LayerSoftmaxMultiClass layer1SoftmaxMultiClass = new LayerSoftmaxMultiClass( 26*26*8, 10 );
-
-    float[][][] oneX = new float[1][28][28];
-    float[][] out1x10 = new float[1][10];
-
-    private Tools tools = new Tools();
-
-    private float ce_loss=0.0f;
-    private int accuracy=0;
+    private LayerConv conv = new LayerConv( 3 , 8, null, null  );
+    private LayerPoolingMax poolMax = new LayerPoolingMax(2,2);
+    private LayerFlatten flatten = new LayerFlatten();
+    private LayerSoftmaxMultiClass softmax = new LayerSoftmaxMultiClass( 13*13*8, 10 );
 
 
     public void prepare() {
-        int filterNum=8;
-        int dataSize =2;
+        int dataSize=100;
         tools.prepareData( dataSize );
 
         testX = tools.getTestX();
@@ -38,38 +29,20 @@ public class  Task_3 implements Task{
         trainX = tools.getTrainX();
         trainY = tools.getTrainY();
 
-        tools.prepareDataAsFlatArray( dataSize );
-        trainXX = tools.getTrainAryX();
-        testXX  = tools.getTestAryX();
-
         float[][][] oneX = new float[1][28][28];
-        oneX[0] = trainXX[0];
-        layerConv.setUpByX( oneX );
-
+        oneX[0] = tools.convertToSquare28x28( trainX[0] );
+        conv.setUpByX( oneX );
     }
 
 
-    public float[][] forward_( float[][] X ){
-
-        oneX[0] = X;
-        layerConv.setX( oneX );
-        float[][][] Zconv = layerConv.Forward();
-            layerPoolMAX.setX(Zconv);
-        float[][][] Zmax = layerPoolMAX.Forward();
-
-        float[] Xf = layerFlatten.Forward(Zmax);
-        float[] Z1 = layer1SoftmaxMultiClass.nForward( Xf );
-
-        // convert out to [1][10]
-        out1x10[0]=Z1;
-        return out1x10;
+    public float[] forward_( float[][] X ){
+        float[][][] oneX = new float[1][][];
+        oneX[0]=X;
+        return softmax.nForward( flatten.Forward( poolMax.Forward( conv.Forward( oneX ))));
     }
 
     public float[][][] backward_( float[] gradient ){
-        float[] eOUT = layer1SoftmaxMultiClass.nBackward( gradient );
-        float[][][] eOUTF    = layerFlatten.Backward( eOUT );
-        float[][][] maxOut = layerPoolMAX.Backward(eOUTF);
-        return layerConv.Backward( maxOut );
+        return conv.Backward(  poolMax.Backward( flatten.Backward(  softmax.nBackward( gradient ))));
     }
 
 
@@ -77,61 +50,75 @@ public class  Task_3 implements Task{
 
     @Override
     public void run() {
+        prepare();
 
-        for (int j=0;j<25;j++) {
-            for (int i = 0; i < 10; i++) train();
-            test();
-        }
+        train( 6000 );
+        train( 6000 );
+        train( 6000 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+        train( 128 );
+
+        test( 10000 );
 
     }
 
-    public void train(){
-
-        int label_counter = 0;
+    public void train( int test_size ){
         int accuracy=0;
-        float acc_sum=0.0f;
-        float learn_rate=0.01f;
         float loss = 0.0f;
+        float ce_loss = 0.0f;
         int sum=0;
 
-        float[][] Z = new float[1][10];
-        for (int i = 0; i < trainXX.length; i++) {
-
-            label_counter++;
-
+        for (int i = 0; i < test_size; i++) {
             //FORWARD PROPAGATION
             int ind_ex = i;
 
-            float[][] X = trainXX[ind_ex];
-            float[] trueZ = trainY[ind_ex];
-            int correct_label = tools.getIndexMaxFloat(trueZ);
+            float[][] X = tools.convertToSquare28x28( trainX[ind_ex] );
+            int correct_label = tools.getIndexMaxFloat(trainY[ind_ex]);
 
-            Z = forward_(X);
-            // float[][] gradient = layer2SoftmaxMulticlass.compute_gradient( Z, correct_label );
-            float[] gradient = layer1SoftmaxMultiClass.gradientCNN( Z, correct_label );
-// System.out.println( Tools.AryToString( gradient ) );
-            loss += layer1SoftmaxMultiClass.delta_Loss( correct_label );
+            float[] Z = forward_(X);
+            loss += softmax.delta_Loss( correct_label );
+            //System.out.println( "correct_label: " + correct_label + ", Z : " + tools.getIndexMaxFloat(Z) + " : " + tools.AryToString( Z ) );
+            if ( correct_label==tools.getIndexMaxFloat( Z )){ accuracy++; }
+
+            float[] gradient = softmax.gradientCNN( Z, correct_label );
             backward_( gradient );
-
-            sum++;
-            if ( correct_label==tools.getIndexMaxFloat( Z[0] )){ accuracy++; }
-            //if(  i % 100 == 99){
-                // System.out.println( "I: " + i + ", ce_loss: " + ce_loss );
-            //    ce_loss=0;
-            //    acc_sum+=accuracy;
-            //    accuracy=0;
-            //}
         }
-        System.out.println( "Loss: " + loss + ", accuracy: " + ( 100f*accuracy )/sum + "%         \tsize: " + trainXX.length );
-        accuracy=0; sum=0;
-        // System.out.println("Average accuracy:- "+acc_sum/training_size+"%\n\n");
+        System.out.println( "Acc: " + ((100.0f*accuracy)/ test_size) + ", Loss: " + loss  );
+        loss=0.0f;
     }
 
 
 
 
-    public void test(){
-        int filterNum = 8;
+    public  void test ( int test_size  )   {
+
         int[][] errors = new int[10][10];
         int error = 0;
 
@@ -139,29 +126,30 @@ public class  Task_3 implements Task{
         int accuracy=0;
         int sum=0;
 
-        float[][] out_l;
-        for (int i = 0; i < trainXX.length; i++) {
+        float[] out_l = new float[10];
+        for (int i = 0; i < test_size; i++) {
 
             label_counter++;
             //FORWARD PROPAGATION
 
-            int ind_ex = i;
+            // importImage
+            int correct_label=tools.getIndexMaxFloat( testY[i] );
+            float[][] pxl = tools.convertToSquare28x28( testX[i] );
 
-            float[][] X = trainXX[ind_ex];
-            float[] trueZ = trainY[ind_ex];
-            int correct_label = tools.getIndexMaxFloat( trueZ );
-
-            out_l = forward_(X);
+            // perform convolution 28*28 --> 8x26x26
+            out_l = forward_( pxl );
 
             // compute cross-entropy loss
-            int findClass = tools.getIndexMaxFloat( out_l[0] );
+            int findClass = tools.getIndexMaxFloat(out_l);//  ()int) Mat.v_argmax(out_l);
             if ( correct_label!=findClass ){
                 errors[correct_label][findClass]++;
                 error++;
             } else { accuracy++;  }
+            //accuracy += correct_label == Mat.v_argmax(out_l) ? 1 : 0;
             sum ++;
         }
-        System.out.println(" ** TEST ** "+ (100*accuracy)/sum + "%,  errors: "+ ( sum-accuracy ) + "\n" );
+        System.out.println("\n***************************************\n** TEST ** errors "+ ( error ) + " .. " + ( 100 * accuracy / test_size ) + "%\n" );
+        Tools2.printTable2( errors );
     }
 
 }

@@ -28,10 +28,9 @@ public class BackConvolutionTest {
 
         LayerConv layerConv= new LayerConv(2,1,null,null);
         layerConv.setUpByX( X );
-        layerConv.setX( X );
         layerConv.filters[0]=filterW11;
 
-        float[][][] Z = layerConv.Forward();
+        float[][][] Z = layerConv.Forward(X);
         float[][][] OUTPUT_DELTA = layerConv.Backward(delta);
 
         System.out.println( "Z:\n"+Tools.AryToString( Z ) );

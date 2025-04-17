@@ -382,4 +382,19 @@ public class Tools {
 
 
 
+    public static void printTable2( int[][] table ){
+        System.out.println( " incorrect class  ->  [0]  |  [1]  |  [2]  |  [3]  |  [4]  |  [5]  |  [6]  |  [7]  |  [8]  |  [9]\n" );
+        for (int y=0;y<table[0].length;y++){
+            System.out.println("True class    ("+y+")   " + printRow3( table[y] ));
+        }
+    }
+
+    public static String printRow3( int[] row ){
+        String out="";
+        for (int x=0;x<row.length;x++){
+            out += "  "+ ((row[x])>9 ? "" : " " ) +  ( row[x]==0 ? "." : row[x] )   +"   |";
+        }
+        return ( out );
+    }
+
 }

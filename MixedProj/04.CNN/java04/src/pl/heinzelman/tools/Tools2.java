@@ -139,9 +139,9 @@ public class Tools2 {
         return gradient;
     }
 
-    public float getCeLoss_CNN( float [][] out_l , int correct_label ){
+    public float getCeLoss_CNN( float [] out_l , int correct_label ){
         //ce_loss += (float) -Math.log(out_l[0][correct_label]);
-        return (float) -Math.log(out_l[0][correct_label]);
+        return (float) -Math.log(out_l[correct_label]);
     }
 
 
@@ -155,6 +155,21 @@ public class Tools2 {
     public  void echo ( String name, float[] v  ) { System.out.println( name + " : " + Tools.AryToString( v ) ); }
     public  void echo ( String name, float[][] v  ) { System.out.println( name + " : " + Tools.AryToString( v ) ); }
     public  void echo ( String name, float[][][] v  ) { System.out.println( name + " : " + Tools.AryToString( v ) ); }
+
+    public static void printTable2( int[][] table ){
+        System.out.println( " incorrect class  ->  [0]  |  [1]  |  [2]  |  [3]  |  [4]  |  [5]  |  [6]  |  [7]  |  [8]  |  [9]\n" );
+        for (int y=0;y<table[0].length;y++){
+            System.out.println("True class    ("+y+")   " + printRow3( table[y] ));
+        }
+    }
+
+    public static String printRow3( int[] row ){
+        String out="";
+        for (int x=0;x<row.length;x++){
+            out += "  "+ ((row[x])>9 ? "" : " " ) +  ( row[x]==0 ? "." : row[x] )   +"   |";
+        }
+        return ( out );
+    }
 
 }
 

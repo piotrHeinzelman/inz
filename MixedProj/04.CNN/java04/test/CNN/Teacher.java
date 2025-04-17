@@ -62,11 +62,8 @@ public class Teacher   {
         // myForward !
         float[][][] oneX = new float[1][][];
         oneX[0]=pxl;
-        myConv.setX( oneX );
-        out = myConv.Forward();
-
-              myPoolMax.setX(out);
-        out = myPoolMax.Forward();
+        out = myConv.Forward( oneX );
+        out = myPoolMax.Forward(out);
 
 
         float[][] out_l = new float[1][];
@@ -104,9 +101,9 @@ public class Teacher   {
             out_l = forward( pxl );
 
             // compute cross-entropy loss
-            ce_loss += tools.getCeLoss_CNN( out_l, correct_label );
+            ce_loss += tools.getCeLoss_CNN( out_l[0], correct_label );
             accuracy += correct_label == tools.getIndexMaxFloat(out_l[0]) ? 1:0;
-            float[] gradient = myLayerSoftmax.gradientCNN( out_l, correct_label );
+            float[] gradient = myLayerSoftmax.gradientCNN( out_l[0], correct_label );
             backward( gradient, learn_rate );
         }
         System.out.println( ce_loss );

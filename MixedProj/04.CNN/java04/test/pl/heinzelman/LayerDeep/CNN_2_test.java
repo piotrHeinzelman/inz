@@ -55,8 +55,7 @@ public class CNN_2_test {
         neuron.setWm(2,2,.1f);
 
 
-        conv.setX( flat );
-        float[][][] out = conv.Forward();
+        float[][][] out = conv.Forward(flat);
 
 
 

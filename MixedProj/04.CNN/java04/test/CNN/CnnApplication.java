@@ -54,10 +54,8 @@ public class CnnApplication {
 		float[][] out_l = softmax.forward( out ); // <--
 
 
-		myConv.setX( trainX );
-		float[][][] myOUT = myConv.Forward();
-		myPool.setX( myOUT );
-		myOUT = myPool.Forward();
+		float[][][] myOUT = myConv.Forward( trainX );
+		myOUT = myPool.Forward(myOUT);
 		float[] flat = myFlatten.Forward( myOUT );
 
 				for (int j=0;j<softmax.weights.length;j++){
@@ -74,13 +72,13 @@ public class CnnApplication {
 		float ce_loss = 0.0f; int accuracy=0;
 		int correct_label = 2;
 		// GRADIENT TEST // OK
-		ce_loss += tools.getCeLoss_CNN( out_l, correct_label );
+		ce_loss += tools.getCeLoss_CNN( out_l[0], correct_label );
 		accuracy += correct_label == tools.getIndexMaxFloat(out_l[0]) ? 1:0;
 
-		float[] gradient = myFCSoftmax.gradientCNN( out_l, correct_label );
+		float[] gradient = myFCSoftmax.gradientCNN( out_l[0], correct_label );
 
 		float[][] SoftZ_Dim = new float[1][]; SoftZ_Dim[0]=SoftZ;
-		float[] gradient2 = myFCSoftmax.gradientCNN( SoftZ_Dim, correct_label );
+		float[] gradient2 = myFCSoftmax.gradientCNN( SoftZ_Dim[0], correct_label );
 
 		// Gradiend  myFCSoftmax.gradientCNN( out_l, correct_label ); ** CORRECT **
 		// tools.echo(gradient2);
@@ -164,7 +162,7 @@ public class CnnApplication {
 		teacher.train( 128 );
 		teacher.train( 128 );
 
-		teacher.test( 1000 );
+		teacher.test( 10000 );
 
 	}
 

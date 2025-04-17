@@ -208,7 +208,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CnnApplication.mainTest">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="CNN.CnnApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="CNN.CnnApplication" />
       <module name="nweb" />
@@ -284,8 +284,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CnnApplication.mainTest" />
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.CnnApplication.mainTest" />
         <item itemvalue="JUnit.CnnApplication.forwardTest" />
         <item itemvalue="JUnit.CnnApplication" />
         <item itemvalue="Application.CNN.CnnApplication" />
