@@ -4,6 +4,8 @@ import pl.heinzelman.LayerDeep.*;
 import pl.heinzelman.neu.LayerSoftmaxMultiClass;
 import pl.heinzelman.tools.Tools2;
 
+import java.util.Random;
+
 public class  Task_3 implements Task{
 
     private Tools2 tools = new Tools2();
@@ -51,10 +53,179 @@ public class  Task_3 implements Task{
     @Override
     public void run() {
         prepare();
+        // 20 X train(5000) + test(10000) = max 94% accuracy
 
+        for ( int i=0;i<5000;i++) {
+            train(5000);
+            if (i%20==0) test(10000);
+        }
+
+
+
+/*        train( 600 );
+        train( 600 );
+        train( 600 );
+        train( 600 );
+        train( 600 );
         train( 6000 );
         train( 6000 );
         train( 6000 );
+        train( 10000 );
+        train( 10000 );
+        train( 10000 );
+        train( 11000 );
+        train( 11000 );
+        train( 11000 );
+        train( 11000 );
+        train( 11000 );
+        train( 12000 );
+        train( 12000 );
+        train( 12000 );
+        train( 12000 );
+        train( 12000 );
+        train( 12000 );
+        train( 12000 );
+        train( 13000 );
+        train( 13000 );
+        train( 13000 );
+        train( 13000 );
+        train( 13000 );
+        train( 13000 );
+        train( 13000 );
+        train( 13000 );
+        train( 13000 );
+        train( 14000 );
+        train( 14000 );
+        train( 14000 );
+        train( 15000 );
+        train( 15000 );
+        train( 15000 );
+        train( 16000 );
+        train( 16000 );
+        train( 16000 );
+        train( 20000 );
+        train( 20000 );
+        train( 20000 );
+        train( 25000 );
+        train( 25000 );
+        train( 25000 );
+        train( 25000 );
+        train( 25000 );
+        train( 30000 );
+        train( 30000 );
+        train( 40000 );
+        train( 40000 );
+        train( 50000 );
+        train( 60000 );
+        train( 60000 );
+        train( 60000 );
+*/
+/*
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+        train( 128 );
+        test( 1000 );
+*/
+        test( 10000 );
+/*
+
+
+
+
+
+
         train( 128 );
         train( 128 );
         train( 128 );
@@ -86,7 +257,7 @@ public class  Task_3 implements Task{
         train( 128 );
 
         test( 10000 );
-
+*/
     }
 
     public void train( int test_size ){
@@ -94,23 +265,26 @@ public class  Task_3 implements Task{
         float loss = 0.0f;
         float ce_loss = 0.0f;
         int sum=0;
+        Random rand = new Random();
 
         for (int i = 0; i < test_size; i++) {
             //FORWARD PROPAGATION
-            int ind_ex = i;
+
+            int ind_ex =  (int) ( rand.nextFloat()*test_size );
+            // System.out.println( ind_ex );
 
             float[][] X = tools.convertToSquare28x28( trainX[ind_ex] );
             int correct_label = tools.getIndexMaxFloat(trainY[ind_ex]);
 
             float[] Z = forward_(X);
             loss += softmax.delta_Loss( correct_label );
-            //System.out.println( "correct_label: " + correct_label + ", Z : " + tools.getIndexMaxFloat(Z) + " : " + tools.AryToString( Z ) );
-            if ( correct_label==tools.getIndexMaxFloat( Z )){ accuracy++; }
+            int findClass = tools.getIndexMaxFloat(Z);
+            if ( correct_label==findClass ){ accuracy++; }
 
             float[] gradient = softmax.gradientCNN( Z, correct_label );
             backward_( gradient );
         }
-        System.out.println( "Acc: " + ((100.0f*accuracy)/ test_size) + ", Loss: " + loss  );
+        System.out.println( "Acc: " + ((100.0f*accuracy)/ test_size) + ", Loss: " + loss + ", of: " + test_size );
         loss=0.0f;
     }
 
@@ -118,7 +292,7 @@ public class  Task_3 implements Task{
 
 
     public  void test ( int test_size  )   {
-
+        Random rand = new Random();
         int[][] errors = new int[10][10];
         int error = 0;
 
@@ -128,7 +302,7 @@ public class  Task_3 implements Task{
 
         float[] out_l = new float[10];
         for (int i = 0; i < test_size; i++) {
-
+            int ind_ex =  (int) ( rand.nextFloat()*test_size );
             label_counter++;
             //FORWARD PROPAGATION
 
@@ -148,8 +322,8 @@ public class  Task_3 implements Task{
             //accuracy += correct_label == Mat.v_argmax(out_l) ? 1 : 0;
             sum ++;
         }
-        System.out.println("\n***************************************\n** TEST ** errors "+ ( error ) + " .. " + ( 100 * accuracy / test_size ) + "%\n" );
-        Tools2.printTable2( errors );
+        System.out.println("\n***************************************\n** TEST ** errors "+ ( error ) + " .. " + ( 100 * accuracy / test_size ) + " : acc["+accuracy+ "]%\n" );
+        // Tools2.printTable2( errors );
     }
 
 }
