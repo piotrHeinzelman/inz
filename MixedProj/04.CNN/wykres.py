@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-plt.title('Czas [s] : CNN klasyfikacja cyfr - MNIST : 5x5 * 20 Filter 500 epoch') 
+plt.title('Czas [s] : CNN klasyfikacja cyfr - MNIST : 5x5 * 20 Filter 500 epoch')
 plt.style.use('_mpl-gallery')
 
 
@@ -12,18 +12,21 @@ plt.style.use('_mpl-gallery')
 #colors = np.array(["red","red","red","red", "orange","orange","orange","orange", "red","red", "orange","orange","orange","orange" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
 #plt.scatter(x, y, c=colors)
 
-x = np.array([ 3, 4, 5, 6, 3         ])
+x = np.array([ 8,9,10,11,12 ])
 y = np.array([ 791, 801, 788, 788, 0 ])
 colors = np.array(["blue","blue","blue","blue","white" ]) # "red"
 plt.scatter(x, y, c=colors, label="Matlab - GPU   791 [sek.] acc: 98%")
 
 
-x = np.array([8,9,10,11      ])
+x = np.array([13,14,15,16    ])
 y = np.array([1079,1078,1105,1150  ])
 colors = np.array(["red","red","red","red" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
 plt.scatter(x, y, c=colors, label="Python Tensorflow K GPU  1079[sek.] acc: 98%")
 
-
+x = np.array([5      ])
+y = np.array([731  ])
+colors = np.array(["green" ]) #"green","blue","yellow","pink","black","orange","purple","beige","brown","gray","cyan","magenta"])
+plt.scatter(x, y, c=colors, label="Java  731[sek.] acc: 78%")
 
 
 #x = np.array([19,20 ])
