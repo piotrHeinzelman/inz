@@ -61,13 +61,12 @@ function showx( arrayx , i )
 end
 
 if ( 1==1 )
-    percent=100;
 
-    fileIMG=fopen( 'data/train-labels-idx1-ubyte','r');
+    fileIMG=fopen( 'data/trainY','r');
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
-    ytmp=fileData(9:8+percent*600)';
-    ysize=percent*600;
+    ytmp=fileData(15*10)';
+    ysize=15*10;
     yyy=zeros(1,ysize);
     for i=(1:ysize)
         d=ytmp(i);
@@ -78,12 +77,12 @@ if ( 1==1 )
 
     fileData=1;
 
-    fileIMG=fopen( 'data/t10k-labels-idx1-ubyte','r');
+    fileIMG=fopen( 'data/testY','r');
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
 
-    ytmp=fileData(9:8+percent*100)';
-    ysize=percent*100;
+    ytmp=fileData(5*10)';
+    ysize=5*10;
     yyy=zeros(1,ysize);
     for i=(1:ysize)
         d=ytmp(i);
@@ -92,49 +91,52 @@ if ( 1==1 )
     end
     ytest=categorical(yyy);
 
-    fileIMG=fopen( 'data/train-images-idx3-ubyte','r');
+    fileIMG=fopen( 'data/trainX','r');
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
-    tmp=fileData(17:16+percent*784*600);
+    tmp=fileData(15*10*75*100);
 
-    for i=1:percent*600
-        col=tmp(1+(i-1)*784:i*784);
+    for i=15*10*75*100
+        col=tmp(1+(i-1)*100*75:i*100*75);
         row=col';
-        ary=zeros(28,28);
-        for j=1:28
-            for k=1:28
-                val=row(k+((j-1)*28));
+        ary=zeros(100,75);
+        for j=1:100
+            for k=1:75
+                val=row(k+((j-1)*75));
                 xtrain(j,k,1,i)=val; %/255
-
             end
         end
     end
     fileData=1;
 
-    fileIMG=fopen( 'data/t10k-images-idx3-ubyte','r');
+    fileIMG=fopen( 'data/testX','r');
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
-    tmp=fileData(17:16+percent*784*100);
+    tmp=fileData(5*10*75*100);
 
-    for i=1:percent*100
-        col=tmp(1+(i-1)*784:i*784);
+    for i=5*10*75*100
+        col=tmp(1+(i-1)*100*75:i*100*75);
         row=col';
-        ary=zeros(28,28);
-        for j=1:28
-            for k=1:28
-                val=row(k+((j-1)*28));
+        ary=zeros(100,75);
+        for j=1:100
+            for k=1:75
+                val=row(k+((j-1)*75));
                 xtest(j,k,1,i)=val; %/255
-
             end
         end
     end
     fileData=1;
 end
 
-input = imageInputLayer([28 28 1]);  % 28x28px 1 channel
-conv = convolution2dLayer(5, 20); % 10 filter, 5x5
-relu = reluLayer;                    %reLU
-maxPooling2dLayer(2,Stride=2);
+input = imageInputLayer([100 75 1]);  % 28x28px 1 channel
+conv1 = convolution2dLayer(10, 3); % 10 filter, 5x5
+relu1 = reluLayer;                    %reLU
+max1 = maxPooling2dLayer(3,Stride=2);
+conv2 = convolution2dLayer(5, 48); % 10 filter, 5x5
+relu2 = reluLayer;                    %reLU
+max2 = maxPooling2dLayer(2,Stride=2);
+
+
 fc = fullyConnectedLayer(10);
 sm = softmaxLayer;
 co = classificationLayer;
@@ -142,8 +144,8 @@ co = classificationLayer;
 epochs=500;
 
 layers = [ input
-    conv
-    relu
+    conv1
+    relu1
     fc
     sm
     co];
