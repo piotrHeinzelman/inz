@@ -30,7 +30,7 @@ for (i) in range(1,21):
       np.array( img_array, np.uint8 ).tofile( allX )
       np.array( k, np.uint8 ).tofile( allY )
 
-      if (i>16):
+      if (i<16):
          np.array( img_array, np.uint8 ).tofile( trainX )
          np.array( k, np.uint8 ).tofile( trainY )
       else:

@@ -48,14 +48,13 @@ end
 
 
 function showx( arrayx , i )
-    img0=arrayx(1:784,i);
-    img0=img0*256;
+    img0=arrayx(1:224*224,i);
     image(img0);
 
-    img=zeros(28,28);
-        for i=(1:28)
-            row=img0((i-1)*28+1:(i)*28);
-           img(i,1:28)=row;
+    img=zeros(224,224);
+        for i=(1:224)
+           row=img0((i-1)*224+1:(i)*224);
+           img(i,1:224)=row;
         end
     image(img)
 end
@@ -65,8 +64,8 @@ if ( 1==1 )
     fileIMG=fopen( 'data/trainY','r');
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
-    ytmp=fileData(15*10)';
-    ysize=15*10;
+    ytmp=fileData(16*10)';
+    ysize=16*10;
     yyy=zeros(1,ysize);
     for i=(1:ysize)
         d=ytmp(i);
@@ -81,8 +80,8 @@ if ( 1==1 )
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
 
-    ytmp=fileData(5*10)';
-    ysize=5*10;
+    ytmp=fileData(4*10)';
+    ysize=4*10;
     yyy=zeros(1,ysize);
     for i=(1:ysize)
         d=ytmp(i);
@@ -94,16 +93,17 @@ if ( 1==1 )
     fileIMG=fopen( 'data/trainX','r');
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
-    tmp=fileData(15*10*75*100);
 
-    for i=15*10*75*100
-        col=tmp(1+(i-1)*100*75:i*100*75);
+    for i=(1:16*10)
+        col=fileData(1+(i-1)*224*224*3:i*224*224*3);
         row=col';
-        ary=zeros(100,75);
-        for j=1:100
-            for k=1:75
-                val=row(k+((j-1)*75));
-                xtrain(j,k,1,i)=val; %/255
+        ary=zeros(224,224,3);
+        for j=0:224
+            for k=0:224
+		for l=0:3
+                   val=row( ( k + ((j)*224) )+l*224*224 );
+                   xtrain(j,k,l,i)=val; %/255
+                end
             end
         end
     end
@@ -114,7 +114,7 @@ if ( 1==1 )
     fclose(fileIMG);
     tmp=fileData(5*10*75*100);
 
-    for i=5*10*75*100
+    for i=(1:4*10)
         col=tmp(1+(i-1)*100*75:i*100*75);
         row=col';
         ary=zeros(100,75);
@@ -141,7 +141,7 @@ fc = fullyConnectedLayer(10);
 sm = softmaxLayer;
 co = classificationLayer;
 
-epochs=500;
+epochs=1;
 
 layers = [ input
     conv1
