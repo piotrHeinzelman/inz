@@ -134,7 +134,7 @@ end
 input = imageInputLayer([28 28 1]);  % 28x28px 1 channel
 conv = convolution2dLayer(5, 20); % 10 filter, 5x5
 relu = reluLayer;                    %reLU
-maxPooling2dLayer(2,Stride=2);
+max = maxPooling2dLayer(2,Stride=2);
 fc = fullyConnectedLayer(10);
 sm = softmaxLayer;
 co = classificationLayer;
@@ -144,12 +144,13 @@ epochs=500;
 layers = [ input
     conv
     relu
+    max
     fc
     sm
     co];
 
 
-options=trainingOptions('adam', 'MaxEpochs',epochs, 'ExecutionEnvironment','gpu','ValidationPatience',10 , 'Verbose',0);
+options=trainingOptions('adam', 'MaxEpochs',epochs, 'ExecutionEnvironment','gpu','ValidationPatience',10 , 'Verbose', 1 , 'MiniBatchSize', percent*600 );
 
 
 ST = datetime('now');
@@ -164,22 +165,6 @@ D = duration( ED-ST );
 
 weights_first=netTransfer.Layers(2,1).Weights(:,:,1,1);
 %image(weights_first*255)
-
-
-%for i=(1:10)
-%    netTransfer = trainNetwork( xtrain, ytrain, layers, options);
-%    weights_first=netTransfer.Layers(2,1).Weights(:,:,1,1)
-%    image(weights_first*255)
-%end
-
-%a=netTransfer;
-%a=netTransfer.Layers;
-%a=netTransfer.Layers(2,1);
-%a=netTransfer.Layers(2,1).Weights;
-%weights_first=netTransfer.Layers(2,1).Weights(:,:,1,1);
-%image(weights_first*255);
-
-
 
  predictedLabels = classify(netTransfer, xtest);
   accuracy = accuracyCheck( predictedLabels', ytest );
