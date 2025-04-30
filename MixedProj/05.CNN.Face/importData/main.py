@@ -26,6 +26,7 @@ for (i) in range(1,21):
       my_str = "./PNG/"+str(k)+'_'+ str(i) +".png"
       img = Image.open( my_str )
       img_array = np.array(img)
+      print(img_array.shape)
 
       np.array( img_array, np.uint8 ).tofile( allX )
       np.array( k, np.uint8 ).tofile( allY )

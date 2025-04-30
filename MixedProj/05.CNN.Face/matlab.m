@@ -48,24 +48,26 @@ end
 
 
 function showx( arrayx , i )
-    img0=arrayx(1:224*224,i);
+    img0=arrayx(1:784,i);
+    img0=img0*256;
     image(img0);
 
-    img=zeros(224,224);
-        for i=(1:224)
-           row=img0((i-1)*224+1:(i)*224);
-           img(i,1:224)=row;
+    img=zeros(28,28);
+        for i=(1:28)
+            row=img0((i-1)*28+1:(i)*28);
+           img(i,1:28)=row;
         end
     image(img)
 end
 
 if ( 1==1 )
+    percent=10*5; % 5 i 15
 
     fileIMG=fopen( 'data/trainY','r');
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
-    ytmp=fileData(16*10)';
-    ysize=16*10;
+    ytmp=fileData';
+    ysize=percent*3;
     yyy=zeros(1,ysize);
     for i=(1:ysize)
         d=ytmp(i);
@@ -80,8 +82,8 @@ if ( 1==1 )
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
 
-    ytmp=fileData(4*10)';
-    ysize=4*10;
+    ytmp=fileData';
+    ysize=percent*1;
     yyy=zeros(1,ysize);
     for i=(1:ysize)
         d=ytmp(i);
@@ -93,17 +95,16 @@ if ( 1==1 )
     fileIMG=fopen( 'data/trainX','r');
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
+    tmp=fileData;
 
-    for i=(1:16*10)
-        col=fileData(1+(i-1)*224*224*3:i*224*224*3);
-        row=col';
-        ary=zeros(224,224,3);
-        for j=0:224
-            for k=0:224
-		for l=0:3
-                   val=row( ( k + ((j)*224) )+l*224*224 );
-                   xtrain(j,k,l,i)=val; %/255
-                end
+    for i=1:percent*3
+       onePic=tmp(1+(i-1)*227*227*3:i*227*227*3);
+        for j=1:227
+            for k=1:227
+		for l=1:3
+           	   val=onePic( 1+ (l-1) + (k-1)*3 + (j-1 )*(3*227)   );
+                   xtrain(j,k,l,i)=val/255;
+		end
             end
         end
     end
@@ -112,31 +113,30 @@ if ( 1==1 )
     fileIMG=fopen( 'data/testX','r');
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
-    tmp=fileData(5*10*75*100);
+    tmp=fileData;
 
-    for i=(1:4*10)
-        col=tmp(1+(i-1)*100*75:i*100*75);
-        row=col';
-        ary=zeros(100,75);
-        for j=1:100
-            for k=1:75
-                val=row(k+((j-1)*75));
-                xtest(j,k,1,i)=val; %/255
+    for i=1:percent*1
+        onePic=tmp(1+(i-1)*227*227*3:i*227*227*3);
+        for j=1:227
+            for k=1:227
+		for l=1:3
+           	   val=onePic( 1+ (l-1) + (k-1)*3 + (j-1 )*(3*227)   );
+                   xtest( j,k,l,i)=val/255;
+		end
             end
         end
     end
     fileData=1;
+
+    AAAA=xtest(:,:,:,1);
+    imshow(AAAA);
+    fileData=1;
 end
 
-input = imageInputLayer([100 75 1]);  % 28x28px 1 channel
-conv1 = convolution2dLayer(10, 3); % 10 filter, 5x5
-relu1 = reluLayer;                    %reLU
-max1 = maxPooling2dLayer(3,Stride=2);
-conv2 = convolution2dLayer(5, 48); % 10 filter, 5x5
-relu2 = reluLayer;                    %reLU
-max2 = maxPooling2dLayer(2,Stride=2);
-
-
+input = imageInputLayer([227 227 3]);  % 28x28px 1 channel
+conv = convolution2dLayer(5, 20); % 10 filter, 5x5
+relu = reluLayer;                    %reLU
+maxPooling2dLayer(2,Stride=2);
 fc = fullyConnectedLayer(10);
 sm = softmaxLayer;
 co = classificationLayer;
@@ -144,8 +144,8 @@ co = classificationLayer;
 epochs=1;
 
 layers = [ input
-    conv1
-    relu1
+    conv
+    relu
     fc
     sm
     co];
@@ -160,7 +160,6 @@ ST = datetime('now');
 
 ED = datetime('now');
 D = duration( ED-ST );
-
 
 
 
@@ -186,7 +185,7 @@ weights_first=netTransfer.Layers(2,1).Weights(:,:,1,1);
  predictedLabels = classify(netTransfer, xtest);
   accuracy = accuracyCheck( predictedLabels', ytest );
 
-    fprintf('# CNN: 5x5 * 20 *  500 cycles: (Linux GPU, batch mode)\n' );
+    fprintf('# CNN face: 5x5 * 20 *  500 cycles: (Linux GPU, batch mode)\n' );
     fprintf( '# accuracy: a:%f\n\n' , accuracy );
     fprintf ('m[]=%f\n' , seconds(D)  );
 
