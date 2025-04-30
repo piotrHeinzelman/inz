@@ -1,5 +1,4 @@
-% S.Osowski, R.Szmurlo : modele matematyczne uczenia maszynowego 
-% Alexnet - tryb Transfer Learning
+% Sieci neuronowe do przetwarzania informacji Stanisław Osowski p.446  Alexnet 227x227x3 channel
 % https://www.mathworks.com/help/deeplearning/ug/introduction-to-convolutional-neural-networks.html
 
 function accuracy = accuracyCheck( first, second )
@@ -128,30 +127,85 @@ if ( 1==1 )
     end
     fileData=1;
 
-    AAAA=xtest(:,:,:,1);
-    imshow(AAAA);
-    fileData=1;
+    if(false)
+       AAAA=xtest(:,:,:,1);
+       imshow(AAAA);
+       fileData=1;
+   end
+
 end
 
 input = imageInputLayer([227 227 3]);  % 28x28px 1 channel
-conv = convolution2dLayer(5, 20); % 10 filter, 5x5
-relu = reluLayer;                    %reLU
-maxPooling2dLayer(2,Stride=2);
-fc = fullyConnectedLayer(10);
+conv1 = convolution2dLayer([11 11], 96, 'Stride', [4 4], 'Padding', [0 0] ); % 96 filter, 11x11 stride [4,4] % ([6 4],16,'Stride',4,'Padding',[1 0])
+relu1 = reluLayer;                    %reLU
+cross1= crossChannelNormalizationLayer(5);
+max1 = maxPooling2dLayer([3 3], 'Stride',[2 2], 'Padding',[0 0]);
+
+conv2 = convolution2dLayer([5 5], 256, 'Stride', [1 1], 'Padding', [2 2] );
+relu2 = reluLayer;
+cross2= crossChannelNormalizationLayer(5);
+max2 = maxPooling2dLayer([3 3], 'Stride',[2 2], 'Padding',[0 0]);
+
+conv3 = convolution2dLayer([3 3], 384, 'Stride', [1 1], 'Padding', [1 1] );
+relu3 = reluLayer;
+
+conv4 = convolution2dLayer([3 3], 384, 'Stride', [1 1], 'Padding', [1 1] );
+relu4 = reluLayer;
+
+conv5 = convolution2dLayer([3 3], 256, 'Stride', [1 1], 'Padding', [1 1] );
+relu5 = reluLayer;
+max5 = maxPooling2dLayer([3 3], 'Stride',[2 2], 'Padding',[0 0]);
+
+fc6 = fullyConnectedLayer(4096);
+relu6 = reluLayer;
+drop6 = dropoutLayer(0.5);
+
+fc7 = fullyConnectedLayer(4096);
+relu7 = reluLayer;
+drop7 = dropoutLayer(0.5);
+
+fc8 = fullyConnectedLayer(10);
 sm = softmaxLayer;
 co = classificationLayer;
 
-epochs=1;
+
+epochs=200;
 
 layers = [ input
-    conv
-    relu
-    fc
-    sm
-    co];
+conv1
+relu1
+cross1
+max1
+
+conv2
+relu2
+cross2
+max2
+
+conv3
+relu3
+
+conv4
+relu4
+
+conv5
+relu5
+max5
+
+fc6
+relu6
+drop6
+
+fc7
+relu7
+drop7
+
+fc8
+sm
+co];
 
 
-options=trainingOptions('adam', 'MaxEpochs',epochs, 'ExecutionEnvironment','gpu','ValidationPatience',10 , 'Verbose',0);
+options=trainingOptions('adam', 'MaxEpochs',epochs, 'MiniBatchSize', 12 , 'ExecutionEnvironment','gpu','ValidationPatience',10 , 'Verbose',1);
 
 
 ST = datetime('now');
@@ -167,25 +221,10 @@ weights_first=netTransfer.Layers(2,1).Weights(:,:,1,1);
 %image(weights_first*255)
 
 
-%for i=(1:10)
-%    netTransfer = trainNetwork( xtrain, ytrain, layers, options);
-%    weights_first=netTransfer.Layers(2,1).Weights(:,:,1,1)
-%    image(weights_first*255)
-%end
-
-%a=netTransfer;
-%a=netTransfer.Layers;
-%a=netTransfer.Layers(2,1);
-%a=netTransfer.Layers(2,1).Weights;
-%weights_first=netTransfer.Layers(2,1).Weights(:,:,1,1);
-%image(weights_first*255);
-
-
-
- predictedLabels = classify(netTransfer, xtest);
+predictedLabels = classify(netTransfer, xtest);
   accuracy = accuracyCheck( predictedLabels', ytest );
 
-    fprintf('# CNN face: 5x5 * 20 *  500 cycles: (Linux GPU, batch mode)\n' );
+    fprintf('# CNN face: Alexnet 200 cycles: (Linux GPU)\n' );
     fprintf( '# accuracy: a:%f\n\n' , accuracy );
     fprintf ('m[]=%f\n' , seconds(D)  );
 
