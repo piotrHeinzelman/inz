@@ -169,7 +169,7 @@ sm = softmaxLayer;
 co = classificationLayer;
 
 
-epochs=200;
+epochs=500;
 
 layers = [ input
 conv1
@@ -224,8 +224,14 @@ weights_first=netTransfer.Layers(2,1).Weights(:,:,1,1);
 predictedLabels = classify(netTransfer, xtest);
   accuracy = accuracyCheck( predictedLabels', ytest );
 
-    fprintf('# CNN face: Alexnet 200 cycles: (Linux GPU)\n' );
-    fprintf( '# accuracy: a:%f\n\n' , accuracy );
+    fprintf('# CNN face: Alexnet 500 cycles: (Linux GPU)\n' );
+    fprintf( '# accuracy testX: a:%f\n\n' , accuracy );
+    fprintf ('m[]=%f\n' , seconds(D)  );
+
+predictedLabels = classify(netTransfer, xtrain);
+  accuracy = accuracyCheck( predictedLabels', ytrain );
+
+    fprintf( '# accuracy trainX: a:%f\n\n' , accuracy );
     fprintf ('m[]=%f\n' , seconds(D)  );
 
 
