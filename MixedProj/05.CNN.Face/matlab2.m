@@ -156,20 +156,12 @@ conv5 = convolution2dLayer([3 3], 256, 'Stride', [1 1], 'Padding', [1 1] );
 relu5 = reluLayer;
 max5 = maxPooling2dLayer([3 3], 'Stride',[2 2], 'Padding',[0 0]);
 
-fc6 = fullyConnectedLayer(4096);
-relu6 = reluLayer;
-drop6 = dropoutLayer(0.5);
-
-fc7 = fullyConnectedLayer(4096);
-relu7 = reluLayer;
-drop7 = dropoutLayer(0.5);
-
-fc8 = fullyConnectedLayer(10);
+fc6 = fullyConnectedLayer(10);
 sm = softmaxLayer;
 co = classificationLayer;
 
 
-epochs=500;
+epochs=5000;
 
 layers = [ input
 conv1
@@ -193,14 +185,6 @@ relu5
 max5
 
 fc6
-relu6
-drop6
-
-fc7
-relu7
-drop7
-
-fc8
 sm
 co];
 

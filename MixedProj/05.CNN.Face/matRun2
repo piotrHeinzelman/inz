@@ -1,0 +1,3 @@
+echo "#    --- Matlab ---"
+/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run matlab2.m' >> matlab_out_5000_fc10
+echo "-- Matlab  END -- "
