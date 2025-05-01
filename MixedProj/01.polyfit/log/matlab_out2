@@ -1,0 +1,8 @@
+# Polyfit:  X[60] * cycles: 100 
+# result: a:0.652629, a:-0.003471
+
+m[]=0.115671
+# implemented:  X[60] * cycles: 100 
+# result: w0:0.652629, w1:-0.003471
+
+mi[]=0.002841
