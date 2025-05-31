@@ -1,0 +1,79 @@
+Dzień dobry
+Nazywam się Piotr Heinzelman
+jestem studentem 4 roku na wydziale elektrycznym.
+
+
+Opowiem dziś o czymś, czym zajmuje się na codzień, i co jest ważne w mojej pracy - czyli wydajności.
+
+W czasie studiów, na naszym wydziale, o wydajości po raz pierwszy mówimy na przedmiocie algorytmy i struktury danych. 
+
+Porównujemy algorytmy sortowania i wpływ wielkości sortowanego zbioru na ilość wykonanych operacji.
+Rozpoczynamy od najprostrzego algorytmu sortowania - czyli sortowania bąbelkowego. 
+Idea jest bardzo prosta do przekazania, jest też bardzo prosty w implementacji - więc na pierwszy rzut oka jest idealny.
+
+Nieco później dowiadujemy się o pojęciu złożoności obliczeniowej, czyli pewnej formule określającej ilość pojedynczych operacji niezbędnych do posortowania zbioru o określonej wielkości. I tak na przykład sortowanie bąbelkowe ma przypisaną złożoność obliczeniową O = (n kwadrat). 
+
+złożoność typu n kwadrat oznacza, że podwojenie wielkości zbioru, spowoduje czterokrotny wzrost czasu wykonania sortowania. 
+
+Aby lepiej zobaczyć ten wpływ, możemy narysować wykres funkcji kwadratowej.
+
+Kolejne sposoby sortowania, mimo że oparte na bardziej skomplikowanych pomysłach, i trudniejsze w realizacji. 
+I tak sortowanie szybkie ma złożoność O = n log(n)
+
+
+Okazuje się że dużo lepszym rozwiązaniem, niż sortowanie zbioru, jest utrzymywanie zbioru w stanie posotrowanym. Jest to możliwe jeśli użyjemy odpowiedniej struktury danych - np. drzewa binarnego. Pobranie największego lub najmniejszego elementu z takiej struktury danych wykazuje złozoność O = ln(2)(n). - Czyli dwukrotne zwiększenie zbioru spowoduje wydłużenie czasu wykonania o jedną operację. W bazach danych można spotkać drzewo B-Tree do przechowywania indeksów. W jednym węźle takiego drzewa może być 100 gałęzi. Zwiększenie przeszukiwanego zbiotu 100X powoduje wykonanie 1 operacji więcej, a zwiększenie zbioru milion razy, powoduje wykonanie 3 operacji więcej. Jednak operacja nowej wartości do drzewa jest jest kosztowna obliczeniowo, ponadto nie można dodawać kilku wpisów jednocześnie. 
+
+W trakcie zajęć przypominamy sobie o znanych strukturach danych takich jak stosy, tablice, kolejki, drzewa, listy jedno i dwu kierunkowe. 
+
+Okazuje się, że pewne algorytmy bardzo dobrze współpracują z jednymi strukturami danych, natomiast z innymi... 
+
+cóż, 
+wyobraźmy sobie że chcemy posortować dane, i wykorzystać strukturę np. stosu. 
+
+Przywodzi to na myśl zagadkę wież Hanoi - gdzie czas przełożenia 64 krążków z palika na palik jest dłuższy niż czas od wielkiego wybuch do dziś. 
+
+Jeśli jesteśmy już przy bardzo długich czasach, to o obliczeniach, które chcialibyśmy by trwały jak najdłużej, uczyliśmy się w ramach przedmiotu Algorytmy i bezpieczeństwo danych. 
+
+Poznawaliśmy operacje które wykonane w jedną stronę trwają mgnienie, natomiast operacje odwrotne trwałyby wielokrotnie dłużej niż wiek wszechświata, czy czas pozostały do wybuchu słońca. 
+
+Poznawaliśmy także - poza notacją wielkiego O - notację wielkiego Omega i wielkiego Theta. 
+
+To ciekawe, ale w zależności od przedmiotu - optymistyczna wielkość czasu wykonania raz jest wielkością maksymalną, a w innym minimalną. 
+Innymi słowy pewne im dłużej wykonywane są operacje odwrotne - tym nasze sekrety są bezpieczniejsze.
+
+Studiując wnikliwie materiały do przedmiotu Systemy czasu rzeczywistego, możemy zauważyć rozwiązanie które przyspiesza obliczanie sumy kontrolnej CRC, a polega ono zastąpieniu sekwencji obliczeń, wyliczoną i znaną wcześniej wartością. Szybkie obliczanie sum CRC jest ważne w przemyśle motoryzacyjnym, we wszystkich nowoczesnych samochodach urządzenia elektroniczne, kontrolujące pracę silnika, podzespołów, czy otoczenia spięte są magistralą CAN wymagającą obliczenia porawnej sumy kontrolnej i dołączenia jej do komunikatu.
+
+Na wydajność procesu ma także znaczenie rodzaj zastosowanej zmiennej. Niektóre operacje, takie jak przesłanie wartości całkowitej 0 do rejestru procesora mogą być wykonane z pomocą arytmetycznej jednostki logicznej ALU bez dostępu do pamięci, i w związku z tym trwają 1 cykl zegara, a nie kilkanaście. 
+Operacje na liczbach zmiennoprzecinkowych wymagają przesłania wartości do rejestrów pomocniczych, i zabierają więcej czasu niż operacje na liczbach całkowitych. Porównanie dwu liczb sprowadza się do odjęcia wartości i sprawdzenia ustawienia flag po operacji. Porównanie dwu łańcuchów znaków sprowadza się do porównywania kolejnych znaków w łańcuchu. Widać dokłądnie które działanie będzie bardziej skomplikowane i potrwa dłużej. 
+
+Wpływ na szybkość wykonania zadania ma także kolejność działań, zwłaszcza przy wykonywaniu zapytań do baz danych. Operacje łączenia danych po indeksie b-tree będzie zdecydowanie szybsze niż łączenie po kluczach napisowych. A operacje sortowania przeprowadzona po filtrowaniu danych będzie wykonana szybciej niż operacja filtrowania posortowanych danych. 
+
+W konstrukcjach można poprawiać wydajność, przyglądając się całemu procesowi i usuwając zbędne operacje, lub zastępować mniej wydajne operacjami bardziej wydajnymi - i nie chodzi tu tylko o obliczenia ale również o wydajność energetyczną, czy zmniejszanie oporów pracy. Proces zwiększania wydajności można traktować trochę jak wyzwanie - zbliżając się coraz bardziej do rozwiązania doskonałego. Tak programu jak i bolidu formuły pierwszej. Jest to zadanie trudne, choć może być fascynujące. 
+
+Zwłaszcza dla inżynierów.  
+
+Dziękuję państwu za uwagę.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
