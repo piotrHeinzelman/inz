@@ -1,5 +1,5 @@
 echo "#   --- Python --- "
-python3 main.py
-python3 main.py
-python3 main.py
-python3 main.py
+python3 main.py >> python_out1
+python3 main.py >> python_out2
+python3 main.py >> python_out3
+python3 main.py >> python_out4
