@@ -103,17 +103,21 @@ model.fit(trainX, trainY, epochs=epochs, verbose=0)
 end=time.time()
 d=end-start
 
-clear_session()
 
 print("# Python Tensorflow Time: " , d)
 
+score = model.evaluate(trainX, trainY, verbose=0 )
+print("Train loss:", score[0])
+print("Train accuracy:", score[1])
 
-score = model.evaluate(testX, testY, verbose=1 )
+
+score = model.evaluate(testX, testY, verbose=0 )
 print("Test loss:", score[0])
 print("Test accuracy:", score[1])
 
 
 
+clear_session()
 
 
-
+# 1 FC 396 sec train: accuracy 1, test acc 0.04
