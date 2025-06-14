@@ -90,7 +90,7 @@ class CNN(nn.Module):
        # 2nd convolutional layer
        self.conv2 = nn.Conv2d(in_channels=96, out_channels=16, kernel_size=3, padding=1)
        # Fully connected layer
-       self.fc1 = nn.Linear( 169 , num_classes) #16*7*7
+       self.fc1 = nn.Linear( 2704 , num_classes) #16*7*7
 
    def forward(self, x):
        """
@@ -148,10 +148,10 @@ for batch_index in range ( trainY.size ):
        # print(data)
        # print(targets)
        scores = model( data )
-       loss = criterion( scores, targets )
-       optimizer.zero_grad()
-       loss.backward()
-       optimizer.step()
+       #loss = criterion( scores, targets )
+       #optimizer.zero_grad()
+       #loss.backward()
+       #optimizer.step()
 
 
 
@@ -164,15 +164,16 @@ model.eval()
 with torch.no_grad():
    for images, labels in range(testY.size):
        # Get predicted probabilities for test data batch
-       outputs = model(images)
-       _, preds = torch.max(outputs, 1)
-       acc(preds, labels)
-       precision(preds, labels)
+       #outputs = model(images)
+       #_, preds = torch.max(outputs, 1)
+       #acc(preds, labels)
+       #precision(preds, labels)
        recall(preds, labels)
+       
 
 #Compute total test accuracy
-test_accuracy = acc.compute()
-print(f"Test accuracy: {test_accuracy}")
+#test_accuracy = acc.compute()
+#print(f"Test accuracy: {test_accuracy}")
 
 
 
@@ -253,3 +254,4 @@ print(f"Test accuracy: {test_accuracy}")
 #      keras.layers.Dropout( .5 ),
 #      keras.layers.Dense(4096, activation='relu'),
 #      keras.layers.Dense(10, activation='softmax')
+#
