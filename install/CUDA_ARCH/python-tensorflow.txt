@@ -1,0 +1,239 @@
+tf) [john@myarch 05.CNN.Face]$ sudo pacman -S python-tensorflow    
+resolving dependencies...
+looking for conflicting packages...
+warning: dependency cycle detected:
+warning: python-keras will be installed before its python-tensorflow dependency
+warning: dependency cycle detected:
+warning: python-tensorboard_plugin_wit will be installed before its tensorboard dependency
+
+Packages (62) c-ares-1.34.5-1  graphviz-12.2.1-1  gts-0.7.6.121130-3  hdf5-1.14.6-4  intel-oneapi-compiler-shared-runtime-libs-2025.0.4-2  libaec-1.1.3-2
+              liblzf-3.6-5  netpbm-10.86.46-3  python-absl-2.1.0-3  python-astor-0.8.1-8  python-astunparse-1.6.3-9  python-autocommand-2.2.2-7
+              python-bleach-6.2.0-2  python-cachetools-5.5.0-2  python-certifi-2025.04.26-1  python-cffi-1.17.1-2  python-cgi-3.13.0-2
+              python-cryptography-45.0.4-1  python-flatbuffers-25.2.10-1  python-gast-0.6.0-2  python-google-auth-2.38.0-1  python-google-auth-oauthlib-1.2.1-2
+              python-grpcio-1.72.0-2  python-grpcio-tools-1.72.0-2  python-h5py-3.14.0-1  python-html5lib-1.1-15  python-httplib2-0.22.0-8
+              python-jaraco.collections-5.1.0-1  python-jaraco.context-6.0.1-1  python-jaraco.functools-4.1.0-1  python-jaraco.text-4.0.0-2
+              python-keras-3.9.2-1  python-markdown-3.8-1  python-markdown-it-py-3.0.0-4  python-mdurl-0.1.2-8  python-ml-dtypes-0.5.2-1
+              python-more-itertools-10.7.0-1  python-oauth2client-4.1.3-11  python-oauthlib-3.2.2-4  python-opt_einsum-3.4.0-1  python-optree-0.13.1-2
+              python-pasta-0.2.0-9  python-protobuf-31.0-2  python-pyasn1-0.6.0-2  python-pyasn1-modules-0.4.0-2  python-pycparser-2.22-3  python-pydot-3.0.1-3
+              python-pygments-2.19.1-1  python-requests-oauthlib-1.3.1-5  python-rich-14.0.0-1  python-rsa-4.9-6  python-setuptools-1:80.9.0-1
+              python-tensorboard_plugin_wit-1.8.1-10  python-termcolor-2.5.0-1  python-webencodings-0.5.1-12  python-werkzeug-3.1.3-1  python-wheel-0.45.1-1
+              python-wrapt-1.16.0-4  re2-1:20240702-5  tensorboard-2.19.0-1  tensorflow-2.19.0-2  python-tensorflow-2.19.0-2
+
+Total Download Size:    384.22 MiB
+Total Installed Size:  2435.75 MiB
+
+:: Proceed with installation? [Y/n] 
+:: Retrieving packages...
+ hdf5-1.14.6-4-x86_64                                                  3.9 MiB  1765 KiB/s 00:02 [#########################################################] 100%
+ graphviz-12.2.1-1-x86_64                                              3.7 MiB  1846 KiB/s 00:02 [#########################################################] 100%
+ tensorboard-2.19.0-1-x86_64                                           8.2 MiB  1700 KiB/s 00:05 [#########################################################] 100%
+ python-grpcio-1.72.0-2-x86_64                                         2.8 MiB  2.03 MiB/s 00:01 [#########################################################] 100%
+ python-pygments-2.19.1-1-any                                          2.3 MiB  1457 KiB/s 00:02 [#########################################################] 100%
+ python-keras-3.9.2-1-any                                           2023.5 KiB  2.07 MiB/s 00:01 [#########################################################] 100%
+ python-cryptography-45.0.4-1-x86_64                                1265.1 KiB  2002 KiB/s 00:01 [#########################################################] 100%
+ netpbm-10.86.46-3-x86_64                                           1341.2 KiB  1315 KiB/s 00:01 [#########################################################] 100%
+ python-h5py-3.14.0-1-x86_64                                        1219.7 KiB  1909 KiB/s 00:01 [#########################################################] 100%
+ python-tensorboard_plugin_wit-1.8.1-10-any                          688.3 KiB  1529 KiB/s 00:00 [#########################################################] 100%
+ python-setuptools-1:80.9.0-1-any                                   1216.6 KiB  1098 KiB/s 00:01 [#########################################################] 100%
+ python-rich-14.0.0-1-any                                            528.9 KiB  1638 KiB/s 00:00 [#########################################################] 100%
+ python-protobuf-31.0-2-x86_64                                       468.7 KiB  1039 KiB/s 00:00 [#########################################################] 100%
+ python-werkzeug-3.1.3-1-any                                         414.1 KiB  1463 KiB/s 00:00 [#########################################################] 100%
+ python-bleach-6.2.0-2-any                                           320.1 KiB   912 KiB/s 00:00 [#########################################################] 100%
+ python-optree-0.13.1-2-any                                          370.5 KiB   600 KiB/s 00:01 [#########################################################] 100%
+ python-cffi-1.17.1-2-x86_64                                         279.7 KiB   923 KiB/s 00:00 [#########################################################] 100%
+ python-google-auth-2.38.0-1-any                                     267.0 KiB   853 KiB/s 00:00 [#########################################################] 100%
+ python-pyasn1-modules-0.4.0-2-any                                   279.3 KiB   528 KiB/s 00:01 [#########################################################] 100%
+ python-html5lib-1.1-15-any                                          250.4 KiB   879 KiB/s 00:00 [#########################################################] 100%
+ python-ml-dtypes-0.5.2-1-x86_64                                     238.6 KiB   843 KiB/s 00:00 [#########################################################] 100%
+ python-absl-2.1.0-3-any                                             237.1 KiB   820 KiB/s 00:00 [#########################################################] 100%
+ c-ares-1.34.5-1-x86_64                                              225.8 KiB   914 KiB/s 00:00 [#########################################################] 100%
+ python-pycparser-2.22-3-any                                         227.5 KiB   402 KiB/s 00:01 [#########################################################] 100%
+ gts-0.7.6.121130-3-x86_64                                           209.5 KiB   782 KiB/s 00:00 [#########################################################] 100%
+ python-oauthlib-3.2.2-4-any                                         196.6 KiB   774 KiB/s 00:00 [#########################################################] 100%
+ python-markdown-3.8-1-any                                           182.1 KiB   820 KiB/s 00:00 [#########################################################] 100%
+ python-pyasn1-0.6.0-2-any                                           171.1 KiB   738 KiB/s 00:00 [#########################################################] 100%
+ re2-1:20240702-5-x86_64                                             167.1 KiB   898 KiB/s 00:00 [#########################################################] 100%
+ python-opt_einsum-3.4.0-1-any                                       163.3 KiB   656 KiB/s 00:00 [#########################################################] 100%
+ python-oauth2client-4.1.3-11-any                                    152.5 KiB   803 KiB/s 00:00 [#########################################################] 100%
+ python-grpcio-tools-1.72.0-2-x86_64                                 147.0 KiB   650 KiB/s 00:00 [#########################################################] 100%
+ python-markdown-it-py-3.0.0-4-any                                   141.4 KiB   813 KiB/s 00:00 [#########################################################] 100%
+ python-more-itertools-10.7.0-1-any                                  116.4 KiB   786 KiB/s 00:00 [#########################################################] 100%
+ python-pasta-0.2.0-9-any                                            116.4 KiB   513 KiB/s 00:00 [#########################################################] 100%
+ python-wheel-0.45.1-1-any                                            66.9 KiB   719 KiB/s 00:00 [#########################################################] 100%
+ python-httplib2-0.22.0-8-any                                         66.2 KiB   487 KiB/s 00:00 [#########################################################] 100%
+ python-astor-0.8.1-8-any                                             59.5 KiB   461 KiB/s 00:00 [#########################################################] 100%
+ python-flatbuffers-25.2.10-1-x86_64                                  59.5 KiB   342 KiB/s 00:00 [#########################################################] 100%
+ python-rsa-4.9-6-any                                                 58.4 KiB   453 KiB/s 00:00 [#########################################################] 100%
+ python-gast-0.6.0-2-any                                              55.7 KiB   392 KiB/s 00:00 [#########################################################] 100%
+ python-wrapt-1.16.0-4-x86_64                                         53.3 KiB   225 KiB/s 00:00 [#########################################################] 100%
+ python-pydot-3.0.1-3-any                                             51.8 KiB   387 KiB/s 00:00 [#########################################################] 100%
+ python-astunparse-1.6.3-9-any                                        29.7 KiB   330 KiB/s 00:00 [#########################################################] 100%
+ python-google-auth-oauthlib-1.2.1-2-any                              28.5 KiB   223 KiB/s 00:00 [#########################################################] 100%
+ python-requests-oauthlib-1.3.1-5-any                                 36.6 KiB  94.5 KiB/s 00:00 [#########################################################] 100%
+ python-cgi-3.13.0-2-any                                              27.1 KiB   277 KiB/s 00:00 [#########################################################] 100%
+ python-cachetools-5.5.0-2-any                                        26.6 KiB   283 KiB/s 00:00 [#########################################################] 100%
+ python-autocommand-2.2.2-7-any                                       24.2 KiB   218 KiB/s 00:00 [#########################################################] 100%
+ python-jaraco.collections-5.1.0-1-any                                23.6 KiB   369 KiB/s 00:00 [#########################################################] 100%
+ libaec-1.1.3-2-x86_64                                                26.0 KiB  82.9 KiB/s 00:00 [#########################################################] 100%
+ python-webencodings-0.5.1-12-any                                     22.7 KiB   273 KiB/s 00:00 [#########################################################] 100%
+ python-jaraco.text-4.0.0-2-any                                       21.0 KiB   291 KiB/s 00:00 [#########################################################] 100%
+ python-mdurl-0.1.2-8-any                                             18.4 KiB   134 KiB/s 00:00 [#########################################################] 100%
+ python-jaraco.functools-4.1.0-1-any                                  18.1 KiB   235 KiB/s 00:00 [#########################################################] 100%
+ python-jaraco.context-6.0.1-1-any                                    13.5 KiB   160 KiB/s 00:00 [#########################################################] 100%
+ liblzf-3.6-5-x86_64                                                  17.0 KiB   149 KiB/s 00:00 [#########################################################] 100%
+ python-termcolor-2.5.0-1-any                                         13.1 KiB   149 KiB/s 00:00 [#########################################################] 100%
+ python-certifi-2025.04.26-1-any                                       8.8 KiB   160 KiB/s 00:00 [#########################################################] 100%
+ intel-oneapi-compiler-shared-runtime-libs-2025.0.4-2-x86_64          63.4 MiB  3.90 MiB/s 00:16 [#########################################################] 100%
+ tensorflow-2.19.0-2-x86_64                                          173.3 MiB  4.98 MiB/s 00:35 [#########################################################] 100%
+ python-tensorflow-2.19.0-2-x86_64                                   112.5 MiB  3.20 MiB/s 00:35 [#########################################################] 100%
+ Total (62/62)                                                       384.2 MiB  10.9 MiB/s 00:35 [#########################################################] 100%
+(62/62) checking keys in keyring                                                                 [#########################################################] 100%
+(62/62) checking package integrity                                                               [#########################################################] 100%
+(62/62) loading package files                                                                    [#########################################################] 100%
+(62/62) checking for file conflicts                                                              [#########################################################] 100%
+(62/62) checking available disk space                                                            [#########################################################] 100%
+:: Processing package changes...
+( 1/62) installing c-ares                                                                        [#########################################################] 100%
+( 2/62) installing intel-oneapi-compiler-shared-runtime-libs                                     [#########################################################] 100%
+( 3/62) installing tensorflow                                                                    [#########################################################] 100%
+Optional dependencies for tensorflow
+    tensorboard: Tensorflow visualization toolkit [pending]
+( 4/62) installing python-termcolor                                                              [#########################################################] 100%
+( 5/62) installing python-astor                                                                  [#########################################################] 100%
+( 6/62) installing python-gast                                                                   [#########################################################] 100%
+( 7/62) installing python-protobuf                                                               [#########################################################] 100%
+( 8/62) installing python-absl                                                                   [#########################################################] 100%
+( 9/62) installing libaec                                                                        [#########################################################] 100%
+(10/62) installing hdf5                                                                          [#########################################################] 100%
+(11/62) installing liblzf                                                                        [#########################################################] 100%
+(12/62) installing python-h5py                                                                   [#########################################################] 100%
+(13/62) installing python-ml-dtypes                                                              [#########################################################] 100%
+(14/62) installing python-optree                                                                 [#########################################################] 100%
+(15/62) installing netpbm                                                                        [#########################################################] 100%
+(16/62) installing gts                                                                           [#########################################################] 100%
+(17/62) installing graphviz                                                                      [#########################################################] 100%
+/usr/bin/bash: warning: setlocale: LC_ALL: cannot change locale (PL): No such file or directory
+Optional dependencies for graphviz
+    mono: sharp bindings
+    guile: guile bindings [installed]
+    lua: lua bindings [installed]
+    perl: perl bindings [installed]
+    python: python bindings [installed]
+    r: r bindings
+    tcl: tcl bindings
+    qt6-base: gvedit [installed]
+    xterm: vimdot
+(18/62) installing python-pydot                                                                  [#########################################################] 100%
+(19/62) installing python-mdurl                                                                  [#########################################################] 100%
+(20/62) installing python-markdown-it-py                                                         [#########################################################] 100%
+Optional dependencies for python-markdown-it-py
+    python-mdit_py_plugins: core plugins
+    python-linkify-it-py: linkify extension
+(21/62) installing python-pygments                                                               [#########################################################] 100%
+(22/62) installing python-rich                                                                   [#########################################################] 100%
+(23/62) installing python-werkzeug                                                               [#########################################################] 100%
+Optional dependencies for python-werkzeug
+    python-watchdog: faster and more advanced reloader
+(24/62) installing python-webencodings                                                           [#########################################################] 100%
+(25/62) installing python-bleach                                                                 [#########################################################] 100%
+Optional dependencies for python-bleach
+    python-tinycss2: for CSS sanitisation
+(26/62) installing python-wheel                                                                  [#########################################################] 100%
+Optional dependencies for python-wheel
+    python-keyring: for wheel.signatures
+    python-xdg: for wheel.signatures [installed]
+    python-setuptools: for legacy bdist_wheel subcommand [pending]
+(27/62) installing python-markdown                                                               [#########################################################] 100%
+Optional dependencies for python-markdown
+    python-yaml: parse Python in YAML metadata [installed]
+(28/62) installing python-html5lib                                                               [#########################################################] 100%
+Optional dependencies for python-html5lib
+    python-lxml: lxml treebuilder
+    python-genshi: genshi treewalker
+(29/62) installing re2                                                                           [#########################################################] 100%
+(30/62) installing python-more-itertools                                                         [#########################################################] 100%
+(31/62) installing python-jaraco.functools                                                       [#########################################################] 100%
+(32/62) installing python-jaraco.context                                                         [#########################################################] 100%
+(33/62) installing python-autocommand                                                            [#########################################################] 100%
+(34/62) installing python-jaraco.text                                                            [#########################################################] 100%
+Optional dependencies for python-jaraco.text
+    python-inflect: for show-newlines script
+(35/62) installing python-jaraco.collections                                                     [#########################################################] 100%
+(36/62) installing python-setuptools                                                             [#########################################################] 100%
+(37/62) installing python-grpcio-tools                                                           [#########################################################] 100%
+(38/62) installing python-grpcio                                                                 [#########################################################] 100%
+(39/62) installing python-cachetools                                                             [#########################################################] 100%
+(40/62) installing python-certifi                                                                [#########################################################] 100%
+(41/62) installing python-cgi                                                                    [#########################################################] 100%
+(42/62) installing python-httplib2                                                               [#########################################################] 100%
+(43/62) installing python-pyasn1                                                                 [#########################################################] 100%
+(44/62) installing python-pyasn1-modules                                                         [#########################################################] 100%
+(45/62) installing python-rsa                                                                    [#########################################################] 100%
+(46/62) installing python-oauth2client                                                           [#########################################################] 100%
+Optional dependencies for python-oauth2client
+    python-gflags: for oauth2client.tools.run function
+(47/62) installing python-google-auth                                                            [#########################################################] 100%
+Optional dependencies for python-google-auth
+    python-aiohttp: for async HTTP support
+    python-cryptography: for TLS support [pending]
+    python-pyjwt: for JSON Web Key support
+    python-pyopenssl: for TLS support
+    python-pyu2f: for reauthentication support
+    python-requests: for async HTTP support [installed]
+(48/62) installing python-pycparser                                                              [#########################################################] 100%
+(49/62) installing python-cffi                                                                   [#########################################################] 100%
+Optional dependencies for python-cffi
+    python-setuptools: "limited api" version checking in cffi.setuptools_ext [installed]
+(50/62) installing python-cryptography                                                           [#########################################################] 100%
+(51/62) installing python-oauthlib                                                               [#########################################################] 100%
+(52/62) installing python-requests-oauthlib                                                      [#########################################################] 100%
+(53/62) installing python-google-auth-oauthlib                                                   [#########################################################] 100%
+Optional dependencies for python-google-auth-oauthlib
+    python-click
+(54/62) installing python-tensorboard_plugin_wit                                                 [#########################################################] 100%
+Optional dependencies for python-tensorboard_plugin_wit
+    python-tensorflow-serving-api: TensorFlow Classification, Regression, or Predict APIs
+(55/62) installing tensorboard                                                                   [#########################################################] 100%
+Optional dependencies for tensorboard
+    python-tensorflow: advanced features for TensorBoard [pending]
+(56/62) installing python-keras                                                                  [#########################################################] 100%
+Optional dependencies for python-keras
+    python-pytorch [installed]
+    python-requests: for RemoteMonitor [installed]
+    python-scikit-learn: wrappers for scikit-learn
+(57/62) installing python-opt_einsum                                                             [#########################################################] 100%
+(58/62) installing python-wrapt                                                                  [#########################################################] 100%
+(59/62) installing python-astunparse                                                             [#########################################################] 100%
+(60/62) installing python-pasta                                                                  [#########################################################] 100%
+(61/62) installing python-flatbuffers                                                            [#########################################################] 100%
+Optional dependencies for python-flatbuffers
+    python-numpy: support for Numpy arrays [installed]
+(62/62) installing python-tensorflow                                                             [#########################################################] 100%
+Optional dependencies for python-tensorflow
+    tensorboard: Tensorflow visualization toolkit [installed]
+:: Running post-transaction hooks...
+(1/2) Arming ConditionNeedsUpdate...
+/bin/sh: warning: setlocale: LC_ALL: cannot change locale (PL): No such file or directory
+(2/2) Checking for old perl modules...
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (PL): No such file or directory
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+    LANGUAGE = "PL",
+    LC_ALL = "PL",
+    LC_CTYPE = (unset),
+    LC_NUMERIC = "PL",
+    LC_COLLATE = (unset),
+    LC_TIME = (unset),
+    LC_MESSAGES = (unset),
+    LC_MONETARY = (unset),
+    LC_ADDRESS = (unset),
+    LC_IDENTIFICATION = (unset),
+    LC_MEASUREMENT = (unset),
+    LC_PAPER = (unset),
+    LC_TELEPHONE = (unset),
+    LC_NAME = "PL",
+    LANG = "pl_PL.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to a fallback locale ("pl_PL.UTF-8").
+(tf) [john@myarch 05.CNN.Face]$ 
+

@@ -1,0 +1,12 @@
+LIBNAME    := samples_common
+SOURCE_DIR := $(subst _,/,$(LIBNAME))
+OUTPUT_DIR := $(subst _,/,$(LIBNAME))
+SAMPLE_DIR := common
+$(eval $(call addToPublicSamples,\
+    $(SAMPLE_DIR),\
+    $(filter-out Makefile.internal,$(notdir $(wildcard $(SAMPLE_PATH)/$(SAMPLE_DIR)/*)))\
+))
+
+include $(ROOT_PATH)/Makefile.component
+include $(MKINC_PATH)/install-public-sample.def
+SAMPLES_INSTALL += install_sdk_$(SAMPLE_DIR)_$(MODE)

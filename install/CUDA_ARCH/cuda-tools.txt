@@ -1,0 +1,109 @@
+[john@myarch INZ]$ sudo pacman -S cuda-tools
+[sudo] password for john: 
+resolving dependencies...
+looking for conflicting packages...
+
+Packages (8) cuda-12.8.1-3  gcc14-14.3.1+r25+g42e99e057bd7-1  gcc14-libs-14.3.1+r25+g42e99e057bd7-1
+             java-runtime-common-3-6  jre8-openjdk-8.452.u09-1  jre8-openjdk-headless-8.452.u09-1
+             opencl-nvidia-575.57.08-3  cuda-tools-12.8.1-3
+
+Total Download Size:   3380.63 MiB
+Total Installed Size:  9270.25 MiB
+
+:: Proceed with installation? [Y/n] 
+:: Retrieving packages...
+ gcc14-libs-14.3.1+r25+g42e99e057bd7-1...   303.2 KiB   641 KiB/s 00:00 [########################################] 100%
+ jre8-openjdk-8.452.u09-1-x86_64            174.7 KiB   955 KiB/s 00:00 [########################################] 100%
+ java-runtime-common-3-6-any                  5.0 KiB   136 KiB/s 00:00 [########################################] 100%
+ opencl-nvidia-575.57.08-3-x86_64             5.6 MiB  5.66 MiB/s 00:01 [########################################] 100%
+ jre8-openjdk-headless-8.452.u09-1-x86_64    28.6 MiB  2.54 MiB/s 00:11 [########################################] 100%
+ cuda-tools-12.8.1-3-x86_64                 754.2 MiB  5.55 MiB/s 02:16 [########################################] 100%
+ cuda-12.8.1-3-x86_64                         2.5 GiB  8.22 MiB/s 05:10 [########################################] 100%
+ Total (8/8)                                  3.3 GiB  10.9 MiB/s 05:11 [########################################] 100%
+(8/8) checking keys in keyring                                          [########################################] 100%
+(8/8) checking package integrity                                        [########################################] 100%
+(8/8) loading package files                                             [########################################] 100%
+(8/8) checking for file conflicts                                       [########################################] 100%
+(8/8) checking available disk space                                     [########################################] 100%
+:: Processing package changes...
+(1/8) installing opencl-nvidia                                          [########################################] 100%
+Optional dependencies for opencl-nvidia
+    opencl-headers: headers necessary for OpenCL development
+(2/8) installing gcc14-libs                                             [########################################] 100%
+(3/8) installing gcc14                                                  [########################################] 100%
+(4/8) installing cuda                                                   [########################################] 100%
+/usr/bin/bash: warning: setlocale: LC_ALL: cannot change locale (PL): No such file or directory
+- The cuda binaries are in /opt/cuda/bin/
+- The cuda samples are in /opt/cuda/samples/
+- The cuda docs are in /opt/cuda/doc/
+- You need to source /etc/profile or restart your session in order for the CUDA
+  binaries to appear in your $PATH
+- The default host compiler for nvcc is set by the $NVCC_CCBIN environment
+  variable in /etc/profile.d/cuda.sh
+- The default host compiler for nvcc is no longer configured using symlinks in
+  /opt/cuda/bin/ but by the $NVCC_CCBIN environment variable in
+  /etc/profile.d/cuda.sh.  You need to source /etc/profile or restart your
+  session for it to be available in your environment.  Additionally, you may
+  need to clear the build cache of your projects where the old path may have
+  been recorded.
+- When you uninstall an old, unrequired version of GCC that was previously
+  required by cuda for the default host compiler ($NVCC_CCBIN), you may need
+  to source /etc/profile or restart your session.  Additionally, you may need
+  to clear the build cache of your projects where the old path may be still
+  recorded.
+Optional dependencies for cuda
+    gdb: for cuda-gdb
+    glu: required for some profiling tools in CUPTI [installed]
+    nvidia-utils: for NVIDIA drivers (not needed in CDI containers) [installed]
+    rdma-core: for GPUDirect Storage (libcufile_rdma.so)
+(5/8) installing java-runtime-common                                    [########################################] 100%
+/usr/bin/bash: warning: setlocale: LC_ALL: cannot change locale (PL): No such file or directory
+For the complete set of Java binaries to be available in your PATH,
+you need to re-login or source /etc/profile
+Please note that this package does not support forcing JAVA_HOME as former package java-common did
+(6/8) installing jre8-openjdk-headless                                  [########################################] 100%
+/usr/bin/bash: warning: setlocale: LC_ALL: cannot change locale (PL): No such file or directory
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (PL): No such file or directory
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (PL): No such file or directory
+Optional dependencies for jre8-openjdk-headless
+    java-rhino: for some JavaScript support
+(7/8) installing jre8-openjdk                                           [########################################] 100%
+/usr/bin/bash: warning: setlocale: LC_ALL: cannot change locale (PL): No such file or directory
+/bin/bash: warning: setlocale: LC_ALL: cannot change locale (PL): No such file or directory
+when you use a non-reparenting window manager,
+set _JAVA_AWT_WM_NONREPARENTING=1 in /etc/profile.d/jre.sh
+Optional dependencies for jre8-openjdk
+    icedtea-web: web browser plugin + Java Web Start
+    alsa-lib: for basic sound support [installed]
+    gtk3: for the Gtk+ look and feel - desktop usage [installed]
+    java8-openjfx: for JavaFX GUI components support
+(8/8) installing cuda-tools                                             [########################################] 100%
+/usr/bin/bash: warning: setlocale: LC_ALL: cannot change locale (PL): No such file or directory
+- The cuda binaries are in /opt/cuda/bin/
+- The cuda samples are in /opt/cuda/samples/
+- The cuda docs are in /opt/cuda/doc/
+- You need to source /etc/profile or restart your session in order for the CUDA
+  binaries to appear in your $PATH
+- The default host compiler for nvcc is set by the $NVCC_CCBIN environment
+  variable in /etc/profile.d/cuda.sh
+- The default host compiler for nvcc is no longer configured using symlinks in
+  /opt/cuda/bin/ but by the $NVCC_CCBIN environment variable in
+  /etc/profile.d/cuda.sh.  You need to source /etc/profile or restart your
+  session for it to be available in your environment.  Additionally, you may
+  need to clear the build cache of your projects where the old path may have
+  been recorded.
+- When you uninstall an old, unrequired version of GCC that was previously
+  required by cuda for the default host compiler ($NVCC_CCBIN), you may need
+  to source /etc/profile or restart your session.  Additionally, you may need
+  to clear the build cache of your projects where the old path may be still
+  recorded.
+Optional dependencies for cuda-tools
+    perl: required by some NVVP plugins [installed]
+:: Running post-transaction hooks...
+(1/2) Arming ConditionNeedsUpdate...
+/bin/sh: warning: setlocale: LC_ALL: cannot change locale (PL): No such file or directory
+(2/2) Updating the desktop file MIME type cache...
+[john@myarch INZ]$ nvcc
+bash: nvcc: command not found
+[john@myarch INZ]$ nvcc --version
+bash: nvcc: command not found

@@ -1,23 +1,11 @@
-# https://keras.io/examples/vision/mnist_convnet
-# https://www.tensorflow.org/?hl=pl
-# https://www.osc.edu/resources/getting_started/howto/howto_use_gpu_in_python
-# https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html
-
-
 import tensorflow as tf
 import numpy as np
 from tensorflow import keras
 
-
 import os
 import time
 from tensorflow.keras.backend import clear_session
-import matplotlib.pyplot as plt
-from matplotlib import pyplot as plt
-from matplotlib import image as mpimg
 
-
-from sklearn.metrics import classification_report, confusion_matrix, roc_curve, auc
 
 
 
@@ -35,7 +23,6 @@ def readFileX ( fileName ,  multi ):
     file=open( fileName, 'rb' )
     data=np.fromfile( fileName, np.uint8, num_classes*multi*100*75, '' )
     data=data.reshape(num_classes*multi, 100*75)
-    #data=(data/255)
     file.close()
     return data
 
@@ -58,8 +45,6 @@ def AlexNet():
       keras.layers.MaxPool2D(pool_size=(2,2), strides=(2,2)),
       keras.layers.Flatten(),
       keras.layers.Dense(64, activation='relu'),
-#      keras.layers.Dense(64, activation='relu'),
-#      keras.layers.Dropout(0.2),
       keras.layers.Dense(10, activation='softmax')
 ])
 
@@ -73,55 +58,22 @@ testX = readFileX ('data/testX', 5  )
 testY = readFileY ('data/testY', 5 )
 
 
-#trainX = trainX.astype("float32")
-#testX = testX.astype("float32")
-
 trainY = trainY.astype("int")
 testY = testY.astype("int")
-
-
-# trainX = trainX.reshape(6*percent*100, 28,28).astype("float32") / 255
-# testX = testX.reshape(1*percent*100, 28,28).astype("float32") / 255
 
 print( trainX[0].shape )
 print( trainX[0] )
 
 
 
-#image = mpimg.imread("sheep.png")
-plt.imshow( trainX[0].reshape(75,100) )
-plt.show()  # Displays the image in a graphical format.
-
-
-
 model = AlexNet()
 model.summary()
 
-# --- flat to 1 item ---
-# print ( trainX.shape )
-# trainX = np.array_split( trainX, 30000 )
-# trainX = trainX[0]
-# print ( trainX.shape )
 
-# --- flat to 1 item ---
-
-# trainY = trainY[0]
 print ( trainY.shape )
 print ( trainY[2])
 
 
-
-
-#trainX = trainX.reshape(1,28,28)
-
-
-#model = tf.keras.models.Sequential([
-#  tf.keras.layers.Input(shape=(784,)),
-#  tf.keras.layers.Dense(64, activation='sigmoid'),
-#  tf.keras.layers.Dense(64, activation='sigmoid'),
-#  tf.keras.layers.Dropout(0.2),
-#  tf.keras.layers.Dense(10, activation='softmax')
-#])
 
 model.compile(optimizer='adam',
   loss='sparse_categorical_crossentropy',
@@ -146,7 +98,7 @@ print("Test accuracy:", score[1])
 
 
 
-# model.evaluate(testX, testY)
+ model.evaluate(testX, testY)
 
 
 

@@ -1,0 +1,316 @@
+(tf) [john@myarch 05.CNN.Face]$ sudo pacman -S python-pytorch-cuda 
+[sudo] password for john: 
+resolving dependencies...
+looking for conflicting packages...
+
+Packages (71) blas-3.12.1-2  cblas-3.12.1-2  cudnn-9.8.0.87-1  double-conversion-3.3.1-1  eigen-3.4.0-2  fmt-11.2.0-1  gflags-2.2.2-5  google-glog-0.7.1-1
+              hwloc-2.12.1-1  intel-oneapi-common-2024.1.0-1  intel-oneapi-mkl-2025.0.1-3  intel-oneapi-openmp-2025.0.4-1  intel-oneapi-tbb-2021.12.0-2
+              intel-oneapi-tcm-1.2.0-3  lapack-3.12.1-2  level-zero-loader-1.21.9-1  libb2-0.98.1-3  libfabric-2.1.0-1  libimagequant-4.3.4-1  libuv-1.51.0-1
+              magma-cuda-2.9.0-2  md4c-0.5.2-1  nccl-2.26.5-1  numactl-2.0.19-1  onednn-3.7.2-1  openmp-20.1.6-1  openmpi-5.0.8-1  openpmix-5.0.8-1
+              openucx-1.18.1-2  prrte-3.0.11-1  pybind11-2.13.6-2  python-charset-normalizer-3.4.2-1  python-contourpy-1.3.2-1  python-cycler-0.12.1-3
+              python-dateutil-2.9.0-6  python-filelock-3.18.0-1  python-fonttools-4.58.3-1  python-gmpy2-2.2.1-2  python-idna-3.10-2  python-jinja-1:3.1.6-1
+              python-kiwisolver-1.4.6-1  python-markupsafe-3.0.2-1  python-matplotlib-3.10.3-1  python-mpmath-1.3.0-4  python-networkx-3.4.2-1
+              python-numpy-2.3.0-2  python-packaging-25.0-1  python-pandas-2.2.3-1  python-pillow-11.2.1-1  python-platformdirs-4.3.6-2  python-pooch-1.8.2-4
+              python-pyparsing-3.2.3-1  python-pytz-2025.2-1  python-requests-2.32.4-1  python-scipy-1.15.3-1  python-six-1.17.0-1  python-sympy-1.14.0-1
+              python-typing_extensions-4.13.2-1  python-urllib3-2.4.0-1  python-yaml-6.0.2-2  qhull-2020.2-5  qt6-base-6.9.1-1  qt6-translations-6.9.1-1
+              spdlog-1.15.3-1  tslib-1.23-1  xcb-util-cursor-0.1.5-1  xcb-util-image-0.4.1-3  xcb-util-keysyms-0.4.1-5  xcb-util-renderutil-0.3.10-2
+              xcb-util-wm-0.4.2-2  python-pytorch-cuda-2.7.0-6
+
+Total Download Size:    2456.33 MiB
+Total Installed Size:  11096.86 MiB
+
+:: Proceed with installation? [Y/n] 
+:: Retrieving packages...
+ intel-oneapi-mkl-2025.0.1-3-x86_64                                  193.6 MiB  1821 KiB/s 01:49 [#########################################################] 100%
+ intel-oneapi-openmp-2025.0.4-1-x86_64                                34.3 MiB  1810 KiB/s 00:19 [#########################################################] 100%
+ python-scipy-1.15.3-1-x86_64                                         21.3 MiB  3.23 MiB/s 00:07 [#########################################################] 100%
+ python-pandas-2.2.3-1-x86_64                                         15.9 MiB  3.19 MiB/s 00:05 [#########################################################] 100%
+ qt6-base-6.9.1-1-x86_64                                              14.3 MiB  2.15 MiB/s 00:07 [#########################################################] 100%
+ python-sympy-1.14.0-1-any                                            13.8 MiB  1295 KiB/s 00:11 [#########################################################] 100%
+ onednn-3.7.2-1-x86_64                                                 8.8 MiB  1099 KiB/s 00:08 [#########################################################] 100%
+ magma-cuda-2.9.0-2-x86_64                                           347.8 MiB  2.06 MiB/s 02:49 [#########################################################] 100%
+ python-matplotlib-3.10.3-1-x86_64                                     6.1 MiB  1850 KiB/s 00:03 [#########################################################] 100%
+ python-numpy-2.3.0-2-x86_64                                           7.7 MiB  1262 KiB/s 00:06 [#########################################################] 100%
+ lapack-3.12.1-2-x86_64                                                4.8 MiB  2.06 MiB/s 00:02 [#########################################################] 100%
+ openmpi-5.0.8-1-x86_64                                                3.9 MiB  1258 KiB/s 00:03 [#########################################################] 100%
+ python-networkx-3.4.2-1-any                                           3.3 MiB  2.10 MiB/s 00:02 [#########################################################] 100%
+ openucx-1.18.1-2-x86_64                                            2037.5 KiB  2.19 MiB/s 00:01 [#########################################################] 100%
+ python-fonttools-4.58.3-1-x86_64                                      2.7 MiB  1746 KiB/s 00:02 [#########################################################] 100%
+ qt6-translations-6.9.1-1-any                                       1854.1 KiB  2004 KiB/s 00:01 [#########################################################] 100%
+ qhull-2020.2-5-x86_64                                              1238.6 KiB  1473 KiB/s 00:01 [#########################################################] 100%
+ libfabric-2.1.0-1-x86_64                                           1203.8 KiB  1878 KiB/s 00:01 [#########################################################] 100%
+ nccl-2.26.5-1-x86_64                                                407.2 MiB  2.28 MiB/s 02:59 [#########################################################] 100%
+ eigen-3.4.0-2-any                                                  1077.6 KiB  1407 KiB/s 00:01 [#########################################################] 100%
+ openpmix-5.0.8-1-x86_64                                             912.5 KiB  1979 KiB/s 00:00 [#########################################################] 100%
+ python-mpmath-1.3.0-4-any                                          1038.9 KiB  1924 KiB/s 00:01 [#########################################################] 100%
+ python-pillow-11.2.1-1-x86_64                                       877.3 KiB  1397 KiB/s 00:01 [#########################################################] 100%
+ intel-oneapi-tbb-2021.12.0-2-x86_64                                 626.1 KiB  1618 KiB/s 00:00 [#########################################################] 100%
+ openmp-20.1.6-1-x86_64                                              574.2 KiB  1539 KiB/s 00:00 [#########################################################] 100%
+ prrte-3.0.11-1-x86_64                                               568.9 KiB  1371 KiB/s 00:00 [#########################################################] 100%
+ level-zero-loader-1.21.9-1-x86_64                                   384.7 KiB  1404 KiB/s 00:00 [#########################################################] 100%
+ hwloc-2.12.1-1-x86_64                                               563.4 KiB  1371 KiB/s 00:00 [#########################################################] 100%
+ python-dateutil-2.9.0-6-any                                         305.0 KiB  1187 KiB/s 00:00 [#########################################################] 100%
+ python-jinja-1:3.1.6-1-any                                          305.0 KiB  1142 KiB/s 00:00 [#########################################################] 100%
+ intel-oneapi-tcm-1.2.0-3-x86_64                                     284.3 KiB  1341 KiB/s 00:00 [#########################################################] 100%
+ libimagequant-4.3.4-1-x86_64                                        267.5 KiB  1189 KiB/s 00:00 [#########################################################] 100%
+ libuv-1.51.0-1-x86_64                                               256.1 KiB  1214 KiB/s 00:00 [#########################################################] 100%
+ blas-3.12.1-2-x86_64                                                249.6 KiB  1236 KiB/s 00:00 [#########################################################] 100%
+ python-urllib3-2.4.0-1-any                                          231.8 KiB  1240 KiB/s 00:00 [#########################################################] 100%
+ python-contourpy-1.3.2-1-x86_64                                     239.4 KiB  1135 KiB/s 00:00 [#########################################################] 100%
+ python-pyparsing-3.2.3-1-any                                        229.5 KiB  1471 KiB/s 00:00 [#########################################################] 100%
+ python-gmpy2-2.2.1-2-x86_64                                         203.0 KiB  1091 KiB/s 00:00 [#########################################################] 100%
+ python-yaml-6.0.2-2-x86_64                                          197.7 KiB  1069 KiB/s 00:00 [#########################################################] 100%
+ pybind11-2.13.6-2-any                                               186.7 KiB  1279 KiB/s 00:00 [#########################################################] 100%
+ fmt-11.2.0-1-x86_64                                                 177.1 KiB   922 KiB/s 00:00 [#########################################################] 100%
+ spdlog-1.15.3-1-x86_64                                              159.7 KiB  1044 KiB/s 00:00 [#########################################################] 100%
+ gflags-2.2.2-5-x86_64                                               160.8 KiB   860 KiB/s 00:00 [#########################################################] 100%
+ python-packaging-25.0-1-any                                         128.8 KiB   940 KiB/s 00:00 [#########################################################] 100%
+ python-requests-2.32.4-1-any                                        121.1 KiB   813 KiB/s 00:00 [#########################################################] 100%
+ python-pooch-1.8.2-4-any                                            112.9 KiB   795 KiB/s 00:00 [#########################################################] 100%
+ google-glog-0.7.1-1-x86_64                                          130.7 KiB   291 KiB/s 00:00 [#########################################################] 100%
+ tslib-1.23-1-x86_64                                                 101.1 KiB   259 KiB/s 00:00 [#########################################################] 100%
+ python-idna-3.10-2-any                                              101.1 KiB   687 KiB/s 00:00 [#########################################################] 100%
+ python-typing_extensions-4.13.2-1-any                                96.2 KiB   697 KiB/s 00:00 [#########################################################] 100%
+ python-charset-normalizer-3.4.2-1-any                                94.5 KiB   675 KiB/s 00:00 [#########################################################] 100%
+ numactl-2.0.19-1-x86_64                                              82.8 KiB   804 KiB/s 00:00 [#########################################################] 100%
+ md4c-0.5.2-1-x86_64                                                  79.3 KiB   727 KiB/s 00:00 [#########################################################] 100%
+ double-conversion-3.3.1-1-x86_64                                     58.2 KiB   534 KiB/s 00:00 [#########################################################] 100%
+ python-kiwisolver-1.4.6-1-x86_64                                     53.6 KiB   516 KiB/s 00:00 [#########################################################] 100%
+ cblas-3.12.1-2-x86_64                                                57.0 KiB   479 KiB/s 00:00 [#########################################################] 100%
+ libb2-0.98.1-3-x86_64                                                44.7 KiB   503 KiB/s 00:00 [#########################################################] 100%
+ intel-oneapi-common-2024.1.0-1-any                                   40.4 KiB   493 KiB/s 00:00 [#########################################################] 100%
+ python-pytz-2025.2-1-any                                             47.5 KiB   255 KiB/s 00:00 [#########################################################] 100%
+ xcb-util-wm-0.4.2-2-x86_64                                           33.0 KiB   600 KiB/s 00:00 [#########################################################] 100%
+ python-platformdirs-4.3.6-2-any                                      32.9 KiB   374 KiB/s 00:00 [#########################################################] 100%
+ python-filelock-3.18.0-1-any                                         28.4 KiB   384 KiB/s 00:00 [#########################################################] 100%
+ python-markupsafe-3.0.2-1-x86_64                                     20.1 KiB   199 KiB/s 00:00 [#########################################################] 100%
+ xcb-util-image-0.4.1-3-x86_64                                        17.3 KiB   361 KiB/s 00:00 [#########################################################] 100%
+ xcb-util-cursor-0.1.5-1-x86_64                                       11.6 KiB   259 KiB/s 00:00 [#########################################################] 100%
+ python-cycler-0.12.1-3-any                                           16.6 KiB   259 KiB/s 00:00 [#########################################################] 100%
+ xcb-util-renderutil-0.3.10-2-x86_64                                   9.3 KiB   245 KiB/s 00:00 [#########################################################] 100%
+ xcb-util-keysyms-0.4.1-5-x86_64                                       7.5 KiB   189 KiB/s 00:00 [#########################################################] 100%
+ python-six-1.17.0-1-any                                              27.8 KiB  81.5 KiB/s 00:00 [#########################################################] 100%
+ python-pytorch-cuda-2.7.0-6-x86_64                                  472.4 MiB  2.47 MiB/s 03:11 [#########################################################] 100%
+ cudnn-9.8.0.87-1-x86_64                                             880.8 MiB  3.88 MiB/s 03:47 [#########################################################] 100%
+ Total (71/71)                                                         2.4 GiB  10.8 MiB/s 03:47 [#########################################################] 100%
+(71/71) checking keys in keyring                                                                 [#########################################################] 100%
+(71/71) checking package integrity                                                               [#########################################################] 100%
+(71/71) loading package files                                                                    [#########################################################] 100%
+(71/71) checking for file conflicts                                                              [#########################################################] 100%
+(71/71) checking available disk space                                                            [#########################################################] 100%
+:: Processing package changes...
+( 1/71) installing gflags                                                                        [#########################################################] 100%
+( 2/71) installing google-glog                                                                   [#########################################################] 100%
+( 3/71) installing openmp                                                                        [#########################################################] 100%
+Optional dependencies for openmp
+    cuda: offloading to NVIDIA GPUs [installed]
+    hsa-rocr: offloading to AMD GPUs
+( 4/71) installing hwloc                                                                         [#########################################################] 100%
+Optional dependencies for hwloc
+    cairo: PDF, Postscript, and PNG export support [installed]
+    libxml2: full XML import/export support [installed]
+( 5/71) installing numactl                                                                       [#########################################################] 100%
+( 6/71) installing libfabric                                                                     [#########################################################] 100%
+( 7/71) installing openpmix                                                                      [#########################################################] 100%
+Optional dependencies for openpmix
+    openpmix-docs: for documentation
+( 8/71) installing openucx                                                                       [#########################################################] 100%
+Optional dependencies for openucx
+    rdma-core: for InfiniBand and RDMA support
+    cuda: for CUDA support [installed]
+    rocm-language-runtime: for ROCm support
+( 9/71) installing prrte                                                                         [#########################################################] 100%
+Optional dependencies for prrte
+    openssh: for execution on remote hosts via plm_ssh_agent [installed]
+    prrte-docs: for documentation
+(10/71) installing openmpi                                                                       [#########################################################] 100%
+Optional dependencies for openmpi
+    cuda: cuda support [installed]
+    hip-runtime-amd: ROCm support
+    gcc-fortran: fortran support
+    openssh: for execution on remote hosts via plm_ssh_agent [installed]
+    openucc: for UCC accelerated collectives
+(11/71) installing pybind11                                                                      [#########################################################] 100%
+Optional dependencies for pybind11
+    python-setuptools: for python bindings
+(12/71) installing python-yaml                                                                   [#########################################################] 100%
+(13/71) installing libuv                                                                         [#########################################################] 100%
+(14/71) installing blas                                                                          [#########################################################] 100%
+(15/71) installing cblas                                                                         [#########################################################] 100%
+(16/71) installing lapack                                                                        [#########################################################] 100%
+(17/71) installing python-numpy                                                                  [#########################################################] 100%
+Optional dependencies for python-numpy
+    blas-openblas: faster linear algebra
+(18/71) installing python-packaging                                                              [#########################################################] 100%
+(19/71) installing python-gmpy2                                                                  [#########################################################] 100%
+(20/71) installing python-mpmath                                                                 [#########################################################] 100%
+(21/71) installing python-sympy                                                                  [#########################################################] 100%
+Optional dependencies for python-sympy
+    ipython: user friendly interface for isympy
+    python-symengine: optimized backend, set USE_SYMENGINE=1 to use
+(22/71) installing double-conversion                                                             [#########################################################] 100%
+(23/71) installing libb2                                                                         [#########################################################] 100%
+(24/71) installing md4c                                                                          [#########################################################] 100%
+(25/71) installing tslib                                                                         [#########################################################] 100%
+(26/71) installing xcb-util-renderutil                                                           [#########################################################] 100%
+(27/71) installing xcb-util-image                                                                [#########################################################] 100%
+(28/71) installing xcb-util-cursor                                                               [#########################################################] 100%
+(29/71) installing xcb-util-keysyms                                                              [#########################################################] 100%
+(30/71) installing xcb-util-wm                                                                   [#########################################################] 100%
+(31/71) installing qt6-translations                                                              [#########################################################] 100%
+(32/71) installing qt6-base                                                                      [#########################################################] 100%
+Optional dependencies for qt6-base
+    freetds: MS SQL driver
+    gdk-pixbuf2: GTK platform plugin [installed]
+    gtk3: GTK platform plugin [installed]
+    libfbclient: Firebird/iBase driver
+    mariadb-libs: MariaDB driver
+    pango: GTK platform plugin [installed]
+    perl: for syncqt [installed]
+    postgresql-libs: PostgreSQL driver
+    qt6-wayland: to run Qt6 applications in a Wayland session
+    unixodbc: ODBC driver
+(33/71) installing eigen                                                                         [#########################################################] 100%
+(34/71) installing intel-oneapi-common                                                           [#########################################################] 100%
+Optional dependencies for intel-oneapi-common
+    procps-ng: Sourcing /opt/intel/oneapi/setvars.sh [installed]
+(35/71) installing intel-oneapi-tcm                                                              [#########################################################] 100%
+(36/71) installing intel-oneapi-tbb                                                              [#########################################################] 100%
+(37/71) installing fmt                                                                           [#########################################################] 100%
+(38/71) installing spdlog                                                                        [#########################################################] 100%
+(39/71) installing level-zero-loader                                                             [#########################################################] 100%
+(40/71) installing intel-oneapi-openmp                                                           [#########################################################] 100%
+(41/71) installing intel-oneapi-mkl                                                              [#########################################################] 100%
+(42/71) installing python-typing_extensions                                                      [#########################################################] 100%
+(43/71) installing python-markupsafe                                                             [#########################################################] 100%
+(44/71) installing python-jinja                                                                  [#########################################################] 100%
+Optional dependencies for python-jinja
+    python-babel: for i18n support
+(45/71) installing python-platformdirs                                                           [#########################################################] 100%
+(46/71) installing python-charset-normalizer                                                     [#########################################################] 100%
+(47/71) installing python-idna                                                                   [#########################################################] 100%
+(48/71) installing python-urllib3                                                                [#########################################################] 100%
+Optional dependencies for python-urllib3
+    python-brotli: Brotli support
+    python-brotlicffi: Brotli support
+    python-h2: HTTP/2 support
+    python-pysocks: SOCKS support
+    python-zstandard: Zstandard support
+(49/71) installing python-requests                                                               [#########################################################] 100%
+Optional dependencies for python-requests
+    python-chardet: alternative character encoding library
+    python-pysocks: SOCKS proxy support
+(50/71) installing python-pooch                                                                  [#########################################################] 100%
+Optional dependencies for python-pooch
+    python-paramiko: for SFTP downloads
+    python-tqdm: for printing a download progress bar
+(51/71) installing python-scipy                                                                  [#########################################################] 100%
+Optional dependencies for python-scipy
+    python-pillow: for image saving module [pending]
+(52/71) installing python-contourpy                                                              [#########################################################] 100%
+Optional dependencies for python-contourpy
+    python-matplotlib: matplotlib renderer [pending]
+(53/71) installing python-cycler                                                                 [#########################################################] 100%
+(54/71) installing python-six                                                                    [#########################################################] 100%
+(55/71) installing python-dateutil                                                               [#########################################################] 100%
+(56/71) installing python-fonttools                                                              [#########################################################] 100%
+Optional dependencies for python-fonttools
+    python-brotli: to compress/decompress WOFF 2.0 web fonts
+    python-fs: to read/write UFO source files
+    python-lxml: faster backend for XML files reading/writing
+    python-lz4: for graphite type tables in ttLib/tables
+    python-matplotlib: for visualizing DesignSpaceDocument and resulting VariationModel [pending]
+    python-pyqt5: for drawing glyphs with Qt
+    python-reportlab: to drawing glyphs as PNG images
+    python-scipy: for finding wrong contour/component order between different masters [installed]
+    python-sympy: for symbolic font statistics analysis [installed]
+    python-uharfbuzz: to use the Harfbuzz Repacker for packing GSUB/GPOS tables
+    python-unicodedata2: for displaying the Unicode character names when dumping the cmap table with ttx
+    python-zopfli: faster backend fom WOFF 1.0 web fonts compression
+(57/71) installing python-kiwisolver                                                             [#########################################################] 100%
+(58/71) installing libimagequant                                                                 [#########################################################] 100%
+(59/71) installing python-pillow                                                                 [#########################################################] 100%
+Optional dependencies for python-pillow
+    libwebp: for webp images [installed]
+    tk: for the ImageTK module
+    python-olefile: OLE2 file support
+    python-pyqt6: for the ImageQt module
+    python-defusedxml: for reading XMP tags [installed]
+(60/71) installing python-pyparsing                                                              [#########################################################] 100%
+Optional dependencies for python-pyparsing
+    python-railroad-diagrams: for generating Railroad Diagrams
+    python-jinja: for generating Railroad Diagrams [installed]
+(61/71) installing qhull                                                                         [#########################################################] 100%
+(62/71) installing python-matplotlib                                                             [#########################################################] 100%
+Optional dependencies for python-matplotlib
+    tk: Tk{Agg,Cairo} backends
+    pyside6: alternative for Qt6{Agg,Cairo} backends
+    python-pyqt5: Qt5{Agg,Cairo} backends
+    python-pyqt6: Qt6{Agg,Cairo} backends
+    python-gobject: for GTK{3,4}{Agg,Cairo} backend [installed]
+    python-wxpython: WX{Agg,Cairo} backend
+    python-cairo: {GTK{3,4},Qt{5,6},Tk,WX}Cairo backends [installed]
+    python-cairocffi: alternative for Cairo backends
+    python-tornado: WebAgg backend
+    ffmpeg: for saving movies [installed]
+    imagemagick: for saving animated gifs [installed]
+    ghostscript: usetex dependencies [installed]
+    texlive-binextra: usetex dependencies
+    texlive-fontsrecommended: usetex dependencies
+    texlive-latexrecommended: usetex usage with pdflatex
+    python-certifi: https support
+(63/71) installing python-pytz                                                                   [#########################################################] 100%
+(64/71) installing python-pandas                                                                 [#########################################################] 100%
+Optional dependencies for python-pandas
+    python-pandas-datareader: pandas.io.data replacement (recommended)
+    python-numexpr: accelerating certain numerical operations (recommended)
+    python-bottleneck: accelerating certain types of nan evaluations (recommended)
+    python-matplotlib: plotting [installed]
+    python-jinja: conditional formatting with DataFrame.style [installed]
+    python-tabulate: printing in Markdown-friendly format
+    python-scipy: miscellaneous statistical functions [installed]
+    python-numba: alternative execution engine
+    python-xarray: pandas-like API for N-dimensional data
+    python-xlrd: Excel XLS input
+    python-xlwt: Excel XLS output
+    python-openpyxl: Excel XLSX input/output
+    python-xlsxwriter: alternative Excel XLSX output
+    python-beautifulsoup4: read_html function (in any case)
+    python-html5lib: read_html function (and/or python-lxml)
+    python-lxml: read_xml, to_xml and read_html function (and/or python-html5lib)
+    python-sqlalchemy: SQL database support
+    python-psycopg2: PostgreSQL engine for sqlalchemy
+    python-pymysql: MySQL engine for sqlalchemy
+    python-pytables: HDF5-based reading / writing
+    python-blosc: for msgpack compression using blosc
+    zlib: compression for msgpack [installed]
+    python-pyarrow: Parquet, ORC and feather reading/writing
+    python-fsspec: handling files aside from local and HTTP
+    python-pyqt5: read_clipboard function (only one needed)
+    python-qtpy: read_clipboard function (only one needed)
+    xclip: read_clipboard function (only one needed)
+    xsel: read_clipboard function (only one needed)
+    python-brotli: Brotli compression
+    python-snappy: Snappy compression
+    python-zstandard: Zstandard (zstd) compression
+(65/71) installing python-networkx                                                               [#########################################################] 100%
+Optional dependencies for python-networkx
+    python-lxml: for GraphML XML format
+    python-pydot: for graph drawing and graph layout algorithms in pure Python via GraphViz
+    python-pygraphviz: for graph drawing and graph layout algorithms with bindings to GraphViz
+    python-sympy: for polynomial algorithms [installed]
+(66/71) installing python-filelock                                                               [#########################################################] 100%
+(67/71) installing nccl                                                                          [#########################################################] 100%
+(68/71) installing cudnn                                                                         [#########################################################] 100%
+(69/71) installing magma-cuda                                                                    [#########################################################] 100%
+Optional dependencies for magma-cuda
+    python: for examples and tests [installed]
+    gcc-fortran: Fortran interface
+(70/71) installing onednn                                                                        [#########################################################] 100%
+(71/71) installing python-pytorch-cuda                                                           [#########################################################] 100%
+:: Running post-transaction hooks...
+(1/2) Arming ConditionNeedsUpdate...
+/bin/sh: warning: setlocale: LC_ALL: cannot change locale (PL): No such file or directory
+(2/2) Updating the desktop file MIME type cache...
+(tf) [john@myarch 05.CNN.Face]$
+

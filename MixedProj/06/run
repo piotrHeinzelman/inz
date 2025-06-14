@@ -1,5 +1,0 @@
-python sobel_filter.py
-python sobel_filter_cuda.py
-python sobel_filter_cuda_simple.py
-python sobel_filter_numba.py
-python sobel_filter_opencv.py
