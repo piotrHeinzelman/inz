@@ -30,7 +30,7 @@ import os
 import time
 
 
-num_epochs=500
+num_epochs=5
 batch_size = 1
 
 train_dataset = datasets.MNIST(root="data/", download=True, train=True, transform=transforms.ToTensor())
@@ -103,6 +103,7 @@ class CNN(nn.Module):
 
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
+print(device)
 
 model = CNN(in_channels=1, num_classes=10).to(device)
 #print(model.from(device))
@@ -141,7 +142,7 @@ for epoch in range(num_epochs):
 
 end=time.time()
 d=end-start
-print("# Python PyTorch 2.0 Time: " , d)
+print("# Python PyTorch 2.0 60000 Images, 500 Epoch Time: " , d)
 
 
 
