@@ -26,10 +26,12 @@ from torcheval.metrics import MulticlassAccuracy
 
 
 import inspect
+import os
+import time
 
 
-num_epochs=1
-batch_size = 99
+num_epochs=500
+batch_size = 1
 
 train_dataset = datasets.MNIST(root="data/", download=True, train=True, transform=transforms.ToTensor())
 train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
@@ -67,13 +69,15 @@ class CNN(nn.Module):
        super(CNN, self).__init__()
 
        # 1st convolutional layer
-       self.conv1 = nn.Conv2d(in_channels=in_channels, out_channels=8, kernel_size=3, padding=1)
+       self.conv1 = nn.Conv2d(in_channels=in_channels, out_channels=20, kernel_size=5, padding=1)
+       self.norm  = nn.BatchNorm2d(20)
        # Max pooling layer
        self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
        # 2nd convolutional layer
-       self.conv2 = nn.Conv2d(in_channels=8, out_channels=16, kernel_size=3, padding=1)
+       # self.conv2 = nn.Conv2d(in_channels=8, out_channels=16, kernel_size=3, padding=1)
        # Fully connected layer
-       self.fc1 = nn.Linear(16 * 7 * 7, num_classes)
+       self.fc1 = nn.Linear( 3380, 64 ) #  self.fc1 = nn.Linear( 64, num_classes) in, out
+       self.fc2 = nn.Linear( 64, num_classes )
 
    def forward(self, x):
        """
@@ -87,11 +91,12 @@ class CNN(nn.Module):
                The output tensor after passing through the network.
        """
        x = F.relu(self.conv1(x))  # Apply first convolution and ReLU activation
+       x = self.norm(x)           # Apply Normalization 
        x = self.pool(x)           # Apply max pooling
-       x = F.relu(self.conv2(x))  # Apply second convolution and ReLU activation
-       x = self.pool(x)           # Apply max pooling
+#      x = F.utils.parameters_to_vector( x ) 
        x = x.reshape(x.shape[0], -1)  # Flatten the tensor
        x = self.fc1(x)            # Apply fully connected layer
+       x = self.fc2(x)            # Apply fully connected layer
        return x
 
 
@@ -114,6 +119,7 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 
+start=time.time()
 
 
 
@@ -122,6 +128,8 @@ for epoch in range(num_epochs):
    print(f"Epoch [{epoch + 1}/{num_epochs}]")
 
    for batch_index, (data, targets) in enumerate(tqdm(train_loader)):
+       if batch_index>1: 
+           continue
        data = data.to(device)
        targets = targets.to(device)
        scores = model(data)
@@ -129,6 +137,12 @@ for epoch in range(num_epochs):
        optimizer.zero_grad()
        loss.backward()
        optimizer.step()
+
+
+end=time.time()
+d=end-start
+print("# Python PyTorch 2.0 Time: " , d)
+
 
 
 
@@ -153,3 +167,4 @@ with torch.no_grad():
 test_accuracy = acc.compute()
 print(f"Test accuracy: {test_accuracy}")
 
+clear_session()

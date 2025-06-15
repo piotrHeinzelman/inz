@@ -1,0 +1,5 @@
+echo "#   --- Python --- "
+python3 main_pytorch.py >> out_pytorch1.txt
+python3 main_pytorch.py >> out_pytorch2.txt
+python3 main_pytorch.py >> out_pytorch3.txt
+python3 main_pytorch.py >> out_pytorch4.txt
