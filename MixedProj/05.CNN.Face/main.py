@@ -4,12 +4,13 @@ from tensorflow import keras
 
 import os
 import time
-from tensorflow.keras.backend import clear_session
+#from tensorflow.keras.backend import clear_session
 
 
 
 
 physical_devices = tf.config.list_physical_devices('GPU')
+print(physical_devices)
 if physical_devices:
    for gpu in physical_devices:
       tf.config.experimental.set_memory_growth(gpu, True)
@@ -84,7 +85,7 @@ testY = testY.astype("int")
 
 
 model = AlexNet()
-model.summary()
+#model.summary()
 
 
 # print ( trainY.shape )
@@ -117,7 +118,7 @@ print("Test accuracy:", score[1])
 
 
 
-clear_session()
+#clear_session()
 
 
 # 1 FC 396 sec train: accuracy 1, test acc 0.04
