@@ -1,2 +1,10 @@
 https://medium.com/@siromermer/running-yolo-models-in-c-for-object-detection-a698b3b7cd5f
 https://medium.com/@shahriar.rezghi.sh/using-yolo-in-c-55d55419a947
+https://github.com/sunsmarterjie/yolov12/tree/main/examples
+https://github.com/sunsmarterjie/yolov12
+
+
+https://github.com/mohamedsamirx/YOLOv12-TensorRT-CPP
+
+
+https://docs.ultralytics.com/models/yolov8/#how-do-i-train-a-yolov8-model

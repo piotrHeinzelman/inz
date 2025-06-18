@@ -1,0 +1,140 @@
+YOLOv8l summary: 209 layers, 43,691,520 parameters, 0 gradients, 165.7 GFLOPs
+Ultralytics 8.3.156  Python-3.9.13 torch-2.7.1+cpu CPU (AMD Ryzen 5 5600G with Radeon Graphics)
+[34m[1mengine\trainer: [0magnostic_nms=False, amp=True, augment=False, auto_augment=randaugment, batch=16, bgr=0.0, box=7.5, cache=False, cfg=None, classes=None, close_mosaic=10, cls=0.5, conf=None, copy_paste=0.0, copy_paste_mode=flip, cos_lr=False, cutmix=0.0, data=coco8.yaml, degrees=0.0, deterministic=True, device=cpu, dfl=1.5, dnn=False, dropout=0.0, dynamic=False, embed=None, epochs=10, erasing=0.4, exist_ok=False, fliplr=0.5, flipud=0.0, format=torchscript, fraction=1.0, freeze=None, half=False, hsv_h=0.015, hsv_s=0.7, hsv_v=0.4, imgsz=640, int8=False, iou=0.7, keras=False, kobj=1.0, line_width=None, lr0=0.01, lrf=0.01, mask_ratio=4, max_det=300, mixup=0.0, mode=train, model=yolov8l.pt, momentum=0.937, mosaic=1.0, multi_scale=False, name=train, nbs=64, nms=False, opset=None, optimize=False, optimizer=auto, overlap_mask=True, patience=100, perspective=0.0, plots=True, pose=12.0, pretrained=True, profile=False, project=None, rect=False, resume=False, retina_masks=False, save=True, save_conf=False, save_crop=False, save_dir=runs\detect\train, save_frames=False, save_json=False, save_period=-1, save_txt=False, scale=0.5, seed=0, shear=0.0, show=False, show_boxes=True, show_conf=True, show_labels=True, simplify=True, single_cls=False, source=None, split=val, stream_buffer=False, task=detect, time=None, tracker=botsort.yaml, translate=0.1, val=True, verbose=True, vid_stride=1, visualize=False, warmup_bias_lr=0.1, warmup_epochs=3.0, warmup_momentum=0.8, weight_decay=0.0005, workers=8, workspace=None
+
+WARNING Dataset 'coco8.yaml' images not found, missing path 'C:\Users\john\source\repos\inz\MixedProj\06.Yolo\datasets\coco8\images\val'
+Downloading https://ultralytics.com/assets/coco8.zip to 'C:\Users\john\source\repos\inz\MixedProj\06.Yolo\datasets\coco8.zip'...
+Dataset download success  (2.4s), saved to [1mC:\Users\john\source\repos\inz\MixedProj\06.Yolo\datasets[0m
+
+
+                   from  n    params  module                                       arguments                     
+  0                  -1  1      1856  ultralytics.nn.modules.conv.Conv             [3, 64, 3, 2]                 
+  1                  -1  1     73984  ultralytics.nn.modules.conv.Conv             [64, 128, 3, 2]               
+  2                  -1  3    279808  ultralytics.nn.modules.block.C2f             [128, 128, 3, True]           
+  3                  -1  1    295424  ultralytics.nn.modules.conv.Conv             [128, 256, 3, 2]              
+  4                  -1  6   2101248  ultralytics.nn.modules.block.C2f             [256, 256, 6, True]           
+  5                  -1  1   1180672  ultralytics.nn.modules.conv.Conv             [256, 512, 3, 2]              
+  6                  -1  6   8396800  ultralytics.nn.modules.block.C2f             [512, 512, 6, True]           
+  7                  -1  1   2360320  ultralytics.nn.modules.conv.Conv             [512, 512, 3, 2]              
+  8                  -1  3   4461568  ultralytics.nn.modules.block.C2f             [512, 512, 3, True]           
+  9                  -1  1    656896  ultralytics.nn.modules.block.SPPF            [512, 512, 5]                 
+ 10                  -1  1         0  torch.nn.modules.upsampling.Upsample         [None, 2, 'nearest']          
+ 11             [-1, 6]  1         0  ultralytics.nn.modules.conv.Concat           [1]                           
+ 12                  -1  3   4723712  ultralytics.nn.modules.block.C2f             [1024, 512, 3]                
+ 13                  -1  1         0  torch.nn.modules.upsampling.Upsample         [None, 2, 'nearest']          
+ 14             [-1, 4]  1         0  ultralytics.nn.modules.conv.Concat           [1]                           
+ 15                  -1  3   1247744  ultralytics.nn.modules.block.C2f             [768, 256, 3]                 
+ 16                  -1  1    590336  ultralytics.nn.modules.conv.Conv             [256, 256, 3, 2]              
+ 17            [-1, 12]  1         0  ultralytics.nn.modules.conv.Concat           [1]                           
+ 18                  -1  3   4592640  ultralytics.nn.modules.block.C2f             [768, 512, 3]                 
+ 19                  -1  1   2360320  ultralytics.nn.modules.conv.Conv             [512, 512, 3, 2]              
+ 20             [-1, 9]  1         0  ultralytics.nn.modules.conv.Concat           [1]                           
+ 21                  -1  3   4723712  ultralytics.nn.modules.block.C2f             [1024, 512, 3]                
+ 22        [15, 18, 21]  1   5644480  ultralytics.nn.modules.head.Detect           [80, [256, 512, 512]]         
+Model summary: 209 layers, 43,691,520 parameters, 43,691,504 gradients, 165.7 GFLOPs
+
+Transferred 595/595 items from pretrained weights
+Freezing layer 'model.22.dfl.conv.weight'
+[34m[1mtrain: [0mFast image access  (ping: 0.00.0 ms, read: 11.94.2 MB/s, size: 50.0 KB)
+[34m[1mtrain: [0mNew cache created: C:\Users\john\source\repos\inz\MixedProj\06.Yolo\datasets\coco8\labels\train.cache
+[34m[1mval: [0mFast image access  (ping: 0.00.0 ms, read: 12.33.5 MB/s, size: 54.0 KB)
+[34m[1mval: [0mNew cache created: C:\Users\john\source\repos\inz\MixedProj\06.Yolo\datasets\coco8\labels\val.cache
+Plotting labels to runs\detect\train\labels.jpg... 
+[34m[1moptimizer:[0m 'optimizer=auto' found, ignoring 'lr0=0.01' and 'momentum=0.937' and determining best 'optimizer', 'lr0' and 'momentum' automatically... 
+[34m[1moptimizer:[0m AdamW(lr=0.000119, momentum=0.9) with parameter groups 97 weight(decay=0.0), 104 weight(decay=0.0005), 103 bias(decay=0.0)
+Image sizes 640 train, 640 val
+Using 0 dataloader workers
+Logging results to [1mruns\detect\train[0m
+Starting training for 10 epochs...
+Closing dataloader mosaic
+
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+                   all          4         17      0.913      0.839      0.976       0.76
+
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+                   all          4         17      0.913      0.839      0.976      0.765
+
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+                   all          4         17      0.913      0.839      0.974      0.762
+
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+                   all          4         17      0.912      0.839      0.974      0.766
+
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+                   all          4         17      0.911      0.839      0.974      0.768
+
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+                   all          4         17       0.91      0.839      0.974      0.767
+
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+                   all          4         17       0.91      0.838      0.974      0.775
+
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+                   all          4         17      0.908      0.838      0.974      0.791
+
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+                   all          4         17      0.907      0.838      0.974      0.792
+
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+                   all          4         17      0.906      0.838      0.974      0.791
+
+10 epochs completed in 0.031 hours.
+Optimizer stripped from runs\detect\train\weights\last.pt, 87.8MB
+Optimizer stripped from runs\detect\train\weights\best.pt, 87.8MB
+
+Validating runs\detect\train\weights\best.pt...
+Ultralytics 8.3.156  Python-3.9.13 torch-2.7.1+cpu CPU (AMD Ryzen 5 5600G with Radeon Graphics)
+Model summary (fused): 112 layers, 43,668,288 parameters, 0 gradients, 165.2 GFLOPs
+                   all          4         17      0.907      0.838      0.974      0.791
+                person          3         10          1      0.427      0.871      0.586
+                   dog          1          1      0.844          1      0.995      0.895
+                 horse          1          2      0.889          1      0.995      0.808
+              elephant          1          2          1      0.601      0.995      0.667
+              umbrella          1          1      0.824          1      0.995      0.995
+          potted plant          1          1      0.884          1      0.995      0.796
+Speed: 1.8ms preprocess, 467.7ms inference, 0.0ms loss, 0.8ms postprocess per image
+Results saved to [1mruns\detect\train[0m
+
+image 1/1 X:\inz\MixedProj\06.Yolo\path\to\bus.jpg: 640x480 5 persons, 1 bicycle, 1 bus, 316.5ms
+Speed: 1.8ms preprocess, 316.5ms inference, 0.7ms postprocess per image at shape (1, 3, 640, 480)
+
+
+
+
+
+#################################
+
+
+
+
+
+Unzipping C:\Users\john\source\repos\inz\MixedProj\06.Yolo\datasets\coco8.zip to C:\Users\john\source\repos\inz\MixedPr
+train: Scanning C:\Users\john\source\repos\inz\MixedProj\06.Yolo\datasets\coco8\labels\train... 4 images, 0 backgrounds
+C:\Users\john\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py:665: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+val: Scanning C:\Users\john\source\repos\inz\MixedProj\06.Yolo\datasets\coco8\labels\val... 4 images, 0 backgrounds, 0
+C:\Users\john\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py:665: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+C:\Users\john\AppData\Roaming\Python\Python39\site-packages\torch\utils\data\dataloader.py:665: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+       1/10         0G      0.572     0.6622     0.9675         13        640: 100%|██████████| 1/1 [00:06<00:00,  6.85
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100%|██████████| 1/1 [00:02<0
+       2/10         0G     0.7468       1.33      1.241         13        640: 100%|██████████| 1/1 [00:06<00:00,  6.81s/it]
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100%|██████████| 1/1 [00:02<00:00,  2.36s/it]
+       3/10         0G     0.5626     0.9354      1.069         13        640: 100%|██████████| 1/1 [00:06<00:00,  6.75s/it]
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100%|██████████| 1/1 [00:02<00:00,  2.20s/it]
+       4/10         0G      0.614     0.5437      1.024         13        640: 100%|██████████| 1/1 [00:06<00:00,  6.90s/it]
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100%|██████████| 1/1 [00:02<00:00,  2.42s/it]
+       5/10         0G     0.5492     0.3915     0.9412         13        640: 100%|██████████| 1/1 [00:06<00:00,  6.86s/it]
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100%|██████████| 1/1 [00:02<00:00,  2.39s/it]
+       6/10         0G     0.7356     0.8927      1.226         13        640: 100%|██████████| 1/1 [00:06<00:00,  6.73s/it]
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100%|██████████| 1/1 [00:02<00:00,  2.28s/it]
+       7/10         0G     0.4562     0.4651     0.8889         13        640: 100%|██████████| 1/1 [00:06<00:00,  6.63s/it]
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100%|██████████| 1/1 [00:02<00:00,  2.34s/it]
+       8/10         0G     0.5135     0.5126     0.9401         13        640: 100%|██████████| 1/1 [00:06<00:00,  6.70s/it]
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100%|██████████| 1/1 [00:02<00:00,  2.36s/it]
+       9/10         0G     0.4979     0.4452     0.9183         13        640: 100%|██████████| 1/1 [00:06<00:00,  6.98s/it]
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100%|██████████| 1/1 [00:02<00:00,  2.25s/it]
+      10/10         0G     0.5243      0.539      1.012         13        640: 100%|██████████| 1/1 [00:06<00:00,  6.70s/it]
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100%|██████████| 1/1 [00:02<00:00,  2.23s/it]
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100%|██████████| 1/1 [00:01<00:00,  1.89s/it]
