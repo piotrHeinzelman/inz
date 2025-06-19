@@ -1,5 +1,0 @@
-﻿  sampleUffFasterRCNN.cpp
-  logger.cpp
-  Generating Code...
-  getopt.c
-LINK : fatal error LNK1181: cannot open input file 'cudnn.lib'
