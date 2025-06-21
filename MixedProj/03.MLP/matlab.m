@@ -163,7 +163,7 @@ layerSize = neurons;
     net = feedforwardnet([ neurons,neurons ],'traingd'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
     %net = fitnet([ 24,24 ],'trainlm'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
 
-    net.trainParam.epochs = 500;
+    net.trainParam.epochs = 100;
     net.trainParam.goal   = 0.0003;
     net.input.processFcns = {'mapminmax'}; % https://www.mathworks.com/matlabcentral/answers/278051-output-processing-function-removeconstantrows-is-not-supported-with-gpu
     net.output.processFcns = {'mapminmax'};%

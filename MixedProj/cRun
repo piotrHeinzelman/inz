@@ -1,0 +1,10 @@
+
+g++ -Wall -g 01.polyfit/main.cpp -o 01.polyfit/main.elf
+./01.polyfit/main.elf
+rm 01.polyfit/main.elf
+
+
+g++ -Wall -g 02.add/main.cpp -o 02.add/main.elf
+./02.add/main.elf
+rm 02.add/main.elf
+

@@ -28,11 +28,13 @@ end = time.time()
 
 d = end-start
 
-print ('# polyfit() X[',x.size,'] * ' , cycles ,' result: ', a )
-print ('# time: ' , d  , '[sek.]' )
-print ('')
-print ('p[]=' , d )
-print ('')
+print ('# Python 01.polyfit time: ' , d  , '[sek.]' )
+
+#print ('# Python 01.polyfit() X[',x.size,'] * ' , cycles ,' result: ', a )
+#print ('# time: ' , d  , '[sek.]' )
+#print ('')
+#print ('p[]=' , d )
+#print ('')
 
 
 

@@ -20,7 +20,7 @@ public class Task_64_64_simple_backward implements Task{
 
     private Tools tools = new Tools();
 
-    int numOfEpoch=500;
+    int numOfEpoch=100;
     float[] CSBin_data=new float[numOfEpoch];
 
     @Override

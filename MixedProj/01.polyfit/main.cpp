@@ -13,7 +13,7 @@ int main() {
 
    const string NAME = "20";
    long len = 60;
-   const long CYCLES = 10000;
+   const long CYCLES = 1000;
    string fileName=""+NAME+".bin";
 
 

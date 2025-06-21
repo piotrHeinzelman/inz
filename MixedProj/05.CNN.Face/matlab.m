@@ -169,7 +169,7 @@ sm = softmaxLayer;
 co = classificationLayer;
 
 
-epochs=500;
+epochs=100;
 
 layers = [ input
 conv1

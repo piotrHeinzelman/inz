@@ -1,4 +1,4 @@
-cycles=100;
+cycles=1000;
 name="20";
 
 

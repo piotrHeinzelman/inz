@@ -30,7 +30,7 @@ import os
 import time
 
 
-num_epochs=5
+num_epochs=100
 batch_size = 1
 
 train_dataset = datasets.MNIST(root="data/", download=True, train=True, transform=transforms.ToTensor())
@@ -129,7 +129,7 @@ for epoch in range(num_epochs):
    print(f"Epoch [{epoch + 1}/{num_epochs}]")
 
    for batch_index, (data, targets) in enumerate(tqdm(train_loader)):
-       if batch_index>1: 
+       if batch_index>1:
            continue
        data = data.to(device)
        targets = targets.to(device)

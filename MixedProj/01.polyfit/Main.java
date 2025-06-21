@@ -8,7 +8,7 @@ import java.time.temporal.ChronoUnit;
 public class Main {
 
     private static  String name="20"; //
-    private static Long cycles = 10000L;
+    private static Long cycles = 1000L;
 
 
 

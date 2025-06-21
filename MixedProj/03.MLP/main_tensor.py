@@ -19,7 +19,7 @@ if physical_devices:
       tf.config.experimental.set_memory_growth(gpu, True)
 
 # params
-epochs = 500
+epochs = 100
 percent = 50
 num_classes = 10
 

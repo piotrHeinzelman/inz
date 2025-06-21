@@ -6,7 +6,11 @@ import os
 import time
 #from tensorflow.keras.backend import clear_session
 
+device_name = tf.test.gpu_device_name()
+print(device_name)
 
+#from keras import backend as K
+#K.tensorflow_backend._get_available_gpus()
 
 
 physical_devices = tf.config.list_physical_devices('GPU')
@@ -16,7 +20,7 @@ if physical_devices:
       tf.config.experimental.set_memory_growth(gpu, True)
 
 # params
-epochs = 500
+epochs = 100
 num_classes = 10
 
 
@@ -99,7 +103,8 @@ model.compile(optimizer='adam',
 
 start=time.time()
 
-model.fit(trainX, trainY, epochs=epochs, verbose=0)
+with tf.device('/device:GPU:0'):
+    model.fit(trainX, trainY, epochs=epochs, verbose=0)
 
 end=time.time()
 d=end-start

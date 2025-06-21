@@ -1,0 +1,8 @@
+echo "#   --- Python --- 01 polyfit 20 x 1000"
+cd 01.polyfit
+# python main.py
+cd ..
+cd 03.MLP
+python main_scikit.py
+python main_tensorflow.py
+cd ..

@@ -27,7 +27,7 @@ if physical_devices:
       tf.config.experimental.set_memory_growth(gpu, True)
 
 # params
-epochs = 500
+epochs = 100
 percent = 100
 num_classes = 10
 
@@ -126,7 +126,8 @@ model.compile(optimizer='adam',
 
 start=time.time()
 
-model.fit(trainX, trainY, epochs=epochs, verbose=0)
+with tf.device('/device:GPU:0'):
+   model.fit(trainX, trainY, epochs=epochs, verbose=0)
 
 end=time.time()
 d=end-start
