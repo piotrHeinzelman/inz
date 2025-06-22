@@ -2,43 +2,39 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-species = ("Adelie", "Chinstrap", "Gentoo")
+species = ("Matlab", "Python \nScikit", "Python \nTensorflow", "Java")
 penguin_means = {
-    'Bill Depth': (18.35, 18.43, 14.98),
-    'Bill Length': (38.79, 48.83, 47.50),
-    'Flipper Length': (189.95, 195.82, 217.19),
+    'CPU': (28.3, 14.08, 69, 127),
+    'GPU': (14.6, 13.79, 88, 127), 
 }
 
-x_ = np.arange(len(species))  # the label locations
-#x = np.arange(len(species))  # the label locations
+x_ = np.arange(len(species))  
 x = np.array(['a','b','c'])
 
-width = 0.25  # the width of the bars
-multiplier = 0
+width = 0.4  
+multiplier = .5
 
 plt, ax = plt.subplots(layout='constrained')
 
 for attribute, measurement in penguin_means.items():
     offset = width * multiplier
     rects = ax.bar(x_ + offset, measurement, width, label=attribute)
-    ax.bar_label(rects, padding=3)
+    ax.bar_label(rects, padding=2)
+    ax.color='red';
     multiplier += 1
 
-# Add some text for labels, title and custom x-axis tick labels, etc.
-#ax.set_ylabel('')
-#ax.set_yticks([])
 
-
-#ax.set_xlabel(['a','b','c'])
-#ax.set_x
-
-#ax.set_xticks(['a','b','c'])
-#ax.set_xticks(['a','b'])
-#ax.set_title('Penguin attributes by species')
-ax.set_xticks(x_ + width, species)
-ax.legend(loc='upper left', ncols=3)
-#ax.set_ylim(0, 250)
  
+ax.set_xticks(x_ + width, species)
+zz = ax.legend(loc='upper left', ncols=2)
+
+
+#zz1=zz.legend_handles[1]
+#print( zz1 )
+#zz1.set_color("yellow")
+#ax.legend[0].set_facecolor('yellow')
+
+#ax.legend_handles[1].set_facecolor('yellow')
  
 plt.show()
 
