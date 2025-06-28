@@ -1,8 +1,8 @@
 # code from: https://www.datacamp.com/tutorial/pytorch-cnn-tutorial
 
 import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
+#import pandas as pd
+#import matplotlib.pyplot as plt
 
 
 import torch
@@ -19,10 +19,10 @@ import torchvision.datasets as datasets
 import torchvision.transforms as transforms
 
 # !pip install torchmetrics
-import torchmetrics
+#import torchmetrics
 from torchmetrics import Accuracy
 
-from torcheval.metrics import MulticlassAccuracy
+#from torcheval.metrics import MulticlassAccuracy
 
 
 import inspect
@@ -30,29 +30,70 @@ import os
 import time
 
 
-num_epochs=100
-batch_size = 1
-
-train_dataset = datasets.MNIST(root="data/", download=True, train=True, transform=transforms.ToTensor())
-train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
-test_dataset = datasets.MNIST(root="datas/", download=True, train=False, transform=transforms.ToTensor())
-test_loader = DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=True)
+#os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "caching_allocator"
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:128"
 
 
 
+if torch.cuda.is_available():
+  print("CUDA available. Using GPU acceleration.")
+  device = "cuda"
+else:
+  print("CUDA is NOT available. Using CPU for training.")
+  device = "cpu"
 
-#def imshow(img):
-#   npimg = img.numpy()
-#   plt.imshow(np.transpose(npimg, (1, 2, 0)))
-#   plt.show()
 
-# get some random training images
-#dataiter = iter(train_loader) #dataiter = iter(dataloader_train)
-#images, labels = next(dataiter)
-#labels
-#show images
-#imshow(torchvision.utils.make_grid(images))
 
+
+# params
+epochs = 100
+percent = 99
+num_classes = 10
+
+
+def readFileX ( fileName , offset, percent, multi ):
+    file=open( fileName, 'rb' )
+    file.read( offset )
+    data=np.fromfile( fileName, np.uint8, percent*100*784*multi, '', offset )
+    data=data.reshape(percent*100*multi, 784)
+    data=(data/255)
+    file.close()
+    return data
+
+def readFileY ( fileName , offset, percent, multi ):
+    file=open( fileName, 'rb' )
+    file.read( offset )
+    len=percent*100*multi
+    data=np.fromfile( fileName, np.uint8, len, '', offset )
+    file.close()
+    return data
+
+
+
+trainX = readFileX ('../04.CNN/data/train-images-idx3-ubyte', 16, percent ,6 )
+trainY = readFileY ('../04.CNN/data/train-labels-idx1-ubyte', 8, percent, 6 )
+testX = readFileX ('../04.CNN/data/t10k-images-idx3-ubyte', 16, percent, 1  )
+testY = readFileY ('../04.CNN/data/t10k-labels-idx1-ubyte', 8, percent, 1 )
+
+
+trainX = trainX.astype("float32")
+testX = testX.astype("float32")
+
+trainY = trainY.astype("int")
+testY = testY.astype("int")
+
+trainX = trainX.reshape(6*percent*100, 1, 28,28).astype("float32") / 255
+testX = testX.reshape(1*percent*100, 1, 28,28).astype("float32") / 255
+
+
+
+
+
+#train_dataset = datasets.MNIST(root="data/", download=True, train=True, transform=transforms.ToTensor())
+#train_loader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
+
+#test_dataset = datasets.MNIST(root="datas/", download=True, train=False, transform=transforms.ToTensor())
+#test_loader = DataLoader(dataset=test_dataset, batch_size=batch_size, shuffle=True)
 
 
 
@@ -105,12 +146,8 @@ class CNN(nn.Module):
 device = "cuda" if torch.cuda.is_available() else "cpu"
 print(device)
 
-model = CNN(in_channels=1, num_classes=10).to(device)
-#print(model.from(device))
-
-
-
-
+modelCPU = CNN(in_channels=1, num_classes=10)
+model = modelCPU.to(device)
 
 
 # Define the loss function
@@ -119,30 +156,33 @@ criterion = nn.CrossEntropyLoss()
 # Define the optimizer
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
+print( trainX.shape )
+print( trainY[0] )
+
+
+data = torch.tensor( trainX , device=device)
+targets = torch.tensor(trainY, device=device)
 
 start=time.time()
 
 
+for epoch in range(epochs):
+   scores = model(data)
+   loss = criterion(scores, targets)
+   optimizer.zero_grad()
+   loss.backward()
+   optimizer.step()
+   # print( loss )
 
-for epoch in range(num_epochs):
- # Iterate over training batches
-   print(f"Epoch [{epoch + 1}/{num_epochs}]")
+end=time.time()
 
-   for batch_index, (data, targets) in enumerate(tqdm(train_loader)):
-       if batch_index>1:
-           continue
-       data = data.to(device)
-       targets = targets.to(device)
-       scores = model(data)
-       loss = criterion(scores, targets)
-       optimizer.zero_grad()
-       loss.backward()
-       optimizer.step()
-
+print(scores[0].shape)
+print(scores[1])
 
 end=time.time()
 d=end-start
-print("# Python PyTorch 2.0 60000 Images, 500 Epoch Time: " , d)
+print("# Python PyTorch 2.0 60000 Images, 100 Epoch Time: " , d)
+
 
 
 
@@ -152,20 +192,17 @@ acc = Accuracy(task="multiclass",num_classes=10).to(device)
 
 # Iterate over the dataset batches
 model.eval()
+
+
+dataTest = torch.tensor( testX , device=device)
+targetsTest = torch.tensor(testY, device=device)
+
 with torch.no_grad():
-   for images, labels in test_loader:
-       images=images.to(device)
-       labels=labels.to(device)
-       # Get predicted probabilities for test data batch
-       outputs = model(images)
-       _, preds = torch.max(outputs, 1)
-       preds = preds.to(device)
-       acc(preds, labels)
-       #precision(preds, labels)
-       #recall(preds, labels)
-       
+   outputs = model(dataTest)
+   _, preds = torch.max(outputs, 1)
+   preds = preds.to(device)
+   acc(preds, targetsTest)
 
 test_accuracy = acc.compute()
 print(f"Test accuracy: {test_accuracy}")
 
-clear_session()

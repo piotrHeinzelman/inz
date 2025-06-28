@@ -20,7 +20,7 @@ import torchvision.transforms as transforms
 
 # !pip install torchmetrics
 #import torchmetrics
-#from torchmetrics import Accuracy
+from torchmetrics import Accuracy
 
 #from torcheval.metrics import MulticlassAccuracy
 
@@ -28,6 +28,10 @@ import torchvision.transforms as transforms
 import inspect
 import os
 import time
+
+
+#os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "caching_allocator"
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:128"
 
 
 
@@ -43,7 +47,7 @@ else:
 
 # params
 epochs = 100
-percent = 100
+percent = 99
 num_classes = 10
 
 
@@ -152,12 +156,6 @@ criterion = nn.CrossEntropyLoss()
 # Define the optimizer
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-
-start=time.time()
-
-
-
-
 print( trainX.shape )
 print( trainY[0] )
 
@@ -165,40 +163,46 @@ print( trainY[0] )
 data = torch.tensor( trainX , device=device)
 targets = torch.tensor(trainY, device=device)
 
+start=time.time()
 
-scores = model(data)
-loss = criterion(scores, targets)
-optimizer.zero_grad()
-loss.backward()
-optimizer.step()
+
+for epoch in range(epochs):
+   scores = model(data)
+   loss = criterion(scores, targets)
+   optimizer.zero_grad()
+   loss.backward()
+   optimizer.step()
+
+end=time.time()
+
 
 #print(scores.shape)
 print(scores[0].shape)
 print(scores[1])
 #print(scores[2])
 
-exit()
+#exit()
 
 
 
 
-for epoch in range(epochs):
+#for epoch in range(epochs):
    # Iterate over training batches
-   for batch_index, (data, targets) in enumerate(tqdm(train_loader)):
-       if batch_index>1:
-           continue
-       data = data.to(device)
-       targets = targets.to(device)
-       scores = model(data)
-       loss = criterion(scores, targets)
-       optimizer.zero_grad()
-       loss.backward()
-       optimizer.step()
+#   for batch_index, (data, targets) in enumerate(tqdm(train_loader)):
+#       if batch_index>1:
+#           continue
+#       data = data.to(device)
+#       targets = targets.to(device)
+#       scores = model(data)
+#       loss = criterion(scores, targets)
+#       optimizer.zero_grad()
+#       loss.backward()
+#       optimizer.step()
 
 
 end=time.time()
 d=end-start
-print("# Python PyTorch 2.0 60000 Images, 500 Epoch Time: " , d)
+print("# Python PyTorch 2.0 60000 Images, 100 Epoch Time: " , d)
 
 
 
