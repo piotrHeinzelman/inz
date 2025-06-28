@@ -78,8 +78,8 @@ testX = testX.astype("float32")
 trainY = trainY.astype("int")
 testY = testY.astype("int")
 
-trainX = trainX.reshape(6*percent*100, 28,28).astype("float32") / 255
-testX = testX.reshape(1*percent*100, 28,28).astype("float32") / 255
+trainX = trainX.reshape(6*percent*100, 1, 28,28).astype("float32") / 255
+testX = testX.reshape(1*percent*100, 1, 28,28).astype("float32") / 255
 
 
 
@@ -156,8 +156,31 @@ optimizer = optim.Adam(model.parameters(), lr=0.001)
 start=time.time()
 
 
-print("!")
+
+
+print( trainX.shape )
+print( trainY[0] )
+
+
+data = torch.tensor( trainX , device=device)
+targets = torch.tensor(trainY, device=device)
+
+
+scores = model(data)
+loss = criterion(scores, targets)
+optimizer.zero_grad()
+loss.backward()
+optimizer.step()
+
+#print(scores.shape)
+print(scores[0].shape)
+print(scores[1])
+#print(scores[2])
+
 exit()
+
+
+
 
 for epoch in range(epochs):
    # Iterate over training batches
