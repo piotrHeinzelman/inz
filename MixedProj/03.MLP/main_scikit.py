@@ -1,5 +1,14 @@
-# from Python - Machine learning i deep learning ISBN: 978-83-283-7001-2
+	# from Python - Machine learning i deep learning ISBN: 978-83-283-7001-2
 # https://scikit-learn.org/dev/modules/generated/sklearn.neural_network.MLPClassifier.html
+
+#
+#
+#  conda install -c conda-forge scikit-learn-intelex
+#
+#
+# Intel(R) Extension for Scikit-learn* enabled (https://github.com/intel/scikit-learn-intelex)
+# time: 15:33 sek
+
 
 import time
 import datetime
@@ -9,6 +18,11 @@ import sklearn.neural_network as snn
 import matplotlib.pyplot as plt
 import numpy as np
 
+#import dpctl
+from sklearnex import patch_sklearn, config_context
+patch_sklearn()
+
+#from sklearn.cluster import DBSCAN
 
 
 def readFileX ( fileName , offset, percent, multi ):
@@ -73,7 +87,8 @@ net = snn.MLPClassifier( hidden_layer_sizes=(64,64), max_iter=100, random_state=
 
 start=time.time()
 
-net.fit( trainX, trainY )
+with config_context(target_offload="gpu:0"):
+   net.fit( trainX, trainY )
 
 # net.partial_fit( trainX, trainY )
 # l.append( net.score(testX, testY) )

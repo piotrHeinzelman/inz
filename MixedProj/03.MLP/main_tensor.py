@@ -68,7 +68,9 @@ model.compile(optimizer='adam',
 
 start=time.time()
 
-model.fit(trainX, trainY, epochs=epochs, verbose=0)
+
+with tf.device('/device:GPU:0'):
+   model.fit(trainX, trainY, epochs=epochs, verbose=0)
 
 end=time.time()
 d=end-start
