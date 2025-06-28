@@ -3,12 +3,14 @@
 # https://www.osc.edu/resources/getting_started/howto/howto_use_gpu_in_python
 # https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html
 
+# tensorflow==2.14.0  ===>>>  cuda-12.* (cuda-12.1, cuda-12.2)
+
 import tensorflow as tf
 
 import numpy as np
 import time
 from tensorflow.keras.backend import clear_session
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 
 
@@ -17,7 +19,9 @@ physical_devices = tf.config.list_physical_devices('GPU')
 if physical_devices:
    for gpu in physical_devices:
       tf.config.experimental.set_memory_growth(gpu, True)
+      print(gpu.device_type)
 
+exit()
 # params
 epochs = 100
 percent = 50
