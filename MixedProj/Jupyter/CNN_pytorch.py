@@ -66,10 +66,10 @@ def readFileY ( fileName , offset, percent, multi ):
 
 
 
-trainX = readFileX ('data/train-images-idx3-ubyte', 16, percent ,6 )
-trainY = readFileY ('data/train-labels-idx1-ubyte', 8, percent, 6 )
-testX = readFileX ('data/t10k-images-idx3-ubyte', 16, percent, 1  )
-testY = readFileY ('data/t10k-labels-idx1-ubyte', 8, percent, 1 )
+trainX = readFileX ('../04.CNN/data/train-images-idx3-ubyte', 16, percent ,6 )
+trainY = readFileY ('../04.CNN/data/train-labels-idx1-ubyte', 8, percent, 6 )
+testX = readFileX ('../04.CNN/data/t10k-images-idx3-ubyte', 16, percent, 1  )
+testY = readFileY ('../04.CNN/data/t10k-labels-idx1-ubyte', 8, percent, 1 )
 
 
 trainX = trainX.astype("float32")
