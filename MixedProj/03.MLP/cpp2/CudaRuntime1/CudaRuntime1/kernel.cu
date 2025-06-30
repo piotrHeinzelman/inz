@@ -13,11 +13,18 @@
 using namespace std;
 
 cudaError_t addWithCuda(int *c, const int *a, const int *b, unsigned int size);
+cudaError_t addFloatWithCuda(float* c, const float* a, const float* b, unsigned int size);
 
 __global__ void addKernel(int *c, const int *a, const int *b)
 {
     int i = threadIdx.x;
     c[i] = a[i] + b[i];
+}
+
+__global__ void mullFloatArrays(float* c, const float* a, const float* b)
+{
+    int i = threadIdx.x;
+    c[i] = a[i] * b[i];
 }
 
 int main()
@@ -28,9 +35,9 @@ int main()
 
     printf( "#  --- C++ ---\n+lenx:%i", lenx);
 
-    double** X = new double * [lenx];
+    float** X = new float * [lenx];
     for (int i = 0; i < lenx; i++) {
-        X[i] = new double[28*28];
+        X[i] = new float[28*28];
     }
     uint8_t* Y = new uint8_t[lenx];
 
@@ -63,10 +70,11 @@ int main()
 //    vector<double>* Z = new vector<double>[lenx];
 //    vector<double>* X1 = new vector<double>[lenx];
 //    vector<double>* Y1 = new vector<double>[lenx];
-    double** W = new double* [64];
+    float* W = new float [32];
+    float* Y_ = new float [32];
 
-    cudaError_t cudaStatus = addWithCuda(X[0], , Z, lenx);
-
+    cudaError_t cudaStatus1 = addFloatWithCuda (Y_, X[0], X[0], 32);
+    printf ( "\nY[0]:%f\n", Y_[0]);
 
 
 
@@ -99,6 +107,108 @@ int main()
 
     return 0;
 }
+
+
+
+
+
+// Helper function for using CUDA to add vectors in parallel.
+cudaError_t addFloatWithCuda(float* c, const float* a, const float* b, unsigned int size)
+{
+    float* dev_a = 0;
+    float* dev_b = 0;
+    float* dev_c = 0;
+    cudaError_t cudaStatus;
+
+    // Choose which GPU to run on, change this on a multi-GPU system.
+    cudaStatus = cudaSetDevice(0);
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "cudaSetDevice failed!  Do you have a CUDA-capable GPU installed?");
+        goto Error;
+    }
+
+    // Allocate GPU buffers for three vectors (two input, one output)    .
+    cudaStatus = cudaMalloc( (void**)&dev_c, size * sizeof(float));
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "cudaMalloc failed!");
+        goto Error;
+    }
+
+    cudaStatus = cudaMalloc((void**)&dev_a, size * sizeof(float));
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "cudaMalloc failed!");
+        goto Error;
+    }
+
+    cudaStatus = cudaMalloc((void**)&dev_b, size * sizeof(float));
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "cudaMalloc failed!");
+        goto Error;
+    }
+
+    // Copy input vectors from host memory to GPU buffers.
+    cudaStatus = cudaMemcpy(dev_a, a, size * sizeof(float), cudaMemcpyHostToDevice);
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "cudaMemcpy failed!");
+        goto Error;
+    }
+
+    cudaStatus = cudaMemcpy(dev_b, b, size * sizeof(float), cudaMemcpyHostToDevice);
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "cudaMemcpy failed!");
+        goto Error;
+    }
+
+    // Launch a kernel on the GPU with one thread for each element.
+    mullFloatArrays <<< 1, size >> > (dev_c, dev_a, dev_b);
+    
+
+    // Check for any errors launching the kernel
+    cudaStatus = cudaGetLastError();
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "addKernel launch failed: %s\n", cudaGetErrorString(cudaStatus));
+        goto Error;
+    }
+
+    // cudaDeviceSynchronize waits for the kernel to finish, and returns
+    // any errors encountered during the launch.
+    cudaStatus = cudaDeviceSynchronize();
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "cudaDeviceSynchronize returned error code %d after launching addKernel!\n", cudaStatus);
+        goto Error;
+    }
+
+    // Copy output vector from GPU buffer to host memory.
+    cudaStatus = cudaMemcpy(c, dev_c, size * sizeof(float), cudaMemcpyDeviceToHost);
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "cudaMemcpy failed!");
+        goto Error;
+    }
+
+Error:
+    cudaFree(dev_c);
+    cudaFree(dev_a);
+    cudaFree(dev_b);
+
+    return cudaStatus;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Helper function for using CUDA to add vectors in parallel.
 cudaError_t addWithCuda(int *c, const int *a, const int *b, unsigned int size)
