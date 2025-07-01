@@ -14,6 +14,8 @@ using namespace std;
 
 cudaError_t addWithCuda(int *c, const int *a, const int *b, unsigned int size);
 cudaError_t addFloatWithCuda(float* c, const float* a, const float* b, unsigned int size);
+void saveFloatsToFile(char* filename, float* floats, int size);
+void loadFloatsToFile(char* filename, float* floats, int arySize);
 
 __global__ void addKernel(int *c, const int *a, const int *b)
 {
@@ -29,8 +31,8 @@ __global__ void mullFloatArrays(float* c, const float* a, const float* b)
 
 int main()
 {
-    int const percent = 0.010; // change to 50 !
-    int const len = percent * 100;
+    int const percent = 1; // 50 0.010; // change to 50 !
+    int const len = percent; // *100;
     int const lenx = len * 6;
 
     printf( "#  --- C++ ---\n+lenx:%i", lenx);
@@ -45,7 +47,7 @@ int main()
     ifstream  inputFileStreamX("../../../data/train-images-idx3-ubyte", ios::in | ios::binary); // 16, percent, 6)
     ifstream  inputFileStreamY("../../../data/train-labels-idx1-ubyte", ios::in | ios::binary); //  8, percent, 6)
 
-    
+
     inputFileStreamX.ignore(16 * sizeof(uint8_t));
     inputFileStreamY.ignore(8 * sizeof(uint8_t));
     uint8_t* tmp = new uint8_t[784];
@@ -70,13 +72,21 @@ int main()
 //    vector<double>* Z = new vector<double>[lenx];
 //    vector<double>* X1 = new vector<double>[lenx];
 //    vector<double>* Y1 = new vector<double>[lenx];
-    float* W = new float [32];
-    float* Y_ = new float [32];
+    const int arySize = 8;
+    float X_[arySize] = { 0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f }; //new float [8];
+    float W_ [arySize] = { -0.4f, 0.2f, -.3f, .3f, -.1f, .5f, -.2f, .4f };
+    //float* W_ = new float[arySize]; // null; { -0.4f, 0.2f, -.3f, .3f, -.1f, .5f, -.2f, .4f }; //new float [8];
+    float* Y_ = new float[arySize];
 
-    cudaError_t cudaStatus1 = addFloatWithCuda (Y_, X[0], X[0], 32);
-    printf ( "\nY[0]:%f\n", Y_[0]);
+    //saveFloatsToFile((char*)"Weights.bin", W_, arySize);
+    //loadFloatsToFile((char*)"Weights.bin", W_, arySize);
+    //printf( "\n->%f",W_[0]);
 
 
+    cudaError_t cudaStatus1 = addFloatWithCuda (Y_, X_, W_, 32);
+    printf ( "\nY[0]:%f, %f, %f\n", Y_[0], Y_[1], Y_[2]);
+    return 0;
+   
 
 
 
@@ -288,4 +298,25 @@ Error:
     cudaFree(dev_b);
     
     return cudaStatus;
+}
+
+
+
+void saveFloatsToFile(char* filename, float* floats, int arySize) {
+    FILE* fb;
+    fb = fopen( (char*) filename, "wb");
+    for (int i = 0; i < arySize; i++) {
+        fwrite(&floats[i], sizeof(float), 1, fb);
+    }
+    fclose(fb);
+}
+
+
+void loadFloatsToFile(char* filename, float* floats, int arySize) {
+    FILE* fb;
+    fb = fopen((char*)filename, "rb");
+    for (int i = 0; i < arySize; i++) {
+        fread(&floats[i], sizeof(float), 1, fb);
+    }
+    fclose(fb);
 }
