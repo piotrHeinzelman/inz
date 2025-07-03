@@ -26,14 +26,14 @@ __global__ void addKernel(int *c, const int *a, const int *b)
 __global__ void mullFloatArrays(float* c, const float* a, const float* b)
 {
     int i = threadIdx.x;
-    c[i] = 0.0f+a[i] * b[i]; 
+    //c[i] = a[i] * b[i]; 
+    c[i] = 0.10;
 }
 
 __global__ void sumOfC(float* d, float* c)
 {
     int i = threadIdx.x;
-    //if (i % 2 == 0) { d[i/2] = c[i] + c[i + 1];  c[i + 1] = 0; c[i] = 0; }
-    d[i] = c[i];
+    if (i % 2 == 0) { d[i/2] = c[i] + c[i + 1];  c[i + 1] = 0; c[i] = 0; }  
 }
 
 int main()
@@ -115,8 +115,8 @@ int main()
     clock_t duration = clock() - before;
     printf("\r\nduration: %d [clocks tick], %d[sek]\r\n", duration, duration/CLOCKS_PER_SEC );
 
-    printf ( "\nYLay[14*28+14]:%f, X[0][14*28+14]%f, W[0][14*28+14]%f\n", YLay1[14 * 28 + 14], X[0][14*28+14], W[0][14 * 28 + 14]);
-    printf("Y[0]:%f \n", YLay1[14 * 28 + 14]);
+    printf ( "\nC[14*28+14]:%f, X[0][14*28+14]%f, W[0][14*28+14]%f\n", C[14 * 28 + 14], X[0][14*28+14], W[0][14 * 28 + 14]);
+    printf("Y[0]:%f \n", C[0]);
 
     cudaStatus1 = cudaDeviceReset();
     if (cudaStatus1 != cudaSuccess) {
@@ -223,11 +223,20 @@ cudaError_t mullAndaddFloatWithCuda(float* c, const float* a, const float* b, un
 
 
     // Launch a kernel on the GPU with one thread for each element.
-    //mullFloatArrays <<< 1, size >> > (dev_c, dev_a, dev_b);
-    //cudaDeviceSynchronize();
-    //sumOfC << < 1, size >> > (dev_d, dev_c);
-    //sumOfC <<< 1, size >> > (dev_d, dev_c);
-    //cudaDeviceSynchronize();
+    mullFloatArrays <<< 1, size >> > (dev_c, dev_a, dev_b);
+    cudaDeviceSynchronize();
+
+    // log(2) 784 < log(2) 1024 = 10 circles
+    for (int i = 0; i < 5; i++) {
+
+        sumOfC <<< 1, size >> > ( dev_d, dev_c );
+        cudaDeviceSynchronize(); 
+        sumOfC <<< 1, size >> > ( dev_c, dev_d );
+        cudaDeviceSynchronize(); 
+    }
+
+
+
     //dev_c[0] = dev_d[0];
 
     // Check for any errors launching the kernel
@@ -244,10 +253,8 @@ cudaError_t mullAndaddFloatWithCuda(float* c, const float* a, const float* b, un
         fprintf(stderr, "cudaDeviceSynchronize returned error code %d after launching addKernel!\n", cudaStatus);
         goto Error;
     }
+     
 
-
-    dev_c = dev_a;
- 
     // Copy output vector from GPU buffer to host memory.
     cudaStatus = cudaMemcpy(c, dev_c, size * sizeof(float), cudaMemcpyDeviceToHost);
     if (cudaStatus != cudaSuccess) {
