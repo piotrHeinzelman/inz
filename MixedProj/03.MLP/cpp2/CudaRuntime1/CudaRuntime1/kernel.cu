@@ -13,7 +13,7 @@
 using namespace std;
 
 cudaError_t addWithCuda(int *c, const int *a, const int *b, unsigned int size);
-cudaError_t addFloatWithCuda(float* c, const float* a, const float* b, unsigned int size);
+cudaError_t mullAndaddFloatWithCuda(float* c, const float* a, const float* b, unsigned int size);
 void saveFloatsToFile(char* filename, float* floats, int size);
 void loadFloatsToFile(char* filename, float* floats, int arySize);
 
@@ -26,7 +26,14 @@ __global__ void addKernel(int *c, const int *a, const int *b)
 __global__ void mullFloatArrays(float* c, const float* a, const float* b)
 {
     int i = threadIdx.x;
-    c[i] = a[i] * b[i];
+    c[i] = 0.0f+a[i] * b[i]; 
+}
+
+__global__ void sumOfC(float* d, float* c)
+{
+    int i = threadIdx.x;
+    //if (i % 2 == 0) { d[i/2] = c[i] + c[i + 1];  c[i + 1] = 0; c[i] = 0; }
+    d[i] = c[i];
 }
 
 int main()
@@ -34,14 +41,28 @@ int main()
     int const percent = 1; // 50 0.010; // change to 50 !
     int const len = percent; // *100;
     int const lenx = len * 6;
+    
+    int const IMGSIZE = 784; // ; 28 * 28
+    int const Lay1out = 64; // neurons = layer out numbers
 
-    printf( "#  --- C++ ---\n+lenx:%i", lenx);
+    //printf( "#  --- C++ ---\n+lenx:%i", lenx);
+    srand((int)time(0));
 
-    float** X = new float * [lenx];
+    float** X = new float* [lenx];
     for (int i = 0; i < lenx; i++) {
-        X[i] = new float[28*28];
+        X[i] = new float[ IMGSIZE ];
     }
+
+    float** W = new float* [ 64 ];
+    for (int i = 0; i < Lay1out; i++) {
+        W[i] = new float[ IMGSIZE ];
+        for (int j = 0; j < IMGSIZE; j++) {
+            W[i][j] = -1.0f + (rand() % 1000) / 500.0f;
+        }
+    }
+
     uint8_t* Y = new uint8_t[lenx];
+
 
     
     ifstream  inputFileStreamX("../../../data/train-images-idx3-ubyte", ios::in | ios::binary); // 16, percent, 6)
@@ -72,19 +93,36 @@ int main()
 //    vector<double>* Z = new vector<double>[lenx];
 //    vector<double>* X1 = new vector<double>[lenx];
 //    vector<double>* Y1 = new vector<double>[lenx];
-    const int arySize = 8;
-    float X_[arySize] = { 0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f }; //new float [8];
-    float W_ [arySize] = { -0.4f, 0.2f, -.3f, .3f, -.1f, .5f, -.2f, .4f };
+    //const int arySize = 8;
+    //float X_[arySize] = { 0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f }; //new float [8];
+    //float W_ [arySize] = { -0.4f, 0.2f, -.3f, .3f, -.1f, .5f, -.2f, .4f };
     //float* W_ = new float[arySize]; // null; { -0.4f, 0.2f, -.3f, .3f, -.1f, .5f, -.2f, .4f }; //new float [8];
-    float* Y_ = new float[arySize];
+    float* YLay1 = new float[Lay1out];
+    float* D = new float[Lay1out];
+     
 
     //saveFloatsToFile((char*)"Weights.bin", W_, arySize);
     //loadFloatsToFile((char*)"Weights.bin", W_, arySize);
     //printf( "\n->%f",W_[0]);
 
 
-    cudaError_t cudaStatus1 = addFloatWithCuda (Y_, X_, W_, 32);
-    printf ( "\nY[0]:%f, %f, %f\n", Y_[0], Y_[1], Y_[2]);
+    //-- start
+    clock_t before = clock();
+
+ //   cudaError_t cudaStatus1 = mullAndaddFloatWithCuda (&YLay1[0], X[0], W[0], IMGSIZE ); // X[0] - first X, W[0] - weights first neutron = first Y
+
+    clock_t duration = clock() - before;
+    printf("\r\nduration: %d [clocks tick], %d[sek]\r\n", duration, duration/CLOCKS_PER_SEC );
+
+    printf ( "\nYLay[14*28+14]:%f, X[0][14*28+14]%f, W[0][14*28+14]%f\n", YLay1[14 * 28 + 14], X[0][14*28+14], W[0][14 * 28 + 14]);
+    printf("Y[0]:%f \n", YLay1[14 * 28 + 14]);
+
+    cudaError_t cudaStatus1 = cudaDeviceReset();
+    if (cudaStatus1 != cudaSuccess) {
+        fprintf(stderr, "cudaDeviceReset failed!");
+        return 1;
+    }
+    exit(0);
     return 0;
    
 
@@ -123,11 +161,12 @@ int main()
 
 
 // Helper function for using CUDA to add vectors in parallel.
-cudaError_t addFloatWithCuda(float* c, const float* a, const float* b, unsigned int size)
+cudaError_t mullAndaddFloatWithCuda(float* c, const float* a, const float* b, unsigned int size)
 {
     float* dev_a = 0;
     float* dev_b = 0;
     float* dev_c = 0;
+    float* dev_d = 0;
     cudaError_t cudaStatus;
 
     // Choose which GPU to run on, change this on a multi-GPU system.
@@ -139,6 +178,13 @@ cudaError_t addFloatWithCuda(float* c, const float* a, const float* b, unsigned 
 
     // Allocate GPU buffers for three vectors (two input, one output)    .
     cudaStatus = cudaMalloc( (void**)&dev_c, size * sizeof(float));
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "cudaMalloc failed!");
+        goto Error;
+    }
+
+    // Allocate GPU buffers for three vectors (two input, one output)    .
+    cudaStatus = cudaMalloc((void**)&dev_d, size * sizeof(float));
     if (cudaStatus != cudaSuccess) {
         fprintf(stderr, "cudaMalloc failed!");
         goto Error;
@@ -171,7 +217,11 @@ cudaError_t addFloatWithCuda(float* c, const float* a, const float* b, unsigned 
 
     // Launch a kernel on the GPU with one thread for each element.
     mullFloatArrays <<< 1, size >> > (dev_c, dev_a, dev_b);
-    
+    //cudaDeviceSynchronize();
+    //sumOfC << < 1, size >> > (dev_d, dev_c);
+    //sumOfC <<< 1, size >> > (dev_d, dev_c);
+    //cudaDeviceSynchronize();
+    //dev_c[0] = dev_d[0];
 
     // Check for any errors launching the kernel
     cudaStatus = cudaGetLastError();
@@ -196,6 +246,7 @@ cudaError_t addFloatWithCuda(float* c, const float* a, const float* b, unsigned 
     }
 
 Error:
+    cudaFree(dev_d);
     cudaFree(dev_c);
     cudaFree(dev_a);
     cudaFree(dev_b);
