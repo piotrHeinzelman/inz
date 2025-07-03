@@ -98,7 +98,8 @@ int main()
     //float W_ [arySize] = { -0.4f, 0.2f, -.3f, .3f, -.1f, .5f, -.2f, .4f };
     //float* W_ = new float[arySize]; // null; { -0.4f, 0.2f, -.3f, .3f, -.1f, .5f, -.2f, .4f }; //new float [8];
     float* YLay1 = new float[Lay1out];
-    float* D = new float[Lay1out];
+    float* D = new float[IMGSIZE];
+    float* C = new float[IMGSIZE];
      
 
     //saveFloatsToFile((char*)"Weights.bin", W_, arySize);
@@ -109,7 +110,7 @@ int main()
     //-- start
     clock_t before = clock();
 
-    cudaError_t cudaStatus1 = mullAndaddFloatWithCuda(&YLay1[0], X[0], W[0], IMGSIZE); // X[0] - first X, W[0] - weights first neutron = first Y
+    cudaError_t cudaStatus1 = mullAndaddFloatWithCuda( C, X[0], W[0], IMGSIZE); // X[0] - first X, W[0] - weights first neutron = first Y
 
     clock_t duration = clock() - before;
     printf("\r\nduration: %d [clocks tick], %d[sek]\r\n", duration, duration/CLOCKS_PER_SEC );
@@ -220,7 +221,6 @@ cudaError_t mullAndaddFloatWithCuda(float* c, const float* a, const float* b, un
     }
 
 
-    return cudaStatus;
 
     // Launch a kernel on the GPU with one thread for each element.
     //mullFloatArrays <<< 1, size >> > (dev_c, dev_a, dev_b);
@@ -245,12 +245,17 @@ cudaError_t mullAndaddFloatWithCuda(float* c, const float* a, const float* b, un
         goto Error;
     }
 
+
+    dev_c = dev_a;
+ 
     // Copy output vector from GPU buffer to host memory.
     cudaStatus = cudaMemcpy(c, dev_c, size * sizeof(float), cudaMemcpyDeviceToHost);
     if (cudaStatus != cudaSuccess) {
         fprintf(stderr, "cudaMemcpy failed!");
         goto Error;
     }
+
+    return cudaStatus;
 
 Error:
     cudaFree(dev_d);
