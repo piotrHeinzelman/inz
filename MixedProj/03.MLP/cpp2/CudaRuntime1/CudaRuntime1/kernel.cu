@@ -109,7 +109,7 @@ int main()
     //-- start
     clock_t before = clock();
 
- //   cudaError_t cudaStatus1 = mullAndaddFloatWithCuda (&YLay1[0], X[0], W[0], IMGSIZE ); // X[0] - first X, W[0] - weights first neutron = first Y
+    cudaError_t cudaStatus1 = mullAndaddFloatWithCuda(&YLay1[0], X[0], W[0], IMGSIZE); // X[0] - first X, W[0] - weights first neutron = first Y
 
     clock_t duration = clock() - before;
     printf("\r\nduration: %d [clocks tick], %d[sek]\r\n", duration, duration/CLOCKS_PER_SEC );
@@ -117,7 +117,7 @@ int main()
     printf ( "\nYLay[14*28+14]:%f, X[0][14*28+14]%f, W[0][14*28+14]%f\n", YLay1[14 * 28 + 14], X[0][14*28+14], W[0][14 * 28 + 14]);
     printf("Y[0]:%f \n", YLay1[14 * 28 + 14]);
 
-    cudaError_t cudaStatus1 = cudaDeviceReset();
+    cudaStatus1 = cudaDeviceReset();
     if (cudaStatus1 != cudaSuccess) {
         fprintf(stderr, "cudaDeviceReset failed!");
         return 1;
@@ -163,6 +163,7 @@ int main()
 // Helper function for using CUDA to add vectors in parallel.
 cudaError_t mullAndaddFloatWithCuda(float* c, const float* a, const float* b, unsigned int size)
 {
+    // size = 88; 88 is OK, 89 throw error !
     float* dev_a = 0;
     float* dev_b = 0;
     float* dev_c = 0;
@@ -176,6 +177,7 @@ cudaError_t mullAndaddFloatWithCuda(float* c, const float* a, const float* b, un
         goto Error;
     }
 
+
     // Allocate GPU buffers for three vectors (two input, one output)    .
     cudaStatus = cudaMalloc( (void**)&dev_c, size * sizeof(float));
     if (cudaStatus != cudaSuccess) {
@@ -184,17 +186,19 @@ cudaError_t mullAndaddFloatWithCuda(float* c, const float* a, const float* b, un
     }
 
     // Allocate GPU buffers for three vectors (two input, one output)    .
-    cudaStatus = cudaMalloc((void**)&dev_d, size * sizeof(float));
+    cudaStatus = cudaMalloc((void**) &dev_d, size * sizeof(float));
     if (cudaStatus != cudaSuccess) {
         fprintf(stderr, "cudaMalloc failed!");
         goto Error;
     }
+
 
     cudaStatus = cudaMalloc((void**)&dev_a, size * sizeof(float));
     if (cudaStatus != cudaSuccess) {
         fprintf(stderr, "cudaMalloc failed!");
         goto Error;
     }
+
 
     cudaStatus = cudaMalloc((void**)&dev_b, size * sizeof(float));
     if (cudaStatus != cudaSuccess) {
@@ -215,8 +219,11 @@ cudaError_t mullAndaddFloatWithCuda(float* c, const float* a, const float* b, un
         goto Error;
     }
 
+
+    return cudaStatus;
+
     // Launch a kernel on the GPU with one thread for each element.
-    mullFloatArrays <<< 1, size >> > (dev_c, dev_a, dev_b);
+    //mullFloatArrays <<< 1, size >> > (dev_c, dev_a, dev_b);
     //cudaDeviceSynchronize();
     //sumOfC << < 1, size >> > (dev_d, dev_c);
     //sumOfC <<< 1, size >> > (dev_d, dev_c);
