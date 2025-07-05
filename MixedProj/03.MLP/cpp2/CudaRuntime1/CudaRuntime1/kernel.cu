@@ -2,6 +2,7 @@
 #include "cuda_runtime.h"
 #include "device_launch_parameters.h"
 
+#include "filetools.h"
 #include <stdio.h>
 
  
@@ -11,12 +12,16 @@
 #include <string.h>
 #include <vector>
 
+#include "filetools.cu"
+
+
 using namespace std;
 
 cudaError_t addWithCuda(int *c, const int *a, const int *b, unsigned int size);
 cudaError_t mullAndaddFloatWithCuda(float* c, const float* a, const float* b, unsigned int size);
 void saveFloatsToFile(char* filename, float* floats, int size);
 void loadFloatsToFile(char* filename, float* floats, int arySize);
+ 
 
 __global__ void addKernel(int *c, const int *a, const int *b)
 {
@@ -27,22 +32,28 @@ __global__ void addKernel(int *c, const int *a, const int *b)
 __global__ void mullFloatArrays(float* c, const float* a, const float* b)
 {
     int i = threadIdx.x;
-    //c[i] = a[i] * b[i]; 
-    c[i] = 1.0/(1.0+ exp ( a[i]+b[i]));
+    c[i] = a[i] * b[i]; 
+    //c[i] = 1.0/(1.0+ exp ( a[i]+b[i]));
     //c[i] = .1;
 }
 
 __global__ void sumOfC(float* d, float* c)
 {
     int i = threadIdx.x;
-    if (i % 2 == 0) { d[i/2] = c[i] + c[i + 1];  c[i + 1] = 0; c[i] = 0; }  
+    if (i%2 == 0) { d[ i >> 1] = c[i] + c[i + 1];  c[i + 1] = 0; c[i] = 0; }
+}
+
+__global__ void SigmodAndDF(float* z, float* df, const float* y)
+{
+    int i = threadIdx.x;
+    z[i] = 1.0/(1.0+ exp ( y[i] ));
+    df[i] = z[i] * (1 + z[i]); 
 }
 
 int main()
 {
     int const percent = 1; // 50 0.010; // change to 50 !
-    int const len = percent; // *100;
-    int const lenx = len * 6;
+    int const lenx = percent * 6 * 100;
     
     int const IMGSIZE = 784; // ; 28 * 28
     int const Lay1out = 64; // neurons = layer out numbers
@@ -62,6 +73,13 @@ int main()
             W[i][j] = -1.0f + (rand() % 1000) / 500.0f;
         }
     }
+
+    testLoadAndSave();
+
+
+    exit(0);
+
+
 
     uint8_t* Y = new uint8_t[lenx];
 
@@ -373,21 +391,3 @@ Error:
 
 
 
-void saveFloatsToFile(char* filename, float* floats, int arySize) {
-    FILE* fb;
-    fb = fopen( (char*) filename, "wb");
-    for (int i = 0; i < arySize; i++) {
-        fwrite(&floats[i], sizeof(float), 1, fb);
-    }
-    fclose(fb);
-}
-
-
-void loadFloatsToFile(char* filename, float* floats, int arySize) {
-    FILE* fb;
-    fb = fopen((char*)filename, "rb");
-    for (int i = 0; i < arySize; i++) {
-        fread(&floats[i], sizeof(float), 1, fb);
-    }
-    fclose(fb);
-}
