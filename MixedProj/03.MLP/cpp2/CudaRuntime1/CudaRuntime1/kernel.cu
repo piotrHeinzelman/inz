@@ -19,8 +19,7 @@ using namespace std;
 
 cudaError_t addWithCuda(int *c, const int *a, const int *b, unsigned int size);
 cudaError_t mullAndaddFloatWithCuda(float* c, const float* a, const float* b, unsigned int size);
-void saveFloatsToFile(char* filename, float* floats, int size);
-void loadFloatsToFile(char* filename, float* floats, int arySize);
+
  
 
 __global__ void addKernel(int *c, const int *a, const int *b)
@@ -61,47 +60,32 @@ int main()
     //printf( "#  --- C++ ---\n+lenx:%i", lenx);
     srand((int)time(0));
 
-    float** X = new float* [lenx];
-    for (int i = 0; i < lenx; i++) {
-        X[i] = new float[ IMGSIZE ];
-    }
 
-    float** W = new float* [ 64 ];
+
+    //testLoadAndSave();
+    float** W = new float* [64];
     for (int i = 0; i < Lay1out; i++) {
-        W[i] = new float[ IMGSIZE ];
+        W[i] = new float[IMGSIZE];
         for (int j = 0; j < IMGSIZE; j++) {
             W[i][j] = -1.0f + (rand() % 1000) / 500.0f;
         }
     }
 
-    testLoadAndSave();
+    float** X = new float*[lenx];
+    uint8_t* S= new uint8_t[lenx];
+    loadXandY( X, S, percent, IMGSIZE, true);
+
+    printf("%i, %f", S[0], X[0][14 * 28 + 14]);
+
+
 
 
     exit(0);
 
 
 
-    uint8_t* Y = new uint8_t[lenx];
-
-
     
-    ifstream  inputFileStreamX("../../../data/train-images-idx3-ubyte", ios::in | ios::binary); // 16, percent, 6)
-    ifstream  inputFileStreamY("../../../data/train-labels-idx1-ubyte", ios::in | ios::binary); //  8, percent, 6)
 
-
-    inputFileStreamX.ignore(16 * sizeof(uint8_t));
-    inputFileStreamY.ignore(8 * sizeof(uint8_t));
-    uint8_t* tmp = new uint8_t[784];
-    for (int i = 0; i < lenx; i++) {
-        inputFileStreamX.read((char*)tmp, 784 * sizeof(char));
-        for (int j = 0; j < 784; j++) {
-            X[i][j] = tmp[j]/255.0f;
-        }
-        inputFileStreamY.read((char*)&Y[i],  sizeof(char));
-    }
-
-    inputFileStreamX.close();
-    inputFileStreamY.close();
 
 //    for (int i = 0; i < 50; i++) {
 //        printf( "%i: %f\n", Y[i], X[i][300+i]);
@@ -388,6 +372,5 @@ Error:
     
     return cudaStatus;
 }
-
 
 

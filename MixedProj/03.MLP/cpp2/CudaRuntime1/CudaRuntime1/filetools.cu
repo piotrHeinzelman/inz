@@ -33,3 +33,37 @@ void testLoadAndSave() {
         printf("\n IN: %f : %f : %f : %f : %f ", Test[0], Test[1], Test[2], Test[3], Test[4]);
         printf("\nOUT: %f : %f : %f : %f : %f ", Check[0], Check[1], Check[2], Check[3], Check[4]);
 }
+
+
+
+void loadXandY(float** X, uint8_t* S, int percent, int IMGSIZE, bool train) {
+    using namespace std;
+   
+    int len = train ? 6 : 1;
+    len = len * 100 * percent;
+
+    //X = new float* [len];
+    for (int i = 0; i < len; i++) {
+        X[i] = new float[IMGSIZE];
+    }
+    //S = new uint8_t[len];
+
+    ifstream  inputFileStreamX("../../../data/train-images-idx3-ubyte", ios::in | ios::binary); // 16, percent, 6)
+    ifstream  inputFileStreamY("../../../data/train-labels-idx1-ubyte", ios::in | ios::binary); //  8, percent, 6)
+
+
+    inputFileStreamX.ignore(16 * sizeof(uint8_t));
+    inputFileStreamY.ignore(8 * sizeof(uint8_t));
+    uint8_t* tmp = new uint8_t[784];
+    for (int i = 0; i < len; i++) {
+        inputFileStreamX.read((char*)tmp, 784 * sizeof(char));
+        for (int j = 0; j < 784; j++) {
+            X[i][j] = tmp[j] / 255.0f;
+        }
+        inputFileStreamY.read((char*)&S[i], sizeof(char));
+    }
+
+    inputFileStreamX.close();
+    inputFileStreamY.close();
+}
+

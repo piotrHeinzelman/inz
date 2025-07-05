@@ -5,6 +5,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{2FDF79BB-BA91-83A3-25DC-DFD2DA77134E}|CudaRuntime1\\CudaRuntime1.vcxproj|C:\\Users\\john\\source\\repos\\inz\\MixedProj\\03.MLP\\cpp2\\CudaRuntime1\\CudaRuntime1\\kernel.cu||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{2FDF79BB-BA91-83A3-25DC-DFD2DA77134E}|CudaRuntime1\\CudaRuntime1.vcxproj|solutionrelative:CudaRuntime1\\kernel.cu||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FDF79BB-BA91-83A3-25DC-DFD2DA77134E}|CudaRuntime1\\CudaRuntime1.vcxproj|C:\\USERS\\JOHN\\SOURCE\\REPOS\\INZ\\MIXEDPROJ\\03.MLP\\CPP2\\CUDARUNTIME1\\CUDARUNTIME1\\FILETOOLS.CU||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{2FDF79BB-BA91-83A3-25DC-DFD2DA77134E}|CudaRuntime1\\CudaRuntime1.vcxproj|solutionrelative:CUDARUNTIME1\\FILETOOLS.CU||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,8 +18,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "filetools.cu",
+              "DocumentMoniker": "C:\\Users\\john\\source\\repos\\inz\\MixedProj\\03.MLP\\cpp2\\CudaRuntime1\\CudaRuntime1\\filetools.cu",
+              "RelativeDocumentMoniker": "CudaRuntime1\\filetools.cu",
+              "ToolTip": "C:\\Users\\john\\source\\repos\\inz\\MixedProj\\03.MLP\\cpp2\\CudaRuntime1\\CudaRuntime1\\filetools.cu",
+              "RelativeToolTip": "CudaRuntime1\\filetools.cu",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-07-05T21:25:54.071Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -24,7 +41,7 @@
               "RelativeDocumentMoniker": "CudaRuntime1\\kernel.cu",
               "ToolTip": "C:\\Users\\john\\source\\repos\\inz\\MixedProj\\03.MLP\\cpp2\\CudaRuntime1\\CudaRuntime1\\kernel.cu",
               "RelativeToolTip": "CudaRuntime1\\kernel.cu",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA4AAAAXAAAAAAAAAA==",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAABYAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2025-06-30T21:07:47.651Z",
               "EditorCaption": ""
