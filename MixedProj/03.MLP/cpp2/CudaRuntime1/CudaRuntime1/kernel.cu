@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 
+ 
 #include <iostream>
 #include <ctime>
 #include <fstream>
@@ -27,7 +28,8 @@ __global__ void mullFloatArrays(float* c, const float* a, const float* b)
 {
     int i = threadIdx.x;
     //c[i] = a[i] * b[i]; 
-    c[i] = 0.10;
+    c[i] = 1.0/(1.0+ exp ( a[i]+b[i]));
+    //c[i] = .1;
 }
 
 __global__ void sumOfC(float* d, float* c)
@@ -228,11 +230,10 @@ cudaError_t mullAndaddFloatWithCuda(float* c, const float* a, const float* b, un
 
     // log(2) 784 < log(2) 1024 = 10 circles
     for (int i = 0; i < 5; i++) {
-
         sumOfC <<< 1, size >> > ( dev_d, dev_c );
-        cudaDeviceSynchronize(); 
+        //cudaDeviceSynchronize(); 
         sumOfC <<< 1, size >> > ( dev_c, dev_d );
-        cudaDeviceSynchronize(); 
+        //cudaDeviceSynchronize(); 
     }
 
 

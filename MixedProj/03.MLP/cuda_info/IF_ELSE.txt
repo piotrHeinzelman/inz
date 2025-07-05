@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/7104384/why-is-a-b010-better-than-if-else-version-in-cuda
