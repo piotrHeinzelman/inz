@@ -1,4 +1,11 @@
 
+% https://www.mathworks.com/help/vision/ug/getting-started-with-r-cnn-fast-r-cnn-and-faster-r-cnn.html#mw_10e85d83-0e31-4896-bde9-8730b448441d
+% krok 1 wagi warstw = 0, wagi warstwy 2 { layers(2).Weights = 0.0001 * randn([filterSize numChannels numFilters]); }
+% zapis wag do pliku
+
+% 2 krok:
+% zaladowanie wag, losowanie wag warstwy 5, zapis do pliku layers(5).Weights = 0.0001 * randn([filterSize 32 32]);
+
 
 cifar10Data = 'X:\';
 % url = 'https://www.cs.toronto.edu/~kriz/cifar-10-matlab.tar.gz';
@@ -131,10 +138,11 @@ layers = [
 	
 	
 	
-layers(2).Weights = 0.0001 * randn([filterSize numChannels numFilters]);	
-%layers(5).Weights = 0.0001 * randn([5 5 3 32]);
-%layers(8).Weights = 0.0001 * randn([5 5 3 32]);
-%layers(11).Weights = 0.0001 * randn([filterSize numChannels numFilters]);
+%	
+% 2 krok:
+%
+%
+%
 
 
 
@@ -146,7 +154,7 @@ opts = trainingOptions('sgdm', ...
     'LearnRateDropFactor', 0.1, ...
     'LearnRateDropPeriod', 8, ...
     'L2Regularization', 0.004, ...
-    'MaxEpochs', 140, ...
+    'MaxEpochs', 70, ...
     'MiniBatchSize', 128, ...
     'Verbose', true);
 	
@@ -163,11 +171,29 @@ opts = trainingOptions('sgdm', ...
 doTraining = true;
 
 if doTraining    
+    % krok 1:
+    layers(2).Weights = 0.0001 * randn([filterSize numChannels numFilters]);
+
+
     % Train a network.
     cifar10Net = trainNetwork(trainingImages, trainingLabels, layers, opts);
+    save('X:\inz\MixedProj\04.R-CNN\Matlab\04.Matlab.Weight1.net.mat','cifar10Net'); 
+
+    layers(5).Weights = 0.0001 * randn([filterSize 32 32]);
+    cifar10Net = trainNetwork(trainingImages, trainingLabels, layers, opts);
+    save('X:\inz\MixedProj\04.R-CNN\Matlab\04.Matlab.Weight1.net.mat','cifar10Net'); 
+
+    layers(8).Weights = 0.0001 * randn([filterSize 32 64]);
+    cifar10Net = trainNetwork(trainingImages, trainingLabels, layers, opts);
+    save('X:\inz\MixedProj\04.R-CNN\Matlab\04.Matlab.Weight1.net.mat','cifar10Net'); 
+
+    layers(11).Weights = 0.0001 * randn([64 576]);
+    cifar10Net = trainNetwork(trainingImages, trainingLabels, layers, opts);
+    save('X:\inz\MixedProj\04.R-CNN\Matlab\04.Matlab.Weight1.net.mat','cifar10Net'); 
+
 else
     % Load pre-trained detector for the example.
-    load('rcnnStopSigns.mat','cifar10Net')       
+    load('X:\inz\MixedProj\04.R-CNN\Matlab\04.Matlab.Weight1.net.mat','cifar10Net');      
 end	
 
 
@@ -191,9 +217,20 @@ montage(w)
 
 
 
+w5 = cifar10Net.Layers(5).Weights;
+w5 = rescale(w5);
+figure
+montage(w5)
 
+w8 = cifar10Net.Layers(8).Weights;
+w8 = rescale(w8);
+figure
+montage(w8)
 
-
+w = cifar10Net.Layers(11).Weights;
+w = rescale(w);
+figure
+montage(w)
 
 % Run the network on the test set.
 YTest = classify(cifar10Net, testImages);
