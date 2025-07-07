@@ -34,6 +34,8 @@
 	  
 	  OpenCV
 	  https://github.com/ultralytics/ultralytics/blob/main/examples/YOLOv8-CPP-Inference/main.cpp
+	  https://opencv.org
+	  https://opencv.org/get-started/?utm_source=opcv&utm_medium=home
 	  
 	  
 	  ???		
