@@ -1,2 +1,0 @@
-https://github.com/kolemare/CNN-CPP?tab=readme-ov-file
-https://www.kaggle.com/code/cdeotte/mnist-cnn-coded-in-c-0-995

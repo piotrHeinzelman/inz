@@ -1,0 +1,11 @@
+AI Basics
+Machine Learning in MATLAB (Statistics and Machine Learning Toolbox)
+Discover machine learning capabilities in MATLAB for classification, regression, clustering, and deep learning, including apps for automated model training and code generation.
+
+Deep Learning in MATLAB (Deep Learning Toolbox)
+Discover deep learning capabilities in MATLAB using convolutional neural networks for classification and regression, including pretrained networks and transfer learning, and training on GPUs, CPUs, clusters, and clouds.
+
+
+Statistics and Machine Learning Toolbox
+Train Classification Models in Classification Learner App
+Classification Functions

@@ -1,10 +1,19 @@
+https://blog.roboflow.com/what-is-r-cnn/
+
 -- MATLAB --
+	https://www.mathworks.com/help/vision/ug/getting-started-with-r-cnn-fast-r-cnn-and-faster-r-cnn.html
+
+	https://www.mathworks.com/help/vision/ug/object-detection-using-deep-learning.html
+	https://www.mathworks.com/help/vision/ug/anchor-boxes-for-object-detection.html
+
 	https://www.mathworks.com/help/vision/ug/getting-started-with-r-cnn-fast-r-cnn-and-faster-r-cnn.html
 	https://www.mathworks.com/help/vision/ug/object-detection-using-deep-learning.html
 	https://www.mathworks.com/videos/object-recognition--deep-learning-and-machine-learning-for-compu-1482957345023.html
 	
 	https://github.com/ShaoqingRen/faster_rcnn
-	
+	https://www.mathworks.com/help/vision/recognition-object-detection-and-semantic-segmentation.html
+	https://www.mathworks.com/help/vision/ug/detect-small-objects-using-tiled-training-yolox.html
+	https://www.mathworks.com/help/vision/ug/example-InstanceSegmentationUsingMaskRCNNDeepLearningExample.html
 
 -- PYTHON --
  Tensorflow:

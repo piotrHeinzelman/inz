@@ -1,14 +1,14 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\john\\source\\repos\\inz\\MixedProj\\03.MLP\\cpp2\\CudaRuntime1\\",
+  "WorkspaceRootPath": "C:\\Users\\john\\source\\repos\\inz\\oldProj\\03.MLP\\cpp2\\CudaRuntime1\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2FDF79BB-BA91-83A3-25DC-DFD2DA77134E}|CudaRuntime1\\CudaRuntime1.vcxproj|C:\\Users\\john\\source\\repos\\inz\\MixedProj\\03.MLP\\cpp2\\CudaRuntime1\\CudaRuntime1\\kernel.cu||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "AbsoluteMoniker": "D:0:0:{2FDF79BB-BA91-83A3-25DC-DFD2DA77134E}|CudaRuntime1\\CudaRuntime1.vcxproj|C:\\Users\\john\\source\\repos\\inz\\oldProj\\03.MLP\\cpp2\\CudaRuntime1\\CudaRuntime1\\kernel.cu||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{2FDF79BB-BA91-83A3-25DC-DFD2DA77134E}|CudaRuntime1\\CudaRuntime1.vcxproj|solutionrelative:CudaRuntime1\\kernel.cu||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2FDF79BB-BA91-83A3-25DC-DFD2DA77134E}|CudaRuntime1\\CudaRuntime1.vcxproj|C:\\Users\\john\\source\\repos\\inz\\MixedProj\\03.MLP\\cpp2\\CudaRuntime1\\CUDARUNTIME1\\FILETOOLS.CU||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{2FDF79BB-BA91-83A3-25DC-DFD2DA77134E}|CudaRuntime1\\CudaRuntime1.vcxproj|solutionrelative:CUDARUNTIME1\\FILETOOLS.CU||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\john\\source\\repos\\inz\\oldProj\\03.MLP\\cpp2\\CudaRuntime1\\CudaRuntime1\\filetools.cu||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:CudaRuntime1\\filetools.cu||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -24,9 +24,9 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "filetools.cu",
-              "DocumentMoniker": "C:\\Users\\john\\source\\repos\\inz\\MixedProj\\03.MLP\\cpp2\\CudaRuntime1\\CudaRuntime1\\filetools.cu",
+              "DocumentMoniker": "C:\\Users\\john\\source\\repos\\inz\\oldProj\\03.MLP\\cpp2\\CudaRuntime1\\CudaRuntime1\\filetools.cu",
               "RelativeDocumentMoniker": "CudaRuntime1\\filetools.cu",
-              "ToolTip": "C:\\Users\\john\\source\\repos\\inz\\MixedProj\\03.MLP\\cpp2\\CudaRuntime1\\CudaRuntime1\\filetools.cu",
+              "ToolTip": "C:\\Users\\john\\source\\repos\\inz\\oldProj\\03.MLP\\cpp2\\CudaRuntime1\\CudaRuntime1\\filetools.cu",
               "RelativeToolTip": "CudaRuntime1\\filetools.cu",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
@@ -36,9 +36,9 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "kernel.cu",
-              "DocumentMoniker": "C:\\Users\\john\\source\\repos\\inz\\MixedProj\\03.MLP\\cpp2\\CudaRuntime1\\CudaRuntime1\\kernel.cu",
+              "DocumentMoniker": "C:\\Users\\john\\source\\repos\\inz\\oldProj\\03.MLP\\cpp2\\CudaRuntime1\\CudaRuntime1\\kernel.cu",
               "RelativeDocumentMoniker": "CudaRuntime1\\kernel.cu",
-              "ToolTip": "C:\\Users\\john\\source\\repos\\inz\\MixedProj\\03.MLP\\cpp2\\CudaRuntime1\\CudaRuntime1\\kernel.cu",
+              "ToolTip": "C:\\Users\\john\\source\\repos\\inz\\oldProj\\03.MLP\\cpp2\\CudaRuntime1\\CudaRuntime1\\kernel.cu",
               "RelativeToolTip": "CudaRuntime1\\kernel.cu",
               "ViewState": "AgIAAKcAAAAAAAAAAADwv7IAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",

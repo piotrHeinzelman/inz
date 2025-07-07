@@ -4,6 +4,7 @@
 
 -- MATLAB --
 	https://www.mathworks.com/help/vision/ug/image-category-classification-using-deep-learning.html
+	https://www.mathworks.com/help/stats/machine-learning-in-matlab.html
 
 
 -- PYTHON --
