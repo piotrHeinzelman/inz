@@ -48,3 +48,4 @@
 	  https://www.geeksforgeeks.org/machine-learning/ml-neural-network-implementation-in-c-from-scratch/
 	  
 	  https://github.com/GreatGameDota/CNN-in-Cpp
+	  

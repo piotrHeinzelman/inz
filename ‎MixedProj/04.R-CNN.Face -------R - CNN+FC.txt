@@ -1,12 +1,41 @@
 -- MATLAB --
-
+	https://www.mathworks.com/help/vision/ug/getting-started-with-r-cnn-fast-r-cnn-and-faster-r-cnn.html
+	https://www.mathworks.com/help/vision/ug/object-detection-using-deep-learning.html
+	https://www.mathworks.com/videos/object-recognition--deep-learning-and-machine-learning-for-compu-1482957345023.html
+	
+	https://github.com/ShaoqingRen/faster_rcnn
+	
 
 -- PYTHON --
  Tensorflow:
-    PyTorch:
+	https://pyimagesearch.com/2020/07/13/r-cnn-object-detection-with-keras-tensorflow-and-deep-learning/
+	https://www.digitalocean.com/community/tutorials/mask-r-cnn-in-tensorflow-2-0
 	
+    PyTorch:
+	https://github.com/jwyang/faster-rcnn.pytorch
+	https://github.com/AlphaJia/pytorch-faster-rcnn
+	https://docs.pytorch.org/vision/main/models/faster_rcnn.html
+	https://docs.pytorch.org/vision/main/models/mask_rcnn.html
+	https://medium.com/@fractal.ai/guide-to-build-faster-rcnn-in-pytorch-42d47cb0ecd3
+	
+	Torch:
+	https://debuggercafe.com/a-simple-pipeline-to-train-pytorch-faster-rcnn-object-detection-model/
 
 -- C / C++ --
-      Torch:
+
+	https://arxiv.org/pdf/1504.08083
+	https://arxiv.org/pdf/1506.01497
+	https://arxiv.org/pdf/1703.06870
+	
+	https://www.reddit.com/r/computervision/comments/9kigri/mask_rcnn_using_opencv_cpython/
+	https://www.geeksforgeeks.org/machine-learning/r-cnn-region-based-cnns/
+	https://learnopencv.com/deep-learning-based-object-detection-and-instance-segmentation-using-mask-rcnn-in-opencv-python-c/
+	
+	https://www.datasciencecentral.com/machine-learning-with-c-mask-r-cnn-with-pytorch-c-frontend/
+	
+	
+	c#
+	https://onnxruntime.ai/docs/tutorials/csharp/fasterrcnn_csharp.html
+	https://github.com/makefile/frcnn
 	  Eigen:
 	  
