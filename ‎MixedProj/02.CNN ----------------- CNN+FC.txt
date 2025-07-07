@@ -1,4 +1,9 @@
+
+
+// z zadania 3 - w miarę obsługa GPU, dodać C++
+
 -- MATLAB --
+	https://www.mathworks.com/help/vision/ug/image-category-classification-using-deep-learning.html
 
 
 -- PYTHON --
@@ -8,18 +13,27 @@
 	https://www.tensorflow.org/guide/keras?hl=pl
 	
     PyTorch:
+	https://pytorch.org/get-started/locally/
+	https://docs.pytorch.org/tutorials/recipes/recipes_index.html
+	https://docs.pytorch.org/tutorials/beginner/basics/quickstart_tutorial.html#quickstart
+	https://docs.pytorch.org/docs/stable/generated/torch.nn.Conv2d.html
+	https://docs.pytorch.org/docs/stable/nn.html
+	https://docs.pytorch.org/tutorials/
 	
+	https://pyimagesearch.com/2021/07/19/pytorch-training-your-first-convolutional-neural-network-cnn/
+
+    Torch:
+	https://pytorch.org/get-started/locally/
 
 -- C / C++ --
-
-
-      Torch:
 	  
 	  Eigen:
 	  https://github.com/kolemare/CNN-CPP
 	  https://www.kaggle.com/code/cdeotte/mnist-cnn-coded-in-c-0-995/notebook
 	  https://kikumu.github.io/portfolio/CNNEigen.html
 	  
+	  OpenCV
+	  https://github.com/ultralytics/ultralytics/blob/main/examples/YOLOv8-CPP-Inference/main.cpp
 	  
 	  
 	  ???		
