@@ -48,3 +48,10 @@ https://blog.roboflow.com/what-is-r-cnn/
 	https://github.com/makefile/frcnn
 	  Eigen:
 	  
+	  
+	  
+	  
+	  
+	https://pl.eitca.org/sztuczna-inteligencja/eitc-ai-gcml-Google-Cloud-Machine-Learning/pierwsze-kroki-w-uczeniu-maszynowym/g%C5%82%C4%99bokie-sieci-neuronowe-i-estymatory/czym-jest-znikaj%C4%85cy-problem-gradientu/  
+	  
+	  

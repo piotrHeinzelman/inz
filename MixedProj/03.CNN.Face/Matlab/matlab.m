@@ -176,20 +176,25 @@ if doTraining
 
 
     % Train a network.
+	% load Lev2.mat;
+	
     cifar10Net = trainNetwork(trainingImages, trainingLabels, layers, opts);
-    save('X:\inz\MixedProj\04.R-CNN\Matlab\04.Matlab.Weight1.net.mat','cifar10Net'); 
+	
+    % save('X:\inz\MixedProj\04.R-CNN\Matlab\04.Matlab.Weight1.net.mat','cifar10Net'); 
+	% save Lev2.mat layers(2).Weights;
 
     layers(5).Weights = 0.0001 * randn([filterSize 32 32]);
     cifar10Net = trainNetwork(trainingImages, trainingLabels, layers, opts);
+	
     save('X:\inz\MixedProj\04.R-CNN\Matlab\04.Matlab.Weight1.net.mat','cifar10Net'); 
 
-    layers(8).Weights = 0.0001 * randn([filterSize 32 64]);
-    cifar10Net = trainNetwork(trainingImages, trainingLabels, layers, opts);
-    save('X:\inz\MixedProj\04.R-CNN\Matlab\04.Matlab.Weight1.net.mat','cifar10Net'); 
+    %layers(8).Weights = 0.0001 * randn([filterSize 32 64]);
+    %cifar10Net = trainNetwork(trainingImages, trainingLabels, layers, opts);
+    %save('X:\inz\MixedProj\04.R-CNN\Matlab\04.Matlab.Weight1.net.mat','cifar10Net'); 
 
-    layers(11).Weights = 0.0001 * randn([64 576]);
-    cifar10Net = trainNetwork(trainingImages, trainingLabels, layers, opts);
-    save('X:\inz\MixedProj\04.R-CNN\Matlab\04.Matlab.Weight1.net.mat','cifar10Net'); 
+    %layers(11).Weights = 0.0001 * randn([64 576]);
+    %cifar10Net = trainNetwork(trainingImages, trainingLabels, layers, opts);
+    %save('X:\inz\MixedProj\04.R-CNN\Matlab\04.Matlab.Weight1.net.mat','cifar10Net'); 
 
 else
     % Load pre-trained detector for the example.

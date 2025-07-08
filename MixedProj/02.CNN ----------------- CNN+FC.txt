@@ -8,7 +8,7 @@
 
 
 -- PYTHON --
- Tensorflow:
+ Tensorflow: (Google )
  	https://github.com/kolemare/CNN-CPP
 	https://www.tensorflow.org/tutorials/keras/classification?hl=pl
 	https://www.tensorflow.org/guide/keras?hl=pl
@@ -50,3 +50,33 @@
 	  
 	  https://github.com/GreatGameDota/CNN-in-Cpp
 	  
+	  
+DATASETS:
+https://paperswithcode.com/datasets	  
+
+https://docs.pytorch.org/vision/stable/generated/torchvision.datasets.CIFAR10.html
+
+	  
+Przykładami architektur konwolucyjnych CNN są: 
+AlexNet, GoogLeNet, LeNet, ResNet, VGGNet.
+	  
+Bechmarkowe zbiory uczące do porównań: 
+MNIST, CIFAR-10, CIFAR-100, STL-10, and SVHN.
+	
+https://cs.stanford.edu/~acoates/stl10/
+https://paperswithcode.com/dataset/cifar-10	
+
+Narzędzia do pracy z sieciami CNN: 
+Theano, PyLearn2, Lasagne, Caffe, Torch7, Deeplearning4j, TensorFlow.
+
+https://paperswithcode.com/sota
+
+https://cs.stanford.edu/people/karpathy/cnnembed/
+https://paperswithcode.com/task/image-super-resolution
+https://paperswithcode.com/dataset/set14
+
+
+https://www.kaggle.com/datasets/pavansanagapati/images-dataset
+
+
+  
