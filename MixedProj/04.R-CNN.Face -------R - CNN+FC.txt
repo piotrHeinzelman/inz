@@ -55,3 +55,11 @@ https://blog.roboflow.com/what-is-r-cnn/
 	https://pl.eitca.org/sztuczna-inteligencja/eitc-ai-gcml-Google-Cloud-Machine-Learning/pierwsze-kroki-w-uczeniu-maszynowym/g%C5%82%C4%99bokie-sieci-neuronowe-i-estymatory/czym-jest-znikaj%C4%85cy-problem-gradientu/  
 	  
 	  
+	https://www.youtube.com/watch?v=nJzQDpppFj0
+	https://www.mathworks.com/help/vision/ug/getting-started-with-mask-r-cnn-for-instance-segmentation.html
+	https://www.linkedin.com/pulse/understanding-r-cnn-algorithm-revolutionizing-object-detection-anuj
+	https://www.youtube.com/watch?v=-qc8-Q_lkNo
+	https://www-linkedin-com.translate.goog/pulse/understanding-r-cnn-algorithm-revolutionizing-object-detection-anuj?_x_tr_sl=en&_x_tr_tl=pl&_x_tr_hl=pl&_x_tr_pto=wapp
+	https://www.youtube.com/watch?v=eJ7now8Q-w4
+	
+	  
