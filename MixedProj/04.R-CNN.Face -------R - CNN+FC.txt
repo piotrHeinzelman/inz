@@ -1,4 +1,5 @@
 https://blog.roboflow.com/what-is-r-cnn/
+https://www.image-net.org/challenges/LSVRC/2012/results.html
 
 -- MATLAB --
 	https://www.mathworks.com/help/vision/ug/getting-started-with-r-cnn-fast-r-cnn-and-faster-r-cnn.html
@@ -62,4 +63,5 @@ https://blog.roboflow.com/what-is-r-cnn/
 	https://www-linkedin-com.translate.goog/pulse/understanding-r-cnn-algorithm-revolutionizing-object-detection-anuj?_x_tr_sl=en&_x_tr_tl=pl&_x_tr_hl=pl&_x_tr_pto=wapp
 	https://www.youtube.com/watch?v=eJ7now8Q-w4
 	
+	https://learnopencv.com/deep-learning-based-object-detection-and-instance-segmentation-using-mask-rcnn-in-opencv-python-c/
 	  
