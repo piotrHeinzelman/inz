@@ -1,16 +1,15 @@
+% przy mniejszych wygenerowanych wagach proces uczenia zaczyna się.
+% uczenie przy większym współczynniku i mniejszym spadku z eopki na eopkę.
 
 % https://www.mathworks.com/help/vision/ug/getting-started-with-r-cnn-fast-r-cnn-and-faster-r-cnn.html#mw_10e85d83-0e31-4896-bde9-8730b448441d
 % krok 1 wagi warstw = 0, wagi warstwy 2 { layers(2).Weights = 0.0001 * randn([filterSize numChannels numFilters]); }
 % zapis wag do pliku
 
-% 2 krok:
-% zaladowanie wag, losowanie wag warstwy 5, zapis do pliku layers(5).Weights = 0.0001 * randn([filterSize 32 32]);
 
-
-cifar10Data = 'X:\';
 % url = 'https://www.cs.toronto.edu/~kriz/cifar-10-matlab.tar.gz';
 % helperCIFAR10Data.download(url,cifar10Data);
 
+cifar10Data = 'X:\';
 [trainingImages,trainingLabels,testImages,testLabels] = helperCIFAR10Data.load(cifar10Data);
 size(trainingImages)
 
@@ -34,22 +33,7 @@ montage(thumbnails)
 
 imageSize = [height width numChannels];
 inputLayer = imageInputLayer(imageSize)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 % Convolutional layer parameters
 filterSize = [5 5];
 numFilters = 32;
@@ -151,10 +135,10 @@ opts = trainingOptions('sgdm', ...
     'Momentum', 0.9, ...
     'InitialLearnRate', 0.001, ...
     'LearnRateSchedule', 'piecewise', ...
-    'LearnRateDropFactor', 0.1, ...
-    'LearnRateDropPeriod', 8, ...
+    'LearnRateDropFactor', 0.9, ...
+    'LearnRateDropPeriod', 15, ...
     'L2Regularization', 0.004, ...
-    'MaxEpochs', 70, ...
+    'MaxEpochs', 140, ...
     'MiniBatchSize', 128, ...
     'Verbose', true);
 	
@@ -163,7 +147,7 @@ opts = trainingOptions('sgdm', ...
 	
 	
 	
-	
+% przy ustawieniach layers(2).Weights = 0.0001 * randn	... brak uczenia
 	
 	
 % A trained network is loaded from disk to save time when running the
@@ -172,33 +156,33 @@ doTraining = true;
 
 if doTraining    
     % krok 1:
-    layers(2).Weights = 0.0001 * randn([filterSize numChannels numFilters]);
-
-
+    layers(2).Weights = 0.01 * randn([filterSize numChannels numFilters]);
+    layers(5).Weights = 0.01 * randn([filterSize 32 32]);
+    layers(8).Weights = 0.01 * randn([filterSize 32 64]);
+    layers(11).Weights = 0.01 * randn([64 576]);
+    layers(13).Weights = 0.01 * randn([10 64]);
     % Train a network.
 	% load Lev2.mat;
+    %load('X:\inz\MixedProj\03.CNN.Face\Matlab\03.Matlab.layers.mat','layers');
 	
+    
     cifar10Net = trainNetwork(trainingImages, trainingLabels, layers, opts);
-	
-    % save('X:\inz\MixedProj\04.R-CNN\Matlab\04.Matlab.Weight1.net.mat','cifar10Net'); 
-	% save Lev2.mat layers(2).Weights;
+    W2=layers(2).Weights;
+    W5=layers(5).Weights;
+    W8=layers(8).Weights;
+    W11=layers(11).Weights;
+    W13=layers(13).Weights; 
+    save('X:\inz\MixedProj\03.CNN.Face\Matlab\03.Matlab.Weight1.net.mat','cifar10Net');
+    save('X:\inz\MixedProj\03.CNN.Face\Matlab\03.lay2Weigh.mat','W2');
+    save('X:\inz\MixedProj\03.CNN.Face\Matlab\03.lay5Weigh.mat','W5');
+    save('X:\inz\MixedProj\03.CNN.Face\Matlab\03.lay8Weigh.mat','W8');
+    save('X:\inz\MixedProj\03.CNN.Face\Matlab\03.lay11Weigh.mat','W11');
+    save('X:\inz\MixedProj\03.CNN.Face\Matlab\03.lay13Weigh.mat','W13');
 
-    layers(5).Weights = 0.0001 * randn([filterSize 32 32]);
-    cifar10Net = trainNetwork(trainingImages, trainingLabels, layers, opts);
-	
-    save('X:\inz\MixedProj\04.R-CNN\Matlab\04.Matlab.Weight1.net.mat','cifar10Net'); 
-
-    %layers(8).Weights = 0.0001 * randn([filterSize 32 64]);
-    %cifar10Net = trainNetwork(trainingImages, trainingLabels, layers, opts);
-    %save('X:\inz\MixedProj\04.R-CNN\Matlab\04.Matlab.Weight1.net.mat','cifar10Net'); 
-
-    %layers(11).Weights = 0.0001 * randn([64 576]);
-    %cifar10Net = trainNetwork(trainingImages, trainingLabels, layers, opts);
-    %save('X:\inz\MixedProj\04.R-CNN\Matlab\04.Matlab.Weight1.net.mat','cifar10Net'); 
-
+ 
 else
     % Load pre-trained detector for the example.
-    load('X:\inz\MixedProj\04.R-CNN\Matlab\04.Matlab.Weight1.net.mat','cifar10Net');      
+    load('X:\inz\MixedProj\03.CNN.Face\Matlab\03.Matlab.Weight1.net.mat','cifar10Net');      
 end	
 
 
@@ -216,26 +200,26 @@ w = cifar10Net.Layers(2).Weights;
 % rescale the weights to the range [0, 1] for better visualization
 w = rescale(w);
 
-figure
-montage(w)
+%figure
+%montage(w)
 
 
 
 
 w5 = cifar10Net.Layers(5).Weights;
 w5 = rescale(w5);
-figure
-montage(w5)
+%figure
+%montage(w5)
 
 w8 = cifar10Net.Layers(8).Weights;
 w8 = rescale(w8);
-figure
-montage(w8)
+%figure
+%montage(w8)
 
-w = cifar10Net.Layers(11).Weights;
-w = rescale(w);
+w11 = cifar10Net.Layers(11).Weights;
+w11 = rescale(w11);
 figure
-montage(w)
+montage(w, w8, w11)
 
 % Run the network on the test set.
 YTest = classify(cifar10Net, testImages);
