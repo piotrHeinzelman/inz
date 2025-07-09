@@ -13,19 +13,19 @@ if ( false )
  save( 'D:\INZ\03.Matlab.10\testLabels.mat','testLabels');
 end
 
- %load( 'D:\INZ\03.Matlab.10\trainingImages.mat');
- %load( 'D:\INZ\03.Matlab.10\trainingLabels.mat');
- %load( 'D:\INZ\03.Matlab.10\testImages.mat');
- %load( 'D:\INZ\03.Matlab.10\testLabels.mat');
+ load( 'D:\INZ\03.Matlab.10\trainingImages.mat');
+ load( 'D:\INZ\03.Matlab.10\trainingLabels.mat');
+ load( 'D:\INZ\03.Matlab.10\testImages.mat');
+ load( 'D:\INZ\03.Matlab.10\testLabels.mat');
 
- load( 'D:\INZ\03.Matlab.10\trainingImagesUP.mat' );
- load( 'D:\INZ\03.Matlab.10\trainingLabelsUP.mat' ); 
- load( 'D:\INZ\03.Matlab.10\testImagesUP.mat' );
- load( 'D:\INZ\03.Matlab.10\testLabelsUP.mat' ); 
+ %load( 'D:\INZ\03.Matlab.10\trainingImagesUP.mat' );
+ %load( 'D:\INZ\03.Matlab.10\trainingLabelsUP.mat' ); 
+ %load( 'D:\INZ\03.Matlab.10\testImagesUP.mat' );
+ %load( 'D:\INZ\03.Matlab.10\testLabelsUP.mat' ); 
 
 %upscale 
-if (false)
-    for i = (1:10000)
+if (true)
+    for i = (1:1000)
         small=testImages(:,:,:,i);
         upscale = imresize( small, [227 227]); % returns image B that has the number of rows and columns specified by the two-element vector [numrows numcols].
         testImagesUP(:,:,:,i) = upscale;
@@ -36,8 +36,8 @@ if (false)
 end
 
 %upscale 
-if (false)
-    for i = (1:50000)
+if (true)
+    for i = (1:5000)
         small=trainingImages(:,:,:,i);
         upscale = imresize( small, [227 227]); % returns image B that has the number of rows and columns specified by the two-element vector [numrows numcols].
         trainingImagesUP(:,:,:,i) = upscale;
@@ -69,7 +69,7 @@ thumbnails = trainingImages(:,:,:,1:81);
 %thumbnails = trainingImages(:,:,:,1:100);
 montage(thumbnails)
 
-exit();
+%exit();
 epochs=100; 
 % AlexNet
 % inputLayer @3 224x224 % (50176)
