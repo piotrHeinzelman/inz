@@ -18,11 +18,12 @@ train = load('D:\INZ\cifar-100-matlab\train.mat' ); % batch_label, coarse_label,
 trainingImages = reshape(train.data , 32,32,3,[]);
 
 trainingImages = reshape(train.data , 32,32,3,[]);
-trainingImages = permute(trainingImages, [2 1 3 4]);
+XBatch = reshape(XBatch, 32,32,3,[]);
+XBatch = permute(XBatch, [2 1 3 4]);
 
 %trainingLabels = categorical( train.fine_labels, 0:99 );
  
-size(trainingImages)
+%size(trainingImages)
 
 %numImageCategories = 100;
 %categories( trainingLabels )
