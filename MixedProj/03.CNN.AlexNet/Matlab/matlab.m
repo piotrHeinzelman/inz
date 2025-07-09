@@ -2,24 +2,28 @@
 % url = 'https://www.cs.toronto.edu/~kriz/cifar-10-matlab.tar.gz';
 % helperCIFAR10Data.download(url,cifar10Data);
 
+path = 'X:\';
+%[trainingImages,trainingLabels] = loadData('D:\INZ\cifar-100-matlab\train.mat');
+%[testImages,testLabels] = loadData('D:\INZ\cifar-100-matlab\test.mat');
 
-cifar10Data = 'X:\';
-[trainingImages,trainingLabels] = loadData('D:\INZ\cifar-100-matlab\train');
-[testImages,testLabels] = loadData('D:\INZ\cifar-100-matlab\test');
+train = load('D:\INZ\cifar-100-matlab\train.mat' ); % batch_label, coarse_label, data, filenames, fine_labels
+trainingImages = reshape(train.data , 32,32,3,[]);
 
+%trainingImages = reshape(train.data(:) , [],32,32,3);
 
+%trainingLabels = categorical( train.fine_labels, 0:99 );
+ 
+%size(trainingImages)
 
-size(trainingImages)
-
-numImageCategories = 10;
-categories(trainingLabels)
+%numImageCategories = 100;
+%categories( trainingLabels )
 
 figure
 thumbnails = trainingImages(:,:,:,1:100);
 montage(thumbnails)
 
 epochs=100;
-
+exit();
 % AlexNet
 % inputLayer @3 224x224 % (50176)
 
@@ -114,12 +118,13 @@ co;
 ]
 	
 %opts = trainingOptions('sgdm', 'Momentum', 0.9, 'InitialLearnRate', 0.001, 'LearnRateSchedule', 'piecewise', 'LearnRateDropFactor', 0.9,'LearnRateDropPeriod', 15, 'L2Regularization', 0.004, 'MaxEpochs', 140,'MiniBatchSize', 128, 'Verbose', true);
-options=trainingOptions('adam', 'MaxEpochs',epochs, 'MiniBatchSize', 90 , 'ExecutionEnvironment','gpu','ValidationPatience',10 , 'Verbose',1);
+options=trainingOptions('adam', 'MaxEpochs',epochs, 'MiniBatchSize', 90 ,...
+    'ValidationPatience',10 , 'Verbose',1); %    'ExecutionEnvironment','gpu',...
 
 
 ST = datetime('now');
 
-	AlexNet = trainNetwork( xtrain, ytrain, layers, options);
+	AlexNet = trainNetwork( trainingImages, trainingLabels, layers, options);
 
 ED = datetime('now');
 trainTime = duration( ED-ST );
