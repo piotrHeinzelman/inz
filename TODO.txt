@@ -1,0 +1,8 @@
+
+
+
+03.AlexNET - load from USB & rescale image to 224x224
+03.AlexNET - MATLAB - fix load function
+03.AlexNET - MATLAB - run program
+
+02.Load data from MNIST 
