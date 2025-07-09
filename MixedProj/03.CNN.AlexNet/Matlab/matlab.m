@@ -5,34 +5,72 @@ if ( false )
  url = 'https://www.cs.toronto.edu/~kriz/cifar-10-matlab.tar.gz';
  helperCIFAR10Data.download(url,path);
 end
+if ( false )
+ [trainingImages, trainingLabels, testImages, testLabels] = helperCIFAR10Data.load(path);
+ save( 'D:\INZ\03.Matlab.10\trainingImages.mat','trainingImages');
+ save( 'D:\INZ\03.Matlab.10\trainingLabels.mat','trainingLabels');
+ save( 'D:\INZ\03.Matlab.10\testImages.mat','testImages');
+ save( 'D:\INZ\03.Matlab.10\testLabels.mat','testLabels');
+end
 
+ %load( 'D:\INZ\03.Matlab.10\trainingImages.mat');
+ %load( 'D:\INZ\03.Matlab.10\trainingLabels.mat');
+ %load( 'D:\INZ\03.Matlab.10\testImages.mat');
+ %load( 'D:\INZ\03.Matlab.10\testLabels.mat');
 
+ load( 'D:\INZ\03.Matlab.10\trainingImagesUP.mat' );
+ load( 'D:\INZ\03.Matlab.10\trainingLabelsUP.mat' ); 
+ load( 'D:\INZ\03.Matlab.10\testImagesUP.mat' );
+ load( 'D:\INZ\03.Matlab.10\testLabelsUP.mat' ); 
 
- exit();
+%upscale 
+if (false)
+    for i = (1:10000)
+        small=testImages(:,:,:,i);
+        upscale = imresize( small, [227 227]); % returns image B that has the number of rows and columns specified by the two-element vector [numrows numcols].
+        testImagesUP(:,:,:,i) = upscale;
+        testLabelsUP(i)=testLabels(i);
+    end
+    save( 'D:\INZ\03.Matlab.10\testImagesUP.mat','testImagesUP','-v7.3');
+    save( 'D:\INZ\03.Matlab.10\testLabelsUP.mat','testLabelsUP');
+end
 
+%upscale 
+if (false)
+    for i = (1:50000)
+        small=trainingImages(:,:,:,i);
+        upscale = imresize( small, [227 227]); % returns image B that has the number of rows and columns specified by the two-element vector [numrows numcols].
+        trainingImagesUP(:,:,:,i) = upscale;
+        trainingLabelsUP(i)=trainingLabels(i);
+    end
+    save( 'D:\INZ\03.Matlab.10\trainingImagesUP.mat','trainingImagesUP','-v7.3');
+    save( 'D:\INZ\03.Matlab.10\trainingLabelsUP.mat','trainingLabelsUP');
+end
+
+trainingLabels = trainingLabelsUP;
+trainingImages = trainingImagesUP;
+testImages = testImagesUP;
+testLabels = testLabelsUP;
 
 %[trainingImages,trainingLabels] = loadData('D:\INZ\cifar-100-matlab\train.mat');
 %[testImages,testLabels] = loadData('D:\INZ\cifar-100-matlab\test.mat');
-
-train = load('D:\INZ\cifar-100-matlab\train.mat' ); % batch_label, coarse_label, data, filenames, fine_labels
-trainingImages = reshape(train.data , 32,32,3,[]);
-
-trainingImages = reshape(train.data , 32,32,3,[]);
-trainingImages = permute(trainingImages, [2 1 3 4]);
-
+%train = load('D:\INZ\cifar-100-matlab\train.mat' ); % batch_label, coarse_label, data, filenames, fine_labels
+%trainingImages = reshape(train.data , 32,32,3,[]);
+%trainingImages = reshape(train.data , 32,32,3,[]);
+%trainingImages = permute(trainingImages, [2 1 3 4]);
 %trainingLabels = categorical( train.fine_labels, 0:99 );
  
-size(trainingImages)
-
-%numImageCategories = 100;
+size(trainingLabels);
+numImageCategories = 100;
 %categories( trainingLabels )
 
 figure
-thumbnails = trainingImages(:,:,:,1:100);
+thumbnails = trainingImages(:,:,:,1:81);
+%thumbnails = trainingImages(:,:,:,1:100);
 montage(thumbnails)
 
-epochs=100;
 exit();
+epochs=100; 
 % AlexNet
 % inputLayer @3 224x224 % (50176)
 
