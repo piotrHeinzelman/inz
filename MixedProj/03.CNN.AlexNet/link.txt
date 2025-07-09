@@ -1,0 +1,41 @@
+https://github.com/kolemare/CNN-CPP/blob/main/tfmodels/cnn_cd_e30.py
+
+https://en.wikipedia.org/wiki/AlexNet
+
+repository 
+https://code.google.com/archive/p/cuda-convnet/
+
+
+obrazy treningowe i testowe 
+https://www.cs.toronto.edu/~kriz/cifar.html
+CIFAR-10 python version
+CIFAR-10 matlab version
+CIFAR-10 C version
+
+CIFAR-100 python version
+CIFAR-100 matlab version
+CIFAR-100 C version
+
+
+https://docs.python.org/3/library/pickle.html
+-- python3 --
+def unpickle(file):
+    import pickle
+    with open(file, 'rb') as fo:
+        dict = pickle.load(fo, encoding='bytes')
+    return dict
+	
+	
+-- binary version --
+<1 x label><3072 x pixel>
+...
+<1 x label><3072 x pixel>	
+
+-- 100 --
+<1 x coarse label><1 x fine label><3072 x pixel>
+...
+
+
+source code
+https://code.google.com/archive/p/cuda-convnet/source/default/source
+
