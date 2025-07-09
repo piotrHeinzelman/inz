@@ -1,38 +1,41 @@
 % zbior obrazow uczacych i testowych, kod wczytujący dane
-path='D:\INZ\cifar-10-matlab';
-% path = 'X:\';
+%path='D:\INZ\03.Matlab.10';
+
+%InitialLearnRate', 0.001 - batchsize 500 uczy sie !!!
+%InitialLearnRate', 0.01 - batchsize 290  nie uczy sie !!!
+path = 'X:\03.Matlab.10';
 if ( false )
  url = 'https://www.cs.toronto.edu/~kriz/cifar-10-matlab.tar.gz';
  helperCIFAR10Data.download(url,path);
 end
 if ( false )
  [trainingImages, trainingLabels, testImages, testLabels] = helperCIFAR10Data.load(path);
- save( 'D:\INZ\03.Matlab.10\trainingImages.mat','trainingImages');
- save( 'D:\INZ\03.Matlab.10\trainingLabels.mat','trainingLabels');
- save( 'D:\INZ\03.Matlab.10\testImages.mat','testImages');
- save( 'D:\INZ\03.Matlab.10\testLabels.mat','testLabels');
+ save( append(path,'\trainingImages.mat'),'trainingImages');
+ save( append(path,'\trainingLabels.mat'),'trainingLabels');
+ save( append(path,'\testImages.mat'),'testImages');
+ save( append(path,'\testLabels.mat'),'testLabels');
 end
 
- load( 'D:\INZ\03.Matlab.10\trainingImages.mat');
- load( 'D:\INZ\03.Matlab.10\trainingLabels.mat');
- load( 'D:\INZ\03.Matlab.10\testImages.mat');
- load( 'D:\INZ\03.Matlab.10\testLabels.mat');
+ %load( append(path,'\trainingImages.mat'));
+ %load( append(path,'\trainingLabels.mat'));
+ %load( append(path,'\testImages.mat'));
+ %load( append(path,'\testLabels.mat'));
 
- %load( 'D:\INZ\03.Matlab.10\trainingImagesUP.mat' );
- %load( 'D:\INZ\03.Matlab.10\trainingLabelsUP.mat' ); 
- %load( 'D:\INZ\03.Matlab.10\testImagesUP.mat' );
- %load( 'D:\INZ\03.Matlab.10\testLabelsUP.mat' ); 
+ load( append(path,'\trainingImagesUP.mat') );
+ load( append(path,'\trainingLabelsUP.mat') ); 
+ load( append(path,'\testImagesUP.mat') );
+ load( append(path,'\testLabelsUP.mat') ); 
 
 %upscale 
-if (true)
+if (false)
     for i = (1:1000)
         small=testImages(:,:,:,i);
         upscale = imresize( small, [227 227]); % returns image B that has the number of rows and columns specified by the two-element vector [numrows numcols].
         testImagesUP(:,:,:,i) = upscale;
         testLabelsUP(i)=testLabels(i);
     end
-    save( 'D:\INZ\03.Matlab.10\testImagesUP.mat','testImagesUP','-v7.3');
-    save( 'D:\INZ\03.Matlab.10\testLabelsUP.mat','testLabelsUP');
+    save( append(path,'\testImagesUP.mat'),'testImagesUP','-v7.3');
+    save( append(path,'\testLabelsUP.mat'),'testLabelsUP');
 end
 
 %upscale 
@@ -43,8 +46,8 @@ if (true)
         trainingImagesUP(:,:,:,i) = upscale;
         trainingLabelsUP(i)=trainingLabels(i);
     end
-    save( 'D:\INZ\03.Matlab.10\trainingImagesUP.mat','trainingImagesUP','-v7.3');
-    save( 'D:\INZ\03.Matlab.10\trainingLabelsUP.mat','trainingLabelsUP');
+    save( append(path,'\trainingImagesUP.mat'),'trainingImagesUP','-v7.3');
+    save( append(path,'\trainingLabelsUP.mat'),'trainingLabelsUP');
 end
 
 trainingLabels = trainingLabelsUP;
@@ -165,8 +168,10 @@ co;
 ]
 	
 %opts = trainingOptions('sgdm', 'Momentum', 0.9, 'InitialLearnRate', 0.001, 'LearnRateSchedule', 'piecewise', 'LearnRateDropFactor', 0.9,'LearnRateDropPeriod', 15, 'L2Regularization', 0.004, 'MaxEpochs', 140,'MiniBatchSize', 128, 'Verbose', true);
-options=trainingOptions('adam', 'MaxEpochs',epochs, 'MiniBatchSize', 90 ,...
-    'ValidationPatience',10 , 'Verbose',1); %    'ExecutionEnvironment','gpu',...
+options=trainingOptions('adam', 'MaxEpochs',epochs, 'MiniBatchSize', 500 ,...
+    'InitialLearnRate', 0.001, 'LearnRateDropFactor', 0.9,'LearnRateDropPeriod', 15, 'L2Regularization', 0.004, ...
+    'ExecutionEnvironment','gpu', ...
+    'ValidationPatience',10 , 'Verbose',1); %    ...
 
 
 ST = datetime('now');
@@ -176,11 +181,11 @@ ST = datetime('now');
 ED = datetime('now');
 trainTime = duration( ED-ST );
 	
-	save('X:\inz\MixedProj\03.CNN.Face\Matlab\03.AlexNet.mat','AlexNet');
+	save(append(path,'\AlexNet.mat'),'AlexNet');
 
 if false    
     % Load pre-trained detector for the example.
-    load('X:\inz\MixedProj\03.CNN.Face\Matlab\03.AlexNet.mat','AlexNet');      
+    load(append(path,'\AlexNet.mat'),'AlexNet');      
 end	
 
 
