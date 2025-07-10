@@ -39,7 +39,7 @@ if (false)
 end
 
 %upscale 
-if (true)
+if (false)
     for i = (1:5000)
         small=trainingImages(:,:,:,i);
         upscale = imresize( small, [227 227]); % returns image B that has the number of rows and columns specified by the two-element vector [numrows numcols].
@@ -67,13 +67,15 @@ size(trainingLabels);
 numImageCategories = 100;
 %categories( trainingLabels )
 
+if (false)
 figure
 thumbnails = trainingImages(:,:,:,1:81);
 %thumbnails = trainingImages(:,:,:,1:100);
 montage(thumbnails)
+end
 
 %exit();
-epochs=100; 
+epochs=500; 
 % AlexNet
 % inputLayer @3 224x224 % (50176)
 
@@ -168,8 +170,8 @@ co;
 ]
 	
 %opts = trainingOptions('sgdm', 'Momentum', 0.9, 'InitialLearnRate', 0.001, 'LearnRateSchedule', 'piecewise', 'LearnRateDropFactor', 0.9,'LearnRateDropPeriod', 15, 'L2Regularization', 0.004, 'MaxEpochs', 140,'MiniBatchSize', 128, 'Verbose', true);
-options=trainingOptions('adam', 'MaxEpochs',epochs, 'MiniBatchSize', 500 ,...
-    'InitialLearnRate', 0.001, 'LearnRateDropFactor', 0.9,'LearnRateDropPeriod', 15, 'L2Regularization', 0.004, ...
+options=trainingOptions('adam', 'MaxEpochs',epochs, 'MiniBatchSize', 1000 ,...
+    'InitialLearnRate', 0.0001, 'LearnRateDropFactor', 0.9,'LearnRateDropPeriod', 15, 'L2Regularization', 0.004, ...
     'ExecutionEnvironment','gpu', ...
     'ValidationPatience',10 , 'Verbose',1); %    ...
 
@@ -207,7 +209,7 @@ CED = datetime('now');
 classifyTime = duration( CED-CST );
 
 % Calculate the accuracy.
-accuracy = sum(YTest == testLabels)/numel(testLabels)
+accuracy = sum(YTest == testLabels)/numel(testLabels);
 
 
     fprintf('# Alexnet: %f epochs, datasize: %f, test size: %f\n', epochs, size( trainingImages ), size( testImages )  );
