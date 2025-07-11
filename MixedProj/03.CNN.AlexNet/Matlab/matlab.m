@@ -75,7 +75,7 @@ montage(thumbnails)
 end
 
 %exit();
-epochs=500; 
+epochs=1500; 
 % AlexNet
 % inputLayer @3 224x224 % (50176)
 
@@ -170,8 +170,8 @@ co;
 ]
 	
 %opts = trainingOptions('sgdm', 'Momentum', 0.9, 'InitialLearnRate', 0.001, 'LearnRateSchedule', 'piecewise', 'LearnRateDropFactor', 0.9,'LearnRateDropPeriod', 15, 'L2Regularization', 0.004, 'MaxEpochs', 140,'MiniBatchSize', 128, 'Verbose', true);
-options=trainingOptions('adam', 'MaxEpochs',epochs, 'MiniBatchSize', 1000 ,...
-    'InitialLearnRate', 0.0001, 'LearnRateDropFactor', 0.9,'LearnRateDropPeriod', 15, 'L2Regularization', 0.004, ...
+options=trainingOptions('adam', 'MaxEpochs',epochs, 'MiniBatchSize', 1500 ,...
+    'InitialLearnRate', 0.0001, 'LearnRateDropFactor', 0.9,'LearnRateDropPeriod', 15, 'L2Regularization', 0.04, ...
     'ExecutionEnvironment','gpu', ...
     'ValidationPatience',10 , 'Verbose',1); %    ...
 
@@ -212,8 +212,8 @@ classifyTime = duration( CED-CST );
 accuracy = sum(YTest == testLabels)/numel(testLabels);
 
 
-    fprintf('# Alexnet: %f epochs, datasize: %f, test size: %f\n', epochs, size( trainingImages ), size( testImages )  );
-    fprintf('# traint time: %f[s], classify time: %f[s], accuracy: a:%f\n\n' ,seconds(trainTime), seconds(classifyTime), accuracy ); 
+fprintf('# Alexnet: %f epochs, datasize: %f, test size: %f\n', epochs, size( trainingImages ), size( testImages )  );
+fprintf('# traint time: %f[s], classify time: %f[s], accuracy: a:%f\n\n' ,seconds(trainTime), seconds(classifyTime), accuracy ); 
 
  
 
