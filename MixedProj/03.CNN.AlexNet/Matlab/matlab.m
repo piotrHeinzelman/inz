@@ -1,5 +1,7 @@
+% https://www.mathworks.com/help/vision/ug/object-detection-using-deep-learning.html
 % zbior obrazow uczacych i testowych, kod wczytujący dane
-%path='D:\INZ\03.Matlab.10';
+% path='D:\INZ\03.Matlab.10';
+% przykład
 
 %InitialLearnRate', 0.001 - batchsize 500 uczy sie !!!
 %InitialLearnRate', 0.01 - batchsize 290  nie uczy sie !!!
@@ -75,7 +77,7 @@ montage(thumbnails)
 end
 
 %exit();
-epochs=1500; 
+epochs=100; 
 % AlexNet
 % inputLayer @3 224x224 % (50176)
 
@@ -93,6 +95,16 @@ epochs=1500;
 % 6.FullConnected 4096 sigmoid
 % 7.FullConnected 4096 sigmoid
 % 8.FullConnected 1000 softmax <- mutation 100 klas
+
+
+
+if true    
+    % Load pre-trained detector for the example.
+    load(append(path,'\AlexNet.mat'),'AlexNet');  
+else  
+
+
+
 
 input = imageInputLayer([227 227 3]);  % 28x28px 1 channel
 
@@ -168,9 +180,17 @@ fc8;
 sm;
 co;
 ]
+
+conv1.Weights = 0.01 * randn([11 11 3 96]); % filterSize numChannels numFilters
+%conv2.Weights = 0.01 * randn([5 5 96 256]); % fil fil inFilter outFilter
+%conv3.Weights = 0.001 * randn([3 3 256 384]); % fil fil inFilter outFilter
+%conv4.Weights = 0.001 * randn([3 3 384 384]); % fil fil inFilter outFilter
+%conv5.Weights = 0.001 * randn([3 3 384 256]); % fil fil inFilter outFilter
+%conv1.Weights = 0.0001 * randn([filterSize numChannels numFilters]);
+%conv1.Weights = 0.0001 * randn([filterSize numChannels numFilters]);
 	
 %opts = trainingOptions('sgdm', 'Momentum', 0.9, 'InitialLearnRate', 0.001, 'LearnRateSchedule', 'piecewise', 'LearnRateDropFactor', 0.9,'LearnRateDropPeriod', 15, 'L2Regularization', 0.004, 'MaxEpochs', 140,'MiniBatchSize', 128, 'Verbose', true);
-options=trainingOptions('adam', 'MaxEpochs',epochs, 'MiniBatchSize', 1500 ,...
+options=trainingOptions('adam', 'MaxEpochs',epochs, 'MiniBatchSize', 300 ,...
     'InitialLearnRate', 0.0001, 'LearnRateDropFactor', 0.9,'LearnRateDropPeriod', 15, 'L2Regularization', 0.04, ...
     'ExecutionEnvironment','gpu', ...
     'ValidationPatience',10 , 'Verbose',1); %    ...
@@ -184,10 +204,6 @@ ED = datetime('now');
 trainTime = duration( ED-ST );
 	
 	save(append(path,'\AlexNet.mat'),'AlexNet');
-
-if false    
-    % Load pre-trained detector for the example.
-    load(append(path,'\AlexNet.mat'),'AlexNet');      
 end	
 
 
@@ -199,6 +215,21 @@ w = rescale(w);
 figure
 montage(w)
 
+
+w2 = conv2.Weights(:,:,1,1:3);
+
+% rescale the weights to the range [0, 1] for better visualization
+w2 = rescale(w2);
+figure
+montage(w2)
+
+
+w5 = conv5.Weights(:,:,1:3,1:81);
+
+% rescale the weights to the range [0, 1] for better visualization
+w5 = rescale(w5);
+figure
+montage(w5)
 
 CST = datetime('now');
 
