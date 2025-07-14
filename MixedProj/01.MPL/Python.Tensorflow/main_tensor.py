@@ -19,9 +19,9 @@ if physical_devices:
       tf.config.experimental.set_memory_growth(gpu, True)
       print(gpu.device_type)
 
-exit()
+ 
 # params
-epochs = 10
+epochs = 5000
 percent = 100
 num_classes = 10
 
@@ -60,31 +60,34 @@ model = tf.keras.models.Sequential([
   tf.keras.layers.Input(shape=(784,)),
   tf.keras.layers.Dense(64, activation='sigmoid'),
   tf.keras.layers.Dense(64, activation='sigmoid'),
-  tf.keras.layers.Dropout(0.2),
+
   tf.keras.layers.Dense(10, activation='softmax')
-])
+]) 
+#  tf.keras.layers.Dropout(0.0),
 
 model.compile(optimizer='adam',
   loss='sparse_categorical_crossentropy',
   metrics=['accuracy'])
 
-start=time.time()
 
+timeTrainStart=time.time()
 
 with tf.device('/device:GPU:0'):
-   model.fit(trainX, trainY, epochs=epochs, verbose=0)
+   model.fit(trainX, trainY, epochs=epochs, verbose=0, batch_size=None)
 
-end=time.time()
-d=end-start
+timeTrainEnd=time.time()
+ 
+timeForwardStart=time.time()
+with tf.device('/device:GPU:0'):
+   result = model.evaluate(testX, testY)
+timeForwardEnd=time.time()
 
 clear_session()
 
 
-print("# Python Tensorflow Time: " , d)
+print('# Python, MLP: 2x 64 Neu, data size=',percent*600,'%i\n' );
+print('# train: epochs=',epochs,', time=',timeTrainEnd-timeTrainStart,', one epoch time=',timeTrainEnd-timeTrainStart/(epochs*600),'\n' );
+print('# accuracy=',result,', forward epoch time=',timeForwardEnd-timeForwardStart,', propagation time=',timeForwardEnd-timeForwardStart/(epochs*100),' \n '  );
 
 
-
-model.evaluate(testX, testY)
-
-
-
+% I tensorflow/stream_executor/cuda/cuda_blas.cc:1614]
