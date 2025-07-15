@@ -1,0 +1,13 @@
+
+echo conda create -n tf3.10 python=3.10 anaconda
+echo conda install conda-forge::tensorflow
+
+echo conda install conda-forge::tensorflow-gpu
+
+echo # conda create -n tensorflow python=3.9
+echo # conda activate tensorflow
+echo # conda install -c anaconda tensorflow-gpu
+
+conda init
+conda activate tf3.9
+python Python.Tensorflow/main_tensor.py >> log\tensor.log
