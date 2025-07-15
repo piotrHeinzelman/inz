@@ -78,7 +78,7 @@ if ( true )
     fileIMG=fopen( '../data/train-labels-idx1-ubyte','r');
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
-    ytmp=fileData(9:8+percent*600)';
+    ytmp=fileData(9:8+(percent*600))';
     ysize=size(ytmp);
     ysize=ysize(2);
     ytrain=zeros(10,ysize);
@@ -96,7 +96,7 @@ if ( true )
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
 
-    ytmp=fileData(9:8+percent*100)';
+    ytmp=fileData(9:8+(percent*100))';
     ysize=size(ytmp);
     ysize=ysize(2);
     ytest=zeros(10,ysize);
@@ -112,7 +112,7 @@ if ( true )
     fileIMG=fopen( '../data/train-images-idx3-ubyte','r');
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
-    tmp=fileData(17:16+percent*784*600);
+    tmp=fileData(17:16+(percent*784*600));
 
     for i=1:percent*600
         col=tmp(1+(i-1)*784:i*784);
@@ -124,7 +124,7 @@ if ( true )
     fileIMG=fopen( '../data/t10k-images-idx3-ubyte','r');
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
-    tmp=fileData(17:16+percent*784*100);
+    tmp=fileData(17:16+(percent*784*100));
 
     for i=1:percent*100
         col=tmp(1+(i-1)*784:i*784);
@@ -139,13 +139,10 @@ showx( xtrain , 1 );
 end
 
 neurons = 64;
-datasetSize = percent;
-layerSize = neurons;
-
-
 
     net = feedforwardnet([ neurons,neurons ],'traingd'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
 
+    %net.trainParam.mc = 0;
     net.trainParam.epochs = epoch;
     net.trainParam.goal   = 0.00000003;
     net.input.processFcns = {'mapminmax'}; % https://www.mathworks.com/matlabcentral/answers/278051-output-processing-function-removeconstantrows-is-not-supported-with-gpu
@@ -164,6 +161,7 @@ layerSize = neurons;
         net = train(net, gxtrain, gytrain,'useParallel','yes','useGPU','yes');
     else
         %No GPU
+        %net = configure(net,xtrain,ytrain);
         net = train( net, xtrain, ytrain );
     end
 

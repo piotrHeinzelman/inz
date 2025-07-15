@@ -1,3 +1,4 @@
+----------- WINDOWS ----------------
 GPU
 /device:GPU:0
 
@@ -16,3 +17,7 @@ GPU
 # Python, MLP: 2x 64 Neu, data size= 60000 
 # train: epochs= 5 , time= 19.641895055770874 [s], one epoch time= 3.928379011154175 [s], one forward&backward time= 0.06547298351923625 [ms]
 # accuracy= 0.7989000082015991 , forward one epoch time= 0.7969269752502441 [s], one propagation time= 0.07969269752502442 [ms]
+
+--------------------------------------
+
+
