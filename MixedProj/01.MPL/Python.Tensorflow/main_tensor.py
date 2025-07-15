@@ -18,10 +18,12 @@ if physical_devices:
    for gpu in physical_devices:
       tf.config.experimental.set_memory_growth(gpu, True)
       print(gpu.device_type)
-
+      
+device_name = tf.test.gpu_device_name()
+print(device_name)
  
 # params
-epochs = 5000
+epochs = 5 #  5000
 percent = 100
 num_classes = 10
 
@@ -60,10 +62,10 @@ model = tf.keras.models.Sequential([
   tf.keras.layers.Input(shape=(784,)),
   tf.keras.layers.Dense(64, activation='sigmoid'),
   tf.keras.layers.Dense(64, activation='sigmoid'),
-
+  tf.keras.layers.Dropout(0.2),
   tf.keras.layers.Dense(10, activation='softmax')
 ]) 
-#  tf.keras.layers.Dropout(0.0),
+#  
 
 model.compile(optimizer='adam',
   loss='sparse_categorical_crossentropy',
@@ -73,21 +75,24 @@ model.compile(optimizer='adam',
 timeTrainStart=time.time()
 
 with tf.device('/device:GPU:0'):
-   model.fit(trainX, trainY, epochs=epochs, verbose=0, batch_size=None)
+   model.fit(trainX, trainY, epochs=epochs, verbose=0) # , batch_size=None
 
 timeTrainEnd=time.time()
  
 timeForwardStart=time.time()
 with tf.device('/device:GPU:0'):
    result = model.evaluate(testX, testY)
+   
 timeForwardEnd=time.time()
 
 clear_session()
 
 
-print('# Python, MLP: 2x 64 Neu, data size=',percent*600,'%i\n' );
-print('# train: epochs=',epochs,', time=',timeTrainEnd-timeTrainStart,', one epoch time=',timeTrainEnd-timeTrainStart/(epochs*600),'\n' );
-print('# accuracy=',result,', forward epoch time=',timeForwardEnd-timeForwardStart,', propagation time=',timeForwardEnd-timeForwardStart/(epochs*100),' \n '  );
+print('# Python, MLP: 2x 64 Neu, data size=',percent*600,'' );
+print('# train: epochs=',epochs,', time=',timeTrainEnd-timeTrainStart,'[s], one epoch time=',(timeTrainEnd-timeTrainStart)/(epochs),'[s], one forward&backward time=',(timeTrainEnd-timeTrainStart)/(epochs*percent*0.6),'[ms]' );
+print('# accuracy=',result[1],', forward one epoch time=',timeForwardEnd-timeForwardStart,'[s], one propagation time=',(timeForwardEnd-timeForwardStart)/(percent/10),'[ms]'  );
+
+ 
 
 
-% I tensorflow/stream_executor/cuda/cuda_blas.cc:1614]
+# I tensorflow/stream_executor/cuda/cuda_blas.cc:1614]

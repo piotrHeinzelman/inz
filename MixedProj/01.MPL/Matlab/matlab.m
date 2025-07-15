@@ -183,8 +183,8 @@ layerSize = neurons;
     end    
 
     fprintf('# Matlab, MLP: 2x %i Neu, data size=%i\n', neurons, percent*600 );
-    fprintf('# train: epochs=%i, time=%f, one epoch time=%f\n', epoch,  seconds( duration(timeTrainEnd-timeTrainStart)), seconds( duration(timeTrainEnd-timeTrainStart))/(epoch*600) );
-    fprintf( '# accuracy=%f, forward epoch time=%f, propagation time=%f \n ' , accuracy, seconds( duration(timeForwardEnd-timeForwardStart)) , seconds( duration(timeForwardEnd-timeForwardStart))/(epoch*100) );
+    fprintf('# train: epochs=%i, time=%f[s], one epoch time=%f[s] , one forward&backward time=%f[ms]\n', epoch,  seconds( duration(timeTrainEnd-timeTrainStart)), seconds( duration(timeTrainEnd-timeTrainStart))/(epoch), seconds( duration(timeTrainEnd-timeTrainStart))/(epoch*percent*0.6) );
+    fprintf( '# accuracy=%f, forward one epoch time=%f[s], one propagation time=%f[ms] \n ' , accuracy, seconds( duration(timeForwardEnd-timeForwardStart)) , seconds( duration(timeForwardEnd-timeForwardStart))/(percent*0.10) );
 
 
 

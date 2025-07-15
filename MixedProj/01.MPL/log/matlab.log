@@ -1,10 +1,5 @@
 
 # Matlab, GPU MLP: 2x 64 Neu, data size=60000
-# train: epochs=5000, time=226.337446, one epoch time=0.000075
-# accuracy=0.815000, forward epoch time=0.218953, propagation time=0.000000 
-
-
-# Matlab, CPU MLP: 2x 64 Neu, data size=60000
-# train: epochs=5000, time=2125.333143, one epoch time=0.000708
-# accuracy=0.815000, forward epoch time=0.200949, propagation time=0.000000  
- 
+# train: epochs=5000, time=227.389308[s], one epoch time=0.045478[s] , one forward&backward time=0.000758[ms]
+# accuracy=0.815000, forward one epoch time=0.225476[s], one propagation time=0.022548[ms] 
+ [Warning: You are deleting one or more running timer objects. MATLAB has automatically stopped them before deletion.] 
