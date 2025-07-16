@@ -1,0 +1,134 @@
+    1  sudo apt-get install -y cuda-drivers
+    2  wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.1-1_all.deb
+    3  sudo dpkg -i cuda-keyring_1.1-1_all.deb
+    4  sudo apt-get update
+    5  sudo apt-get -y install cuda-toolkit-12-9
+    6  sudo dpkg -i cuda-keyring_1.1-1_all.deb
+    7  sudo apt-get update
+    8  wget https://developer.download.nvidia.com/compute/cuda/12.9.1/local_installers/cuda_12.9.1_575.57.08_linux.run
+    9  mc
+   10  sudo apt install mc
+   11  mc
+   12  wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-keyring_1.1-1_all.deb
+   13  sudo dpkg -i cuda-keyring_1.1-1_all.deb
+   14  sudo apt-get update
+   15  sudo apt-get -y install cuda-toolkit-12-6
+   16  ubuntu2004
+   17  	
+   18  x86_64
+   19  sudo apt-get install -y nvidia-open
+   20  reboot
+   21  ./Anaconda3-2023.07-2-Linux-x86_64.sh
+   22  nano ~/.bashrc 
+   23  history
+   24  git clone git@github.com:piotrHeinzelman/inz.git
+   25  git clone https://github.com/piotrHeinzelman/inz.git
+   26  nvidia-smi
+   27  git
+   28  sudo apt install git
+   29  conda
+   30  python
+   31  nvcc
+   32  nvidia-smi
+   33  clear
+   34  nvcc
+   35  sudo apt-get -y install cuda-toolkit-12-6
+   36  sudo apt auto remove
+   37  sudo apt autoremove
+   38  sudo apt-get install -y cuda-drivers
+   39  sudo apt-get update
+   40  sudo apt-get -y install cuda-toolkit-12-6
+   41  nvcc
+   42  cuda
+   43  nvcc
+   44  sudo apt-get -y install cuda-toolkit-12-6
+   45  sudo apt-get -y install cuda-toolkit
+   46  nvcc
+   47  sudo apt install nvidia-cuda-toolkit
+   48  nvcc
+   49  gcc
+   50  gcc --version
+   51  clang
+   52  sudo apt install clang
+   53  clang
+   54  clang --version
+   55  clang -version
+   56  clang --version
+   57  gcc --version
+   58  conda
+   59  nvidia-smi
+   60  cd Downloads/
+   61  wget https://repo.anaconda.com/archive/Anaconda3-2023.07-2-Linux-x86_64.sh
+   62  mc
+   63  ld
+   64  ls
+   65  ./Anaconda3-2023.07-2-Linux-x86_64.sh 
+   66  conda init
+   67  conda
+   68  source ~/.bashrc 
+   69  conda
+   70  anaconda
+   71  conda
+   72  ls
+   73  cd ~
+   74  ls
+   75  nano .bash
+   76  nano .bashrc 
+   77  source ~/.bashrc 
+   78  conda
+   79  anaconda
+   80  conda create tf python=3.9 anaconda
+   81  conda -create tf python=3.9 anaconda
+   82  conda create tf python=3.9 anaconda
+   83  conda -n tf python=3.9 anaconda
+   84  conda create -n tf python=3.9 anaconda
+   85  conda activate tf
+   86  conda init
+   87  conda activate tf
+   88  conda
+   89  conda init
+   90  conda activate tf
+   91  conda
+   92  conda activate tf
+   93  ls
+   94  python
+   95  mc
+   96  ls
+   97  git
+   98  ls
+   99  conda install anaconda::tensorflow-gpu
+  100  ls
+  101  conda install anaconda::tensorflow-gpu
+  102  pip install tensorflow[and-cuda]
+  103  ls
+  104  mc
+  105  dir
+  106  cd inz/
+  107  cd <
+  108  cd MixedProj/
+  109  cd 01.MPL/
+  110  ls
+  111  ./tensorflowRun 
+  112  ls
+  113  cd Python.Tensorflow/
+  114  ls
+  115  python main_tensor.py 
+  116  cls
+  117  clear
+  118  ../tensorflowRun 
+  119  mc
+  120  ./tensorflowRun
+  121  nvidia-smi
+  122  clear
+  123  ls
+  124  conda
+  125  conda activate tf
+  126  ./tensorflowRun 
+  127  conda install tensorflow[and-cuda]
+  128  ./tensorflowRun 
+  129  conda install keras
+  130  conda install conda-forge::keras
+  131  ./tensorflowRun 
+  132  mc
+  133  history
+  134  history >> history.ubu

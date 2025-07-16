@@ -10,7 +10,7 @@ import tensorflow as tf
 import numpy as np
 import time
 from tensorflow.keras.backend import clear_session
- 
+
 
 
 physical_devices = tf.config.list_physical_devices('GPU')
@@ -18,12 +18,12 @@ if physical_devices:
    for gpu in physical_devices:
       tf.config.experimental.set_memory_growth(gpu, True)
       print(gpu.device_type)
-      
+
 device_name = tf.test.gpu_device_name()
 print(device_name)
- 
+
 # params
-epochs = 5 #  5000
+epochs = 50 #  5000
 percent = 100
 num_classes = 10
 

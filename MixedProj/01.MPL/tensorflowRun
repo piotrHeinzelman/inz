@@ -8,19 +8,50 @@ echo # conda create -n tensorflow python=3.9
 echo # conda activate tensorflow
 echo # conda install -c anaconda tensorflow-gpu
 
-conda init
-conda activate tf3.9
+echo conda init
+echo conda activate tf3.9
 python Python.Tensorflow/main_tensor.py >> log/tensor.log
 
+exit
 
-2025-07-15 22:57:04.134395: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:485] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
-2025-07-15 22:57:04.169142: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:8454] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
-2025-07-15 22:57:04.179725: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1452] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
-2025-07-15 22:57:04.368784: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
-To enable the following instructions: SSE4.1 SSE4.2 AVX AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2025-07-15 22:57:10.065768: E external/local_xla/xla/stream_executor/cuda/cuda_driver.cc:266] failed call to cuInit: CUDA_ERROR_COMPAT_NOT_SUPPORTED_ON_DEVICE: forward compatibility was attempted on non supported HW
-2025-07-15 22:57:10.066243: I external/local_xla/xla/stream_executor/cuda/cuda_diagnostics.cc:135] retrieving CUDA diagnostic information for host: Ubu-B550
-2025-07-15 22:57:10.066252: I external/local_xla/xla/stream_executor/cuda/cuda_diagnostics.cc:142] hostname: Ubu-B550
-2025-07-15 22:57:10.066389: I external/local_xla/xla/stream_executor/cuda/cuda_diagnostics.cc:166] libcuda reported version is: 535.247.1
-2025-07-15 22:57:10.066407: I external/local_xla/xla/stream_executor/cuda/cuda_diagnostics.cc:170] kernel reported version is: 535.230.2
-2025-07-15 22:57:10.066413: E external/local_xla/xla/stream_executor/cuda/cuda_diagnostics.cc:252] kernel version 535.230.2 does not match DSO version 535.247.1 -- cannot find working devices in this configuration
+external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:485] 
+Unable to register cuFFT factory: 
+Attempting to register factory for plugin cuFFT when 
+one has already been registered
+
+external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:8454] 
+Unable to register cuDNN factory: 
+Attempting to register factory for plugin cuDNN when 
+one has already been registered
+
+E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1452] 
+Unable to register cuBLAS factory: 
+Attempting to register factory for plugin cuBLAS when 
+one has already been registered
+
+I tensorflow/core/platform/cpu_feature_guard.cc:210] 
+This TensorFlow binary is optimized to use available CPU instructions 
+in performance-critical operations.
+To enable the following instructions: 
+SSE4.1 SSE4.2 AVX AVX2 FMA, in other operations, 
+rebuild TensorFlow with the appropriate compiler flags.
+
+E external/local_xla/xla/stream_executor/cuda/cuda_driver.cc:266] 
+failed call to cuInit: 
+CUDA_ERROR_COMPAT_NOT_SUPPORTED_ON_DEVICE: 
+forward compatibility was attempted on non supported HW
+
+I external/local_xla/xla/stream_executor/cuda/cuda_diagnostics.cc:135] 
+retrieving CUDA diagnostic information for host: Ubu-B550
+
+I external/local_xla/xla/stream_executor/cuda/cuda_diagnostics.cc:142] 
+hostname: Ubu-B550
+I external/local_xla/xla/stream_executor/cuda/cuda_diagnostics.cc:166] 
+libcuda reported version is: 535.247.1
+
+I external/local_xla/xla/stream_executor/cuda/cuda_diagnostics.cc:170] 
+kernel reported version is: 535.230.2
+
+E external/local_xla/xla/stream_executor/cuda/cuda_diagnostics.cc:252] 
+kernel version 535.230.2 does not match DSO version 535.247.1 
+-- cannot find working devices in this configuration
