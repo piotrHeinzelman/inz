@@ -1,0 +1,8 @@
+0. instalacja sterownika w systemie operacyjnym
+
+1. po zalogowaniu pobranie injstalera odpowiedniego do systemu operacyjnego: Windows, Linux, MacOS
+   https://www.mathworks.com/downloads/
+   
+2. uruchomienie instalera
+3. Matlab wykrywa i używa dostępnych w systemie kart NVidia.
+   

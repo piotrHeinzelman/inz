@@ -1,0 +1,128 @@
+*
+*
+*** sterowniki NVIDIA ***   RTX 4070  Ada Lovelace    
+*                           Liczba rdzeni NVIDIA CUDA: 5888
+*                           12 GB - GDDR6 
+*                           CUDA Compute capability (CC) :  8.9
+							CUDA Toolkit : 11.8   lub 12.6
+							https://docs.nvidia.com/cuda/ada-compatibility-guide/index.html
+
+
+
+
+https://www.nvidia.com/en-us/drivers/
+
+    Widnows 10
+NVIDIA Studio Driver 576.80 | Windows 10 64-bit
+https://us.download.nvidia.com/Windows/576.80/576.80-desktop-win10-win11-64bit-international-nsd-dch-whql.exe
+https://us.download.nvidia.com/Windows/572.83/572.83-desktop-win10-win11-64bit-international-nsd-dch-whql.exe
+https://us.download.nvidia.com/Windows/566.36/566.36-desktop-win10-win11-64bit-international-nsd-dch-whql.exe
+
+
+ Linux / Ubuntu
+unix driver archive
+https://www.nvidia.com/en-us/drivers/unix/
+
+Linux x86_64/AMD64/EM64T
+https://www.nvidia.com/en-us/drivers/details/247720/
+Linux x64 (AMD64/EM64T) Display Driver 470.256.02 | Linux 64-bit   --- recommended
+https://us.download.nvidia.com/XFree86/Linux-x86_64/570.169/NVIDIA-Linux-x86_64-570.169.run
+
+Linux x64 (AMD64/EM64T) Display Driver 550.163.01 | Linux 64-bit
+https://us.download.nvidia.com/XFree86/Linux-x86_64/550.163.01/NVIDIA-Linux-x86_64-550.163.01.run
+
+Linux x64 (AMD64/EM64T) Display Driver 535.247.02 | Linux 64-bit
+https://us.download.nvidia.com/XFree86/Linux-x86_64/535.247.01/NVIDIA-Linux-x86_64-535.247.01.run
+
+ 
+*
+*
+*****	NVIDIA CUDA
+*		https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html
+*       https://docs.nvidia.com/
+* 
+ 
+ 
+ 
+*   
+*	
+**** 	CUDA TOOLKIT   ******
+*
+*
+
+https://docs.nvidia.com/cuda/
+https://docs.nvidia.com/cuda/cuda-quick-start-guide/index.html
+
+		Cuda Toolkit 11.8    Linux >=450.80.02  Windows >=452.39
+		           CUDA 11.8 GA >=520.61.05     Windows >=520.06
+				   CUDA 12.6    >=525.60.13         >=527.41
+				   
+			
+https://developer.nvidia.com/cuda-11-8-0-download-archive
+
+
+***               *******
+https://docs.nvidia.com/cuda/cuda-toolkit-release-notes/index.html
+
+
+
+
+****  NVIDIA CUDA ******
+https://docs.nvidia.com/cuda/doc/index.html
+
+
+		
+
+
+
+
+
+****  NVIDIA cuDNN ****
+https://docs.nvidia.com/cudnn/index.html
+https://docs.nvidia.com/deeplearning/cudnn/backend/latest/release-notes.html
+https://docs.nvidia.com/deeplearning/cudnn/archives/index.html
+https://docs.nvidia.com/deeplearning/cudnn/backend/latest/reference/support-matrix.html
+
+
+
+		--------------------------------
+		cuDNN 9.5.0
+		https://docs.nvidia.com/deeplearning/cudnn/backend/v9.5.0/reference/support-matrix.html
+		cuDNN 9.5.0 for 
+		CUDA 12.6 , Linux driver >=525.60.13 Windows driver >=527.41, CUDA Compute Capability 8.9, NVIDIA Ada Lovelace architecture  
+		https://developer.nvidia.com/cudnn-9-5-0-download-archive
+
+
+		-----------------------	
+		cuDNN 9.5.0 for CUDA 11.x 
+		Cuda Toolkit: 11.8
+		Linux driver   >= 450.80.02
+		Windows driver >=452.39
+		
+		
+
+			cuDNN frontend !!!!!!
+			https://docs.nvidia.com/deeplearning/cudnn/installation/latest/frontend.html
+			python, c++
+
+
+
+
+****  NVIDIA TensorRT  ****
+https://docs.nvidia.com/deeplearning/tensorrt/latest/index.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
