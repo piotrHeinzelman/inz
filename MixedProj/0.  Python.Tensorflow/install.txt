@@ -1,0 +1,4 @@
+pip install tensorflow-gpu==2.9
+Downloading tensorflow_gpu-2.9.0-cp39-cp39-win_amd64.whl (444.0 MB)
+Installing collected packages: keras, flatbuffers, tensorflow-estimator, tensorboard, tensorflow-gpu
+Successfully installed flatbuffers-1.12 keras-2.9.0 tensorboard-2.9.1 tensorflow-estimator-2.9.0 tensorflow-gpu-2.9.0

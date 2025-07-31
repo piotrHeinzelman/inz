@@ -19,19 +19,37 @@ GPU
 # accuracy= 0.7989000082015991 , forward one epoch time= 0.7969269752502441 [s], one propagation time= 0.07969269752502442 [ms]
 
 --------------------------------------
+=GPU
+/device:GPU:0
 
-CUDA Linux
+  1/313 [..............................] - ETA: 41s - loss: 0.1704 - accuracy: 0.9688
+ 27/313 [=>............................] - ETA: 0s - loss: 0.2331 - accuracy: 0.9236 
+ 52/313 [===>..........................] - ETA: 0s - loss: 0.2731 - accuracy: 0.9105
+ 78/313 [======>.......................] - ETA: 0s - loss: 0.3016 - accuracy: 0.9071
+103/313 [========>.....................] - ETA: 0s - loss: 0.2897 - accuracy: 0.9111
+128/313 [===========>..................] - ETA: 0s - loss: 0.3004 - accuracy: 0.9082
+151/313 [=============>................] - ETA: 0s - loss: 0.3039 - accuracy: 0.9075
+175/313 [===============>..............] - ETA: 0s - loss: 0.2861 - accuracy: 0.9129
+199/313 [==================>...........] - ETA: 0s - loss: 0.2787 - accuracy: 0.9161
+223/313 [====================>.........] - ETA: 0s - loss: 0.2704 - accuracy: 0.9189
+246/313 [======================>.......] - ETA: 0s - loss: 0.2593 - accuracy: 0.9214
+270/313 [========================>.....] - ETA: 0s - loss: 0.2502 - accuracy: 0.9241
+294/313 [===========================>..] - ETA: 0s - loss: 0.2353 - accuracy: 0.9284
+313/313 [==============================] - 1s 2ms/step - loss: 0.2404 - accuracy: 0.9270
+# Python, MLP: 2x 64 Neu, data size= 60000 
+# train: epochs= 50 , time= 220.3032751083374 [s], one epoch time= 4.406065502166748 [s], one forward&backward time= 0.07343442503611247 [ms]
+# accuracy= 0.9269999861717224 , forward one epoch time= 0.8323979377746582 [s], one propagation time= 0.08323979377746582 [ms]
 GPU
 /device:GPU:0
-459ms/step - accuracy: 0.9688 - loss: 0.2011
-997us/step - accuracy: 0.9190 - loss: 0.2615
-961us/step - accuracy: 0.9158 - loss: 0.2737
-950us/step - accuracy: 0.9154 - loss: 0.2767
-936us/step - accuracy: 0.9165 - loss: 0.2736
-  2ms/step - accuracy: 0.9178 - loss: 0.2691
-  2ms/step - accuracy: 0.9179 - loss: 0.2690
-# Python, MLP: 2x 64 Neu, data size= 60000 
-# train: epochs= 50 , time= 89.74873113632202 [s], one epoch time= 1.7949746227264405 [s], one forward&backward time= 0.02991624371210734 [ms]
-# accuracy= 0.9266999959945679 , forward one epoch time= 1.2374343872070312 [s], one propagation time= 0.12374343872070312 [ms]
+GPU
+/device:GPU:0
+GPU
+/device:GPU:0
+GPU
+/device:GPU:0
+GPU
+/device:GPU:0
+GPU
+/device:GPU:0
 GPU
 /device:GPU:0

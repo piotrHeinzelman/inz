@@ -1,9 +1,9 @@
 
-call c:\Users\john\tf\Scripts\activate
-cd X:\inz\MixedProj\01.MPL
+rem call c:\Users\john\tf\Scripts\activate
+rem cd X:\inz\MixedProj\01.MPL
 python Python.Tensorflow\main_tensor.py >> log\tensor.log
 pause
-exit
+ 
 
 
 echo python -m venv c:\Users\john\tf
