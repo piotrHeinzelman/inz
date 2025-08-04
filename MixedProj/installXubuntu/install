@@ -102,3 +102,17 @@ Logfile is /var/log/cuda-installer.log
 
 
 
+
+*****************************************
+
+
+https://repo.anaconda.com/archive/Anaconda3-2025.06-0-Linux-x86_64.sh
+
+
+conda create -n tf
+conda activate tf
+
+conda install anaconda::keras-gpu
+
+
+for a in /sys/bus/pci/devices/*; do echo 0 | sudo tee -a $a/numa_node; done
