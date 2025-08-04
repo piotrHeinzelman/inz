@@ -52,7 +52,7 @@ __global__ void SigmodAndDF(float* z, float* df, const float* y)
 
 int main()
 {
-    int const percent = 1; // 50 0.010; // change to 50 !
+    int const percent = 100; // 50 0.010; // change to 50 !
     int const lenx = percent * 6 * 100;
 
     int const IMGSIZE = 784; // ; 28 * 28
