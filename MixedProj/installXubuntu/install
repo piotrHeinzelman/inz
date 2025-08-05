@@ -116,3 +116,8 @@ conda install anaconda::keras-gpu
 
 
 for a in /sys/bus/pci/devices/*; do echo 0 | sudo tee -a $a/numa_node; done
+
+
+python 3.9
+# https://storage.googleapis.com/tensorflow/versions/2.19.0/tensorflow-2.19.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+conda install -c anaconda keras-gpu
