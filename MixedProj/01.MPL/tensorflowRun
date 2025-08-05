@@ -5,5 +5,7 @@ echo conda install conda-forge::tensorflow-gpu
 echo conda init
 echo conda activate tf
 
+echo 'for a in /sys/bus/pci/devices/*; do echo 0 | sudo tee -a $a/numa_node; done'
+
 python3 Python.Tensorflow/main_tensor.py >> log/tensor.log
 
