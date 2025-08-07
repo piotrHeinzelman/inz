@@ -1,19 +1,6 @@
 echo "#    --- Matlab ---"
-echo "1" 
-/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run matlab.m' >> matlab_out_1
+/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run Matlab/matlab.m' >> log/matlab.log
 
-echo "2" 
-/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run matlab.m' >> matlab_out_2
-
-echo "3" 
-/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run matlab.m' >> matlab_out_3
-
-echo "4" 
-/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run matlab.m' >> matlab_out_4
-
-echo "5" 
-/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run matlab.m' >> matlab_out_5
-echo "#    --- Matlab END ---"
 
 
 

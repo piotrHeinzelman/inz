@@ -1,5 +1,10 @@
-echo conda create -n tensorflow python=3.9
-echo conda install conda-forge::tensorflow-gpu
+echo ! conda create -n tensorflow python=3.9
+echo ! conda install conda-forge::tensorflow-gpu
+echo ! conda install keras
+
+echo conda create -n tf10 python=3.10
+echo conda install conda-forge::tensorflow-gpu=2.16.1
+echo conda update -n base -c defaults conda
 
 
 echo conda init
