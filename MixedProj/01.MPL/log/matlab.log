@@ -3,3 +3,7 @@ GPU
 # train: epochs=5000, time=278.761816[s], one epoch time=0.055752[s] , one forward&backward time=0.000929[ms]
 # accuracy=0.815000, forward one epoch time=0.231759[s], one propagation time=0.023176[ms]  
 
+# Matlab, MLP: 2x 64 Neu, data size=60000
+# train: epochs=5000, time=229.899032[s], one epoch time=0.045980[s] , one forward&backward time=0.000766[ms]
+# accuracy=0.815000, forward one epoch time=0.339086[s], one propagation time=0.033909[ms] 
+ 

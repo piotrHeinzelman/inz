@@ -1,0 +1,9 @@
+echo "#    --- Matlab ---"
+/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run Matlab/matlab.m' >> log/matlab.log
+/usr/local/MATLAB/R2024a/bin/matlab
+
+
+
+
+
+

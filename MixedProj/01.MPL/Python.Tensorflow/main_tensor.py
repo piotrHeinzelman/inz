@@ -16,6 +16,7 @@ import tensorflow as tf
 #from tensorflow.keras.backend import clear_session
 #from tensorflow import keras
 
+exit()
 
 import numpy as np
 import keras
@@ -31,6 +32,7 @@ if physical_devices:
 device_name = tf.test.gpu_device_name()
 print(device_name)
 
+exit()
 # params
 epochs = 50 #  5000
 percent = 1
