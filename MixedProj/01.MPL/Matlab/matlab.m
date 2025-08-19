@@ -73,7 +73,7 @@ end
 
 
 if ( true )
-    
+
 
     fileIMG=fopen( '../data/train-labels-idx1-ubyte','r');
     fileData=fread( fileIMG, 'uint8' );
