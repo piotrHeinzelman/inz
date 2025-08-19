@@ -71,6 +71,7 @@ end
 
 
 
+timeLoadDataStart = datetime('now');
 
 if ( true )
 
@@ -133,6 +134,9 @@ if ( true )
     xtest=xtest/255;
     fileData=1;
 end
+timeLoadDataEnd = datetime('now');
+
+
 
 if (false)
 showx( xtrain , 1 );
@@ -149,23 +153,32 @@ neurons = 64;
     net.output.processFcns = {'mapminmax'};%
 
 
-    gxtrain = gpuArray( xtrain );
-    gytrain = gpuArray( ytrain );
-
-    timeTrainStart = datetime('now');
-
 
     if ( gpu )
         %GPU
+	timeDataTransferStart = datetime('now');
+
+        gxtrain = gpuArray( xtrain );
+        gytrain = gpuArray( ytrain );
+
+	timeDataTransferEnd = datetime('now');
+
+
         net = configure(net,xtrain,ytrain);
+
+	timeTrainStart = datetime('now');
         net = train(net, gxtrain, gytrain,'useParallel','yes','useGPU','yes');
+        timeTrainEnd = datetime('now');
     else
         %No GPU
         %net = configure(net,xtrain,ytrain);
+
+	timeTrainStart = datetime('now');
         net = train( net, xtrain, ytrain );
+        timeTrainEnd = datetime('now');
+
     end
 
-    timeTrainEnd = datetime('now');
 
     timeForwardStart = datetime('now');
     z = net( xtest );
@@ -175,15 +188,15 @@ neurons = 64;
     flatZtest = aryOfVectorToAryOfInt( ytest );
     accuracy = accuracyCheck(flatZ, flatZtest);
 
-    str='CPU';    
+    str='CPU';
     if gpu
         str='GPU';
-    end    
+    end
 
     fprintf('# Matlab, MLP: 2x %i Neu, data size=%i\n', neurons, percent*600 );
     fprintf('# train: epochs=%i, time=%f[s], one epoch time=%f[s] , one forward&backward time=%f[ms]\n', epoch,  seconds( duration(timeTrainEnd-timeTrainStart)), seconds( duration(timeTrainEnd-timeTrainStart))/(epoch), seconds( duration(timeTrainEnd-timeTrainStart))/(epoch*percent*0.6) );
     fprintf( '# accuracy=%f, forward one epoch time=%f[s], one propagation time=%f[ms] \n ' , accuracy, seconds( duration(timeForwardEnd-timeForwardStart)) , seconds( duration(timeForwardEnd-timeForwardStart))/(percent*0.10) );
-
+    fprintf( '# loadDataTime=%f[s], transferToGPUTime=%f[s]', seconds( duration( timeLoadDataEnd-timeLoadDataStart )), seconds( duration(timeDataTransferEnd-timeDataTransferStart)))
 
 
 %timeTrainStart
@@ -191,3 +204,8 @@ neurons = 64;
 %seconds( duration( ED-ST ))
 %timeForwardStart
 %timeForwardEnd
+%timeLoadDataEnd
+%timeLoadDataStart
+%timeDataTransferEnd
+%timeDataTransferStart
+
