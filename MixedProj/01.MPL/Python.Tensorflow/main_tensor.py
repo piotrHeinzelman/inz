@@ -1,3 +1,4 @@
+
 # https://keras.io/examples/vision/mnist_convnet
 # https://www.tensorflow.org/?hl=pl
 # https://www.osc.edu/resources/getting_started/howto/howto_use_gpu_in_python
@@ -31,7 +32,7 @@ device_name = tf.test.gpu_device_name()
 print(device_name)
 
 # params
-epochs = 5 # 5000
+epochs = 5000 # 5000
 percent = 100
 num_classes = 10
 
@@ -53,7 +54,7 @@ def readFileY ( fileName , offset, percent, multi ):
     file.close()
     return data
 
-
+timeLoadDataStart=time.time()
 
 trainX = readFileX ('data/train-images-idx3-ubyte', 16, percent ,6 )
 trainY = readFileY ('data/train-labels-idx1-ubyte', 8, percent, 6 )
@@ -66,6 +67,7 @@ testX = testX.astype("float32") # / 255
 trainX = trainX.reshape(6*percent*100, 784).astype("float32") / 255
 testX = testX.reshape(1*percent*100, 784).astype("float32") / 255
 
+timeLoadDataEnd=time.time()
 
 
 # Model / data parameters
@@ -79,66 +81,34 @@ model.add(tf.keras.layers.Dense(64, activation='sigmoid'))
 model.add(tf.keras.layers.Dense(64, activation='sigmoid'))
 model.add(tf.keras.layers.Dense(10, activation='softmax'))
 
-model.compile(optimizer='sgd', loss='mse')
 
+opt = tf.keras.optimizers.SGD( learning_rate=0.1, momentum=0.0 )
+#cce = tf.keras.losses.CategoricalCrossentropy()
+cce = tf.keras.losses.SparseCategoricalCrossentropy()
 
-# This builds the model for the first time:
-#model.fit(trainX, trainY, batch_size=32, epochs=10)
-
-model.fit(trainX, trainY,  epochs=epochs)
-
-model.summary()
-
-
-
-exit()
-
-
-
-
-
-model = tf.keras.Sequential([
-    tf.keras.layers.Input(shape=(784,)),
-#    tf.keras.layers.Input(shape=(28,28,1)),
-    tf.keras.layers.Dense(64, activation='sigmoid'),
-    tf.keras.layers.Dense(64, activation='sigmoid'),
-
-#    tf.keras.layers.Conv2D(32, 3, activation='relu',
-#                           kernel_regularizer=tf.keras.regularizers.l2(0.02),
-#                           input_shape=(28, 28, 1)),
-#    tf.keras.layers.MaxPooling2D(),
-#    tf.keras.layers.Flatten(),
-#    tf.keras.layers.Dropout(0.1),
-#    tf.keras.layers.Dense(64, activation='relu'),
-#    tf.keras.layers.BatchNormalization(),
-    tf.keras.layers.Dense(10, activation='softmax')
-])
-
+model.compile(optimizer=opt, loss=cce, metrics=['accuracy'])
 
 model.summary()
 
-# Model is the full model w/o custom layers
-#model.compile(optimizer='adam',
-model.compile(optimizer='sdg',
-              loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-              metrics=['accuracy'])
+
 
 timeTrainStart=time.time()
 
 with tf.device('/device:GPU:0'):
-   model.fit(trainX, trainY, epochs=epochs, verbose=0, ) #
+   model.fit( trainX, trainY, epochs=epochs, verbose=0, batch_size=60000 ) #
 
 timeTrainEnd=time.time()
+
 timeForwardStart=time.time()
 
 with tf.device('/device:GPU:0'):
-   result = model.evaluate(testX, testY)
+   result = model.evaluate( testX, testY )
 
 timeForwardEnd=time.time()
 
 
 
-loss, acc = model.evaluate(testX, testY)
+loss, acc = model.evaluate( testX, testY )
 print("Loss {}, Accuracy {}".format(loss, acc))
 
 
@@ -146,4 +116,5 @@ print('# Python, MLP: 2x 64 Neu, data size=',percent*600,'' );
 print('# train: epochs=',epochs,', time=',timeTrainEnd-timeTrainStart,'[s], one epoch time=',(timeTrainEnd-timeTrainStart)/(epochs),'[s], one forward&backward time=',(timeTrainEnd-timeTrainStart)/(epochs*percent*0.6),'[ms]' );
 print('# accuracy=',result[1],', forward one epoch time=',timeForwardEnd-timeForwardStart,'[s], one propagation time=',(timeForwardEnd-timeForwardStart)/(percent/10),'[ms]'  );
 
+print ('# LoadDataTime=', timeLoadDataEnd-timeLoadDataStart,'[s]')
 
