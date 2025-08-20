@@ -37,7 +37,7 @@ device_name = tf.test.gpu_device_name()
 print(device_name)
 
 # params
-epochs = 5000 # 5000
+epochs = 200 # 5000
 percent = 100
 num_classes = 10
 input_shape = (784, 1)
@@ -74,8 +74,8 @@ testY = to_categorical(testY, num_classes)
 
 trainX = trainX.astype("float32") # / 255
 testX = testX.astype("float32") # / 255
-trainX = trainX.reshape(6*percent*100, 784).astype("float32") / 255
-testX = testX.reshape(1*percent*100, 784).astype("float32") / 255
+trainX = trainX.reshape(6*percent*100, 784).astype("float32") #/ 255
+testX = testX.reshape(1*percent*100, 784).astype("float32") #/ 255
 
 timeLoadDataEnd=time.time()
 
@@ -89,7 +89,7 @@ model.add(tf.keras.layers.Dense(10, activation='softmax'))
 
 
 opt = tf.keras.optimizers.SGD(
-    learning_rate=0.001,
+    learning_rate=0.01,
     momentum=0.0,
     nesterov=False,
 #    weight_decay=0.3,
