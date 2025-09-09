@@ -1,0 +1,15 @@
+
+https://www.mathworks.com/help/vision/ug/example-InstanceSegmentationUsingMaskRCNNDeepLearningExample.html
+Download the pretrained Mask R-CNN. The network is stored as a maskrcnn object.
+
+
+
+%\section{ Układ pracy }
+%W pierwszej części przedstawiono sieć Yolo, porównano sposoby budowy sieci w %różnych środowiskach w aspektach takich jak wygoda tworzenia, dostęp do %dokumentacji.
+
+% Yolo Matlab v3
+% https://www.mathworks.com/help/vision/ref/yolov3objectdetector.html
+% autorun Example: openExample('vision/DetectObjectsUsingYOLOV3DetectorExample')
+
+% Yolo Matlab v4
+% https://www.mathworks.com/help/vision/ug/getting-started-with-yolo-v4.html
