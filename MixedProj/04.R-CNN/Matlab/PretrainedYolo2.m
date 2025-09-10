@@ -4,7 +4,16 @@
 % Computer Vision Toolbox Model for YOLO v2 Object Detection
 
 % Yolo Matlab v2
-% https://www.mathworks.com/help/vision/ref/yolov3objectdetector.html
+% https://www.mathworks.com/help/vision/ug/getting-started-with-yolo-v2.html
+% https://www.mathworks.com/help/vision/ref/yolov2objectdetector.html
+
+if (true)
+    name = "tiny-yolov2-coco";
+    detector = yolov2ObjectDetector(name);
+end
+
+
+
 
 % Yolo Matlab v3
 % https://www.mathworks.com/help/vision/ref/yolov3objectdetector.html
@@ -22,17 +31,18 @@
 
 %
 % Load YOLO v8 model
-det = yolov8ObjectDetector('yolov8s');
-%
-% Analyze loaded model
-%analyzeNetwork(det.Network);
-%
+if (false)
+    detector = yolov8ObjectDetector('yolov8s');
+    analyzeNetwork(detector.Network)
 %yolov8n
 %yolov8s
 %yolov8m
 %yolov8l
 %yolov8x
 % https://github.com/matlab-deep-learning/Pretrained-YOLOv8-Network-For-Object-Detection?tab=readme-ov-file#object-detection-1
+end
+
+
 
 disp(detector)
 
@@ -40,18 +50,15 @@ disp(detector)
 
 
 % detekcja
-img = imread('sherlock.jpg');
-%img = imread('img.jpg');
+% img = imread('dog-5519360_1280.jpg'); 
+img = imread('dog-7956828_1280.jpg'); 
+%img = imread('sherlock.jpg'); 
 [bboxes,scores,labels] = detect(detector,img); 
 
 detectedImg = insertObjectAnnotation(img,"Rectangle",bboxes,labels);
 figure
 imshow(detectedImg)
-
-
-
-
-
+ 
 
 
 
