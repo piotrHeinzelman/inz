@@ -3,14 +3,47 @@
 % wymaga : Computer Vision Toolbox™
 % Computer Vision Toolbox Model for YOLO v2 Object Detection
 
+
+
+% CNN
+% Train net 
+% https://www.mathworks.com/help/deeplearning/ref/trainnet.html
+
+
+
 % Yolo Matlab v2
 % https://www.mathworks.com/help/vision/ug/getting-started-with-yolo-v2.html
 % https://www.mathworks.com/help/vision/ref/yolov2objectdetector.html
 
-if (false)
-    name = "tiny-yolov2-coco";
+%
+%
+% custom !!!!!!!!!!
+%
+%
+%   https://www.mathworks.com/help/vision/ug/create-yolo-v2-object-detection-network.html
+%
+%
+% export to ONNX
+% https://www.mathworks.com/help/vision/ug/export-yolo-v2-object-detector-to-onnx.html
+%
+% detect params : 
+% https://www.mathworks.com/help/vision/ref/yolov2objectdetector.detect.html
+%
+% training data
+% https://www.mathworks.com/help/vision/ref/objectdetectortrainingdata.html
+% 
+% combine datastore
+% https://www.mathworks.com/help/matlab/ref/matlab.io.datastore.combine.html
+% !!! train data
+% https://www.mathworks.com/help/vision/ref/trainacfobjectdetector.html#d126e285996
+
+
+if (true)
+    name = "tiny-yolov2-coco";  % "darknet19-coco" | "tiny-yolov2-coco" 
     detector = yolov2ObjectDetector( name );
 end
+
+
 
 
 % Yolo Matlab v3
@@ -29,9 +62,19 @@ if (false)
     detector = yolov4ObjectDetector( name );
 end  
  
+% yoloX
+if (false)
+    name = "nano-coco"; % "nano-coco" "tiny-coco"  "small-coco" "medium-coco"  "large-coco"  
+    detector = yoloxObjectDetector( name );
+end  
+
+
+
+
+
 % Load YOLO v8 model
 % https://github.com/matlab-deep-learning/Pretrained-YOLOv8-Network-For-Object-Detection?tab=readme-ov-file#object-detection-1
-if (true)
+if (false)
     %name = "yolov8s";
     %name = "yolov8m";
     %name = "yolov8l";
@@ -74,7 +117,8 @@ disp(detector)
 
 
 % detekcja
- img = imread('dog-5519360_1280.jpg'); 
+img = imread('some_team.jpg'); 
+% img = imread('dog-5519360_1280.jpg'); 
 % img = imread('dog-7956828_1280.jpg'); 
 %img = imread('sherlock.jpg'); 
 [bboxes,scores,labels] = detect(detector,img); 
