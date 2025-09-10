@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<paths>
+  <path>.</path>
+  <path>.circleci</path>
+  <path>data</path>
+  <path>models</path>
+  <path>test</path>
+  <path>test\tools</path>
+</paths>
