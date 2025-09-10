@@ -32,8 +32,10 @@ end
 % Load YOLO v8 model
 % https://github.com/matlab-deep-learning/Pretrained-YOLOv8-Network-For-Object-Detection?tab=readme-ov-file#object-detection-1
 if (true)
-    name = "yolov8s";
-    %name = "yolov8n";
+    %name = "yolov8s";
+    %name = "yolov8m";
+    %name = "yolov8l";
+    name = "yolov8x";
     detector = yolov8ObjectDetector( name );
 %    analyzeNetwork(detector.Network)
 %yolov8n
