@@ -24,15 +24,16 @@ end
 
 % yolo 4
 % https://www.mathworks.com/help/vision/ref/yolov4objectdetector.html
-if (true)
+if (false)
     name = "tiny-yolov4-coco";
     detector = yolov4ObjectDetector( name );
 end  
  
 % Load YOLO v8 model
 % https://github.com/matlab-deep-learning/Pretrained-YOLOv8-Network-For-Object-Detection?tab=readme-ov-file#object-detection-1
-if (false)
+if (true)
     name = "yolov8s";
+    %name = "yolov8n";
     detector = yolov8ObjectDetector( name );
 %    analyzeNetwork(detector.Network)
 %yolov8n
@@ -40,6 +41,26 @@ if (false)
 %yolov8m
 %yolov8l
 %yolov8x
+
+%                   'yolov8n'   Use this model for speed and efficiency.
+%
+%                   'yolov8s'   Use this model for a balance between speed
+%                               and accuracy, suitable for applications
+%                               requiring real-time performance with good
+%                               segmentation quality.
+%
+%                   'yolov8m'   Use this model for higher accuracy with
+%                               moderate computational demands.
+%
+%                   'yolov8l'   Use this model to prioritize maximum
+%                               segmentation accuracy for high-end systems,
+%                               at the cost of computational intensity.
+%
+%                   'yolov8x'   Use this model to get most accurate
+%                               segmentation but requires significant
+%                               computational resources, ideal for high-end
+%                               systems prioritizing segmentation
+%                               performance.
 
 end
 

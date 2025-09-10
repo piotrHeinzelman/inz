@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<addonCore>
-  <label>Object Detection And Instance Segmentation Using YOLO v8</label>
-  <version>1.0.0</version>
-  <type>zip</type>
-  <identifier>6adb3a14-62c6-4d9e-8f12-f7c489f5b6b8</identifier>
-  <createdBy name="Vivek Akkala"/>
-  <image>resources/screenshot.png</image>
-</addonCore>
