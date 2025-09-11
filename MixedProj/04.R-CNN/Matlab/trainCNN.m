@@ -1,5 +1,7 @@
 
 
+ 
+a=1; 
 
 %unzip("DigitsData.zip")
 
@@ -31,13 +33,19 @@ layers = [
     softmaxLayer];
 	
 options = trainingOptions("sgdm", ...
-    MaxEpochs=30, ...
+    MaxEpochs=1, ...
     Verbose=false, ...
     Plots="training-progress", ...
     Metrics="accuracy");
 	
+if (true) 
+    load(  'D:\INZ\SAS_and_NoSAS_train_Data_240\mainNet.mat','net');
+end    
+
 net = trainnet(imdsTrain,layers,"crossentropy",options);
-save("D:\\INZ\\SAS_and_NoSAS_train_Data_240\\net.mat",net);
+ 
+save( append('D:\\INZ\\SAS_and_NoSAS_train_Data_240\\','\mainNet.mat'),'net');
+
 %accuracy = testnet(net,imdsTest,"accuracy")
 
 
@@ -45,3 +53,7 @@ save("D:\\INZ\\SAS_and_NoSAS_train_Data_240\\net.mat",net);
 %YTest = scores2label(scoresTest,classNames);
 
 %confusionchart(imdsTest.Labels,YTest)
+
+%save(filename)
+%Then
+%load('filename.mat')
