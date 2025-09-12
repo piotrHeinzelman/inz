@@ -135,3 +135,67 @@ imshow(detectedImg)
 
 % Yolo Matlab v4
 % https://www.mathworks.com/help/vision/ug/getting-started-with-yolo-v4.html
+
+
+
+
+
+
+
+
+
+
+% https://www.mathworks.com/help/deeplearning/ug/pretrained-convolutional-neural-networks.html?searchHighlight=trainnet+load+pretrained+data&s_tid=srchtitle_support_results_2_trainnet+load+pretrained+data
+%Pretrained Object Detection Network Name Arguments	Object Detection Model	Required Support Package
+%    "darknet19-coco"
+%    "tiny-yolov2-coco"
+%
+%YOLO v2 – yolov2ObjectDetector (Computer Vision Toolbox)
+%	Computer Vision Toolbox Model for YOLO v2 Object Detection
+%    "darknet53-coco"
+%    "tiny-yolov3-coco"
+%
+%YOLO v3 – yolov3ObjectDetector (Computer Vision Toolbox)
+%	Computer Vision Toolbox Model for YOLO v3 Object Detection
+%    "csp-darknet53-coco"
+%    "tiny-yolov4-coco"
+%
+%YOLO v4 – yolov4ObjectDetector (Computer Vision Toolbox)
+%	Computer Vision Toolbox Model for YOLO v4 Object Detection
+%    "nano-coco"
+%    "tiny-coco"
+%    "small-coco"
+%    "medium-coco"
+%    "large-coco"
+%
+%YOLOX – yoloxObjectDetector (Computer Vision Toolbox)
+%	
+%Automated Visual Inspection Library for Computer Vision Toolbox
+%
+%    "tiny-network-coco"
+%    "small-network-coco"
+%    "medium-network-coco"
+%    "large-network-coco"
+%
+%
+
+
+
+
+
+% Hardware and Acceleration
+% ExecutionEnvironment — Hardware resource for training neural network
+% "auto" (default) | "cpu" | "gpu" | "multi-gpu" | "parallel-auto" | "parallel-cpu" | "parallel-gpu"
+
+% PreprocessingEnvironment — Environment for fetching and preprocessing data
+% "serial" (default) | "background" | "parallel"
+
+% Acceleration — Performance optimization
+% "auto" (default) | "none"
+
+
+
+
+
+
+% https://www.mathworks.com/help/vision/ug/object-detection-using-deep-learning.html
