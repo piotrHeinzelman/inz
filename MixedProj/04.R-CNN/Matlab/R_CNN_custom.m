@@ -8,14 +8,14 @@ numTrainFiles = 800;
 
 layers = [
 % Input Layers
-    imageInputLayer([720 720 3]) % [height width numChannels]
+    imageInputLayer([240 240 3]) % [height width numChannels]
 
 %middleLayers
-    convolution2dLayer( [15 15], 16 ,'Padding',2)   % (filterSize,numFilters,'Padding',2) % filterSize = [5 5]; numFilters = 32;
+    convolution2dLayer( [51 51], 16 ,'Padding',2)   % (filterSize,numFilters,'Padding',2) % filterSize = [5 5]; numFilters = 32;
     reluLayer()
     maxPooling2dLayer(3,'Stride',2)
 
-    convolution2dLayer([5,5], 32, 'Padding', 2 )
+    convolution2dLayer([15,15], 32, 'Padding', 2 )
     reluLayer()
     maxPooling2dLayer(3, 'Stride',2)
 
@@ -31,24 +31,25 @@ layers = [
 
     softmaxLayer()
     classificationLayer
-    ];
+    ]
 
-
-layers(2).Weights = 0.0001 * randn([15 15 3 16]); % [filterSize numChannels numFilters]
-
+layers(2).Weights = 0.0001 * randn([51 51 3 16]); % [filterSize numChannels numFilters]
+layers(5).Weights = 0.0001 * randn([15 15 16 32]);
+layers(8).Weights = 0.0001 * randn([5 5 32 64]); 
 
 
 % Set the network training options
 opts = trainingOptions('sgdm', ...
     'Momentum', 0.9, ...
-    'InitialLearnRate', 0.001, ...
+    'InitialLearnRate', 0.003, ... % 0.001, 
     'LearnRateSchedule', 'piecewise', ...
     'LearnRateDropFactor', 0.1, ...
     'LearnRateDropPeriod', 8, ...
     'L2Regularization', 0.004, ...
-    'MaxEpochs', 40, ...
+    'MaxEpochs', 250, ...
     'MiniBatchSize', 128, ...
     'ExecutionEnvironment','parallel', ...
+    'Plots','training-progress', ...
     'Verbose', true);
 
 

@@ -38,7 +38,7 @@
 % https://www.mathworks.com/help/vision/ref/trainacfobjectdetector.html#d126e285996
 
 
-if (true)
+if (false)
     name = "tiny-yolov2-coco";  % "darknet19-coco" | "tiny-yolov2-coco" 
     detector = yolov2ObjectDetector( name );
 end
@@ -57,7 +57,7 @@ end
 
 % yolo 4
 % https://www.mathworks.com/help/vision/ref/yolov4objectdetector.html
-if (false)
+if (true)
     name = "tiny-yolov4-coco";
     detector = yolov4ObjectDetector( name );
 end  
@@ -126,12 +126,27 @@ img = imread('some_team.jpg');
 detectedImg = insertObjectAnnotation(img,"Rectangle",bboxes,labels);
 figure
 imshow(detectedImg)
- 
 
+% show weights 2, 6, 10, 14, 18, 22, 26, 32
+w = detector.Network.Layers(2).Weights;
+w = rescale(w);
+figure
+montage(w)
 
+u = detector.Network.Layers(6).Weights(:,:,1:3,:);
+u = rescale(u);
+figure
+montage(u)
 
+u = detector.Network.Layers(14).Weights(:,:,1:3,:);
+u = rescale(u);
+figure
+montage(u)
 
-
+u = detector.Network.Layers(26).Weights(1,1,:,:);
+%u = rescale(u);
+figure
+montage(u)
 
 % Yolo Matlab v4
 % https://www.mathworks.com/help/vision/ug/getting-started-with-yolo-v4.html
