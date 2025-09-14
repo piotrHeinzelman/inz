@@ -75,11 +75,11 @@ fprintf ('\n# net: %s; task:%s; class: %s score: %f;  prepare detectortime: :%f;
 % detect [2]
 % score [3]
 % detections length [4]
-fprintf ('\n%s%i[0]=%f' ,seriesName(t), i, seconds( prepareDetectorTime ));
-fprintf ('\n%s%i[1]=%f' ,seriesName(t), i, seconds( readImageTime       ));
-fprintf ('\n%s%i[2]=%f' ,seriesName(t), i, seconds( detectTime          ));
-fprintf ('\n%s%i[3]=%f' ,seriesName(t), i, sc );
-%fprintf ('\n%s%i[4]=%i' ,seriesName(t), i, size(labels) );
+fprintf ('\n%s%i[0]=%f ' ,seriesName(t), i, seconds( prepareDetectorTime ));
+fprintf ('\n%s%i[1]=%f ' ,seriesName(t), i, seconds( readImageTime       ));
+fprintf ('\n%s%i[2]=%f ' ,seriesName(t), i, seconds( detectTime          ));
+fprintf ('\n%s%i[3]=%f ' ,seriesName(t), i, sc );
+fprintf ('\n%s%i[4]=%i ' ,seriesName(t), i, size(labels) );
 
 
 end
