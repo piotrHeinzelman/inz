@@ -101,3 +101,19 @@ coreClock: 2.475GHz coreCount: 46 deviceMemorySize: 11.60GiB deviceMemoryBandwid
 2025-08-21 00:00:11.833919: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.10
 
 
+GPU
+/device:GPU:0
+Model: "sequential"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+dense (Dense)                (None, 64)                50240     
+_________________________________________________________________
+dense_1 (Dense)              (None, 64)                4160      
+_________________________________________________________________
+dense_2 (Dense)              (None, 10)                650       
+=================================================================
+Total params: 55,050
+Trainable params: 55,050
+Non-trainable params: 0
+_________________________________________________________________

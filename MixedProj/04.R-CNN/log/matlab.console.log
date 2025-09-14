@@ -1,0 +1,64 @@
+# net: tiny-yolov2-coco; task:dog1; class: ? score: 0.000000;  prepare detectortime: :2.218071; 
+# load image time: 0.084069; detect object time: 1.848544 
+library[ 1 ]=" tiny-yolov2-coco score:0.000000, find(0) "
+d1[0]=2.218071 
+d1[1]=0.084069 
+d1[2]=1.848544 
+# net: tiny-yolov3-coco; task:dog1; class: ? score: 0.000000;  prepare detectortime: :1.221098; 
+# load image time: 0.011384; detect object time: 1.151867 
+library[ 2 ]=" tiny-yolov3-coco score:0.000000, find(0) "
+d2[0]=1.221098 
+d2[1]=0.011384 
+d2[2]=1.151867 
+# net: tiny-yolov4-coco; task:dog1; class: ? score: 0.000000;  prepare detectortime: :0.717630; 
+# load image time: 0.011168; detect object time: 0.783034 
+library[ 3 ]=" tiny-yolov4-coco score:0.000000, find(0) "
+d3[0]=0.717630 
+d3[1]=0.011168 
+d3[2]=0.783034 
+# net: tiny-coco; task:dog1; class: dog score: 0.762755;  prepare detectortime: :2.484519; 
+# load image time: 0.008367; detect object time: 1.264122 
+library[ 4 ]=" tiny-coco score:0.762755, find(1) "
+d4[0]=2.484519 
+d4[1]=0.008367 
+d4[2]=1.264122 
+# net: tiny-yolov2-coco; task:dog2; class: dog score: 0.879725;  prepare detectortime: :0.523857; 
+# load image time: 0.020853; detect object time: 0.323668 
+e1[0]=0.523857 
+e1[1]=0.020853 
+e1[2]=0.323668 
+# net: tiny-yolov3-coco; task:dog2; class: dog score: 0.936445;  prepare detectortime: :0.402806; 
+# load image time: 0.007598; detect object time: 0.314734 
+e2[0]=0.402806 
+e2[1]=0.007598 
+e2[2]=0.314734 
+# net: tiny-yolov4-coco; task:dog2; class: dog score: 0.588947;  prepare detectortime: :0.368372; 
+# load image time: 0.005527; detect object time: 0.295248 
+e3[0]=0.368372 
+e3[1]=0.005527 
+e3[2]=0.295248 
+# net: tiny-coco; task:dog2; class: dog score: 0.922000;  prepare detectortime: :1.405576; 
+# load image time: 0.005477; detect object time: 0.640220 
+e4[0]=1.405576 
+e4[1]=0.005477 
+e4[2]=0.640220 
+# net: tiny-yolov2-coco; task:team; class: person score: 0.707635;  prepare detectortime: :0.336245; 
+# load image time: 0.050282; detect object time: 0.184854 
+f1[0]=0.336245 
+f1[1]=0.050282 
+f1[2]=0.184854 
+# net: tiny-yolov3-coco; task:team; class: person score: 0.949395;  prepare detectortime: :0.302148; 
+# load image time: 0.015816; detect object time: 0.165614 
+f2[0]=0.302148 
+f2[1]=0.015816 
+f2[2]=0.165614 
+# net: tiny-yolov4-coco; task:team; class: person score: 0.718039;  prepare detectortime: :0.361120; 
+# load image time: 0.011518; detect object time: 0.257293 
+f3[0]=0.361120 
+f3[1]=0.011518 
+f3[2]=0.257293 
+# net: tiny-coco; task:team; class: person score: 0.878444;  prepare detectortime: :1.238064; 
+# load image time: 0.006718; detect object time: 0.581497 
+f4[0]=1.238064 
+f4[1]=0.006718 
+f4[2]=0.581497 

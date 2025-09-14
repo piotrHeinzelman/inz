@@ -68,19 +68,25 @@ if ( size(labels) > 0)
     lb = labels(1);
 end
 
-fprintf ('\n# net: %s; task:%s; class: %s score: %f;  prepare detectortime: :%f; \n# load image time: %f; detect object time: %f\n', name, taskNames(t), lb, sc,  seconds( prepareDetectorTime ), seconds( readImageTime ), seconds(detectTime)  );
+fprintf ('# net: %s; task:%s; class: %s score: %f;  prepare detectortime: :%f; \n# load image time: %f; detect object time: %f \n', name, taskNames(t), lb, sc,  seconds( prepareDetectorTime ), seconds( readImageTime ), seconds(detectTime)  );
+
+if (t==1)
+    fprintf ('library[ %d ]=\" %s score:%f, find(%i) \"\n', i, name, sc, (0+size(labels)));
+end
 
 % prepare[0]
 % load image[1]
 % detect [2]
 % score [3]
 % detections length [4]
-fprintf ('\n%s%i[0]=%f ' ,seriesName(t), i, seconds( prepareDetectorTime ));
-fprintf ('\n%s%i[1]=%f ' ,seriesName(t), i, seconds( readImageTime       ));
-fprintf ('\n%s%i[2]=%f ' ,seriesName(t), i, seconds( detectTime          ));
-fprintf ('\n%s%i[3]=%f ' ,seriesName(t), i, sc );
-fprintf ('\n%s%i[4]=%i ' ,seriesName(t), i, size(labels) );
+fprintf ('%s%d[0]=%f \n' ,seriesName(t), i, seconds( prepareDetectorTime ));
+fprintf ('%s%d[1]=%f \n' ,seriesName(t), i, seconds( readImageTime       ));
+fprintf ('%s%d[2]=%f \n' ,seriesName(t), i, seconds( detectTime          ));
+
 
 
 end
+
+
+
 end
