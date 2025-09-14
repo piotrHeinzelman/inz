@@ -2,7 +2,14 @@
 
 % Create the image input layer for 32x32x3 CIFAR-10 images.
 % USE images 
-imds = imageDatastore("D:\\INZ\\SAS_and_NoSAS_train_Data_240\\", IncludeSubfolders=true, LabelSource="foldernames");
+if (false) 
+    path = "D:\\INZ\\SAS_and_NoSAS_train_Data_240\\";
+else 
+    path='/home/john/inz_DATA/INZ2/SAS_and_NoSAS_train_Data_240/';
+end    
+
+
+imds = imageDatastore(path, IncludeSubfolders=true, LabelSource="foldernames");
 numTrainFiles = 800;
 [imdsTrain,imdsTest] = splitEachLabel(imds,numTrainFiles,"randomized"); 
 
@@ -61,10 +68,10 @@ doTraining = true;
 if doTraining    
     % Train a network.
     cifar10Net = trainNetwork(imdsTrain, layers, opts);
-    save( append('D:\\INZ\\SAS_and_NoSAS_train_Data_240\\','\cifar10Net.mat'),'cifar10Net');
+    save( append(path,'cifar10Net.mat'),'cifar10Net');
 else
     % Load pre-trained detector for the example.
-    load(  'D:\\INZ\\SAS_and_NoSAS_train_Data_240\\cifar10Net.mat', 'cifar10Net' );
+    load( append(path , 'cifar10Net.mat'), 'cifar10Net' );
 end
 
 
