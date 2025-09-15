@@ -1,0 +1,25 @@
+Creating Bag-Of-Features.
+-------------------------
+* Image category 1: 0
+* Image category 2: 1
+* Selecting feature point locations using the Grid method.
+* Extracting SURF features from the selected feature point locations.
+** The GridStep is [8 8] and the BlockWidth is [32 64 96 128].
+
+* Extracting features from 1600 images...done. Extracted 5760000 features.
+
+* Keeping 80 percent of the strongest features from each category.
+
+* Creating a 500 word visual vocabulary.
+* Number of levels: 1
+* Branching factor: 500
+* Number of clustering steps: 1
+
+* [Step 1/1] Clustering vocabulary level 1.
+* Number of features          : 4608000
+* Number of clusters          : 500
+* Initializing cluster centers...100.00%.
+* Clustering...completed 66/100 iterations (~10.12 seconds/iteration)...converged in 66 iterations.
+
+* Finished creating Bag-Of-Features
+
