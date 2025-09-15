@@ -70,18 +70,18 @@ end
 
 fprintf ('# net: %s; task:%s; class: %s score: %f;  prepare detectortime: :%f; \n# load image time: %f; detect object time: %f \n', name, taskNames(t), lb, sc,  seconds( prepareDetectorTime ), seconds( readImageTime ), seconds(detectTime)  );
 
-if (t==1)
-    fprintf ('library[ %d ]=\" %s score:%f, find(%i) \"\n', i, name, sc, (0+size(labels)));
-end
+% if (t==1)
+    fprintf ('library[ %d ]=\" %s score:%f, find(%i) \" \n', i-1, name, sc, (0+size(labels)));
+% end
 
 % prepare[0]
 % load image[1]
 % detect [2]
 % score [3]
 % detections length [4]
-fprintf ('%s%d[0]=%f \n' ,seriesName(t), i, seconds( prepareDetectorTime ));
-fprintf ('%s%d[1]=%f \n' ,seriesName(t), i, seconds( readImageTime       ));
-fprintf ('%s%d[2]=%f \n' ,seriesName(t), i, seconds( detectTime          ));
+fprintf ('%s0[%d]=%f \n' ,seriesName(t), i-1, seconds( prepareDetectorTime ));
+fprintf ('%s1[%d]=%f \n' ,seriesName(t), i-1, seconds( readImageTime       ));
+fprintf ('%s2[%d]=%f \n' ,seriesName(t), i-1, seconds( detectTime          ));
 
 
 
