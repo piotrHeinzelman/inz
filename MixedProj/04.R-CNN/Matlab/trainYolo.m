@@ -1,3 +1,13 @@
+% https://www.mathworks.com/help/vision/ref/trainyolov4objectdetector.html#d126e346295
+% Subnetworks to freeze during training, specified as one of these values:
+
+%    "none" — Do not freeze subnetworks
+
+%    "backbone" — Freeze the feature extraction subnetwork
+
+%    "backboneAndNeck" — Freeze both the feature extraction and the path aggregation subnetworks
+
+
 path="/home/john/inz_DATA/GROUPS/jpg/";
 
 
