@@ -1,4 +1,4 @@
-%path="/home/john/inz_DATA/GROUPS/jpg/";
+path="/home/john/inz_DATA/GROUPS/jpg/";
 
 
 load("/home/john/inz/MixedProj/04.R-CNN/Matlab/trainingData.mat");
@@ -20,3 +20,17 @@ detector.Network
 imds = imageDatastore(trainingData.imageFilename);
 blds = boxLabelDatastore(trainingData(:,2:end));
 ds = combine(imds,blds);
+
+inputSize = [224 224 3];
+trainingDataForEstimation = transform(ds,@(data)preprocessData(data,inputSize));
+
+numAnchors = 6;
+[anchors,meanIoU] = estimateAnchorBoxes(trainingData,numAnchors);
+area = anchors(:,1).*anchors(:,2);
+[~,idx] = sort(area,"descend");
+anchors = anchors(idx,:);
+anchorBoxes = {anchors(1:3,:);anchors(4:6,:)};
+
+
+classes = ["vehicle"];
+detector = yolov4ObjectDetector("tiny-yolov4-coco",classes,anchorBoxes,InputSize=inputSize);
