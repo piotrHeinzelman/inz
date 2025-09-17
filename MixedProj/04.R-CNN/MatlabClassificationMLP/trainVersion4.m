@@ -4,10 +4,14 @@
 
 % https://www.mathworks.com/help/vision/ref/yolov4objectdetector.html
 
-
+if(false)
+path="D:\\INZ\\inz\\MixedProj\\240pix2classSAS\\";
+else
+path="/home/john/inz/MixedProj/240pix2classSAS/";
+end
 
 if (true)
-    imds = imageDatastore("D:\\INZ\\inz\\MixedProj\\240pix2classSAS\\", IncludeSubfolders=true, LabelSource="foldernames");
+    imds = imageDatastore(path, IncludeSubfolders=true, LabelSource="foldernames");
 	    
     numTrainFiles = 800;
     [imdsTrain,imdsTest] = splitEachLabel(imds,numTrainFiles,"randomized");
@@ -48,7 +52,7 @@ if (true)
 
     %net.replaceLayer('input_1', inputLayer);
     %net.addInputLayer(inputLayer, "input_1");
-    netTrained= trainnet( images, net, lossFcn,options);
+    netTrained= trainnet( images, net.Layers, lossFcn,options);
     accuracy = testnet(net,imdsTest,"accuracy")
     scoresTest = minibatchpredict(net,imdsTest);
     YTest = scores2label(scoresTest,classNames);
