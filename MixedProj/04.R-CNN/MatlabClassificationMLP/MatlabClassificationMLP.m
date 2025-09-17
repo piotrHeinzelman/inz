@@ -45,35 +45,35 @@ batchNormalizationLayer
 reluLayer
 maxPooling2dLayer(2)
 
-convolution2dLayer(3,128)
-batchNormalizationLayer
-reluLayer
-maxPooling2dLayer(2)
+%convolution2dLayer(3,128)
+%batchNormalizationLayer
+%reluLayer
+%maxPooling2dLayer(2)
 
-convolution2dLayer(3,256)
-batchNormalizationLayer
-leakyReluLayer(.1)
-maxPooling2dLayer(2)
+%convolution2dLayer(3,256)
+%batchNormalizationLayer
+%reluLayer
+%maxPooling2dLayer(2)
 
-convolution2dLayer(3,512)
-batchNormalizationLayer
-leakyReluLayer(.1)
-maxPooling2dLayer(2)
+%convolution2dLayer(3,512)
+%batchNormalizationLayer
+%reluLayer
+%maxPooling2dLayer(2)
 
-convolution2dLayer(3,1024)
-batchNormalizationLayer
-leakyReluLayer(.1)
+%convolution2dLayer(3,1024)
+%batchNormalizationLayer
+%reluLayer
 
-convolution2dLayer(3,512)
-batchNormalizationLayer
-leakyReluLayer(.1)
+%convolution2dLayer(3,512)
+%batchNormalizationLayer
+%leakyReluLayer(.1)
 
-convolution2dLayer(3,425)
+%convolution2dLayer(3,425)
 
 %% Yolo enter here !!!
 
-batchNormalizationLayer
-reluLayer
+%batchNormalizationLayer
+%reluLayer
 fullyConnectedLayer(numClasses)
 softmaxLayer];
 
@@ -84,14 +84,28 @@ softmaxLayer];
 % "lm" (since R2024b) — Levenberg–Marquardt (LM). LM is a batch solver. Use the LM algorithm for regression networks with small numbers of learnable parameters, where you can process the data set in a single batch. If solverName is "lm", then the lossFcn argument of the trainnet function must be "mse" or "l2loss". For additional training options, see Batch Solver Options. For more information, see Levenberg–Marquardt.
 
 options = trainingOptions("adam", ...
-    MaxEpochs=10, ...
+    MaxEpochs=1, ...
     ValidationData=imdsValidation, ...
-    ValidationFrequency=30, ...
+    ValidationFrequency=30, ...  
     Plots="training-progress", ...
     Metrics="accuracy", ...
-    Verbose=false);
+    Verbose=false); % MiniBatchSize=20, ...
 
 net = trainnet(imdsTrain,layers,"crossentropy",options);
 
+
+doTraining = true;
+
+%if doTraining    
+    % Train a network.
+%    cifar10Net = trainNetwork(imdsTrain, layers, opts);
+    save( 'net.mat','net');
+%else
+    % Load pre-trained detector for the example.
+%    load( append(path , 'cifar10Net.mat'), 'cifar10Net' );
+%end
+
 accuracy = testnet(net,imdsValidation,"accuracy")
+
+
 
