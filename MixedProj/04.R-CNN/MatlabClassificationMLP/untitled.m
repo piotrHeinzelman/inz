@@ -1,1 +1,0 @@
-DD = data.toolsTrainingData

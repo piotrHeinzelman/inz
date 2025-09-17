@@ -1,5 +1,140 @@
 % openExample('vision/TrainYOLOV4NetworkForVehicleDetectionExample')
 
+% https://medium.com/@kattarajesh2001/object-detection-part-2-two-stage-detectors-r-cnn-fast-r-cnn-faster-r-cnn-026e5fac5dd0
+
+% https://www.mathworks.com/help/vision/ref/yolov4objectdetector.html
+
+
+
+if (true)
+    imds = imageDatastore("D:\\INZ\\inz\\MixedProj\\240pix2classSAS\\", IncludeSubfolders=true, LabelSource="foldernames");
+	    
+    numTrainFiles = 800;
+    [imdsTrain,imdsTest] = splitEachLabel(imds,numTrainFiles,"randomized");
+    
+    inputSize = [240 240 3];
+    classNames = categories(imds.Labels);
+    numClasses = numel(classNames);
+    inputLayer = imageInputLayer( inputSize, Name="input_1" );
+    
+    trainingData=imdsTrain;
+    validationData=imdsTest;
+
+    % detector = yolov4ObjectDetector("tiny-yolov4-coco");
+    %Y4 =  yolov4ObjectDetector("tiny-yolov4-coco");
+
+    %detector = yolov4ObjectDetector(net,classes,aboxes)
+    %detector = yolov4ObjectDetector(Y4.network, classes, aboxes);
+
+    %net = Y4.Network; % <--- detector = yolov4Object416Detector(net,classes,aboxes)
+    net = load("yolo4net.mat").net;
+     
+
+   
+
+    % https://www.mathworks.com/help/deeplearning/ref/trainnet.html
+
+    options = trainingOptions("sgdm", ...
+    MaxEpochs=4, ...
+    Verbose=false, ...
+    Plots="training-progress", ...
+    Metrics="accuracy");
+
+    images=imds;
+    lossFcn="crossentropy";
+ 
+    classNames = categories(imds.Labels);
+    numClasses = numel(classNames);
+
+    %net.replaceLayer('input_1', inputLayer);
+    %net.addInputLayer(inputLayer, "input_1");
+    netTrained= trainnet( images, net, lossFcn,options);
+    accuracy = testnet(net,imdsTest,"accuracy")
+    scoresTest = minibatchpredict(net,imdsTest);
+    YTest = scores2label(scoresTest,classNames);
+
+    %detector = yolov4ObjectDetector("tiny-yolov4-coco");
+end 
+
+exit();
+
+
+
+
+data = load("toolsTrainingData.mat"); 
+
+trainingData = data.toolsTrainingData;
+trainingData.imageFilename = fullfile( trainingData.imageFilename );
+
+imds = imageDatastore(trainingData.imageFilename);
+%Create a boxLabelDatastore using the label columns from the table.
+blds = boxLabelDatastore(trainingData(:,2:end));
+%Combine the datastores.
+ds = combine(imds,blds);
+
+
+
+
+
+
+
+%augmentedTrainingData = trainingData;
+%augmentedTrainingData = transform(trainingData,@augmentData);
+
+options = trainingOptions("adam", ...
+    GradientDecayFactor=0.9, ...
+    SquaredGradientDecayFactor=0.999, ...
+    InitialLearnRate=0.001, ...
+    LearnRateSchedule="none", ...
+    MiniBatchSize=4, ...
+    L2Regularization=0.0005, ...
+    MaxEpochs=80, ...
+    DispatchInBackground=true, ...
+    ResetInputNormalization=true, ...
+    Shuffle="every-epoch", ...
+    VerboseFrequency=20, ...
+    ValidationFrequency=1000, ... % CheckpointPath=tempdir, ...
+    ValidationData=ds, ... % ValidationData=validationData, ...
+    OutputNetwork="best-validation-loss");
+
+
+ 
+
+doTraining = true;
+if doTraining       
+    % Train the YOLO v4 detector.
+    %[detector,info] = trainYOLOv4ObjectDetector( trainingData, detector, options );
+    [detector,info] = trainYOLOv4ObjectDetector( ds, detector, options );
+    save('detector','detector');
+else
+    % Load pretrained detector for the example.
+    detector = downloadPretrainedYOLOv4Detector();
+end
+
+
+
+
+
+
+%trainYOLOv4ObjectDetector();
+
+InputSize=[240 240 3];
+ModelName="dedra";
+detector = yolov4ObjectDetector( InputSize=InputSize, ModelName=ModelName );
+%specifies one or more options using name-value arguments in addition to any combination of input arguments from previous syntaxes. Use this syntax to:
+%Modify the detection network sources in a YOLO v4 object detection network and train the network with different numbers of object classes, anchor boxes, or both. Specify the new detection network sources using the DetectionNetworkSource=layer name-value argument.
+%Set the InputSize and ModelName properties of the object detector. For example, InputSize=[224 224 3] sets the size of the images used for training to [224 224 3].
+
+
+
+
+
+
+
+
+
+
+
 %Train YOLO v4 Network for Vehicle Detection
 %This example shows how to fine-tune a pretrained YOLO v4 object detector for detecting vehicles in an image.
 %Load a tiny YOLO v4 object detector, pretrained on the COCO dataset, and inspect its properties.
@@ -13,10 +148,13 @@ detector.Network
 data = load("toolsTrainingData.mat");
 %data = load("vehicleTrainingData.mat");
 
-trainingData = data.vehicleTrainingData;
+trainingData = data.toolsTrainingData;
 %Specify the directory in which to store the training samples. Add the full path to the file names in training data.
-dataDir = fullfile(toolboxdir("vision"),"visiondata");
-trainingData.imageFilename = fullfile(dataDir,trainingData.imageFilename);
+
+%dataDir = fullfile(toolboxdir("vision"),"visiondata");
+%trainingData.imageFilename = fullfile(dataDir,trainingData.imageFilename);
+
+trainingData.imageFilename = fullfile( trainingData.imageFilename );
 %Create an ImageDatastore using the files from the table.
 imds = imageDatastore(trainingData.imageFilename);
 %Create a boxLabelDatastore using the label columns from the table.
@@ -37,7 +175,34 @@ anchors = anchors(idx,:);
 anchorBoxes = {anchors(1:3,:);anchors(4:6,:)};
 %Configure and Train YOLO v4 Network
 %Specify the class names and configure the pretrained YOLO v4 deep learning network to be retrained for the new data set using the yolov4ObjectDetector function.
-classes = ["vehicle"];
+
+
+
+
+
+%https://www.mathworks.com/help/vision/ref/trainyolov4objectdetector.html#d126e346295
+%FreezeSubNetwork — Subnetworks to freeze
+%"none" (default) | "backbone" | "backboneAndNeck"
+%Since R2024a
+%Subnetworks to freeze during training, specified as one of these values:
+%"none" — Do not freeze subnetworks
+%"backbone" — Freeze the feature extraction subnetwork
+%"backboneAndNeck" — Freeze both the feature extraction and the path aggregation subnetworks
+%The weight of layers in frozen subnetworks does not change during training.
+
+
+
+
+
+
+
+
+
+
+
+
+%classes = ["vehicle"];
+classes = ["tools"];
 detector = yolov4ObjectDetector("tiny-yolov4-coco",classes,anchorBoxes,InputSize=inputSize);
 %Specify the training options and retrain the pretrained YOLO v4 network on the new data set using the trainYOLOv4ObjectDetector function.
 options = trainingOptions("sgdm", ...
@@ -50,7 +215,7 @@ trainedDetector = trainYOLOv4ObjectDetector(ds,detector,options);
 
 %Detect Vehicles in Test Image
 %Load a test image from the workspace.
-I = imread("highway.png");
+I = imread("SAStest.jpg");
 %Use the fine-tuned YOLO v4 object detector to detect vehicles in the test image and display the detection results.
 [bboxes,scores,labels] = detect(trainedDetector,I,Threshold=0.05);
 detectedImg = insertObjectAnnotation(I,"Rectangle",bboxes,labels);
