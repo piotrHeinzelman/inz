@@ -91,12 +91,13 @@ labels = vertcat(data{:,2});
 diagonalLength = hypot(bboxes(:,3),bboxes(:,4));
 
 % Group the object lengths by class.
-G = findgroups(labels);
-groupedDiagonalLength = splitapply(@(x){x},diagonalLength,G);
+%G = findgroups(labels);
+%groupedDiagonalLength = splitapply(@(x){x},diagonalLength,G);
+groupedDiagonalLength = splitapply(@(x){x},diagonalLength,"SAS");
 
 %Visualize the distribution of object lengths for each class. 
 figure
-classes = tbl.Label;
+classes = "SAS"; %tbl.Label;
 numClasses = numel(classes);
 for i = 1:numClasses
     len = groupedDiagonalLength{i};
@@ -110,7 +111,7 @@ ylabel("Object extent (pixels)")
 xticks(1:numClasses)
 xticklabels(classes)
 
-exit();
+% exit();
 % *****************
 
 pretrainedDetector = yolov2ObjectDetector("tiny-yolov2-coco");
@@ -121,6 +122,7 @@ pretrainedDetector.Network.Layers(1).InputSize
 inputSize = [720 720 3];
 
 % Combine the image and bounding box datastores.
+blds = bboxes;
 ds = combine(imds,blds);
 
 %Use transform to apply a preprocessing function that resizes images and their corresponding bounding boxes. The function also sanitizes the bounding boxes to convert them to a valid shape. 
