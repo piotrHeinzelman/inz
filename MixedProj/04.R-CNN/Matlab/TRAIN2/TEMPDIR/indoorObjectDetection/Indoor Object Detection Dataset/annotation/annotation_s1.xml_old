@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<?xml-stylesheet type='text/xsl' href='image_metadata_stylesheet.xsl'?>
+<dataset>
+<name> TUT Indoor Object Detection Dataset</name>
+<comment>Created on 03-06-2018 by Bishwo Adhikari</comment>
+<images>
+  <image file='frame_s1_1.jpg'>
+    <box top='244' left='500' width='192' height='99'>
+      <label>exit</label>
+    </box>
+  </image>
+</images>
+</dataset>
