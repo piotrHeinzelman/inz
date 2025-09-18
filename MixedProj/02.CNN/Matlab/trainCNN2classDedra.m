@@ -1,7 +1,7 @@
 % https://www.mathworks.com/help/deeplearning/ug/create-simple-deep-learning-network-for-classification.html
 % unzip("DigitsData.zip"); % MNIST
 
-epoch=8; %50
+epoch=50; %50
 GPU=true;
 TIME_START=datetime('now');
 
@@ -303,7 +303,7 @@ options = trainingOptions("sgdm", ...
 TIME_CREATE_MODEL = datetime('now');
 
 net = trainnet(imdsTrain,layers,"crossentropy",options);
-analyzeNetwork(net)
+% analyzeNetwork(net)
 
 TIME_TRAIN_TIME = datetime('now');
 

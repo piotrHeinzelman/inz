@@ -7,6 +7,7 @@
 % Number of filters in the output convolutional layer must be 18 for 3 anchor boxes and 1 classes.
 % Number of filters in the output convolutional layer must be 21 for 3 anchor boxes and 2 classes.
 
+epoch=10;
 path="../../imagesAndRegions/sequence_1/";
 load("toolsTrainingData.mat");
 load("netCNN_SAS.mat");
@@ -73,10 +74,28 @@ detector = yolov4ObjectDetector(net,classes,anchorBoxes );
   %  DetectionNetworkSource=featureExtractionLayers);
 
 
+
 %disp(detector) ;
 if (false) 
     analyzeNetwork(detector.Network); 
 end
+
+
+
+
+options = trainingOptions("sgdm", ...
+    InitialLearnRate=0.01, ...
+    MaxEpochs=epoch, ...
+    Shuffle="every-epoch", ... % ValidationData=imdsValidation, ...
+    ValidationFrequency=30, ...
+    Plots="training-progress", ... % Metrics="accuracy", ...
+    Verbose=false);
+
+
+
+
+detector = trainYOLOv4ObjectDetector(trainingData,detector,options)
+ 
 
 I = imread("dedra_www.jpg");
 [bboxes, scores, labels] = detect(detector, I, Threshold=0.8);
