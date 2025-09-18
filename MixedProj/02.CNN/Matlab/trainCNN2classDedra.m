@@ -1,7 +1,7 @@
 % https://www.mathworks.com/help/deeplearning/ug/create-simple-deep-learning-network-for-classification.html
 % unzip("DigitsData.zip"); % MNIST
 
-epoch=50;
+epoch=1; %50
 GPU=true;
 
 TIME_START=datetime('now');
@@ -81,30 +81,26 @@ layers = [
 
     convolution2dLayer(3,256,Padding="same")
     batchNormalizationLayer
-    reluLayer
-    maxPooling2dLayer(2, Stride=2)
+    reluLayer(Name="ReLU_IN")
+    maxPooling2dLayer(2)
 
+%% 
+ 
+%    convolution2dLayer(3,512,Padding="same")
+%    batchNormalizationLayer
+%    reluLayer
+    % maxPooling2dLayer(2, Stride=2)
 
-    %{ ** wymaganie matlab !!! na wyjsciu 18 kanalow ** %}
-    convolution2dLayer(3,128,Padding="same")
-    batchNormalizationLayer
-    reluLayer
-    maxPooling2dLayer(2, Stride=2)
+%    convolution2dLayer(3,256,Padding=2)
+%    batchNormalizationLayer
+%    reluLayer
+    % maxPooling2dLayer(2, Stride=2)
 
-    convolution2dLayer(3,64,Padding="same")
-    batchNormalizationLayer
-    reluLayer
-    maxPooling2dLayer(2, Stride=2)
-
-    convolution2dLayer(3,32,Padding="same")
-    batchNormalizationLayer
-    reluLayer
-    maxPooling2dLayer(2, Stride=2)
-
-    convolution2dLayer(3,18,Padding=1, Stride=2)
-    batchNormalizationLayer
-    reluLayer
-    %{ ** wymaganie matlab !!! na wyjsciu 18 kanalow **  %}
+%    convolution2dLayer(3,128,Padding=2 )
+%    batchNormalizationLayer
+%    reluLayer(Name="ReLU_OUT")
+    
+    %%
 
     fullyConnectedLayer( numberOfClass )
     softmaxLayer ];
@@ -135,7 +131,7 @@ accuracy = mean(YValidation == TValidation)
 
 TIME_ACCURACY_TIME = datetime('now');
 
-if(false) % No generate on CPU !
+if(true) % No generate on CPU !
    save('netCNN_SAS','net');
 end
 

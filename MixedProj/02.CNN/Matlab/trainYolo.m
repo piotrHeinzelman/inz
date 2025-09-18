@@ -5,8 +5,10 @@
 %    "backboneAndNeck" — Freeze both the feature extraction and the path aggregation subnetworks
 
 path="../../imagesAndRegions/sequence_1/";
-load("netCNN_SAS.mat");
 load("toolsTrainingData.mat");
+load("netCNN_SAS.mat");
+load("dlnet.mat");
+net=dlnet;
 trainingData=toolsTrainingData;
 
 
@@ -31,11 +33,40 @@ aboxes=anchorBoxes;
 
 classes = ["sas"];
 
-%netUpdated = removeLayers( net , layerNames );
-netUpdated = removeLayers( net , ['softmax'] );
-net2 = removeLayers( netUpdated , ['fc'] );
-detector = yolov4ObjectDetector(net2,classes,aboxes);
+%netUpdated = removeLayers( net , ['softmax'] );
+%net2 = removeLayers( netUpdated , ['fc'] );
+ 
+
+imageSize = net.Layers(1).InputSize;
+layerName = net.Layers(1).Name;
+newInputLayer = imageInputLayer(imageSize,Normalization="none",Name=layerName);
+%Replace the image input layer in the base network with the new input layer.
+dlnet = replaceLayer(net,layerName,newInputLayer);
+%Specify the names of the feature extraction layers in the base network to use as the detection heads.
+featureExtractionLayers = ["activation_22_relu","activation_40_relu"]% ["activation_22_relu","activation_40_relu"];
+
+detector = yolov4ObjectDetector(dlnet,classes,anchorBoxes, ...
+    DetectionNetworkSource=featureExtractionLayers);
+
+
+disp(detector) 
+analyzeNetwork(detector.Network)
+
+I = imread("dedra_www.jpg");
+[bboxes, scores, labels] = detect(detector, I, Threshold=0.4);
+objBoxes = bboxes(labels=="person", :);
+detectedImg = insertObjectAnnotation(I, "Rectangle", objBoxes, "person");
+figure
+imshow(detectedImg)
+
+
+
+% detector = yolov4ObjectDetector(net2,classes,aboxes);
+%yolov4ObjectDetector(net2,classes,aboxes,'DetectionNetworkSource',layer);
 %Network must not have any fully connected layers.
+
+
+
 
 %detector = yolov4ObjectDetector(baseNet,classes,aboxes,DetectionNetworkSource=layer)
 
