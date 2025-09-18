@@ -11,7 +11,7 @@
 path="/home/john/inz_DATA/GROUPS/jpg/";
 
 
-load("/home/john/inz/MixedProj/04.R-CNN/Matlab/trainingData.mat");
+load("/home/john/inz/MixedProj/03.R-CNN/Matlab/trainingData.mat");
 
 %trainingData = Data.Data.vehicleTrainingData;
 

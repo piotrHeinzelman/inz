@@ -1,3 +1,4 @@
 echo "#    --- Matlab ---"
-/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run Matlab/trainCNN2classDedra.m' >> log/Matlab.log
+/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run Matlab/trainCNN1classDedra_save_netCNN.m' >> log/Matlab.log
 echo "/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run Matlab/trainYolo.m' >> log/Matlab.log"
+

@@ -19,13 +19,11 @@ d3=[None,None,None,None]
 
 #################################
 
-## Epoch:50, GPU:Yes, loadData:1.325154, createLayers:1.291018, trainTime:313.592937, timeAccuracy:0.907339, accuracy: 1.000000
-library[0]="Matlab GPU"
-d0[0]=1.325154
-d1[0]=1.291018
-d2[0]=313.592937/50
-d3[0]=0.907339
-
+## Epoch:50, GPU:True, loadData:1.507153, createLayers:1.374062, trainTime:317.409336, timeAccuracy:1.015633, accuracy: 0.500000
+d0[0]=1.507153
+d1[0]=1.374062
+d2[0]=317.409336/50
+d3[0]=1.015633
 
 #################################
 

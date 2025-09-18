@@ -8,21 +8,21 @@
 % Number of filters in the output convolutional layer must be 21 for 3 anchor boxes and 2 classes.
 
 
-path="../../imagesAndRegions/sequence_1/";
-load("toolsTrainingData.mat");
+path="../../imagesAndRegions/sas/";
+load("trainData.mat");
 load("netCNN_SAS.mat");
 %load("dlnet.mat");
 %net=dlnet;
-trainingData=toolsTrainingData;
+%trainingData=toolsTrainingData;
 
 %disp(net.Layers);
 
 dataDir = fullfile(path );
-trainingData.imageFilename = fullfile("",trainingData.imageFilename);
+trainData.imageFilename = fullfile(path,trainData.imageFilename);
 
 
-imds = imageDatastore(trainingData.imageFilename);
-blds = boxLabelDatastore(trainingData(:,2:end));
+imds = imageDatastore(trainData.imageFilename);
+blds = boxLabelDatastore(trainData(:,2:end));
 ds = combine(imds,blds);
 
 inputSize = [240 240 3];
@@ -66,8 +66,8 @@ dlnet = replaceLayer(net,layerName,newInputLayer);
 featureExtractionLayers = ["Lay" ]; % ["activation_22_relu","activation_40_relu"];
 
 
-net=net.removeLayers("softmax");
-net=net.removeLayers("fc");
+%net=net.removeLayers("softmax");
+%net=net.removeLayers("fc");
 %net=net.removeLayers("fc_2"); 
 
 detector = yolov4ObjectDetector(net,classes,anchorBoxes );
