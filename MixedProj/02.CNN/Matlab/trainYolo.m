@@ -62,19 +62,21 @@ newInputLayer = imageInputLayer(imageSize,Normalization="none",Name=layerName);
 %Replace the image input layer in the base network with the new input layer.
 dlnet = replaceLayer(net,layerName,newInputLayer);
 %Specify the names of the feature extraction layers in the base network to use as the detection heads.
-featureExtractionLayers = ["Lay" ]% ["activation_22_relu","activation_40_relu"];
+featureExtractionLayers = ["Lay" ]; % ["activation_22_relu","activation_40_relu"];
 
 
 net=net.removeLayers("softmax");
-net=net.removeLayers("fc_1");
-net=net.removeLayers("fc_2"); 
+net=net.removeLayers("fc");
+%net=net.removeLayers("fc_2"); 
 
 detector = yolov4ObjectDetector(net,classes,anchorBoxes );
   %  DetectionNetworkSource=featureExtractionLayers);
 
 
-disp(detector) ;
-analyzeNetwork(detector.Network);
+%disp(detector) ;
+if (false) 
+    analyzeNetwork(detector.Network); 
+end
 
 I = imread("dedra_www.jpg");
 [bboxes, scores, labels] = detect(detector, I, Threshold=0.8);

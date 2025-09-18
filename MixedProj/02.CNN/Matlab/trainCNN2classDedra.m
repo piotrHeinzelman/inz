@@ -86,6 +86,9 @@ layers = [
 
     convolution2dLayer(1,256,Padding="same")
     batchNormalizationLayer
+
+    convolution2dLayer(1,18,Padding="same")
+    batchNormalizationLayer
     reluLayer(Name="Lay")
  
     fullyConnectedLayer( numberOfClass )
