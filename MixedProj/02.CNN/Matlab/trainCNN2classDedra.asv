@@ -1,8 +1,8 @@
 % https://www.mathworks.com/help/deeplearning/ug/create-simple-deep-learning-network-for-classification.html
 % unzip("DigitsData.zip"); % MNIST
 
-epoch=50;
-GPU=false;
+epoch=1;
+GPU=true;
 
 TIME_START=datetime('now');
 
@@ -63,29 +63,40 @@ TIME_LOAD_AND_PREPARE_DATA = datetime('now');
 %layers a`la yolo4
 layers = [
     imageInputLayer([240 240 3])
-    convolution2dLayer(3,32,Padding="same", Stride=2)
+    convolution2dLayer(7,32,Padding="same")
     batchNormalizationLayer
     reluLayer
-    maxPooling2dLayer(2,Stride=2)
+    maxPooling2dLayer(2)
 
 
-    convolution2dLayer(3,64,Padding=1, Stride=2)
+    convolution2dLayer(5,64,Padding="same")
     batchNormalizationLayer
     reluLayer
-    maxPooling2dLayer(2,Stride=2)
+    maxPooling2dLayer(2)
 
-    convolution2dLayer(3,128,Padding=1, Stride=2)
+    convolution2dLayer(3,128,Padding="same")
     batchNormalizationLayer
     reluLayer
-    maxPooling2dLayer(2,Stride=2)
+    maxPooling2dLayer(2)
 
-    convolution2dLayer(3,256,Padding=1, Stride=2)
+    convolution2dLayer(3,256,Padding="same")
     batchNormalizationLayer
     reluLayer
-    maxPooling2dLayer(2,Stride=2)
+    maxPooling2dLayer(2)
+
+
+    %{
+
+
+    convolution2dLayer(3,18,Padding=1, Stride=2)
+    batchNormalizationLayer
+    reluLayer
+    %}
 
     fullyConnectedLayer( numberOfClass )
     softmaxLayer ];
+
+disp(layers)
 
 
 options = trainingOptions("sgdm", ...
@@ -113,8 +124,9 @@ accuracy = mean(YValidation == TValidation)
 
 TIME_ACCURACY_TIME = datetime('now');
 
-
-
+if(false) % No generate on CPU !
+   save('netCNN_SAS','net');
+end
 
 
 
@@ -131,7 +143,22 @@ fprintf ('Epoch:%d, GPU:%s, loadData:%f, createLayers:%f, trainTime:%f, timeAccu
 %fprintf ('%s2[%d]=%f \n');
 
 
-%{ 
+%{
+Error using yolov4ObjectDetector>iValidateYOLOv4Network (line 1733)
+Number of filters in the output convolutional layer must be 18 for 3 anchor boxes and 1 classes.
+
+Error in yolov4ObjectDetector/parseDetectorInputs (line 1180)
+                iValidateYOLOv4Network(params.Network, numClasses, params.AnchorBoxes, params.PredictedBoxType);
+
+Error in yolov4ObjectDetector (line 286)
+                params = yolov4ObjectDetector.parseDetectorInputs(varargin{:});
+
+Error in trainYolo (line 37)
+detector = yolov4ObjectDetector(net2,classes,aboxes);
+%}
+
+
+%{
   1   'input'             Image Input               416×416×3 images
      2   'conv2d_1'          2-D Convolution           16 3×3×3 convolutions with stride [1  1] and padding 'same'
      3   'batch_norm_1'      Batch Normalization       Batch normalization with 16 channels
@@ -165,5 +192,5 @@ fprintf ('Epoch:%d, GPU:%s, loadData:%f, createLayers:%f, trainTime:%f, timeAccu
     31   'leaky_relu_8'      Leaky ReLU                Leaky ReLU with scale 0.1
     32   'conv2d_9'          2-D Convolution           425 1×1×512 convolutions with stride [1  1] and padding [0  0  0  0]
     33   'yolov2Transform'   YOLO v2 Transform Layer   YOLO v2 Transform Layer with 5 anchors
-  
+
 %}
