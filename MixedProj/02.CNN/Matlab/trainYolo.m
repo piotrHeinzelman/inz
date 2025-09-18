@@ -4,13 +4,17 @@
 %    "backbone" — Freeze the feature extraction subnetwork
 %    "backboneAndNeck" — Freeze both the feature extraction and the path aggregation subnetworks
 
+% Number of filters in the output convolutional layer must be 18 for 3 anchor boxes and 1 classes.
+% Number of filters in the output convolutional layer must be 21 for 3 anchor boxes and 2 classes.
+
 path="../../imagesAndRegions/sequence_1/";
 load("toolsTrainingData.mat");
 load("netCNN_SAS.mat");
-load("dlnet.mat");
-net=dlnet;
+%load("dlnet.mat");
+%net=dlnet;
 trainingData=toolsTrainingData;
 
+%disp(net.Layers);
 
 dataDir = fullfile(path );
 trainingData.imageFilename = fullfile("",trainingData.imageFilename);
@@ -31,7 +35,22 @@ anchors = anchors(idx,:);
 anchorBoxes = {anchors(1:3,:);anchors(4:6,:)};
 aboxes=anchorBoxes;
 
-classes = ["sas"];
+classes = ["sas" ]; 
+anchorBoxes = {[122,177;223,84;80,94] };
+
+
+%detector = yolov4ObjectDetector(net,classes,aboxes,'DetectionNetworkSource',layer );
+
+
+ 
+
+
+
+
+
+
+
+
 
 %netUpdated = removeLayers( net , ['softmax'] );
 %net2 = removeLayers( netUpdated , ['fc'] );
@@ -43,33 +62,25 @@ newInputLayer = imageInputLayer(imageSize,Normalization="none",Name=layerName);
 %Replace the image input layer in the base network with the new input layer.
 dlnet = replaceLayer(net,layerName,newInputLayer);
 %Specify the names of the feature extraction layers in the base network to use as the detection heads.
-featureExtractionLayers = ["activation_22_relu","activation_40_relu"]% ["activation_22_relu","activation_40_relu"];
-
-detector = yolov4ObjectDetector(dlnet,classes,anchorBoxes, ...
-    DetectionNetworkSource=featureExtractionLayers);
+featureExtractionLayers = ["Lay" ]% ["activation_22_relu","activation_40_relu"];
 
 
-disp(detector) 
-analyzeNetwork(detector.Network)
+net=net.removeLayers("softmax");
+net=net.removeLayers("fc_1");
+net=net.removeLayers("fc_2"); 
+
+detector = yolov4ObjectDetector(net,classes,anchorBoxes );
+  %  DetectionNetworkSource=featureExtractionLayers);
+
+
+disp(detector) ;
+analyzeNetwork(detector.Network);
 
 I = imread("dedra_www.jpg");
-[bboxes, scores, labels] = detect(detector, I, Threshold=0.4);
-objBoxes = bboxes(labels=="person", :);
-detectedImg = insertObjectAnnotation(I, "Rectangle", objBoxes, "person");
+[bboxes, scores, labels] = detect(detector, I, Threshold=0.8);
+objBoxes = bboxes(labels=="sas", :);
+detectedImg = insertObjectAnnotation(I, "Rectangle", objBoxes, "sas");
 figure
 imshow(detectedImg)
 
-
-
-% detector = yolov4ObjectDetector(net2,classes,aboxes);
-%yolov4ObjectDetector(net2,classes,aboxes,'DetectionNetworkSource',layer);
-%Network must not have any fully connected layers.
-
-
-
-
-%detector = yolov4ObjectDetector(baseNet,classes,aboxes,DetectionNetworkSource=layer)
-
-
-%detector = yolov4ObjectDetector(net,classes,anchorBoxes,InputSize=inputSize);
- %}
+ 
