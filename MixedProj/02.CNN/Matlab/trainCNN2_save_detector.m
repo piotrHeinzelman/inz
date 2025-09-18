@@ -57,18 +57,30 @@ anchorBoxes = {[122,177;223,84;80,94] };
 %net2 = removeLayers( netUpdated , ['fc'] );
  
 
-imageSize = net.Layers(1).InputSize;
-layerName = net.Layers(1).Name;
-newInputLayer = imageInputLayer(imageSize,Normalization="none",Name=layerName);
+%imageSize = net.Layers(1).InputSize;
+%layerName = net.Layers(1).Name;
+%newInputLayer = imageInputLayer(imageSize,Normalization="none",Name=layerName);
 %Replace the image input layer in the base network with the new input layer.
-dlnet = replaceLayer(net,layerName,newInputLayer);
+%net = replaceLayer(net,layerName,newInputLayer);
 %Specify the names of the feature extraction layers in the base network to use as the detection heads.
 featureExtractionLayers = ["Lay" ]; % ["activation_22_relu","activation_40_relu"];
 
 
-%net=net.removeLayers("softmax");
-%net=net.removeLayers("fc");
-%net=net.removeLayers("fc_2"); 
+net=net.removeLayers("softmax");
+net=net.removeLayers("flatten");
+net=net.removeLayers("relu_7"); 
+net=net.removeLayers("batchnorm_9"); 
+net=net.removeLayers("maxpool_7"); 
+net=net.removeLayers("relu_6"); 
+net=net.removeLayers("batchnorm_8"); 
+net=net.removeLayers("conv_8"); 
+net=net.removeLayers("maxpool_6"); 
+net=net.removeLayers("relu_5"); 
+net=net.removeLayers("batchnorm_7"); 
+net=net.removeLayers("conv_7"); 
+net=net.removeLayers("maxpool_5"); 
+net=net.removeLayers("conv_9"); 
+net = initialize(net)
 
 detector = yolov4ObjectDetector(net,classes,anchorBoxes );
 save('detector','detector')

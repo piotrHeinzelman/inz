@@ -87,20 +87,28 @@ layers = [
     convolution2dLayer(1,256,Padding="same")
     batchNormalizationLayer
 
-    convolution2dLayer(1,18,Padding="same")
+    convolution2dLayer(1,18,Padding="same", Stride=2)
     batchNormalizationLayer
     reluLayer(Name="Lay")
+    maxPooling2dLayer(2)
 
-    convolution2dLayer(1,18,Padding="same", Stride=5)
+    convolution2dLayer(1,8,Padding="same", Stride=2)
     batchNormalizationLayer
-    reluLayer
+    reluLayer 
+    maxPooling2dLayer(2)
 
-    convolution2dLayer(1,2,Padding="same", Stride=3)
+    convolution2dLayer(1,6,Padding="same", Stride=2)
     batchNormalizationLayer
-    reluLayer
-    %maxPooling2dLayer(2, Stride=2)
+    reluLayer 
+    maxPooling2dLayer(2)
+
+    convolution2dLayer(1,2,Padding="same" )
+    batchNormalizationLayer
+    reluLayer  
  
-%    fullyConnectedLayer( numberOfClass )
+    %maxPooling2dLayer(2, Stride=2)
+    % fullyConnectedLayer( numberOfClass )
+    flattenLayer
     softmaxLayer
     %flattenLayer
 

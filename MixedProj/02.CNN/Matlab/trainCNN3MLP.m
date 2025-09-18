@@ -1,6 +1,6 @@
 % https://www.mathworks.com/help/deeplearning/ref/dlnetwork.initialize.html
 %
-
+gpuDevice()
 epoch=10;
 load("trainData.mat");
 load('detector');
@@ -9,10 +9,11 @@ load('detector');
 dataDir = "../../imagesAndRegions/sas/";
 trainData.imageFilename = fullfile(dataDir,trainData.imageFilename);
 imds = imageDatastore(trainData.imageFilename);
+%imds = imageDatastore(trainData.imageFilename);
 blds = boxLabelDatastore(trainData(:,2:end));
 ds = combine(imds,blds);
 
-inputSize = [240 240 3];
+inputSize = [1240 1240 3];
 trainingDataForEstimation = transform(ds,@(data)preprocessData(data,inputSize));
 
 numAnchors = 6;
@@ -23,33 +24,21 @@ anchors = anchors(idx,:);
 anchorBoxes = {anchors(1:3,:);anchors(4:6,:)};
 
 classes = ["sas"];
-%detector = yolov4ObjectDetector(detector,classes,anchorBoxes,InputSize=inputSize);
+detector = yolov4ObjectDetector(detector.Network, classes,anchorBoxes,InputSize=inputSize);
 
 
 options = trainingOptions("sgdm", ...
     InitialLearnRate=0.001, ...
     MiniBatchSize=16,...
-    MaxEpochs=40, ...
+    MaxEpochs=5, ...
     ResetInputNormalization=false,...
     VerboseFrequency=30);
 
+detector = trainYOLOv4ObjectDetector(ds,detector,options );
 
-% Initialize the learnable parameters of the network using the initialize function and specify the example inputs. Specify the inputs with order corresponding to the InputNames property of the network.
-% inputSizeBranch = [32 32 18];
-% X1 = dlarray(rand(inputSize),"SSCB");
-% X2 = dlarray(rand(inputSizeBranch),"SSCB");
+I = imread("dedra_www.jpg");
 
-
-detector.Learnables;
-
-
-
-detector = initialize(detector);
-%trainedDetector = trainYOLOv4ObjectDetector(ds,net,options);
-
-I = imread("highway.png");
-
-[bboxes, scores, labels] = detect(detector,I,Threshold=0.05);
+[bboxes, scores, labels] = detect(detector,I,Threshold=0.75);
 detectedImg = insertObjectAnnotation(I,"Rectangle",bboxes,labels);
 figure
 imshow(detectedImg)
