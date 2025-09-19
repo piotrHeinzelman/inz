@@ -19,56 +19,39 @@ d3=[None,None,None,None]
 
 #################################
 
-## Epoch:50, GPU:True, loadData:0.078701, createLayers:0.111876, trainTime:324.218412, timeAccuracy:0.925654, accuracy: 0.993902
+
+
+### -- TRAIN klasyfikator CNN -- class="SAS" ###
+## Epoch:50, GPU:True, loadData:1.317517, createLayers:1.308044, trainTime:315.703167, timeAccuracy:0.931454, accuracy: 1.000000
 library[0]="Matlab GPU"
-d0[0]=0.078701
-d1[0]=0.111876
-d2[0]=324.218412/50
-d3[0]=0.925654
+d0[0]=1.317517
+d1[0]=1.308044
+d2[0]=315.703167/50
+d3[0]=0.931454
+d4[0]=0.097898
+d5[0]=16.519
+
+
+# prepare detector : 0.097898
+# train detector   : 16.519395
+# epoch: 100
+# images: 10
+
 
 #################################
 
-# net: tiny-yolov3-coco; task:dog1; class: ? score: 0.000000;  prepare detectortime: :1.225820;
-# load image time: 0.011383; detect object time: 1.161000
-library[ 1 ]=" ?? "
-d0[1]=1.225820
-d1[1]=0.011383
-d2[1]=1.161000
-d3[1]=1.161000
-# net: tiny-yolov4-coco; task:dog1; class: ? score: 0.000000;  prepare detectortime: :0.718696;
-# load image time: 0.011418; detect object time: 0.780485
-library[ 2 ]=" ?? "
-d0[2]=0.718696
-d1[2]=0.011418
-d2[2]=0.780485
-d3[2]=0.780485
-# net: tiny-coco; task:dog1; class: dog score: 0.762755;  prepare detectortime: :2.496382;
-# load image time: 0.008481; detect object time: 1.285220
-library[ 3 ]=" ?? "
-d0[3]=2.496382
-d1[3]=0.008481
-d2[3]=1.285220
-d3[3]=1.285220
 
-
-################################
-
-
-# Define library names
-#library = ['Yolo2', 'Yolo3', 'Yolo4', 'Yolo5']
-
-# Number of Enthusiasts for different regions
-#enthusiasts_north = [2000, 1500, 2500, 2000]
-#enthusiasts_south = [1500, 1300, 2000, 1800]
-bar_width = 0.18
+bar_width = 0.12
 x = np.arange( len(library) )
 off = bar_width
 
 # Grouped Bar Plot
-plt.bar( x-1.5*off  , d0, bar_width, label='wczytanie obrazów z dysku')
-plt.bar( x-0.5*off  , d1, bar_width, label='budowanie modelu')
-plt.bar( x+0.5*off  , d2, bar_width, label='trenowanie modelu (1 epoka) F+B')
-plt.bar( x+1.5*off  , d3, bar_width, label='predykcja F')
+plt.bar( x-2.5*off  , d0, bar_width, label='wczytanie danych uczących CNN')
+plt.bar( x-1.5*off  , d1, bar_width, label='budowanie modelu CNN')
+plt.bar( x-0.5*off  , d2, bar_width, label='trenowanie modelu CNN F+B')
+plt.bar( x+0.5*off  , d3, bar_width, label='obliczenie dokładności F')
+plt.bar( x+1.5*off  , d4, bar_width, label='budowanie detektora Yolo4')
+plt.bar( x+2.5*off  , d4, bar_width, label='uczenie detektora Yolo4')
 
 # Adding labels and title
 #plt.xlabel('Yolo ')

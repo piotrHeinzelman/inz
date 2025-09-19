@@ -36,16 +36,11 @@ trainingDataForEstimation = transform(ds,@(data)preprocessData(data,inputSize));
 %anchorBoxes = {anchors(1:3,:);anchors(4:6,:)};
 %aboxes=anchorBoxes;
 
-classes = ["sas" ]; 
+classes = ["sas" ];
 anchorBoxes = {[122,177;223,84;80,94] };
 
 
 %detector = yolov4ObjectDetector(net,classes,aboxes,'DetectionNetworkSource',layer );
-
-
- 
-
-
 
 
 
@@ -55,7 +50,6 @@ anchorBoxes = {[122,177;223,84;80,94] };
 
 %netUpdated = removeLayers( net , ['softmax'] );
 %net2 = removeLayers( netUpdated , ['fc'] );
- 
 
 %imageSize = net.Layers(1).InputSize;
 %layerName = net.Layers(1).Name;
@@ -68,20 +62,20 @@ featureExtractionLayers = ["Lay" ]; % ["activation_22_relu","activation_40_relu"
 
 net=net.removeLayers("softmax");
 net=net.removeLayers("flatten");
-net=net.removeLayers("relu_7"); 
-net=net.removeLayers("batchnorm_9"); 
-net=net.removeLayers("maxpool_7"); 
-net=net.removeLayers("relu_6"); 
-net=net.removeLayers("batchnorm_8"); 
-net=net.removeLayers("conv_8"); 
-net=net.removeLayers("maxpool_6"); 
-net=net.removeLayers("relu_5"); 
-net=net.removeLayers("batchnorm_7"); 
-net=net.removeLayers("conv_7"); 
-net=net.removeLayers("maxpool_5"); 
-net=net.removeLayers("conv_9"); 
-net = initialize(net)
+net=net.removeLayers("relu_7");
+net=net.removeLayers("batchnorm_9");
+net=net.removeLayers("maxpool_7");
+net=net.removeLayers("relu_6");
+net=net.removeLayers("batchnorm_8");
+net=net.removeLayers("conv_8");
+net=net.removeLayers("maxpool_6");
+net=net.removeLayers("relu_5");
+net=net.removeLayers("batchnorm_7");
+net=net.removeLayers("conv_7");
+net=net.removeLayers("maxpool_5");
+net=net.removeLayers("conv_9");
+net = initialize(net);
 
 detector = yolov4ObjectDetector(net,classes,anchorBoxes );
-save('detector','detector')
+save('detector','detector');
 
