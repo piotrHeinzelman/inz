@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-plt.title('Yolo in Matlab - Team.jpg')
 plt.style.use('_mpl-gallery')
 
 
@@ -107,6 +106,7 @@ f2[3]=0.594101
 ################################
 
 
+
 # Define library names
 #library = ['Yolo2', 'Yolo3', 'Yolo4', 'Yolo5']
 
@@ -118,18 +118,18 @@ x = np.arange( len(library) )
 offset = bar_width
 
 # Grouped Bar Plot
-plt.bar( x-offset         , d0, bar_width, label='load detector time')
-plt.bar( x         , d1, bar_width, label='load image time')
-plt.bar( x+offset         , d2, bar_width, label='detect time')
+plt.bar( x-offset         , d0, bar_width, label='przygotowanie detektora')
+plt.bar( x         , d1, bar_width, label='wczytanie obrazów z dysku')
+plt.bar( x+offset         , d2, bar_width, label='detekcja F')
 
 # Adding labels and title
 #plt.xlabel('Yolo ')
 plt.ylabel('Time[s]')
 plt.xticks(x, library, size=5)
 plt.legend(title='Time[s]')
-plt.title('Yolo in Matlab - DOG1.jpg')
+plt.title('Yolo in Matlab - Dog1.jpg')
 
-plt.savefig( '04_RCNN_MAT_dog1.pdf',dpi=400 )
+plt.savefig( '03_Yolo_MATLAB_dog1.pdf',dpi=400 )
 #plt.show()
 #plt.close()
 
@@ -141,18 +141,18 @@ plt.title('Yolo in Matlab - Team.jpg')
 plt.style.use('_mpl-gallery')
 
 # Grouped Bar Plot
-plt.bar( x-offset         , e0, bar_width, label='load detector time')
-plt.bar( x         , e1, bar_width, label='load image time')
-plt.bar( x+offset         , e2, bar_width, label='detect time')
+plt.bar( x-offset         , e0, bar_width, label='przygotowanie detektora')
+plt.bar( x         , e1, bar_width, label='wczytanie obrazów z dysku')
+plt.bar( x+offset         , e2, bar_width, label='detekcja F')
 
 # Adding labels and title
 #plt.xlabel('Yolo ')
 plt.ylabel('Time[s]')
 plt.xticks(x, library, size=5)
 plt.legend(title='Time[s]')
-plt.title('Yolo in Matlab - DOG2.jpg')
+plt.title('Yolo in Matlab - Dog2.jpg')
 
-plt.savefig( '04_RCNN_MAT_dog2.pdf',dpi=400 )
+plt.savefig( '03_Yolo_MATLAB_dog2.pdf',dpi=400 )
 #plt.show()
 #plt.close()
 
@@ -164,9 +164,9 @@ plt.title('Yolo in Matlab - Team.jpg')
 plt.style.use('_mpl-gallery')
 
 # Grouped Bar Plot
-plt.bar( x-offset         , f0, bar_width, label='load detector time')
-plt.bar( x         , f1, bar_width, label='load image time')
-plt.bar( x+offset         , f2, bar_width, label='detect time')
+plt.bar( x-offset         , f0, bar_width, label='przygotowanie detektora')
+plt.bar( x         , f1, bar_width, label='wczytanie obrazów z dysku')
+plt.bar( x+offset         , f2, bar_width, label='detekcja F')
 
 # Adding labels and title
 #plt.xlabel('Yolo ')
@@ -175,9 +175,12 @@ plt.xticks(x, library, size=5)
 plt.legend(title='Time[s]')
 plt.title('Yolo in Matlab - Team.jpg')
 
-plt.savefig( '04_RCNN_MAT_team.pdf',dpi=400 )
+plt.savefig( '03_Yolo_MATLAB_team.pdf',dpi=400 )
 #plt.show()
 #plt.close()
+
+
+
 
 
 

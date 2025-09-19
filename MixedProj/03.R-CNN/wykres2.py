@@ -82,14 +82,14 @@ x = np.arange( len(library) )
 off = bar_width
 
 # Grouped Bar Plot
-plt.barh( x+3*off  , d0, bar_width, label='load detector GPU', color='r')
-plt.barh( x+2*off    , d3, bar_width, label='load detector CPU', color="#AA0000")
+plt.barh( x+3*off  , d0, bar_width, label='przygotowanie detektora GPU', color='r')
+plt.barh( x+2*off    , d3, bar_width, label='przygotowanie detektora CPU', color="#AA0000")
 
-plt.barh( x+off    , d1, bar_width, label='load image GPU', color='g')
-plt.barh( x    , d4, bar_width, label='load image CUP', color="#00AA00")
+plt.barh( x+off    , d1, bar_width, label='wczytanie obrazu GPU', color='g')
+plt.barh( x    , d4, bar_width, label='wczytanie obrazu CPU', color="#00AA00")
 
-plt.barh( x-off  , d2, bar_width, label='detect GPU', color='b')
-plt.barh( x-2*off  , d5, bar_width, label='detect CPU', color="#0000AA")
+plt.barh( x-off  , d2, bar_width, label='detekcja GPU', color='b')
+plt.barh( x-2*off  , d5, bar_width, label='detekcja CPU', color="#0000AA")
 
 # Adding labels and title
 #plt.xlabel('Yolo ')
@@ -98,7 +98,7 @@ plt.yticks(x, library)
 plt.legend(title='Time[s]')
 plt.title('Yolo in Matlab - DOG1.jpg')
 
-plt.savefig( '04_RCNN_MAT_dog1_and_CPU.pdf',dpi=400 )
+plt.savefig( '03_Yolo_MATLAB_dog1.pdf',dpi=400 )
 #plt.show()
 #plt.close()
  
