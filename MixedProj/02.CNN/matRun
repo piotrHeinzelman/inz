@@ -3,3 +3,5 @@ echo "/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batc
 /usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run Matlab/trainCNN3MLP.m' >> log/Matlab3.log
 echo "/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run Matlab/trainYolo.m' >> log/Matlab.log"
 
+
+

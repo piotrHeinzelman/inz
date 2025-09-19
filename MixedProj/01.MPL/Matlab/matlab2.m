@@ -10,7 +10,7 @@
 %D = gpuDevice;
 
 percent=100;
-epoch=5000;
+epoch=3;
 gpu=true;
 TIME_GPUTransferData=0;
 
@@ -150,7 +150,7 @@ neurons = 64;
 
     %net.trainParam.mc = 0;
     net.trainParam.epochs = epoch;
-    net.trainParam.goal   = 0.00000003;
+    net.trainParam.goal   = 0.00000000000000000003;
     net.input.processFcns = {'mapminmax'}; % https://www.mathworks.com/matlabcentral/answers/278051-output-processing-function-removeconstantrows-is-not-supported-with-gpu
     net.output.processFcns = {'mapminmax'};%
 
@@ -158,6 +158,8 @@ neurons = 64;
 
     if ( gpu )
         %GPU
+
+
 	timeDataTransferStart = datetime('now');
 
         gxtrain = gpuArray( xtrain );
@@ -166,58 +168,45 @@ neurons = 64;
 	timeDataTransferEnd = datetime('now');
 TIME_GPUTransferData=seconds(duration( timeDataTransferEnd-timeDataTransferStart ));
 
-        net = configure(net,xtrain,ytrain);
 
-	timeTrainStart = datetime('now');
-        net = train(net, gxtrain, gytrain,'useParallel','yes','useGPU','yes');
-        timeTrainEnd = datetime('now');
-TIME_Train=seconds(duration( timeTrainEnd-timeTrainStart ));
+	    for i=(1:15)
+		net = configure(net,xtrain,ytrain);
 
+	        timeTrainStart = datetime('now');
+                net = train(net, gxtrain, gytrain,'useParallel','yes','useGPU','yes');
+                timeTrainEnd = datetime('now');
+                TIME_Train=seconds(duration( timeTrainEnd-timeTrainStart ));
+	        z = net( xtest );
+		flatZ = aryOfVectorToAryOfInt( z );
+		flatZtest = aryOfVectorToAryOfInt( ytest );
+                accuracy = accuracyCheck(flatZ, flatZtest);
+		fprintf('accuracy[%d]=%f\n',epoch, accuracy );
+		fprintf('train_time[%d]=%f\n',epoch, TIME_Train );
+		epoch=epoch+epoch;
+		net.trainParam.epochs = epoch;
 
-    else
-        %No GPU
-        %net = configure(net,xtrain,ytrain);
+	     end
 
-	timeTrainStart = datetime('now');
-        net = train( net, xtrain, ytrain );
-        timeTrainEnd = datetime('now');
-TIME_Train=seconds(duration( timeTrainEnd-timeTrainStart ));
     end
 
 
-    timeForwardStart = datetime('now');
-    z = net( xtest );
-    timeForwardEnd = datetime('now');
-TIME_Forward=seconds(duration( timeForwardEnd-timeForwardStart ));
-
-    flatZ = aryOfVectorToAryOfInt( z );
-    flatZtest = aryOfVectorToAryOfInt( ytest );
-    accuracy = accuracyCheck(flatZ, flatZtest);
-
-    str='CPU';
-    if gpu
-        str='GPU';
-    end
-
-    fprintf('# Matlab, MLP: 2x %i Neu, epoch=%i, data size=%i, accuracy:%f%%\n', neurons, epoch, percent*600, accuracy );
-%   fprintf('# train: epochs=%i, time=%f[s], one epoch time=%f[s] , one forward&backward time=%f[ms]\n', epoch,  seconds( duration(timeTrainEnd-timeTrainStart)), seconds( duration(timeTrainEnd-timeTrainStart))/(epoch), seconds( duration(timeTrainEnd-timeTrainStart))/(epoch*percent*0.6) );
-%   fprintf( '# accuracy=%f, forward one epoch time=%f[s], one propagation time=%f[ms] \n ' , accuracy, seconds( duration(timeForwardEnd-timeForwardStart)) , seconds( duration(timeForwardEnd-timeForwardStart))/(percent*0.10) );
-%   fprintf( '# loadDataTime=%f[s], transferToGPUTime=%f[s]', seconds( duration( timeLoadDataEnd-timeLoadDataStart )), seconds( duration(timeDataTransferEnd-timeDataTransferStart)))
 
 
-    fprintf('library[0]="Matlab GPU accuracy:%f"\n', accuracy);
-    fprintf('d0[0]=%f\n', TIME_GPUTransferData );
-    fprintf('d1[0]=%f\n' , TIME_Forward );
-    fprintf('d2[0]=%f\n' , TIME_Train );
 
 
-%timeTrainStart
-%timeTrainEnd
-%seconds( duration( ED-ST ))
-%timeForwardStart
-%timeForwardEnd
-%timeLoadDataEnd
-%timeLoadDataStart
-%timeDataTransferEnd
-%timeDataTransferStart
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

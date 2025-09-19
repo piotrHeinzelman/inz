@@ -37,7 +37,7 @@ device_name = tf.test.gpu_device_name()
 print(device_name)
 
 # params
-epochs = 200 # 5000
+epochs = 5000 # 5000
 percent = 100
 num_classes = 10
 input_shape = (784, 1)

@@ -13,16 +13,15 @@ library=[None,None,None,None]
 d0=[None,None,None,None]
 d1=[None,None,None,None]
 d2=[None,None,None,None]
-d3=[None,None,None,None]
 
 #################################
 
-# Matlab, MLP: 2x 64 Neu, epoch=200, data size=60000, accuracy:0.354000%
-library[0]="Matlab GPU"
-d0[0]=0.613316
-d1[0]=0.316464
-d2[0]=14.436038
-d3[0]=0.354000
+
+# Matlab, MLP: 2x 64 Neu, epoch=5000, data size=60000, accuracy:0.815000%
+library[0]="Matlab GPU accuracy:81.5%"
+d0[0]=0.602632
+d1[0]=0.323410
+d2[0]=217.394381
 
 #################################
 
@@ -32,21 +31,18 @@ library[ 1 ]=" ?? "
 d0[1]=1.225820
 d1[1]=0.011383
 d2[1]=1.161000
-d3[1]=1.161000
 # net: tiny-yolov4-coco; task:dog1; class: ? score: 0.000000;  prepare detectortime: :0.718696;
 # load image time: 0.011418; detect object time: 0.780485
 library[ 2 ]=" ?? "
 d0[2]=0.718696
 d1[2]=0.011418
 d2[2]=0.780485
-d3[2]=0.780485
 # net: tiny-coco; task:dog1; class: dog score: 0.762755;  prepare detectortime: :2.496382;
 # load image time: 0.008481; detect object time: 1.285220
 library[ 3 ]=" ?? "
 d0[3]=2.496382
 d1[3]=0.008481
 d2[3]=1.285220
-d3[3]=1.285220
 
 
 ################################
@@ -63,10 +59,9 @@ x = np.arange( len(library) )
 off = bar_width
 
 # Grouped Bar Plot
-plt.bar( x-1.5*off  , d0, bar_width, label='transfer danych do GPU')
-plt.bar( x-0.5*off  , d1, bar_width, label='predykcja F')
-plt.bar( x+0.5*off  , d2, bar_width, label='trenowanie modelu F+B')
-plt.bar( x+1.5*off  , d3, bar_width, label='dokładność (accuracy)')
+plt.bar( x-1.0*off  , d0, bar_width, label='transfer danych do GPU')
+plt.bar( x-0.0*off  , d1, bar_width, label='predykcja F')
+plt.bar( x+1.0*off  , d2, bar_width, label='trenowanie modelu F+B') 
 
 # Adding labels and title
 #plt.xlabel('Yolo ')
