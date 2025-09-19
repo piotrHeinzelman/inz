@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-plt.title('Trening klasyfikatora CNN w Matlab, 50 epok')
+plt.title('Trening klasyfikatora CNN 50 epok')
 plt.style.use('_mpl-gallery')
 
 
@@ -19,7 +19,7 @@ d3=[None,None,None,None]
 
 #################################
 
-## Epoch:50, GPU:, loadData:0.078701, createLayers:0.111876, trainTime:324.218412, timeAccuracy:0.925654, accuracy: 0.993902
+## Epoch:50, GPU:True, loadData:0.078701, createLayers:0.111876, trainTime:324.218412, timeAccuracy:0.925654, accuracy: 0.993902
 library[0]="Matlab GPU"
 d0[0]=0.078701
 d1[0]=0.111876
@@ -62,22 +62,20 @@ d3[3]=1.285220
 #enthusiasts_south = [1500, 1300, 2000, 1800]
 bar_width = 0.18
 x = np.arange( len(library) )
-offset = bar_width
+off = bar_width
 
 # Grouped Bar Plot
-plt.bar( x-offset         , d0, bar_width, label='load image')
-plt.bar( x         , d1, bar_width, label='create layers')
-plt.bar( x+offset         , d2, bar_width, label='training time 1 epoch')
-plt.bar( x+offset+offset  , d3, bar_width, label='prediction time')
+plt.bar( x-1.5*off  , d0, bar_width, label='wczytanie obrazów z dysku')
+plt.bar( x-0.5*off  , d1, bar_width, label='budowanie modelu')
+plt.bar( x+0.5*off  , d2, bar_width, label='trenowanie modelu (1 epoka) F+B')
+plt.bar( x+1.5*off  , d3, bar_width, label='predykcja F')
 
 # Adding labels and title
 #plt.xlabel('Yolo ')
 plt.ylabel('Time[s]')
 plt.xticks(x, library) # ,size=5
 plt.legend(title='Time[s]')
-plt.title('CNN trening klasyfikatora Matlab.jpg')
-
-plt.savefig( '02_CNN_MAT.pdf',dpi=400 )
+plt.savefig( 'Pomiary_KlasyfikatorCNN.pdf',dpi=400 )
 #plt.show()
 #plt.close()
 

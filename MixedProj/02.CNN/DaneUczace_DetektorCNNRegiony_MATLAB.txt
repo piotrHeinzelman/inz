@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<?xml-stylesheet type='text/xsl' href='image_metadata_stylesheet.xsl'?>
+<dataset>
+<name>Dedraset Dataset</name>
+<comment>Created on  2025 by Piotr Heinzelman</comment>
+<images>
+<image file='group_1000.jpg'>
+<box top='93' left='119' width='379' height='671'>
+<label>SAS</label>
+</box>
+</image>
+<image file='group_1002.jpg'>
+<box top='235' left='45' width='440' height='681'>
+<label>SAS</label>
+</box>
+</image>

@@ -28,13 +28,13 @@ ds = combine(imds,blds);
 inputSize = [240 240 3];
 trainingDataForEstimation = transform(ds,@(data)preprocessData(data,inputSize));
 
-numAnchors = 6;
-[anchors,meanIoU] = estimateAnchorBoxes( blds, numAnchors);
-area = anchors(:,1).*anchors(:,2);
-[~,idx] = sort(area,"descend");
-anchors = anchors(idx,:);
-anchorBoxes = {anchors(1:3,:);anchors(4:6,:)};
-aboxes=anchorBoxes;
+%numAnchors = 6;
+%[anchors,meanIoU] = estimateAnchorBoxes( blds, numAnchors);
+%area = anchors(:,1).*anchors(:,2);
+%[~,idx] = sort(area,"descend");
+%anchors = anchors(idx,:);
+%anchorBoxes = {anchors(1:3,:);anchors(4:6,:)};
+%aboxes=anchorBoxes;
 
 classes = ["sas" ]; 
 anchorBoxes = {[122,177;223,84;80,94] };
