@@ -73,25 +73,21 @@ end
 
 
 
-timeLoadDataStart = datetime('now');
-
-if ( true )
-
+if ( 1==1 )
+    percent=100;
 
     fileIMG=fopen( '../data/train-labels-idx1-ubyte','r');
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
-    ytmp=fileData(9:8+(percent*600))';
-    ysize=size(ytmp);
-    ysize=ysize(2);
-    ytrain=zeros(10,ysize);
+    ytmp=fileData(9:8+percent*600)';
+    ysize=percent*600;
+    yyy=zeros(1,ysize);
     for i=(1:ysize)
         d=ytmp(i);
-        if (d==0)
-            d=10;
-        end
-        ytrain(d,i)=1;
+        d=d+1;
+        yyy(i)=d ;
     end
+    ytrain=categorical(yyy);
 
     fileData=1;
 
@@ -99,102 +95,104 @@ if ( true )
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
 
-    ytmp=fileData(9:8+(percent*100))';
-    ysize=size(ytmp);
-    ysize=ysize(2);
-    ytest=zeros(10,ysize);
+    ytmp=fileData(9:8+percent*100)';
+    ysize=percent*100;
+    yyy=zeros(1,ysize);
     for i=(1:ysize)
         d=ytmp(i);
-        if (d==0)
-            d=10;
-        end
-        ytest(d,i)=1;
+        d=d+1;
+        yyy(i)=d ;
     end
-
+    ytest=categorical(yyy);
 
     fileIMG=fopen( '../data/train-images-idx3-ubyte','r');
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
-    tmp=fileData(17:16+(percent*784*600));
+    tmp=fileData(17:16+percent*784*600);
 
     for i=1:percent*600
         col=tmp(1+(i-1)*784:i*784);
-        xtrain(1:784,i)=col';
+        row=col';
+        ary=zeros(28,28);
+        for j=1:28
+            for k=1:28
+                val=row(k+((j-1)*28));
+                xtrain(j,k,1,i)=val; %/255
+
+            end
+        end
     end
-    xtrain=xtrain/255;
     fileData=1;
 
     fileIMG=fopen( '../data/t10k-images-idx3-ubyte','r');
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
-    tmp=fileData(17:16+(percent*784*100));
+    tmp=fileData(17:16+percent*784*100);
 
     for i=1:percent*100
         col=tmp(1+(i-1)*784:i*784);
-        xtest(1:784,i)=col';
+        row=col';
+        ary=zeros(28,28);
+        for j=1:28
+            for k=1:28
+                val=row(k+((j-1)*28));
+                xtest(j,k,1,i)=val; %/255
+
+            end
+        end
     end
-    xtest=xtest/255;
     fileData=1;
 end
-timeLoadDataEnd = datetime('now');
+
+ 
+
+input = imageInputLayer([28 28 1]);  % 28x28px 1 channel
+conv = convolution2dLayer(5, 20); % 10 filter, 5x5
+relu = reluLayer;                    %reLU
+max = maxPooling2dLayer(2,Stride=2);
+fc = fullyConnectedLayer(10);
+sm = softmaxLayer;
+co = classificationLayer;
+
+
+layers = [ input
+    conv
+    relu
+    max
+    fc
+    sm
+    co];
+
+
+options=trainingOptions('adam', 'MaxEpochs',epoch, 'ExecutionEnvironment','gpu','ValidationPatience',10 , 'Verbose', 0 , 'MiniBatchSize', percent*600 );
 
 
 
-if (false)
-showx( xtrain , 1 );
-end
+ 
 
-neurons = 64;
-
-    net = feedforwardnet([ neurons,neurons ],'traingd'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
-
-    %net.trainParam.mc = 0;
-    net.trainParam.epochs = epoch;
-    net.trainParam.goal   = 0.00000000000000000003;
-    net.input.processFcns = {'mapminmax'}; % https://www.mathworks.com/matlabcentral/answers/278051-output-processing-function-removeconstantrows-is-not-supported-with-gpu
-    net.output.processFcns = {'mapminmax'};%
-
-
-
-    if ( gpu )
-        %GPU
-
-
-	timeDataTransferStart = datetime('now');
-
-        gxtrain = gpuArray( xtrain );
-        gytrain = gpuArray( ytrain );
-
-	timeDataTransferEnd = datetime('now');
-TIME_GPUTransferData=seconds(duration( timeDataTransferEnd-timeDataTransferStart ));
-
-
-	    for i=(1:15)
-		net = configure(net,xtrain,ytrain);
+	    for i=(1:15) % 15
+		%net = configure(net,xtrain,ytrain);
 
 	        timeTrainStart = datetime('now');
-                net = train(net, gxtrain, gytrain,'useParallel','yes','useGPU','yes');
+		    netTransfer = trainNetwork( xtrain, ytrain, layers, options);
+                %net = train(net, gxtrain, gytrain,'useParallel','yes','useGPU','yes');
                 timeTrainEnd = datetime('now');
                 TIME_Train=seconds(duration( timeTrainEnd-timeTrainStart ));
-	        z = net( xtest );
+	        z = netTransfer.predict( xtest );
 		flatZ = aryOfVectorToAryOfInt( z );
 		flatZtest = aryOfVectorToAryOfInt( ytest );
                 accuracy = accuracyCheck(flatZ, flatZtest);
 		fprintf('accuracy[%d]=%f\n',epoch, accuracy );
 		fprintf('train_time[%d]=%f\n',epoch, TIME_Train );
 		epoch=epoch+epoch;
-		net.trainParam.epochs = epoch;
+        options.MaxEpochs=epoch;
 
 	     end
 
-    end
+ save('netTransfer','netTransfer');
 
-
-
-
-
-
-
+% predictedLabels = classify(netTransfer, xtest);
+% accuracy = accuracyCheck( predictedLabels', ytest );
 
 
 

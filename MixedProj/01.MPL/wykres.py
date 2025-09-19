@@ -18,10 +18,10 @@ d2=[None,None,None,None]
 
 
 # Matlab, MLP: 2x 64 Neu, epoch=5000, data size=60000, accuracy:0.815000%
-library[0]="Matlab GPU accuracy:81.5%"
+library[0]="Matlab GPU\n acc:81.5%"
 d0[0]=0.602632
 d1[0]=0.323410
-d2[0]=217.394381
+d2[0]=217.394381/50
 
 #################################
 
@@ -61,7 +61,7 @@ off = bar_width
 # Grouped Bar Plot
 plt.bar( x-1.0*off  , d0, bar_width, label='transfer danych do GPU')
 plt.bar( x-0.0*off  , d1, bar_width, label='predykcja F')
-plt.bar( x+1.0*off  , d2, bar_width, label='trenowanie modelu F+B') 
+plt.bar( x+1.0*off  , d2, bar_width, label='trenowanie modelu/50F+B') 
 
 # Adding labels and title
 #plt.xlabel('Yolo ')

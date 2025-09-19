@@ -1,34 +1,6 @@
-% S.Osowski / R.Szmurlo matematyczne modele
-% page 89
-% https://www.tensorflow.org/?hl=pl
-% https://www.mathworks.com/help/deeplearning/ref/feedforwardnet.html
-% https://www.mathworks.com/help/overview/ai-and-statistics.html?s_tid=hc_product_group_bc
-% https://www.youtube.com/watch?v=aircAruvnKk
-
-% To train a deep learning network, use trainnet.
-
-%D = gpuDevice;
-
-percent=100;
-epoch=3;
-gpu=true;
-TIME_GPUTransferData=0;
 
 
-
-function accuracy = accuracyCheck( first, second )
-    goals=0;
-    s=size(first);
-    s=s(2);
-    for i=(1:s)
-        val1=first(i);
-        val2=second(i);
-        if (val1==val2)
-            goals=goals+1;
-        end
-    end
-    accuracy = goals/s;
-end
+ 
 
 function index = indexOfMaxInVector( vec ) %
     val=vec(1);
@@ -140,65 +112,12 @@ timeLoadDataEnd = datetime('now');
 
 
 
-if (false)
-showx( xtrain , 1 );
-end
+load("net");
+X=xtrain(:,18);
+showx( xtrain , 18 );
+Z = net( X )
+indexOfMaxInVector( Z )
 
-neurons = 64;
-
-    net = feedforwardnet([ neurons,neurons ],'traingd'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
-
-    %net.trainParam.mc = 0;
-    net.trainParam.epochs = epoch;
-    net.trainParam.goal   = 0.00000000000000000003;
-    net.input.processFcns = {'mapminmax'}; % https://www.mathworks.com/matlabcentral/answers/278051-output-processing-function-removeconstantrows-is-not-supported-with-gpu
-    net.output.processFcns = {'mapminmax'};%
-
-
-
-    if ( gpu )
-        %GPU
-
-
-	timeDataTransferStart = datetime('now');
-
-        gxtrain = gpuArray( xtrain );
-        gytrain = gpuArray( ytrain );
-
-	timeDataTransferEnd = datetime('now');
-TIME_GPUTransferData=seconds(duration( timeDataTransferEnd-timeDataTransferStart ));
-
-
-	    for i=(1:15)
-		net = configure(net,xtrain,ytrain);
-
-	        timeTrainStart = datetime('now');
-                net = train(net, gxtrain, gytrain,'useParallel','yes','useGPU','yes');
-                timeTrainEnd = datetime('now');
-                TIME_Train=seconds(duration( timeTrainEnd-timeTrainStart ));
-	        z = net( xtest );
-		flatZ = aryOfVectorToAryOfInt( z );
-		flatZtest = aryOfVectorToAryOfInt( ytest );
-                accuracy = accuracyCheck(flatZ, flatZtest);
-		fprintf('accuracy[%d]=%f\n',epoch, accuracy );
-		fprintf('train_time[%d]=%f\n',epoch, TIME_Train );
-		epoch=epoch+epoch;
-		net.trainParam.epochs = epoch;
-
-	     end
-
-    end
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
+   
 

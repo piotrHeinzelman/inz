@@ -210,6 +210,9 @@ TIME_Forward=seconds(duration( timeForwardEnd-timeForwardStart ));
     fprintf('d1[0]=%f\n' , TIME_Forward );
     fprintf('d2[0]=%f\n' , TIME_Train );
 
+    save('net','net');
+ 
+
 
 %timeTrainStart
 %timeTrainEnd
