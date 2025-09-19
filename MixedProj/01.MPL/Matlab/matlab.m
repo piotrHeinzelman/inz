@@ -10,8 +10,10 @@
 %D = gpuDevice;
 
 percent=100;
-epoch=5000;
+epoch=200;
 gpu=true;
+TIME_GPUTransferData=0;
+
 
 
 function accuracy = accuracyCheck( first, second )
@@ -162,13 +164,16 @@ neurons = 64;
         gytrain = gpuArray( ytrain );
 
 	timeDataTransferEnd = datetime('now');
-
+TIME_GPUTransferData=seconds(duration( timeDataTransferEnd-timeDataTransferStart ));
 
         net = configure(net,xtrain,ytrain);
 
 	timeTrainStart = datetime('now');
         net = train(net, gxtrain, gytrain,'useParallel','yes','useGPU','yes');
         timeTrainEnd = datetime('now');
+TIME_Train=seconds(duration( timeTrainEnd-timeTrainStart ));
+
+
     else
         %No GPU
         %net = configure(net,xtrain,ytrain);
@@ -176,13 +181,14 @@ neurons = 64;
 	timeTrainStart = datetime('now');
         net = train( net, xtrain, ytrain );
         timeTrainEnd = datetime('now');
-
+TIME_Train=seconds(duration( timeTrainEnd-timeTrainStart ));
     end
 
 
     timeForwardStart = datetime('now');
     z = net( xtest );
     timeForwardEnd = datetime('now');
+TIME_Forward=seconds(duration( timeForwardEnd-timeForwardStart ));
 
     flatZ = aryOfVectorToAryOfInt( z );
     flatZtest = aryOfVectorToAryOfInt( ytest );
@@ -193,10 +199,17 @@ neurons = 64;
         str='GPU';
     end
 
-    fprintf('# Matlab, MLP: 2x %i Neu, data size=%i\n', neurons, percent*600 );
-    fprintf('# train: epochs=%i, time=%f[s], one epoch time=%f[s] , one forward&backward time=%f[ms]\n', epoch,  seconds( duration(timeTrainEnd-timeTrainStart)), seconds( duration(timeTrainEnd-timeTrainStart))/(epoch), seconds( duration(timeTrainEnd-timeTrainStart))/(epoch*percent*0.6) );
-    fprintf( '# accuracy=%f, forward one epoch time=%f[s], one propagation time=%f[ms] \n ' , accuracy, seconds( duration(timeForwardEnd-timeForwardStart)) , seconds( duration(timeForwardEnd-timeForwardStart))/(percent*0.10) );
-    fprintf( '# loadDataTime=%f[s], transferToGPUTime=%f[s]', seconds( duration( timeLoadDataEnd-timeLoadDataStart )), seconds( duration(timeDataTransferEnd-timeDataTransferStart)))
+    fprintf('# Matlab, MLP: 2x %i Neu, epoch=%i, data size=%i, accuracy:%f%%\n', neurons, epoch, percent*600, accuracy );
+%   fprintf('# train: epochs=%i, time=%f[s], one epoch time=%f[s] , one forward&backward time=%f[ms]\n', epoch,  seconds( duration(timeTrainEnd-timeTrainStart)), seconds( duration(timeTrainEnd-timeTrainStart))/(epoch), seconds( duration(timeTrainEnd-timeTrainStart))/(epoch*percent*0.6) );
+%   fprintf( '# accuracy=%f, forward one epoch time=%f[s], one propagation time=%f[ms] \n ' , accuracy, seconds( duration(timeForwardEnd-timeForwardStart)) , seconds( duration(timeForwardEnd-timeForwardStart))/(percent*0.10) );
+%   fprintf( '# loadDataTime=%f[s], transferToGPUTime=%f[s]', seconds( duration( timeLoadDataEnd-timeLoadDataStart )), seconds( duration(timeDataTransferEnd-timeDataTransferStart)))
+
+
+    fprintf('library[0]="Matlab GPU"\n');
+    fprintf('d0[0]=%f\n', TIME_GPUTransferData );
+    fprintf('d1[0]=%f\n' , TIME_Forward );
+    fprintf('d2[0]=%f\n' , TIME_Train );
+    fprintf('d3[0]=%f\n', accuracy );
 
 
 %timeTrainStart

@@ -1,0 +1,6 @@
+# Matlab, MLP: 2x 64 Neu, epoch=200, data size=60000, accuracy:0.354000%
+library[0]="Matlab GPU"
+d0[0]=0.613316
+d1[0]=0.316464
+d2[0]=14.436038
+d3[0]=0.354000
