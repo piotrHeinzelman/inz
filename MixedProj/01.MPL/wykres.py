@@ -21,7 +21,7 @@ d2=[None,None,None,None]
 library[0]="Matlab GPU\n acc:81.5%"
 d0[0]=0.602632
 d1[0]=0.323410
-d2[0]=217.394381/50
+d2[0]=217.394381 / 100
 
 #################################
 
@@ -61,7 +61,7 @@ off = bar_width
 # Grouped Bar Plot
 plt.bar( x-1.0*off  , d0, bar_width, label='transfer danych do GPU')
 plt.bar( x-0.0*off  , d1, bar_width, label='predykcja F')
-plt.bar( x+1.0*off  , d2, bar_width, label='trenowanie modelu/50F+B') 
+plt.bar( x+1.0*off  , d2, bar_width, label='trenowanie modelu / 100 F+B')
 
 # Adding labels and title
 #plt.xlabel('Yolo ')
