@@ -166,7 +166,7 @@ options=trainingOptions('adam', 'MaxEpochs',epoch, 'ExecutionEnvironment','gpu',
 
 
 
-	    for i=(1:10) % 15
+	    for i=(1:15) % 15
 		%net = configure(net,xtrain,ytrain);
 
 	        timeTrainStart = datetime('now');
