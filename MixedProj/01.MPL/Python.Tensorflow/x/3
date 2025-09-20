@@ -1,0 +1,2 @@
+conda create --name tf2 nvidia::cudnn conda-forge::tensorflow-gpu  anaconda::keras-gpu cuda-version=12.8
+

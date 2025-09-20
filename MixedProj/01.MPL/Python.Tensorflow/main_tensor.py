@@ -37,7 +37,7 @@ device_name = tf.test.gpu_device_name()
 print(device_name)
 
 # params
-epochs = 5000 # 5000
+epochs = 50 # 5000
 percent = 100
 num_classes = 10
 input_shape = (784, 1)
@@ -63,10 +63,10 @@ def readFileY ( fileName , offset, percent, multi ):
 
 timeLoadDataStart=time.time()
 
-trainX = readFileX ('data/train-images-idx3-ubyte', 16, percent ,6 )
-trainY = readFileY ('data/train-labels-idx1-ubyte', 8, percent, 6 )
-testX = readFileX ('data/t10k-images-idx3-ubyte', 16, percent, 1  )
-testY = readFileY ('data/t10k-labels-idx1-ubyte', 8, percent, 1 )
+trainX = readFileX ('../data/train-images-idx3-ubyte', 16, percent ,6 )
+trainY = readFileY ('../data/train-labels-idx1-ubyte', 8, percent, 6 )
+testX = readFileX ('../data/t10k-images-idx3-ubyte', 16, percent, 1  )
+testY = readFileY ('../data/t10k-labels-idx1-ubyte', 8, percent, 1 )
 
 
 trainY = to_categorical(trainY, num_classes)
@@ -114,14 +114,14 @@ model.compile(optimizer=opt,
               metrics=['accuracy'])
 
 
-model.summary()
+#model.summary()
 
 
 
 timeTrainStart=time.time()
 
 with tf.device('/device:GPU:0'):
-   model.fit( trainX, trainY, epochs=epochs, verbose=0 , batch_size=512 ) #
+   model.fit( trainX, trainY, epochs=epochs, verbose=0 )
 
 timeTrainEnd=time.time()
 
@@ -129,7 +129,6 @@ timeForwardStart=time.time()
 
 with tf.device('/device:GPU:0'):
    result = model.evaluate( testX, testY )
-
 timeForwardEnd=time.time()
 
 
