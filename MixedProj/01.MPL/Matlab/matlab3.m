@@ -5,15 +5,14 @@
 % https://www.mathworks.com/help/overview/ai-and-statistics.html?s_tid=hc_product_group_bc
 % https://www.youtube.com/watch?v=aircAruvnKk
 
-% To train a deep learning network, use trainnet.
 
-%D = gpuDevice;
 
-percent=100;
-epoch=3;
-gpu=true;
-TIME_GPUTransferData=0;
+% S.Osowski, R.Szmurlo : modele matematyczne uczenia maszynowego 
+% Alexnet - tryb Transfer Learning
+% https://www.mathworks.com/help/deeplearning/ug/introduction-to-convolutional-neural-networks.html
 
+epoch=3; %130;
+verbose=0;
 
 
 function accuracy = accuracyCheck( first, second )
@@ -30,6 +29,7 @@ function accuracy = accuracyCheck( first, second )
     accuracy = goals/s;
 end
 
+
 function index = indexOfMaxInVector( vec ) %
     val=vec(1);
     index=1;
@@ -42,6 +42,7 @@ function index = indexOfMaxInVector( vec ) %
         end
     end
 end
+
 
 function aryOfInt = aryOfVectorToAryOfInt( aryOfVec )
     s = size( aryOfVec );
@@ -58,6 +59,7 @@ function aryOfInt = aryOfVectorToAryOfInt( aryOfVec )
     end
 end
 
+
 function showx( arrayx , i )
     img0=arrayx(1:784,i);
     img0=img0*256;
@@ -70,8 +72,6 @@ function showx( arrayx , i )
         end
     image(img)
 end
-
-
 
 if ( 1==1 )
     percent=100;
@@ -144,8 +144,6 @@ if ( 1==1 )
     fileData=1;
 end
 
- 
-
 input = imageInputLayer([28 28 1]);  % 28x28px 1 channel
 conv = convolution2dLayer(5, 20); % 10 filter, 5x5
 relu = reluLayer;                    %reLU
@@ -164,13 +162,11 @@ layers = [ input
     co];
 
 
-options=trainingOptions('adam', 'MaxEpochs',epoch, 'ExecutionEnvironment','gpu','ValidationPatience',10 , 'Verbose', 0 , 'MiniBatchSize', percent*600 );
+options=trainingOptions('adam', 'MaxEpochs',epoch, 'ExecutionEnvironment','gpu','ValidationPatience',10 , 'Verbose', verbose , 'MiniBatchSize', percent*600 );
 
 
 
- 
-
-	    for i=(1:15) % 15
+	    for i=(1:10) % 15
 		%net = configure(net,xtrain,ytrain);
 
 	        timeTrainStart = datetime('now');
@@ -178,10 +174,9 @@ options=trainingOptions('adam', 'MaxEpochs',epoch, 'ExecutionEnvironment','gpu',
                 %net = train(net, gxtrain, gytrain,'useParallel','yes','useGPU','yes');
                 timeTrainEnd = datetime('now');
                 TIME_Train=seconds(duration( timeTrainEnd-timeTrainStart ));
-	        z = netTransfer.predict( xtest );
-		flatZ = aryOfVectorToAryOfInt( z );
-		flatZtest = aryOfVectorToAryOfInt( ytest );
-                accuracy = accuracyCheck(flatZ, flatZtest);
+            predictedLabels = classify(netTransfer, xtest);
+            accuracy = accuracyCheck( predictedLabels', ytest );
+
 		fprintf('accuracy[%d]=%f\n',epoch, accuracy );
 		fprintf('train_time[%d]=%f\n',epoch, TIME_Train );
 		epoch=epoch+epoch;
@@ -190,13 +185,6 @@ options=trainingOptions('adam', 'MaxEpochs',epoch, 'ExecutionEnvironment','gpu',
 	     end
 
  save('netTransfer','netTransfer');
-
-% predictedLabels = classify(netTransfer, xtest);
-% accuracy = accuracyCheck( predictedLabels', ytest );
-
-
-
-
-
+ 
 
 
