@@ -10,7 +10,7 @@ from tensorflow import keras
 
 import os
 import time
-from tensorflow.keras.backend import clear_session
+#from tensorflow.keras.backend import clear_session
 # import matplotlib.pyplot as plt
 
 # from sklearn.metrics import classification_report, confusion_matrix, roc_curve, auc
@@ -70,10 +70,10 @@ def AlexNet():
 
 
 
-trainX = readFileX ('data/train-images-idx3-ubyte', 16, percent ,6 )
-trainY = readFileY ('data/train-labels-idx1-ubyte', 8, percent, 6 )
-testX = readFileX ('data/t10k-images-idx3-ubyte', 16, percent, 1  )
-testY = readFileY ('data/t10k-labels-idx1-ubyte', 8, percent, 1 )
+trainX = readFileX ('../01.MPL/data/train-images-idx3-ubyte', 16, percent ,6 )
+trainY = readFileY ('../01.MPL/data/train-labels-idx1-ubyte', 8, percent, 6 )
+testX = readFileX ('../01.MPL/data/t10k-images-idx3-ubyte', 16, percent, 1  )
+testY = readFileY ('../01.MPL/data/t10k-labels-idx1-ubyte', 8, percent, 1 )
 
 
 trainX = trainX.astype("float32") # / 255

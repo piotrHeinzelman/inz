@@ -1,0 +1,7 @@
+https://github.com/muchlakshay/Dual-Backend-MLP-From-Scratch-CUDA
+
+sudo apt update && sudo apt upgrade
+sudo apt install libeigen3-dev
+dpkg -L libeigen3-dev
+
+

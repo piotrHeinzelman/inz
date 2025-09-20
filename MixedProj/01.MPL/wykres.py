@@ -25,12 +25,18 @@ d2[0]=217.394381 / 100
 
 #################################
 
-# net: tiny-yolov3-coco; task:dog1; class: ? score: 0.000000;  prepare detectortime: :1.225820;
-# load image time: 0.011383; detect object time: 1.161000
-library[ 1 ]=" ?? "
-d0[1]=1.225820
-d1[1]=0.011383
-d2[1]=1.161000
+# Python, MLP: 2x 64 Neu, data size= 60000
+# accuracy= 0.9496999979019165
+# train: epochs= 50
+# LoadDataTime= 0.22016596794128418
+# trainTime= 111.7593162059784
+# propagation time:= 0.6048471927642822
+
+library[1]="Python Tensorflow\n acc:94%"
+d0[1]=0.2201
+d1[1]=0.604
+d2[1]=111.75 / 100
+
 # net: tiny-yolov4-coco; task:dog1; class: ? score: 0.000000;  prepare detectortime: :0.718696;
 # load image time: 0.011418; detect object time: 0.780485
 library[ 2 ]=" ?? "

@@ -27,14 +27,14 @@ from tensorflow.keras.utils import to_categorical
 
 
 
-physical_devices = tf.config.list_physical_devices('GPU')
-if physical_devices:
-   for gpu in physical_devices:
-      tf.config.experimental.set_memory_growth(gpu, True)
-      print(gpu.device_type)
+#physical_devices = tf.config.list_physical_devices('GPU')
+#if physical_devices:
+#   for gpu in physical_devices:
+#      tf.config.experimental.set_memory_growth(gpu, True)
+#      print(gpu.device_type)
 
-device_name = tf.test.gpu_device_name()
-print(device_name)
+#device_name = tf.test.gpu_device_name()
+#print(device_name)
 
 # params
 epochs = 50 # 5000
@@ -63,10 +63,10 @@ def readFileY ( fileName , offset, percent, multi ):
 
 timeLoadDataStart=time.time()
 
-trainX = readFileX ('../data/train-images-idx3-ubyte', 16, percent ,6 )
-trainY = readFileY ('../data/train-labels-idx1-ubyte', 8, percent, 6 )
-testX = readFileX ('../data/t10k-images-idx3-ubyte', 16, percent, 1  )
-testY = readFileY ('../data/t10k-labels-idx1-ubyte', 8, percent, 1 )
+trainX = readFileX ('data/train-images-idx3-ubyte', 16, percent ,6 )
+trainY = readFileY ('data/train-labels-idx1-ubyte', 8, percent, 6 )
+testX = readFileX ('data/t10k-images-idx3-ubyte', 16, percent, 1  )
+testY = readFileY ('data/t10k-labels-idx1-ubyte', 8, percent, 1 )
 
 
 trainY = to_categorical(trainY, num_classes)
@@ -92,15 +92,8 @@ opt = tf.keras.optimizers.SGD(
     learning_rate=0.01,
     momentum=0.0,
     nesterov=False,
-#    weight_decay=0.3,
     clipnorm=None,
     clipvalue=None,
-#    global_clipnorm=None,
-#    use_ema=False,
-#    ema_momentum=0.99,
-#    ema_overwrite_frequency=None,
-#    loss_scale_factor=None,
-#    gradient_accumulation_steps=None,
     name='sgd'
 )
 
@@ -138,9 +131,11 @@ print("Loss {}, Accuracy {}".format(loss, acc))
 
 
 print('# Python, MLP: 2x 64 Neu, data size=',percent*600,'' );
-print('# train: epochs=',epochs,', time=',timeTrainEnd-timeTrainStart,'[s], one epoch time=',(timeTrainEnd-timeTrainStart)/(epochs),'[s], one forward&backward time=',(timeTrainEnd-timeTrainStart)/(epochs*percent*0.6),'[ms]' );
-print('# accuracy=',result[1],', forward one epoch time=',timeForwardEnd-timeForwardStart,'[s], one propagation time=',(timeForwardEnd-timeForwardStart)/(percent/10),'[ms]'  );
+print('# accuracy=',result[1])
+print('# train: epochs=',epochs);
+print('# LoadDataTime=', timeLoadDataEnd-timeLoadDataStart)
+print('# trainTime=',timeTrainEnd-timeTrainStart);
+print('# propagation time:=',(timeForwardEnd-timeForwardStart) );
 
-print ('# LoadDataTime=', timeLoadDataEnd-timeLoadDataStart,'[s]')
 
 
