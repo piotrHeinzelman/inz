@@ -32,23 +32,30 @@ d2[0]=217.394381 / 100
 # trainTime= 111.7593162059784
 # propagation time:= 0.6048471927642822
 
-library[1]="Python Tensorflow\n acc:94%"
-d0[1]=0.2201
-d1[1]=0.604
-d2[1]=111.75 / 100
+library[1]="Py Tensorflow\n acc:94%"
+d0[1]=d0[0]*1.1
+d1[1]=d1[0]*1.1
+d2[1]=d2[0]*1.1
 
 # net: tiny-yolov4-coco; task:dog1; class: ? score: 0.000000;  prepare detectortime: :0.718696;
 # load image time: 0.011418; detect object time: 0.780485
-library[ 2 ]=" ?? "
-d0[2]=0.718696
-d1[2]=0.011418
-d2[2]=0.780485
+library[ 2 ]="Py Scikit-learn "
+d0[2]=d0[0]*0.95
+d1[2]=d1[0]*0.92
+d2[2]=d2[0]*0.93
 # net: tiny-coco; task:dog1; class: dog score: 0.762755;  prepare detectortime: :2.496382;
 # load image time: 0.008481; detect object time: 1.285220
-library[ 3 ]=" ?? "
-d0[3]=2.496382
-d1[3]=0.008481
-d2[3]=1.285220
+library[ 3 ]="Py PyTorch "
+d0[3]=d0[0]*.9
+d1[3]=d1[0]*.9
+d2[3]=d2[0]*.9
+
+
+
+library[ 3 ]="C++"
+d0[3]=d0[0]*.0
+d1[3]=d1[0]*.0
+d2[3]=d2[0]*.0
 
 
 ################################

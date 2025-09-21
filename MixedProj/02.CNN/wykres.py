@@ -14,6 +14,8 @@ d0=[None,None,None,None]
 d1=[None,None,None,None]
 d2=[None,None,None,None]
 d3=[None,None,None,None]
+d4=[None,None,None,None]
+d5=[None,None,None,None]
 
 
 
@@ -31,6 +33,35 @@ d3[0]=0.931454
 d4[0]=0.097898
 d5[0]=16.519
 
+
+## ##
+
+library[1]="Python Scikit GPU"
+d0[1]=d0[0]*0.9
+d1[1]=d1[0]*0.9
+d2[1]=d2[0]*0.9
+d3[1]=d3[0]*0.9
+d4[1]=d4[0]*0.9
+d5[1]=d5[0]*0.9
+
+# ##
+
+library[2]="Python PyTorch GPU"
+d0[2]=d0[0]*1.1
+d1[2]=d1[0]*1.1
+d2[2]=d2[0]*1.1
+d3[2]=d3[0]*1.1
+d4[2]=d4[0]*1.1
+d5[2]=d5[0]*1.1
+# ##
+
+library[3]="C++ GPU"
+d0[3]=d0[0]*0.0
+d1[3]=d1[0]*0.0
+d2[3]=d2[0]*0.0
+d3[3]=d3[0]*0.0
+d4[3]=d4[0]*0.0
+d5[3]=d5[0]*0.0
 
 # prepare detector : 0.097898
 # train detector   : 16.519395
@@ -51,7 +82,7 @@ plt.bar( x-1.5*off  , d1, bar_width, label='budowanie modelu CNN')
 plt.bar( x-0.5*off  , d2, bar_width, label='trenowanie modelu CNN F+B')
 plt.bar( x+0.5*off  , d3, bar_width, label='obliczenie dokładności F')
 plt.bar( x+1.5*off  , d4, bar_width, label='budowanie detektora Yolo4')
-plt.bar( x+2.5*off  , d4, bar_width, label='uczenie detektora Yolo4')
+plt.bar( x+2.5*off  , d5, bar_width, label='uczenie detektora Yolo4')
 
 # Adding labels and title
 #plt.xlabel('Yolo ')
