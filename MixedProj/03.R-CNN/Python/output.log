@@ -1,0 +1,29 @@
+PRO TIP 💡 Replace 'model=yolov3-tiny.pt' with new 'model=yolov3-tinyu.pt'.
+YOLOv5 'u' models are trained with https://github.com/ultralytics/ultralytics and feature improved performance vs standard YOLOv5 models trained with https://github.com/ultralytics/yolov5.
+
+YOLOv3-tiny summary: 53 layers, 12,173,248 parameters, 0 gradients, 19.1 GFLOPs
+Ultralytics 8.3.202 🚀 Python-3.13.5 torch-2.8.0+cu128 CUDA:0 (NVIDIA GeForce RTX 4070, 11882MiB)
+
+100 epochs completed in 0.012 hours.
+Optimizer stripped from /home/john/inz/MixedProj/03.R-CNN/Python/Yolo3/runs/detect/train2/weights/last.pt, 24.5MB
+Optimizer stripped from /home/john/inz/MixedProj/03.R-CNN/Python/Yolo3/runs/detect/train2/weights/best.pt, 24.5MB
+
+Validating /home/john/inz/MixedProj/03.R-CNN/Python/Yolo3/runs/detect/train2/weights/best.pt...
+Ultralytics 8.3.202 🚀 Python-3.13.5 torch-2.8.0+cu128 CUDA:0 (NVIDIA GeForce RTX 4070, 11882MiB)
+YOLOv3-tiny summary (fused): 34 layers, 12,168,784 parameters, 0 gradients, 19.0 GFLOPs
+[K                 Class     Images  Instances      Box
+                   all          4         17      0.876      0.633       0.74      0.478
+                person          3         10      0.891        0.3      0.399      0.198
+                   dog          1          1      0.914          1      0.995      0.597
+                 horse          1          2      0.943          1      0.995      0.622
+              elephant          1          2      0.765        0.5      0.562      0.359
+              umbrella          1          1      0.743          1      0.995      0.796
+          potted plant          1          1          1          0      0.497      0.298
+Speed: 0.7ms preprocess, 1.9ms inference, 0.0ms loss, 1.2ms postprocess per image
+Results saved to [1m/home/john/inz/MixedProj/03.R-CNN/Python/Yolo3/runs/detect/train2[0m
+
+image 1/1 /home/john/inz/MixedProj/03.R-CNN/Python/Yolo3/path/to/dog.jpg: 480x640 1 dog, 32.0ms
+Speed: 1.9ms preprocess, 32.0ms inference, 1.6ms postprocess per image at shape (1, 3, 480, 640)
+# Create Model:  0.04591965675354004
+# Training Model:  56.78736448287964
+# Detect time:  0.4355125427246094

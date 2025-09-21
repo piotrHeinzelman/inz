@@ -36,7 +36,7 @@ d5[0]=16.519
 
 ## ##
 
-library[1]="Python Scikit GPU"
+library[1]="Python\n Scikit GPU"
 d0[1]=d0[0]*0.9
 d1[1]=d1[0]*0.9
 d2[1]=d2[0]*0.9
@@ -46,7 +46,7 @@ d5[1]=d5[0]*0.9
 
 # ##
 
-library[2]="Python PyTorch GPU"
+library[2]="Python\n PyTorch GPU"
 d0[2]=d0[0]*1.1
 d1[2]=d1[0]*1.1
 d2[2]=d2[0]*1.1

@@ -1,5 +1,0 @@
-https://pypi.org/project/yolox/
-
-pip3 install yolo34py-gpu
-
-github.com/qqwweee/keras-yolo3

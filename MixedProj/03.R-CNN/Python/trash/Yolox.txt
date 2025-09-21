@@ -1,5 +1,0 @@
-https://pypi.org/project/yolox/
-
-% USE PyTorch !
-conda install pytorch::pytorch
-
