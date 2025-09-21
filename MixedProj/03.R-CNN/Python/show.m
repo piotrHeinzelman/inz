@@ -1,6 +1,6 @@
 
-I = imread("path/to/dog.jpg"); 
-detectedImg = insertObjectAnnotation(I,"Rectangle",[ 3*4 1*4  640*1.9 480*1.9],["dog"]);
+I = imread("PythonDog2.jpg"); 
+detectedImg = insertObjectAnnotation(I,"Rectangle",[ 130 450  470 700],["dog"]);
 figure
 imshow(detectedImg)
  

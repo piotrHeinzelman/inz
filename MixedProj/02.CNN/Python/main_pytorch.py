@@ -46,8 +46,8 @@ else:
 
 
 # params
-epochs = 100
-percent = 99
+epochs = 50
+percent = 90
 num_classes = 10
 
 
@@ -70,10 +70,10 @@ def readFileY ( fileName , offset, percent, multi ):
 
 
 
-trainX = readFileX ('../04.CNN/data/train-images-idx3-ubyte', 16, percent ,6 )
-trainY = readFileY ('../04.CNN/data/train-labels-idx1-ubyte', 8, percent, 6 )
-testX = readFileX ('../04.CNN/data/t10k-images-idx3-ubyte', 16, percent, 1  )
-testY = readFileY ('../04.CNN/data/t10k-labels-idx1-ubyte', 8, percent, 1 )
+trainX = readFileX ('train-images-idx3-ubyte', 16, percent ,6 )
+trainY = readFileY ('train-labels-idx1-ubyte', 8, percent, 6 )
+testX = readFileX ('t10k-images-idx3-ubyte', 16, percent, 1  )
+testY = readFileY ('t10k-labels-idx1-ubyte', 8, percent, 1 )
 
 
 trainX = trainX.astype("float32")
@@ -181,7 +181,7 @@ print(scores[1])
 
 end=time.time()
 d=end-start
-print("# Python PyTorch 2.0 60000 Images, 100 Epoch Time: " , d)
+print("# Python PyTorch 2.0 60000 Images, %d Epoch Time: " , epoch, d)
 
 
 

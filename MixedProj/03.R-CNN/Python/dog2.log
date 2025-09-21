@@ -1,0 +1,17 @@
+PRO TIP 💡 Replace 'model=yolov3-tiny.pt' with new 'model=yolov3-tinyu.pt'.
+YOLOv5 'u' models are trained with https://github.com/ultralytics/ultralytics and feature improved performance vs standard YOLOv5 models trained with https://github.com/ultralytics/yolov5.
+
+YOLOv3-tiny summary: 53 layers, 12,173,248 parameters, 0 gradients, 19.1 GFLOPs
+
+image 1/1 /home/john/inz_Hidden/Yolo3/path/to/dog2.jpg: 640x448 1 dog, 33.9ms
+Speed: 3.4ms preprocess, 33.9ms inference, 82.5ms postprocess per image at shape (1, 3, 640, 448)
+# Create Model:  0.06665420532226562
+PRO TIP 💡 Replace 'model=yolov3-tiny.pt' with new 'model=yolov3-tinyu.pt'.
+YOLOv5 'u' models are trained with https://github.com/ultralytics/ultralytics and feature improved performance vs standard YOLOv5 models trained with https://github.com/ultralytics/yolov5.
+
+YOLOv3-tiny summary: 53 layers, 12,173,248 parameters, 0 gradients, 19.1 GFLOPs
+
+image 1/1 /home/john/inz_Hidden/Yolo3/path/to/dog2.jpg: 640x448 1 dog, 33.4ms
+Speed: 3.3ms preprocess, 33.4ms inference, 81.2ms postprocess per image at shape (1, 3, 640, 448)
+# Create Model:  0.043099164962768555
+# Detect time:  1.0444037914276123

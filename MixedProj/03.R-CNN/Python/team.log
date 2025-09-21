@@ -1,0 +1,9 @@
+PRO TIP 💡 Replace 'model=yolov3-tiny.pt' with new 'model=yolov3-tinyu.pt'.
+YOLOv5 'u' models are trained with https://github.com/ultralytics/ultralytics and feature improved performance vs standard YOLOv5 models trained with https://github.com/ultralytics/yolov5.
+
+YOLOv3-tiny summary: 53 layers, 12,173,248 parameters, 0 gradients, 19.1 GFLOPs
+
+image 1/1 /home/john/inz_Hidden/Yolo3/path/to/team.jpg: 416x640 7 persons, 33.1ms
+Speed: 3.6ms preprocess, 33.1ms inference, 87.1ms postprocess per image at shape (1, 3, 416, 640)
+# Create Model:  0.07130837440490723
+# Detect time:  1.0438988208770752
