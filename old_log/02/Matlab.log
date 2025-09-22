@@ -1,0 +1,25 @@
+
+
+### -- TRAIN klasyfikator CNN -- class="SAS" ###
+## Epoch:50, GPU:True, loadData:1.317517, createLayers:1.308044, trainTime:315.703167, timeAccuracy:0.931454, accuracy: 1.000000
+library[0]="Matlab GPU"
+d0[0]=1.317517
+d1[0]=1.308044
+d2[0]=315.703167/50
+d3[0]=0.931454
+
+### *************************************************************************
+### Training a YOLO v4 Object Detector for the following object classes:
+### class = "sas" 
+#     30         30         00:00:05        0.001         132.82   
+#     60         60         00:00:08        0.001         132.81   
+#     90         90         00:00:10        0.001         132.81   
+#
+## *************************************************************************
+## Detector training complete.
+## *************************************************************************
+
+# prepare detector : 0.097898 
+# train detector   : 16.519395 
+# epoch: 100 
+# images: 10 

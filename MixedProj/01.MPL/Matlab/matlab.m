@@ -10,7 +10,7 @@
 %D = gpuDevice;
 
 percent=100;
-epoch=5000;
+epoch=500;
 gpu=true;
 TIME_GPUTransferData=0;
 

@@ -1,0 +1,7 @@
+
+
+conda deactivate
+conda deactivate
+
+python3 Python/yolo3.py >> log/python_yolo3.log
+

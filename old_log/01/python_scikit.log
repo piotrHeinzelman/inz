@@ -1,0 +1,7 @@
+# Python Sklearn Time:  9.350707769393921
+# Python Sklearn loss: 2.4348610535033615 , score:  0.1314 , predict:  [[0 0 0 0 0 0 0 0 0 0]] epoch: 500
+# Load File: 0.28263092041015625
+# Create Net: 3.1948089599609375e-05
+# Training Net: 9.350707769393921
+# Score Time: 0.06679368019104004
+# Score: 0.1314
