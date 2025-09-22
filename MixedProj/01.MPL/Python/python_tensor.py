@@ -38,7 +38,7 @@ from tensorflow.keras.utils import to_categorical
 
 # params
 epochs = 500 # 5000
-percent = 100
+percent = 80
 num_classes = 10
 input_shape = (784, 1)
 

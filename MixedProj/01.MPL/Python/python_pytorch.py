@@ -44,7 +44,7 @@ else:
 
 # params
 epochs = 550
-percent = 90
+percent = 80
 num_classes = 10
 
 
@@ -66,7 +66,7 @@ def readFileY ( fileName , offset, percent, multi ):
     return data
 
 
-
+start=time.time()
 trainX = readFileX ('data/train-images-idx3-ubyte', 16, percent ,6 )
 trainY = readFileY ('data/train-labels-idx1-ubyte', 8, percent, 6 )
 testX = readFileX ('data/t10k-images-idx3-ubyte', 16, percent, 1  )
@@ -78,6 +78,9 @@ testX = testX.astype("float32")
 
 trainY = trainY.astype("int")
 testY = testY.astype("int")
+end=time.time()
+timeLoadData=end-start
+
 
 #trainX = trainX.reshape(6*percent*100, 1, 28,28).astype("float32") / 255
 #testX = testX.reshape(1*percent*100, 1, 28,28).astype("float32") / 255
@@ -130,9 +133,10 @@ class MLP(nn.Module):
 
 
 
-
+start=time.time()
 modelCPU = MLP(in_channels=1, num_classes=10)
 model = modelCPU.to(device)
+
 
 
 # Define the loss function
@@ -142,13 +146,13 @@ criterion = nn.CrossEntropyLoss()
 #optimizer = optim.Adam(model.parameters(), lr=0.01)
 
 optimizer=optim.SGD(model.parameters(), lr=0.01, momentum=0.0)
-
-print( trainX.shape )
-print( trainY[0] )
-
-
 data = torch.tensor( trainX , device=device)
 targets = torch.tensor(trainY, device=device)
+end=time.time()
+timeDataTransfer=end-start
+
+
+
 
 start=time.time()
 
@@ -162,13 +166,17 @@ for epoch in range(epochs):
    # print( loss )
 
 end=time.time()
+timeTrain=end-start
 
-print(scores[0].shape)
-print(scores[1])
 
-end=time.time()
-d=end-start
-print("# Python PyTorch 2.0 60000 Images, %d Epoch Time: " , epoch, d)
+
+
+
+
+ 
+
+
+
 
 
 
@@ -184,12 +192,31 @@ model.eval()
 dataTest = torch.tensor( testX , device=device)
 targetsTest = torch.tensor(testY, device=device)
 
+start=time.time()
 with torch.no_grad():
    outputs = model(dataTest)
    _, preds = torch.max(outputs, 1)
    preds = preds.to(device)
    acc(preds, targetsTest)
 
+end=time.time()
+timeForward=end-start
+
 test_accuracy = acc.compute()
+
+print("# timeLoadData: ",timeLoadData)
+print("# timeDataTransfer: ", timeDataTransfer)
+print("# timeTrain: ",timeTrain)
+print("# Epoch: " , epoch)
+print("# Score[0]:", scores[0])
+print("# timeForward: ", timeForward)
 print(f"Test accuracy: {test_accuracy}")
+
+
+
+
+
+
+
+
 

@@ -9,7 +9,7 @@
 
 %D = gpuDevice;
 
-percent=100;
+percent=80;
 epoch=500;
 gpu=true;
 TIME_GPUTransferData=0;
@@ -210,17 +210,6 @@ TIME_Forward=seconds(duration( timeForwardEnd-timeForwardStart ));
     fprintf('d1[0]=%f\n' , TIME_Forward );
     fprintf('d2[0]=%f\n' , TIME_Train );
 
+    if (false)
     save('net','net');
- 
-
-
-%timeTrainStart
-%timeTrainEnd
-%seconds( duration( ED-ST ))
-%timeForwardStart
-%timeForwardEnd
-%timeLoadDataEnd
-%timeLoadDataStart
-%timeDataTransferEnd
-%timeDataTransferStart
-
+    end

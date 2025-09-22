@@ -1,8 +1,0 @@
-CUDA available. Using GPU acceleration.
-(54000, 784)
-5
-torch.Size([10])
-tensor([ 5.1049, -3.7476, -0.6192,  0.8478, -1.4648,  3.0879,  1.5267, -2.5717,
-        -0.2329, -2.1749], device='cuda:0', grad_fn=<SelectBackward0>)
-# Python PyTorch 2.0 60000 Images, %d Epoch Time:  549 1.4162609577178955
-Test accuracy: 0.7932222485542297
