@@ -46,7 +46,7 @@ else:
 
 
 # params
-epochs = 55
+epochs = 550
 percent = 90
 num_classes = 10
 
@@ -143,8 +143,6 @@ class CNN(nn.Module):
 
 
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
-print(device)
 
 modelCPU = CNN(in_channels=1, num_classes=10)
 model = modelCPU.to(device)

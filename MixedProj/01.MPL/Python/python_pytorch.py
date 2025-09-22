@@ -79,8 +79,8 @@ testX = testX.astype("float32")
 trainY = trainY.astype("int")
 testY = testY.astype("int")
 
-trainX = trainX.reshape(6*percent*100, 1, 28,28).astype("float32") / 255
-testX = testX.reshape(1*percent*100, 1, 28,28).astype("float32") / 255
+#trainX = trainX.reshape(6*percent*100, 1, 28,28).astype("float32") / 255
+#testX = testX.reshape(1*percent*100, 1, 28,28).astype("float32") / 255
 
 
 class MLP(nn.Module):
@@ -96,7 +96,7 @@ class MLP(nn.Module):
        super(MLP, self).__init__()
 
        # 1st convolutional layer
-       self.conv1 = nn.Conv2d(in_channels=in_channels, out_channels=20, kernel_size=5, padding=1)
+       #self.conv1 = nn.Conv2d(in_channels=in_channels, out_channels=20, kernel_size=5, padding=1)
        #self.norm  = nn.BatchNorm2d(20)
        # Max pooling layer
        #self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
@@ -139,7 +139,9 @@ model = modelCPU.to(device)
 criterion = nn.CrossEntropyLoss()
 
 # Define the optimizer
-optimizer = optim.Adam(model.parameters(), lr=0.001)
+#optimizer = optim.Adam(model.parameters(), lr=0.01)
+
+optimizer=optim.SGD(model.parameters(), lr=0.01, momentum=0.0)
 
 print( trainX.shape )
 print( trainY[0] )

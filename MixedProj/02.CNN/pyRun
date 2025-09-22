@@ -16,7 +16,7 @@ echo 'conda activate tf-gpu'
 
 echo 'for a in /sys/bus/pci/devices/*; do echo 0 | sudo tee -a $a/numa_node; done'
 
-
+conda init
 conda deactivate
 
 python3 Python/python_pytorch.py >> log/python_pytorch.log
