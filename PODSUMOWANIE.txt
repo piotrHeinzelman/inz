@@ -1,0 +1,20 @@
+1 +
+2  wprowadzenie się zgadza, 
+   realizacja w Java jest zrobiona - ale jeśli już dawać to na końcu lub w załącznikach.
+   
+3. Problemy efektywności w przetwarzaniu numerycznym - zrobione - to też widze na końcu lub w załącznikach.   
+
+4. Gotowe
+
+4. Gotowe - (Maatlab, Python Tensor+Sklearn+PyTorch)
+
+5. Gotowe - (Maatlab, Python Tensor+Sklearn+PyTorch)
+
+
+6 i 7 to właściwie to samo...
+6. Gotowe - (Maatlab, Python Tensor+Sklearn+PyTorch)
+7. w przygotowaniu  - tu zrobiłem zmianę i uczyłem rozpoznawania narzędzi
+
+8. Gotowe (C++, Matlab Yolo2,Yolo3,Yolo4,Yolox, Python Yolo3) - 3 przykłady
+
+9. i 10 jeszcze nie gotowe
