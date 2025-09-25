@@ -15,7 +15,7 @@ import datetime
 import sys
 import struct
 import sklearn.neural_network as snn
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import numpy as np
 
 #import dpctl
