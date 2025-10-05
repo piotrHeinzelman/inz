@@ -20,12 +20,13 @@ public class Task_64_64_simple_backward implements Task{
 
     private Tools tools = new Tools();
 
-    int numOfEpoch=100;
+    int cepo=0;	
+    int numOfEpoch=5;
     float[] CSBin_data=new float[numOfEpoch];
 
     @Override
     public void prepare() {
-        tools.prepareData( 50 );
+        tools.prepareData( 80 );
 
         testX = tools.getTestX();
         testY = tools.getTestY();
@@ -46,15 +47,17 @@ public class Task_64_64_simple_backward implements Task{
     @Override
     public void run() {
 
-        for (int cycle=0;cycle<1;cycle++) {
+        for (int cycle=0;cycle<250;cycle++) {
 
             float Loss = 0.0f;
             int step=1;
             for (int epoch = 0; epoch < numOfEpoch; epoch++) {
                 step++;
+                cepo++;
                 for ( int index = 0; index < trainX.length; index++ ) {
 
                     // ONE CYCLE
+	           
                     int ind_ex = /*index; //*/ (index*step) % trainX.length;
 
 
@@ -74,9 +77,9 @@ public class Task_64_64_simple_backward implements Task{
                 CSBin_data[epoch]=Loss/trainX.length;
 
             }
-            System.out.println( Arrays.toString( layer1.getNeuronWeight(0)));
-            System.out.println( Arrays.toString( layer3.getX()));
-            System.out.println( Arrays.toString( layer3.getZ()));
+            //System.out.println( Arrays.toString( layer1.getNeuronWeight(0)));
+            //System.out.println( Arrays.toString( layer3.getX()));
+            //System.out.println( Arrays.toString( layer3.getZ()));
 
             // check accuracy
             int len = testX.length;
@@ -95,7 +98,7 @@ public class Task_64_64_simple_backward implements Task{
                     accuracy++;
                 }
             }
-            System.out.println(100.0f * accuracy / len + "%");
+            System.out.println("epoch num: "+cepo + ", "+100.0f * accuracy / len + "%");
         }
     }
 }
