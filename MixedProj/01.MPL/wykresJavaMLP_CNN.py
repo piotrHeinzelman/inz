@@ -5,7 +5,7 @@ plt.title('Trening klasyfikatora MLP zależność czas/dokładność')
 plt.style.use('_mpl-gallery')
 
 
-x = [3,6,12,24,48,96,192,384,768,1536,3072,6144, 12288, 24576, 49152]
+x = [3,6,12,24,48,96,192,384,768]
 accuracy=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 train_time=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 accuracy1=[0,0,0,0,0,0,0,0,0,0,0,0]
@@ -70,7 +70,7 @@ train_time1[9]=18
 accuracy1[10]=0.98
 train_time1[10]=18
 accuracy1[11]=0.98
-train_time1[11]=49
+train_time1[11]=1000
 
 
 
@@ -80,12 +80,12 @@ train_time1[11]=49
 
 
 
-plt.plot(  train_time, accuracy, ':', color='tab:green')
-plt.plot(  train_time1, accuracy1, ':', color='tab:red')
+plt.plot(  train_time, accuracy, '-', color='tab:green', linewidth=.1)
+plt.plot(  train_time1, accuracy1, '-', color='tab:red', linewidth=.1)
 
 plt.legend(['dokładność MLP Java','dokładność CNN Java']);
-plt.xlabel('ilość eopk', size=10)
-plt.ylabel('dokładność [%]', size=10)
+plt.xlabel('ilość eopk', size=5)
+plt.ylabel('dokładność [%]', size=5)
 plt.savefig( 'czas_dokladnosc_MLP_Java.pdf',dpi=400 )
 
 
