@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-plt.title('Trening klasyfikatora MLP zależność czas/dokładność Matlab')
+plt.title('dokładność klasyfikatorów (Matlab) zależność czas/dokładność')
 plt.style.use('_mpl-gallery')
 
 
