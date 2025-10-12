@@ -1,0 +1,5 @@
+
+g++ -gdwarf main.cpp -o main.elf 
+./main.elf
+echo 'rm main.elf'
+echo 'gdb... layout asm'

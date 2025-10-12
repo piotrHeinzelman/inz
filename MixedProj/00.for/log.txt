@@ -1,0 +1,330 @@
+john@Xubuntu:~/inz/MixedProj/00.for$ cat main.cpp 
+using namespace std;
+int main(int argc, char **argv) {
+
+
+   int len = 8;
+   double X[ len ]={ 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 };
+   double W[ len ]={ 0.85, 0.75, 0.65, 0.55, 0.45, 0.35, 0.25, 0.15 };
+
+   double sum=0.0;
+   for (int i=0; i<len; i++) {
+	sum+=X[i]*W[i];
+   }
+  return 0;
+}
+
+john@Xubuntu:~/inz/MixedProj/00.for$ g++ -gdwarf main.cpp 
+john@Xubuntu:~/inz/MixedProj/00.for$ gdb a.out 
+GNU gdb (Ubuntu 9.2-0ubuntu1~20.04.2) 9.2
+Copyright (C) 2020 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from a.out...
+(gdb) list main
+1	//#include<iostream>
+2	using namespace std;
+3	
+4	
+5	int main(int argc, char **argv) {
+6	
+7	
+8	   int len = 8;
+9	   double X[ len ]={ 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 };
+10	   double W[ len ]={ 0.85, 0.75, 0.65, 0.55, 0.45, 0.35, 0.25, 0.15 };
+(gdb) 
+11	
+12	   double sum=0.0;
+13	   for (int i=0; i<len; i++) {
+14		sum+=X[i]*W[i];
+15	   }
+16	//  std::cout<<x;
+17	  return 0;
+18	}
+19	
+(gdb) 
+ 0x1149 <main>           endbr64                                                                                                                                                                                                         │
+│   0x114d <main+4>         push   %rbp                                                                                                                                                                                                     │
+│   0x114e <main+5>         mov    %rsp,%rbp                                                                                                                                                                                                │
+│   0x1151 <main+8>         push   %r15                                                                                                                                                                                                     │
+│   0x1153 <main+10>        push   %r14                                                                                                                                                                                                     │
+│   0x1155 <main+12>        push   %r13                                                                                                                                                                                                     │
+│   0x1157 <main+14>        push   %r12                                                                                                                                                                                                     │
+│   0x1159 <main+16>        sub    $0x50,%rsp                                                                                                                                                                                               │
+│   0x115d <main+20>        mov    %edi,-0x64(%rbp)                                                                                                                                                                                         │
+│   0x1160 <main+23>        mov    %rsi,-0x70(%rbp)                                                                                                                                                                                         │
+│   0x1164 <main+27>        mov    %fs:0x28,%rax                                                                                                                                                                                            │
+│   0x116d <main+36>        mov    %rax,-0x28(%rbp)                                                                                                                                                                                         │
+│   0x1171 <main+40>        xor    %eax,%eax                                                                                                                                                                                                │
+│   0x1173 <main+42>        mov    %rsp,%rax                                                                                                                                                                                                │
+│   0x1176 <main+45>        mov    %rax,%rsi                                                                                                                                                                                                │
+│   0x1179 <main+48>        movl   $0x8,-0x54(%rbp)                                                                                                                                                                                         │
+│   0x1180 <main+55>        mov    -0x54(%rbp),%eax                                                                                                                                                                                         │
+│   0x1183 <main+58>        cltq                                                                                                                                                                                                            │
+│   0x1185 <main+60>        lea    -0x1(%rax),%rcx                                                                                                                                                                                          │
+│   0x1189 <main+64>        mov    %rcx,-0x48(%rbp)                                                                                                                                                                                         │
+│   0x118d <main+68>        mov    %rcx,%rax                                                                                                                                                                                                │
+│   0x1190 <main+71>        add    $0x1,%rax                                                                                                                                                                                                │
+│   0x1194 <main+75>        mov    %rax,%r14                                                                                                                                                                                                │
+│   0x1197 <main+78>        mov    $0x0,%r15d                                                                                                                                                                                               │
+│   0x119d <main+84>        mov    %rcx,%rax                                                                                                                                                                                                │
+│   0x11a0 <main+87>        add    $0x1,%rax                                                                                                                                                                                                │
+│   0x11a4 <main+91>        mov    %rax,%r12                                                                                                                                                                                                │
+│   0x11a7 <main+94>        mov    $0x0,%r13d                                                                                                                                                                                               │
+│   0x11ad <main+100>       mov    %rcx,%rax                                                                                                                                                                                                │
+│   0x11b0 <main+103>       add    $0x1,%rax                                                                                                                                                                                                │
+│   0x11b4 <main+107>       lea    0x0(,%rax,8),%rdx                                                                                                                                                                                        │
+│   0x11bc <main+115>       mov    $0x10,%eax                                                                                                                                                                                               │
+│   0x11c1 <main+120>       sub    $0x1,%rax                                                                                                                                                                                                │
+│   0x11c5 <main+124>       add    %rdx,%rax                                                                                                                                                                                                │
+│   0x11c8 <main+127>       mov    $0x10,%edi                                                                                                                                                                                               │
+│   0x11cd <main+132>       mov    $0x0,%edx                                                                                                                                                                                                │
+│   0x11d2 <main+137>       div    %rdi                                                                                                                                                                                                     │
+│   0x11d5 <main+140>       imul   $0x10,%rax,%rax                                                                                                                                                                                          │
+│   0x11d9 <main+144>       mov    %rax,%rdx                                                                                                                                                                                                │
+│   0x11dc <main+147>       and    $0xfffffffffffff000,%rdx  
+ 0x11e3 <main+154>       mov    %rsp,%rdi                                                                                                                                                                                                │
+│   0x11e6 <main+157>       sub    %rdx,%rdi                                                                                                                                                                                                │
+│   0x11e9 <main+160>       mov    %rdi,%rdx                                                                                                                                                                                                │
+│   0x11ec <main+163>       cmp    %rdx,%rsp                                                                                                                                                                                                │
+│   0x11ef <main+166>       je     0x1203 <main+186>                                                                                                                                                                                        │
+│   0x11f1 <main+168>       sub    $0x1000,%rsp                                                                                                                                                                                             │
+│   0x11f8 <main+175>       orq    $0x0,0xff8(%rsp)                                                                                                                                                                                         │
+│   0x1201 <main+184>       jmp    0x11ec <main+163>   
+
+ 0x128c <main+323>       add    $0x8,%rax                                                                                                                                                                                                │
+│   0x1290 <main+327>       sub    $0x1,%rdx                                                                                                                                                                                                │
+│   0x1294 <main+331>       movsd  0xd8c(%rip),%xmm0        # 0x2028                                                                                                                                                                        │
+│   0x129c <main+339>       movsd  %xmm0,(%rax)                                                                                                                                                                                             │
+│   0x12a0 <main+343>       add    $0x8,%rax                                                                                                                                                                                                │
+│   0x12a4 <main+347>       sub    $0x1,%rdx                                                                                                                                                                                                │
+│   0x12a8 <main+351>       movsd  0xd80(%rip),%xmm0        # 0x2030                                                                                                                                                                        │
+│   0x12b0 <main+359>       movsd  %xmm0,(%rax)                                                                                                                                                                                             │
+│   0x12b4 <main+363>       add    $0x8,%rax                                                                                                                                                                                                │
+│   0x12b8 <main+367>       sub    $0x1,%rdx                                                                                                                                                                                                │
+│   0x12bc <main+371>       movsd  0xd74(%rip),%xmm0        # 0x2038                                                                                                                                                                        │
+│   0x12c4 <main+379>       movsd  %xmm0,(%rax)                                                                                                                                                                                             │
+│   0x12c8 <main+383>       add    $0x8,%rax                                                                                                                                                                                                │
+│   0x12cc <main+387>       lea    -0x1(%rdx),%rcx                                                                                                                                                                                          │
+│   0x12d0 <main+391>       movsd  0xd68(%rip),%xmm0        # 0x2040                                                                                                                                                                        │
+│   0x12d8 <main+399>       movsd  %xmm0,(%rax)                                                                                                                                                                                             │
+│   0x12dc <main+403>       lea    0x8(%rax),%rdx                                                                                                                                                                                           │
+│   0x12e0 <main+407>       lea    -0x1(%rcx),%rax                                                                                                                                                                                          │
+│   0x12e4 <main+411>       test   %rax,%rax                                                                                                                                                                                                │
+│   0x12e7 <main+414>       js     0x12fb <main+434>                                                                                                                                                                                        │
+│   0x12e9 <main+416>       pxor   %xmm0,%xmm0                                                                                                                                                                                              │
+│   0x12ed <main+420>       movsd  %xmm0,(%rdx)                                                                                                                                                                                             │
+│   0x12f1 <main+424>       add    $0x8,%rdx                                                                                                                                                                                                │
+│   0x12f5 <main+428>       sub    $0x1,%rax                                                                                                                                                                                                │
+│   0x12f9 <main+432>       jmp    0x12e4 <main+411>                                                                                                                                                                                        │
+│   0x12fb <main+434>       mov    -0x54(%rbp),%eax                                                                                                                                                                                         │
+│   0x12fe <main+437>       cltq                                                                                                                                                                                                            │
+│   0x1300 <main+439>       lea    -0x1(%rax),%rcx                                                                                                                                                                                          │
+│   0x1304 <main+443>       mov    %rcx,-0x38(%rbp)                                                                                                                                                                                         │
+│   0x1308 <main+447>       mov    %rcx,%rax                                                                                                                                                                                                │
+│   0x130b <main+450>       add    $0x1,%rax                                                                                                                                                                                                │
+│   0x130f <main+454>       mov    %rax,%r10                                                                                                                                                                                                │
+│   0x1312 <main+457>       mov    $0x0,%r11d                                                                                                                                                                                               │
+│   0x1318 <main+463>       mov    %rcx,%rax                                                                                                                                                                                                │
+│   0x131b <main+466>       add    $0x1,%rax                                                                                                                                                                                                │
+│   0x131f <main+470>       mov    %rax,%r8                                                                                                                                                                                                 │
+│   0x1322 <main+473>       mov    $0x0,%r9d                                                                                                                                                                                                │
+│   0x1328 <main+479>       mov    %rcx,%rax                                                                                                                                                                                                │
+│   0x132b <main+482>       add    $0x1,%rax                                                                                                                                                                                                │
+│   0x132f <main+486>       lea    0x0(,%rax,8),%rdx                                                                                                                                                                                     │
+│   0x1203 <main+186>       mov    %rax,%rdx                                                                                                                                                                                                │
+│   0x1206 <main+189>       and    $0xfff,%edx                                                                                                                                                                                              │
+│   0x120c <main+195>       sub    %rdx,%rsp                                                                                                                                                                                                │
+│   0x120f <main+198>       mov    %rax,%rdx                                                                                                                                                                                                │
+│   0x1212 <main+201>       and    $0xfff,%edx                                                                                                                                                                                              │
+│   0x1218 <main+207>       test   %rdx,%rdx                                                                                                                                                                                                │
+│   0x121b <main+210>       je     0x122d <main+228>                                                                                                                                                                                        │
+│   0x121d <main+212>       and    $0xfff,%eax                                                                                                                                                                                              │
+│   0x1222 <main+217>       sub    $0x8,%rax                                                                                                                                                                                                │
+│   0x1226 <main+221>       add    %rsp,%rax                                                                                                                                                                                                │
+│   0x1229 <main+224>       orq    $0x0,(%rax)                                                                                                                                                                                              │
+│   0x122d <main+228>       mov    %rsp,%rax                                                                                                                                                                                                │
+│   0x1230 <main+231>       add    $0x7,%rax                                                                                                                                                                                                │
+│   0x1234 <main+235>       shr    $0x3,%rax                                                                                                                                                                                                │
+│   0x1238 <main+239>       shl    $0x3,%rax                                                                                                                                                                                                │
+│   0x123c <main+243>       mov    %rax,-0x40(%rbp)                                                                                                                                                                                         │
+│   0x1240 <main+247>       mov    -0x40(%rbp),%rax                                                                                                                                                                                         │
+│   0x1244 <main+251>       movsd  0xdbc(%rip),%xmm0        # 0x2008                                                                                                                                                                        │
+│   0x124c <main+259>       movsd  %xmm0,(%rax)                                                                                                                                                                                             │
+│   0x1250 <main+263>       add    $0x8,%rax                                                                                                                                                                                                │
+│   0x1254 <main+267>       lea    -0x1(%rcx),%rdx                                                                                                                                                                                          │
+│   0x1258 <main+271>       movsd  0xdb0(%rip),%xmm0        # 0x2010                                                                                                                                                                        │
+│   0x1260 <main+279>       movsd  %xmm0,(%rax)                                                                                                                                                                                             │
+│   0x1264 <main+283>       add    $0x8,%rax                                                                                                                                                                                                │
+│   0x1268 <main+287>       sub    $0x1,%rdx                                                                                                                                                                                                │
+│   0x126c <main+291>       movsd  0xda4(%rip),%xmm0        # 0x2018                                                                                                                                                                        │
+│   0x1274 <main+299>       movsd  %xmm0,(%rax)                                                                                                                                                                                             │
+│   0x1278 <main+303>       add    $0x8,%rax                                                                                                                                                                                                │
+│   0x127c <main+307>       sub    $0x1,%rdx                                                                                                                                                                                                │
+│   0x1280 <main+311>       movsd  0xd98(%rip),%xmm0        # 0x2020                                                                                                                                                                        │
+│   0x1288 <main+319>       movsd  %xmm0,(%rax)                                                                                                                                                                                             │
+│   0x128c <main+323>       add    $0x8,%rax   
+  0x1337 <main+494>       mov    $0x10,%eax                                                                                                                                                                                               │
+│   0x133c <main+499>       sub    $0x1,%rax                                                                                                                                                                                                │
+│   0x1340 <main+503>       add    %rdx,%rax                                                                                                                                                                                                │
+│   0x1343 <main+506>       mov    $0x10,%edi                                                                                                                                                                                               │
+│   0x1348 <main+511>       mov    $0x0,%edx                                                                                                                                                                                                │
+│   0x134d <main+516>       div    %rdi                                                                                                                                                                                                     │
+│   0x1350 <main+519>       imul   $0x10,%rax,%rax                                                                                                                                                                                          │
+│   0x1354 <main+523>       mov    %rax,%rdx                                                                                                                                                                                                │ 0x13df <main+662>       add    $0x8,%rax                                                                                                                                                                                                │
+│   0x13e3 <main+666>       sub    $0x1,%rdx                                                                                                                                                                                                │
+│   0x13e7 <main+670>       movsd  0xc69(%rip),%xmm0        # 0x2058                                                                                                                                                                        │
+│   0x13ef <main+678>       movsd  %xmm0,(%rax)                                                                                                                                                                                             │
+│   0x13f3 <main+682>       add    $0x8,%rax                                                                                                                                                                                                │
+│   0x13f7 <main+686>       sub    $0x1,%rdx                                                                                                                                                                                                │
+│   0x13fb <main+690>       movsd  0xc5d(%rip),%xmm0        # 0x2060                                                                                                                                                                        │
+│   0x1403 <main+698>       movsd  %xmm0,(%rax)                                                                                                                                                                                             │
+│   0x1407 <main+702>       add    $0x8,%rax                                                                                                                                                                                                │
+│   0x140b <main+706>       sub    $0x1,%rdx                                                                                                                                                                                                │
+│   0x140f <main+710>       movsd  0xc51(%rip),%xmm0        # 0x2068                                                                                                                                                                        │
+│   0x1417 <main+718>       movsd  %xmm0,(%rax)                                                                                                                                                                                             │
+│   0x141b <main+722>       add    $0x8,%rax                                                                                                                                                                                                │
+│   0x141f <main+726>       sub    $0x1,%rdx                                                                                                                                                                                                │
+│   0x1423 <main+730>       movsd  0xc45(%rip),%xmm0        # 0x2070                                                                                                                                                                        │
+│   0x142b <main+738>       movsd  %xmm0,(%rax)                                                                                                                                                                                             │
+│   0x142f <main+742>       add    $0x8,%rax                                                                                                                                                                                                │
+│   0x1433 <main+746>       sub    $0x1,%rdx                                                                                                                                                                                                │
+│   0x1437 <main+750>       movsd  0xc39(%rip),%xmm0        # 0x2078                                                                                                                                                                        │
+│   0x143f <main+758>       movsd  %xmm0,(%rax)                                                                                                                                                                                             │
+│   0x1443 <main+762>       add    $0x8,%rax                                                                                                                                                                                                │
+│   0x1447 <main+766>       lea    -0x1(%rdx),%rcx                                                                                                                                                                                          │
+│   0x144b <main+770>       movsd  0xc2d(%rip),%xmm0        # 0x2080                                                                                                                                                                        │
+│   0x1453 <main+778>       movsd  %xmm0,(%rax)                                                                                                                                                                                             │
+│   0x1457 <main+782>       lea    0x8(%rax),%rdx                                                                                                                                                                                           │
+│   0x145b <main+786>       lea    -0x1(%rcx),%rax                                                                                                                                                                                          │
+│   0x145f <main+790>       test   %rax,%rax                                                                                                                                                                                                │
+│   0x1462 <main+793>       js     0x1476 <main+813>                                                                                                                                                                                        │
+│   0x1464 <main+795>       pxor   %xmm0,%xmm0                                                                                                                                                                                              │
+│   0x1468 <main+799>       movsd  %xmm0,(%rdx)                                                                                                                                                                                             │
+│   0x146c <main+803>       add    $0x8,%rdx                                                                                                                                                                                                │
+│   0x1470 <main+807>       sub    $0x1,%rax                                                                                                                                                                                                │
+│   0x1474 <main+811>       jmp    0x145f <main+790>                                                                                                                                                                                        │
+│   0x1476 <main+813>       pxor   %xmm0,%xmm0                                                                                                                                                                                              │
+│   0x147a <main+817>       movsd  %xmm0,-0x50(%rbp)                                                                                                                                                                                        │
+│   0x147f <main+822>       movl   $0x0,-0x58(%rbp)                                                                                                                                                                                         │
+│   0x1486 <main+829>       mov    -0x58(%rbp),%eax                                                                                                                                                                                         │
+│   0x1489 <main+832>       cmp    -0x54(%rbp),%eax                                                                                                                                                                                         │
+│   0x148c <main+835>       jge    0x14c4 <main+891>                                                                                                                                                                                        │
+│   0x148e <main+837>       mov    -0x40(%rbp),%rax  
+│   0x1357 <main+526>       and    $0xfffffffffffff000,%rdx                                                                                                                                                                                 │
+│   0x135e <main+533>       mov    %rsp,%rdi                                                                                                                                                                                                │
+│   0x1361 <main+536>       sub    %rdx,%rdi                                                                                                                                                                                                │
+│   0x1364 <main+539>       mov    %rdi,%rdx                                                                                                                                                                                                │
+│   0x1367 <main+542>       cmp    %rdx,%rsp                                                                                                                                                                                                │
+│   0x136a <main+545>       je     0x137e <main+565>                                                                                                                                                                                        │
+│   0x136c <main+547>       sub    $0x1000,%rsp                                                                                                                                                                                             │
+│   0x1373 <main+554>       orq    $0x0,0xff8(%rsp)                                                                                                                                                                                         │
+│   0x137c <main+563>       jmp    0x1367 <main+542>                                                                                                                                                                                        │
+│   0x137e <main+565>       mov    %rax,%rdx                                                                                                                                                                                                │
+│   0x1381 <main+568>       and    $0xfff,%edx                                                                                                                                                                                              │
+│   0x1387 <main+574>       sub    %rdx,%rsp                                                                                                                                                                                                │
+│   0x138a <main+577>       mov    %rax,%rdx                                                                                                                                                                                                │
+│   0x138d <main+580>       and    $0xfff,%edx                                                                                                                                                                                              │
+│   0x1393 <main+586>       test   %rdx,%rdx                                                                                                                                                                                                │
+│   0x1396 <main+589>       je     0x13a8 <main+607>                                                                                                                                                                                        │
+│   0x1398 <main+591>       and    $0xfff,%eax                                                                                                                                                                                              │
+│   0x139d <main+596>       sub    $0x8,%rax                                                                                                                                                                                                │
+│   0x13a1 <main+600>       add    %rsp,%rax                                                                                                                                                                                                │
+│   0x13a4 <main+603>       orq    $0x0,(%rax)                                                                                                                                                                                              │
+│   0x13a8 <main+607>       mov    %rsp,%rax                                                                                                                                                                                                │
+│   0x13ab <main+610>       add    $0x7,%rax                                                                                                                                                                                                │
+│   0x13af <main+614>       shr    $0x3,%rax                                                                                                                                                                                                │
+│   0x13b3 <main+618>       shl    $0x3,%rax                                                                                                                                                                                                │
+│   0x13b7 <main+622>       mov    %rax,-0x30(%rbp)                                                                                                                                                                                         │
+│   0x13bb <main+626>       mov    -0x30(%rbp),%rax                                                                                                                                                                                         │
+│   0x13bf <main+630>       movsd  0xc81(%rip),%xmm0        # 0x2048                                                                                                                                                                        │
+│   0x13c7 <main+638>       movsd  %xmm0,(%rax)                                                                                                                                                                                             │
+│   0x13cb <main+642>       add    $0x8,%rax                                                                                                                                                                                                │
+│   0x13cf <main+646>       lea    -0x1(%rcx),%rdx                                                                                                                                                                                          │
+│   0x13d3 <main+650>       movsd  0xc75(%rip),%xmm0        # 0x2050                                                                                                                                                                        │
+│   0x13db <main+658>       movsd  %xmm0,(%rax)  
+ 0x1474 <main+811>               jmp    0x145f <main+790>                                                                                                                                                                                │
+│   0x1476 <main+813>               pxor   %xmm0,%xmm0                                                                                                                                                                                      │
+│   0x147a <main+817>               movsd  %xmm0,-0x50(%rbp)                                                                                                                                                                                │
+│   0x147f <main+822>               movl   $0x0,-0x58(%rbp)                                                                                                                                                                                 │
+│   0x1486 <main+829>               mov    -0x58(%rbp),%eax                                                                                                                                                                                 │
+│   0x1489 <main+832>               cmp    -0x54(%rbp),%eax                                                                                                                                                                                 │
+│   0x148c <main+835>               jge    0x14c4 <main+891>                                                                                                                                                                                │
+│   0x148e <main+837>               mov    -0x40(%rbp),%rax                                                                                                                                                                                 │
+│   0x1492 <main+841>               mov    -0x58(%rbp),%edx                                                                                                                                                                                 │
+│   0x1495 <main+844>               movslq %edx,%rdx                                                                                                                                                                                        │
+│   0x1498 <main+847>               movsd  (%rax,%rdx,8),%xmm1                                                                                                                                                                              │
+│   0x149d <main+852>               mov    -0x30(%rbp),%rax                                                                                                                                                                                 │
+│   0x14a1 <main+856>               mov    -0x58(%rbp),%edx                                                                                                                                                                                 │
+│   0x14a4 <main+859>               movslq %edx,%rdx                                                                                                                                                                                        │
+│   0x14a7 <main+862>               movsd  (%rax,%rdx,8),%xmm0                                                                                                                                                                              │
+│   0x14ac <main+867>               mulsd  %xmm1,%xmm0                                                                                                                                                                                      │
+│   0x14b0 <main+871>               movsd  -0x50(%rbp),%xmm1                                                                                                                                                                                │
+│   0x14b5 <main+876>               addsd  %xmm1,%xmm0                                                                                                                                                                                      │
+│   0x14b9 <main+880>               movsd  %xmm0,-0x50(%rbp)                                                                                                                                                                                │
+│   0x14be <main+885>               addl   $0x1,-0x58(%rbp)                                                                                                                                                                                 │
+│   0x14c2 <main+889>               jmp    0x1486 <main+829>                                                                                                                                                                                │
+│   0x14c4 <main+891>               mov    $0x0,%eax                                                                                                                                                                                        │
+│   0x14c9 <main+896>               mov    %rsi,%rsp                                                                                                                                                                                        │
+│   0x14cc <main+899>               mov    -0x28(%rbp),%rsi                                                                                                                                                                                 │
+│   0x14d0 <main+903>               xor    %fs:0x28,%rsi                                                                                                                                                                                    │
+│   0x14d9 <main+912>               je     0x14e0 <main+919>                                                                                                                                                                                │
+│   0x14db <main+914>               callq  0x1050 <__stack_chk_fail@plt>                                                                                                                                                                    │
+│   0x14e0 <main+919>               lea    -0x20(%rbp),%rsp                                                                                                                                                                                 │
+│   0x14e4 <main+923>               pop    %r12                                                                                                                                                                                             │
+│   0x14e6 <main+925>               pop    %r13                                                                                                                                                                                             │
+│   0x14e8 <main+927>               pop    %r14                                                                                                                                                                                             │
+│   0x14ea <main+929>               pop    %r15                                                                                                                                                                                             │
+│   0x14ec <main+931>               pop    %rbp                                                                                                                                                                                             │
+│   0x14ed <main+932>               retq                                                                                                                                                                                                    │
+│   0x14ee                              xchg   %ax,%ax                                                                                                                                                                                      │
+│   0x14f0 <__libc_csu_init>        endbr64                                                                                                                                                                                                 │
+│   0x14f4 <__libc_csu_init+4>      push   %r15                                                                                                                                                                                             │
+│   0x14f6 <__libc_csu_init+6>      lea    0x28bb(%rip),%r15        # 0x3db8                                                                                                                                                                │
+│   0x14fd <__libc_csu_init+13>     push   %r14                                                                                                                                                                                             │
+│   0x14ff <__libc_csu_init+15>     mov    %rdx,%r14             
+   0x14ff <__libc_csu_init+15>     mov    %rdx,%r14                                                                                                                                                                                        │
+│   0x1502 <__libc_csu_init+18>     push   %r13                                                                                                                                                                                             │
+│   0x1504 <__libc_csu_init+20>     mov    %rsi,%r13                                                                                                                                                                                        │
+│   0x1507 <__libc_csu_init+23>     push   %r12                                                                                                                                                                                             │
+│   0x1509 <__libc_csu_init+25>     mov    %edi,%r12d                                                                                                                                                                                       │
+│   0x150c <__libc_csu_init+28>     push   %rbp                                                                                                                                                                                             │
+│   0x150d <__libc_csu_init+29>     lea    0x28ac(%rip),%rbp        # 0x3dc0                                                                                                                                                                │
+│   0x1514 <__libc_csu_init+36>     push   %rbx                                                                                                                                                                                             │
+│   0x1515 <__libc_csu_init+37>     sub    %r15,%rbp                                                                                                                                                                                        │
+│   0x1518 <__libc_csu_init+40>     sub    $0x8,%rsp                                                                                                                                                                                        │
+│   0x151c <__libc_csu_init+44>     callq  0x1000 <_init>                                                                                                                                                                                   │
+│   0x1521 <__libc_csu_init+49>     sar    $0x3,%rbp                                                                                                                                                                                        │
+│   0x1525 <__libc_csu_init+53>     je     0x1546 <__libc_csu_init+86>                                                                                                                                                                      │
+│   0x1527 <__libc_csu_init+55>     xor    %ebx,%ebx                                                                                                                                                                                        │
+│   0x1529 <__libc_csu_init+57>     nopl   0x0(%rax)                                                                                                                                                                                        │
+│   0x1530 <__libc_csu_init+64>     mov    %r14,%rdx                                                                                                                                                                                        │
+│   0x1533 <__libc_csu_init+67>     mov    %r13,%rsi                                                                                                                                                                                        │
+│   0x1536 <__libc_csu_init+70>     mov    %r12d,%edi                                                                                                                                                                                       │
+│   0x1539 <__libc_csu_init+73>     callq  *(%r15,%rbx,8)                                                                                                                                                                                   │
+│   0x153d <__libc_csu_init+77>     add    $0x1,%rbx                                                                                                                                                                                        │
+│   0x1541 <__libc_csu_init+81>     cmp    %rbx,%rbp                                                                                                                                                                                        │
+│   0x1544 <__libc_csu_init+84>     jne    0x1530 <__libc_csu_init+64>                                                                                                                                                                      │
+│   0x1546 <__libc_csu_init+86>     add    $0x8,%rsp                                                                                                                                                                                        │
+│   0x154a <__libc_csu_init+90>     pop    %rbx                                                                                                                                                                                             │
+│   0x154b <__libc_csu_init+91>     pop    %rbp                                                                                                                                                                                             │
+│   0x154c <__libc_csu_init+92>     pop    %r12                                                                                                                                                                                             │
+│   0x154e <__libc_csu_init+94>     pop    %r13                                                                                                                                                                                             │
+│   0x1550 <__libc_csu_init+96>     pop    %r14                                                                                                                                                                                             │
+│   0x1552 <__libc_csu_init+98>     pop    %r15                                                                                                                                                                                             │
+│   0x1554 <__libc_csu_init+100>    retq                                                                                                                                                                                                    │
+│   0x1555                              data16 nopw %cs:0x0(%rax,%rax,1)                                                                                                                                                                    │
+│   0x1560 <__libc_csu_fini>        endbr64                                                                                                                                                                                                 │
+│   0x1564 <__libc_csu_fini+4>      retq                                                        
+
