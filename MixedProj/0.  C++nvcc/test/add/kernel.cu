@@ -99,10 +99,14 @@ cudaError_t addWithCuda(float *c, float *d, unsigned int size)
     }
 
     // Launch a kernel on the GPU with one thread for each element.
+//    for (int k=0;k<1000;k++){
+//    for (int j=0;j<1000;j++){
     for (int i=0;i<5;i++){
-    sumOfC<<< 1, size >>>(dev_c, dev_d);
-    sumOfC<<< 1, size >>>(dev_d, dev_c);
+    sumOfC<<< 1, 1024 >>>(dev_c, dev_d);
+    sumOfC<<< 1, 1024 >>>(dev_d, dev_c);
     }
+//    }
+//    }
 
     // Check for any errors launching the kernel
     cudaStatus = cudaGetLastError();

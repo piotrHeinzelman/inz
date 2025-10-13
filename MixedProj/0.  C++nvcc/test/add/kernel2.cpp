@@ -30,10 +30,13 @@ int main()
     //-- start
     clock_t before = clock();
 
+    for (int k=0;k<1000;k++){
+    for (int j=0;j<1000;j++){
     for (int i = 0; i < IMGSIZE; i++) {
 	D+=C[i];
     }
-
+    }
+    }
     clock_t duration = clock() - before;
     printf("\r\nduration: %lu [clocks tick], %ld[sek]\r\n", duration, duration/CLOCKS_PER_SEC );
 
