@@ -1,0 +1,23 @@
+
+n=60
+
+echo "vector size:${n} " > out_${n}.txt
+#echo "plt.title('Regresja liniowa: polyfit  X[${n}] x 100') " >> output.txt
+#echo "x=[  'Python()','Python I','Matlab()','Matlab I','Java I','C++ I'] " >> output.txt
+#echo "y=[0,0,0,0,0,0] " >> output.txt
+#echo "  " >> output.txt
+#echo "  " >> output.txt
+
+./pyRun  >> out_${n}.txt
+./matRun >> out_${n}.txt
+./javaRun >> out_${n}.txt
+./cRun    >> out_${n}.txt
+
+#echo "  " >> output.txt
+#echo "  " >> output.txt
+#echo "plt.barh( x, y ) " >> output.txt 
+#echo "plt.savefig( '../000.fig/fig01.pdf',dpi=400 ) " >> output.txt 
+#echo "plt.close() " >> output.txt 
+
+cat out_${n}.txt
+#python output.txt
