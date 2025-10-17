@@ -4,13 +4,16 @@ import datetime
 import sys
 
 size = 64000000;
+
+x=[0]*size
+y=[0]*size
 startFillArray = time.time()
 
-x = np.linspace(0.1, 6400000, size)
-y = np.linspace(0.2, 12800000, size)
+for i in range( size ):
+    x[i]=0.1*i
+    y[i]=0.2*i
 
 endFillArray = time.time()
-
 print ('# fill array time: ' , endFillArray-startFillArray  , '[sek.]' )
 
 w0=0
