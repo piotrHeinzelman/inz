@@ -5,14 +5,14 @@ import sys
 
 size = 64000000;
 
-x=[]
-y=[]
+x=np.array(size)
+y=np.array(size)
 
 startFillArray = time.time()
 
 for i in range( size ):
-    x.append(0.1*i)
-    y.append(0.2*i)
+    x[i]=(0.1*i)
+    y[i]=(0.2*i)
 
 endFillArray = time.time()
 print ('# fill array time: ' , endFillArray-startFillArray  , '[sek.]' )
