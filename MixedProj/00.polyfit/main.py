@@ -15,7 +15,7 @@ for i in range( size ):
     y.append(0.2*i)
 
 endFillArray = time.time()
-print ('# fill array time: ' , endFillArray-startFillArray  , '[sek.]' )
+print ('# prepare table time: ' , endFillArray-startFillArray  , '[sek.]' )
 
 w0=0
 w1=0
@@ -48,8 +48,7 @@ d = end-start
 
 
 print ('# size: ' , size ,' w1: ', w1 , ', w0: ' , w0  )
-print ('# time: ' , d  , '[sek.]' )
-print ('')  
+print ('# time: ' , d  , '[sek.]' ) 
 
  
 

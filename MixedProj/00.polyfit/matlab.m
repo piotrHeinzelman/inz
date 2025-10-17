@@ -1,88 +1,44 @@
-cycles=1000;
-name="20";
+size = 64000000;
 
 
-%generate data
-if (false)
-    x=[ 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 ]
+prepareStart = datetime('now');
+x=1:size;
+y=1:size;        
 
-    fileID=fopen( append ('data\datax',name,'.bin'),'w');
-    fwrite( fileID, x, 'double' );
-    fclose(fileID);
-
-    y=[ -1.69 -0.79 5.77 7.80 4.56 14.32 15.47 8.88 7.41 17.26 14.83 20.47 20.39 27.04 22.53 22.36 29.35 22.86 31.22 28.13 ]
-
-    fileID=fopen(append('data\datay',name,'.bin'),'w');
-    fwrite( fileID, y, 'double' );
-    fclose(fileID);
+for i=1:size
+	   x(i)=0.1*i;
+	   y(i)=0.2*i;
 end
+prepareEnd = datetime('now');
 
 
-%load data
-if (true)
-    fileID=fopen(append('data/datax',name,'.bin'),'r');
-    x=fread( fileID, 'double' );
-    fclose(fileID);
+w1 = 0.0; w0 = 0.0;
 
-    fileID=fopen(append('data/datay',name,'.bin'),'r');
-    y=fread( fileID, 'double' );
-    fclose(fileID);
+% start
+timeStart = datetime('now');
+xsr = 0.0;  ysr = 0.0;
+
+for i=1:size
+    xsr = xsr+x(i);
+    ysr = xsr+y(i);
 end
+xsr = xsr / size;
+ysr = ysr / size;
 
+w1 = 0.0; w0 = 0.0;
+sumTop = 0.0; sumBottom = 0.0;
 
-ST = datetime('now');
-for i = 1:cycles
-    a = polyfit(x,y,1);
-end
+for i=1:size
+    sumTop = sumTop + ((x(i) - xsr) * (y(i) - ysr));
+    sumBottom = sumBottom + ((x(i) - xsr) * (x(i) - xsr));
+end    
+w1 = sumTop / sumBottom;
+w0 = ysr - w1 * xsr;
 
-ED = datetime('now');
+%  -- end
+timeEnd = datetime('now');
+TIME_=seconds(duration( timeEnd-timeStart ));
+TIME_TAB=seconds(duration( prepareEnd-prepareStart ));
 
-D = duration( ED-ST );
-L = size( x );
-
-fprintf('# Polyfit:  X[%i] * cycles: %i \n', L(1), cycles  );
-fprintf( '# result: a:%f, a:%f\n\n' , a(2), a(1) );
-fprintf ('m[]=%f\n' , seconds(D)  );
-
-
-ST2 = datetime('now');
-
-xsr = 0;
-ysr = 0;
-w0  = 0;
-w1  = 0;
-
-for c = 1:cycles
-   xsr = 0;
-   ysr = 0;
-   for i=1:length(x)
-      xsr = (x(i)+xsr);
-      ysr = (y(i)+ysr);
-   end
-
-   xsr = xsr/length(x);
-   ysr = ysr/length(x);
-
-   w0=0;
-   w1=0;
-   sumTop=0;
-   sumBottom=0;
-
-   for i = 1:length(x)
-      sumTop     = ((( x(i)-xsr ) * ( y(i)-ysr )) + sumTop);
-      sumBottom  = ((( x(i)-xsr ) * ( x(i)-xsr )) + sumBottom);
-
-
-   end
-   w1 = sumTop/sumBottom;
-   w0 = ysr-( w1 * xsr );      
-
-end
-
-ED2 = datetime('now');
-D2 = duration( ED2-ST2 );
-
-fprintf('# implemented:  X[%i] * cycles: %i \n', L(1), cycles  );
-fprintf('# result: w0:%f, w1:%f\n\n', w0, w1);
-fprintf ('mi[]=%f\n' , seconds(D2)  );
-
+fprintf('czas przygotowania tablic (Matlab): %f\n' , TIME_TAB );     
+fprintf('czas obliczania regresji (Matlab): %f\n' , TIME_ );
