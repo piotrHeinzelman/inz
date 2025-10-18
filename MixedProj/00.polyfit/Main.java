@@ -10,8 +10,8 @@ public class Main {
     private static int size = 64000000;
 
     public static void main(String[] args) throws IOException {
-		
-	Instant prepareStart = Instant.now();	
+
+	Instant prepareStart = Instant.now();
         double[] x = new double[size];
         double[] y = new double[size];
 	for (int i=0;i<size;i++){
@@ -49,11 +49,10 @@ public class Main {
 
     Instant end = Instant.now();
 	Double prepareTime=ChronoUnit.MILLIS.between(prepareStart, prepareEnd)/1000.0;
-	
 
     System.out.println( "# prepare Table time:" + prepareTime + "[sek.]");
     System.out.println( "# time: " + (   ChronoUnit.MILLIS.between(start, end)/1000.0  ) + " [sek.],");
-    System.out.println( " result: [" + w1 + ", " + w0 + "]" ); 
+    System.out.println( " result: [" + w1 + ", " + w0 + "]" );
     }
 }
 
