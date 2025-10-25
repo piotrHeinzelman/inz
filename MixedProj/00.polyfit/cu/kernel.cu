@@ -14,12 +14,13 @@ cudaError_t prepareArrays( unsigned int sizex, unsigned int sizey );
 
 __global__ void prepareX(double* x)
 {
-    int i = threadIdx.x;
+int i = threadIdx.x + blockIdx.x * blockDim.x;
     x[i]=i*.1;
 }
+
 __global__ void prepareY(double* y)
 {
-    int i = threadIdx.x;
+int i = threadIdx.x + blockIdx.x * blockDim.x;
     y[i]=i*.2;
 }
 
@@ -95,8 +96,6 @@ cudaError_t prepareArrays( unsigned int sizex, unsigned int sizey )
 
     // Launch a kernel on the GPU with one thread for each element.
     prepareX<<< sizex, sizey >>>(dev_x);
-//    prepareX<<<size, size>>>(dev_x);
-//    prepareY<<<size, size>>>(dev_y);
 
     // Check for any errors launching the kernel
     cudaStatus = cudaGetLastError();
@@ -112,6 +111,27 @@ cudaError_t prepareArrays( unsigned int sizex, unsigned int sizey )
         fprintf(stderr, "cudaDeviceSynchronize returned error code %d after launching addKernel!\n", cudaStatus);
         goto Error;
     }
+
+    prepareY<<< sizex, sizey >>>(dev_x);
+
+
+    // Check for any errors launching the kernel
+    cudaStatus = cudaGetLastError();
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "addKernel launch failed: %s\n", cudaGetErrorString(cudaStatus));
+        goto Error;
+    }
+
+    // cudaDeviceSynchronize waits for the kernel to finish, and returns
+    // any errors encountered during the launch.
+    cudaStatus = cudaDeviceSynchronize();
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "cudaDeviceSynchronize returned error code %d after launching addKernel!\n", cudaStatus);
+        goto Error;
+    }
+
+
+
 
     // Copy output vector from GPU buffer to host memory.
     //cudaStatus = cudaMemcpy(c, dev_c, size * sizeof(float), cudaMemcpyDeviceToHost);
