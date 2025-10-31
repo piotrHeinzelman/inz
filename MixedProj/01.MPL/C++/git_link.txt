@@ -1,0 +1,8 @@
+
+mnist.cu
+git@github.com:SzymonOzog/GPU_Programming.git
+
+ASM
+https://www.youtube.com/watch?v=Zrbw0zajhJM&list=PL5XwKDZZlwaY7t0M5OLprpkJUIrF8Lc9j&index=7
+
+https://www.youtube.com/watch?v=IpHjDoW4ffw
