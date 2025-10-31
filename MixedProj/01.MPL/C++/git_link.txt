@@ -15,3 +15,10 @@ https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/
 
 !!!
 https://github.com/nvidia/cudalibrarysamples
+
+!!!!
+https://github.com/NVIDIA/CUDALibrarySamples/tree/main/cuBLAS/Level-3/gemm
+
+
+!!!!!  + python CuTensor ! << Convolution !
+https://github.com/NVIDIA/CUDALibrarySamples/tree/main/cuTENSOR
