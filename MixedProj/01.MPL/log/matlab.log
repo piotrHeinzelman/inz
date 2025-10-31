@@ -1,5 +1,7 @@
-# Matlab, MLP: 2x 64 Neu, epoch=500, data size=48000, accuracy:0.494875%
-library[0]="Matlab GPU accuracy:0.494875"
-d0[0]=0.553556
-d1[0]=0.315436
-d2[0]=23.873486
+# Matlab, MLP: 2x 64 Neu, epoch=500, data size=48000, accuracy:0.815875%
+# loadDataTime=0.639145[s], transferToGPUTime=0.054673[s]library[0]="Matlab GPU accuracy:0.815875"
+d0[0]=0.63
+d1[0]=0.054673
+d2[0]=0.211489
+d3[0]=20.770361
+d4[0]=0.81

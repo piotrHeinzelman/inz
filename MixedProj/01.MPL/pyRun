@@ -24,6 +24,7 @@ echo 'export TF_XLA_FLAGS=--tf_xla_enable_xla_devices'
 
 python3 Python/python_scikit.py >> log/python_scikit.log
 
+echo "PyTorch RUN WITHOUT CONDA !!"
 python3 Python/python_pytorch.py >> log/python_pytorch.log
 
 conda init

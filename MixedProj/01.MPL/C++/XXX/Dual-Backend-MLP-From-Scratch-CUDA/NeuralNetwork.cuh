@@ -626,3 +626,5 @@ float calculateAccuracy(const EigenMatrix& predictions, const EigenMatrix& Y_tru
 	// Return accuracy as a percentage
 	return static_cast<float>(correct) / total * 100;
 }
+
+

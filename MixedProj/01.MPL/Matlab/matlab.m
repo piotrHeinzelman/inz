@@ -141,16 +141,17 @@ timeLoadDataEnd = datetime('now');
 
 
 if (false)
-showx( xtrain , 1 );
+showx( xtrain , 19 );
 end
 
 neurons = 64;
 
-    net = feedforwardnet([ neurons,neurons ],'traingd'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquardt
-
-    %net.trainParam.mc = 0;
+    net = feedforwardnet([ neurons,neurons ],'trainrp'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquard
+    
+    net.trainParam.mc = 0;
     net.trainParam.epochs = epoch;
-    net.trainParam.goal   = 0.00000003;
+    %net.traingd.InitialLearnRate =0.0100;
+    net.trainParam.goal   = 0;
     net.input.processFcns = {'mapminmax'}; % https://www.mathworks.com/matlabcentral/answers/278051-output-processing-function-removeconstantrows-is-not-supported-with-gpu
     net.output.processFcns = {'mapminmax'};%
 
@@ -166,7 +167,7 @@ neurons = 64;
 	timeDataTransferEnd = datetime('now');
 TIME_GPUTransferData=seconds(duration( timeDataTransferEnd-timeDataTransferStart ));
 
-        net = configure(net,xtrain,ytrain);
+        % net = configure(net,xtrain,ytrain);
 
 	timeTrainStart = datetime('now');
         net = train(net, gxtrain, gytrain,'useParallel','yes','useGPU','yes');
@@ -202,10 +203,11 @@ TIME_Forward=seconds(duration( timeForwardEnd-timeForwardStart ));
     fprintf('# Matlab, MLP: 2x %i Neu, epoch=%i, data size=%i, accuracy:%f%%\n', neurons, epoch, percent*600, accuracy );
 %   fprintf('# train: epochs=%i, time=%f[s], one epoch time=%f[s] , one forward&backward time=%f[ms]\n', epoch,  seconds( duration(timeTrainEnd-timeTrainStart)), seconds( duration(timeTrainEnd-timeTrainStart))/(epoch), seconds( duration(timeTrainEnd-timeTrainStart))/(epoch*percent*0.6) );
 %   fprintf( '# accuracy=%f, forward one epoch time=%f[s], one propagation time=%f[ms] \n ' , accuracy, seconds( duration(timeForwardEnd-timeForwardStart)) , seconds( duration(timeForwardEnd-timeForwardStart))/(percent*0.10) );
-%   fprintf( '# loadDataTime=%f[s], transferToGPUTime=%f[s]', seconds( duration( timeLoadDataEnd-timeLoadDataStart )), seconds( duration(timeDataTransferEnd-timeDataTransferStart)))
+   fprintf( '# loadDataTime=%f[s], transferToGPUTime=%f[s]', seconds( duration( timeLoadDataEnd-timeLoadDataStart )), seconds( duration(timeDataTransferEnd-timeDataTransferStart)))
 
 
     fprintf('library[0]="Matlab GPU accuracy:%f"\n', accuracy);
+%   fprintf('d0[0]=%f\n', seconds(duration(timeLoadDataEnd-timeLoadDataStart));
     fprintf('d0[0]=%f\n', TIME_GPUTransferData );
     fprintf('d1[0]=%f\n' , TIME_Forward );
     fprintf('d2[0]=%f\n' , TIME_Train );

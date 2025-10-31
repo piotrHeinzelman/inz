@@ -1,5 +1,7 @@
 # code from: https://www.datacamp.com/tutorial/pytorch-cnn-tutorial
 
+# RUN WITHOUT CONDA !!!
+
 import numpy as np
 
 import torch
@@ -43,7 +45,7 @@ else:
 
 
 # params
-epochs = 550
+epochs = 500
 percent = 80
 num_classes = 10
 

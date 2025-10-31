@@ -1,0 +1,1 @@
+g++ -std=c++17  main.cpp NeuralNetwork.cpp -o NN -I/usr/include/eigen3/Eigen

@@ -1,0 +1,13 @@
+#include <cmath>
+#include <math.h>
+#include <stdlib.h>
+
+#include <iostream>
+#include <cerrno>
+#include <cstring>
+#include <cfenv>
+
+#include "NeuralNetwork.cuh"
+#include "loadcsv.cuh"
+#include "load_mnist.cuh"
+

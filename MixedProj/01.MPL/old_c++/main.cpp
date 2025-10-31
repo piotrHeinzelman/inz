@@ -10,9 +10,9 @@ using namespace std;
 
 int main() {
 
-   int const percent = 50;
+   int const percent = 80;
    long const len = percent*100;
-   const long CYCLES = 1000; 
+   const long CYCLES = 500;
 
 
   cout << "#  --- C++ ---\n";
@@ -30,7 +30,7 @@ int main() {
 
    inputFileStreamX.read( (char*) &X, percent * 100 * 784 * 6 * sizeof( double )  );
    inputFileStreamY.read( (char*) &Y, percent * 100 *   1 * 6 * sizeof( double )  );
-   
+
 
    inputFileStreamX.close();
    inputFileStreamY.close();

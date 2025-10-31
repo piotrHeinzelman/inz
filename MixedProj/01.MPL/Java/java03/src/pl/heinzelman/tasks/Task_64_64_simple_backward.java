@@ -6,6 +6,9 @@ import pl.heinzelman.tools.Tools;
 
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
 
 public class Task_64_64_simple_backward implements Task{
 
@@ -20,12 +23,13 @@ public class Task_64_64_simple_backward implements Task{
 
     private Tools tools = new Tools();
 
-    int cepo=0;	
+    int cepo=0;
     int numOfEpoch=5;
     float[] CSBin_data=new float[numOfEpoch];
 
     @Override
     public void prepare() {
+	Instant start=Instant.now();
         tools.prepareData( 80 );
 
         testX = tools.getTestX();
@@ -42,12 +46,18 @@ public class Task_64_64_simple_backward implements Task{
         layer3=new Layer( LType.softmaxMultiClass , 10 ,64 ); layer3.setName("Layer3"); // n neurons
         layer3.rnd();
 
+	Instant end=Instant.now();
+	Double time=( ChronoUnit.MILLIS.between(start,end))/1000.0;
+
+        System.out.println("time prepare data:" +  time );
+
+
     }
 
     @Override
     public void run() {
 
-        for (int cycle=0;cycle<250;cycle++) {
+        for (int cycle=0;cycle<100/4;cycle++) {
 
             float Loss = 0.0f;
             int step=1;
@@ -57,7 +67,6 @@ public class Task_64_64_simple_backward implements Task{
                 for ( int index = 0; index < trainX.length; index++ ) {
 
                     // ONE CYCLE
-	           
                     int ind_ex = /*index; //*/ (index*step) % trainX.length;
 
 
@@ -99,6 +108,19 @@ public class Task_64_64_simple_backward implements Task{
                 }
             }
             System.out.println("epoch num: "+cepo + ", "+100.0f * accuracy / len + "%");
+
+
+                    layer1.setX( trainX[ 17 ] );
+                    layer1.nForward();
+                    layer2.setX( layer1.getZ() );
+                    layer2.nForward();
+                    layer3.setX( layer2.getZ() );
+                    layer3.nForward();
+
+	            int netClassId = tools.getIndexMaxFloat( layer3.getZ() );
+
+            System.out.println("18 element należy do klasy: " + netClassId );
+
         }
     }
 }
