@@ -12,3 +12,6 @@ nvcc 5.5 with gcc-4.7 (or greater) has issues with the standard <limits> header 
   #undef _GLIBCXX_USE_INT128
 #endif
 On 64bits system Eigen uses long int as the default type for indexes and sizes. On CUDA device, it would make sense to default to 32 bits int. However, to keep host and CUDA code compatible, this cannot be done automatically by Eigen, and the user is thus required to define EIGEN_DEFAULT_DENSE_INDEX_TYPE to int throughout his code (or only for CUDA code if there is no interaction between host and CUDA code through Eigen's object).
+
+
+https://stackoverflow.com/questions/23802209/how-to-work-with-eigen-in-cuda-kernels
