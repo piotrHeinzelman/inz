@@ -68,7 +68,7 @@ def readFileY ( fileName , offset, percent, multi ):
     return data
 
 
-start=time.time()
+start1=time.time()
 trainX = readFileX ('data/train-images-idx3-ubyte', 16, percent ,6 )
 trainY = readFileY ('data/train-labels-idx1-ubyte', 8, percent, 6 )
 testX = readFileX ('data/t10k-images-idx3-ubyte', 16, percent, 1  )
@@ -80,8 +80,8 @@ testX = testX.astype("float32")
 
 trainY = trainY.astype("int")
 testY = testY.astype("int")
-end=time.time()
-timeLoadData=end-start
+end1=time.time()
+timeLoadData=end1-start1
 
 
 #trainX = trainX.reshape(6*percent*100, 1, 28,28).astype("float32") / 255
@@ -135,7 +135,7 @@ class MLP(nn.Module):
 
 
 
-start=time.time()
+start2=time.time()
 modelCPU = MLP(in_channels=1, num_classes=10)
 model = modelCPU.to(device)
 
@@ -150,8 +150,8 @@ criterion = nn.CrossEntropyLoss()
 optimizer=optim.SGD(model.parameters(), lr=0.01, momentum=0.0)
 data = torch.tensor( trainX , device=device)
 targets = torch.tensor(trainY, device=device)
-end=time.time()
-timeDataTransfer=end-start
+end2=time.time()
+timeDataTransfer=end2-start2
 
 
 
@@ -173,17 +173,6 @@ timeTrain=end-start
 
 
 
-
-
- 
-
-
-
-
-
-
-
-
 # Set up of multiclass accuracy metric
 acc = Accuracy(task="multiclass",num_classes=10).to(device)
 
@@ -194,15 +183,15 @@ model.eval()
 dataTest = torch.tensor( testX , device=device)
 targetsTest = torch.tensor(testY, device=device)
 
-start=time.time()
+start3=time.time()
 with torch.no_grad():
    outputs = model(dataTest)
    _, preds = torch.max(outputs, 1)
    preds = preds.to(device)
    acc(preds, targetsTest)
 
-end=time.time()
-timeForward=end-start
+end3=time.time()
+timeForward=end3-start3
 
 test_accuracy = acc.compute()
 

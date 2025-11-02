@@ -67,7 +67,7 @@ d3[3]=1.001 /100
 library[ 4 ]="C++"
 d0[4]=0.46
 d1[4]=0.197
-d2[4]=23.142/500
+d2[4]=0.04
 d3[4]=23.142 / 100
 #d4[4]=d2[0]*.0
 
@@ -100,7 +100,6 @@ plt.legend(title='Time[s]')
 plt.savefig( 'Pomiary_KlasyfikatorMLP.pdf',dpi=400 )
 #plt.show()
 #plt.close()
-
 
 
 

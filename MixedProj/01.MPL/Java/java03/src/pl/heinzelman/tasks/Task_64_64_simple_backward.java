@@ -57,7 +57,7 @@ public class Task_64_64_simple_backward implements Task{
     @Override
     public void run() {
 
-        for (int cycle=0;cycle<100/4;cycle++) {
+        for (int cycle=0;cycle<1;cycle++) {
 
             float Loss = 0.0f;
             int step=1;
@@ -91,6 +91,8 @@ public class Task_64_64_simple_backward implements Task{
             //System.out.println( Arrays.toString( layer3.getZ()));
 
             // check accuracy
+	Instant Astart=Instant.now();
+
             int len = testX.length;
             int accuracy = 0;
             for (int i = 0; i < len; i++) {
@@ -108,6 +110,9 @@ public class Task_64_64_simple_backward implements Task{
                 }
             }
             System.out.println("epoch num: "+cepo + ", "+100.0f * accuracy / len + "%");
+	Instant Aend=Instant.now();
+	Double time=( ChronoUnit.MILLIS.between(Astart,Aend))/1000.0;
+        System.out.println("Accuracy Time::" +  time );
 
 
                     layer1.setX( trainX[ 17 ] );
