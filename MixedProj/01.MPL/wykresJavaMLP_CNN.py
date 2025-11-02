@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-plt.title('dokładność klasyfikatorów (Java) zależność czas/dokładność')
+plt.title('Proces uczenia klasyfikatorów MLP i CNN (Java)')
 plt.style.use('_mpl-gallery')
 
 
@@ -80,13 +80,10 @@ train_time1[11]=1000
 
 
 
-plt.plot(  train_time, accuracy, '-', color='tab:green', linewidth=.1)
-plt.plot(  train_time1, accuracy1, '-', color='tab:red', linewidth=.1)
+plt.plot(  train_time, accuracy, ':', color='tab:green')
+plt.plot(  train_time1, accuracy1, ':', color='tab:red')
 
 plt.legend(['dokładność MLP Java','dokładność CNN Java']);
-plt.xlabel('ilość eopk', size=5)
-plt.ylabel('dokładność [%]', size=5)
+plt.xlabel('ilość eopk')
+plt.ylabel('dokładność [%]')
 plt.savefig( 'czas_dokladnosc_MLP_Java.pdf',dpi=400 )
-
-
- 

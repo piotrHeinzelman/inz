@@ -1,7 +1,7 @@
 #include <chrono>
 #include <fstream>
 #include <iomanip>
-#include <iostream> 
+#include <iostream>
 #include <curand.h>
 #include <curand_kernel.h>
 #include <cuda_runtime.h>
@@ -12,7 +12,7 @@
 #define gpuErrchk(ans) { gpuAssert((ans), __FILE__, __LINE__); }
 inline void gpuAssert(cudaError_t code, const char *file, int line, bool abort=true)
 {
-   if (code != cudaSuccess) 
+   if (code != cudaSuccess)
    {
       fprintf(stderr,"GPUassert: %s %s %d\n", cudaGetErrorString(code), file, line);
       if (abort) exit(code);
@@ -227,8 +227,8 @@ void read_mnist(const std::string filename, int length, float* x, float* y)
 
 int main(int argc, char** argv)
 {
-  int test_length = 10000;
-  int train_length = 60000;
+  int test_length = 8000;
+  int train_length = 48000;
 
   float* input;
   float* labels;
@@ -242,16 +242,16 @@ int main(int argc, char** argv)
   float* mnist_test_y = new float[labels_size * test_length];
   {
     Timer t("read mnist");
-    read_mnist("./mnist_train.csv", train_length, mnist_train_x, mnist_train_y);
-    read_mnist("./mnist_test.csv", test_length, mnist_test_x, mnist_test_y);
+    read_mnist("../../../../inz_Hidden/mnist_train.csv", train_length, mnist_train_x, mnist_train_y);
+    read_mnist("../../../../inz_Hidden/mnist_test.csv", test_length, mnist_test_x, mnist_test_y);
   }
 
-  int size1 = 300;
+  int size1 = 64;
   float* weights1;
   float* biases1;
   float* d_l1;
 
-  int size2 = 100;
+  int size2 = 64;
   float* weights2;
   float* biases2;
   float* d_l2;
@@ -263,9 +263,9 @@ int main(int argc, char** argv)
 
 
   int BLOCK_SIZE = 16;
-  int BATCH_SIZE = 16;
-  int EPOCHS = 10;
-  float LR = 0.003f;
+  int BATCH_SIZE = 2000;
+  int EPOCHS = 500;
+  float LR = 0.01f;
   dim3 dimGrid;
   dim3 dimBlock;
 
@@ -352,7 +352,7 @@ int main(int argc, char** argv)
 
       softmax<<<dimGrid, dimBlock>>>(size3, BATCH_SIZE, x3, a3);
       gpuErrchk(cudaPeekAtLastError());
-      
+
       dimGrid = dim3(ceil(size3/(float)BLOCK_SIZE), 1, 1);
       dimBlock = dim3(BLOCK_SIZE, 1, 1);
       cross_entropy<<<dimGrid, dimBlock>>>(size3, BATCH_SIZE, a3, labels, loss);
@@ -361,7 +361,7 @@ int main(int argc, char** argv)
 
       gpuErrchk(cudaMemcpy(out_h, a3, BATCH_SIZE*size3*sizeof(float), cudaMemcpyDeviceToHost));
       gpuErrchk(cudaMemcpy(loss_h, loss, BATCH_SIZE*sizeof(float), cudaMemcpyDeviceToHost));
-      
+
       for (int i = 0; i < BATCH_SIZE; i++)
       {
         float max_1 = 0.f;
@@ -375,7 +375,7 @@ int main(int argc, char** argv)
             max_1 = out_h[i*labels_size + j];
             i1 = j;
           }
-          
+
           if (mnist_train_y[batch*BATCH_SIZE*labels_size + i*labels_size + j] > max_2)
           {
             max_2 = mnist_train_y[batch*BATCH_SIZE*labels_size + i*labels_size + j];
@@ -461,7 +461,7 @@ int main(int argc, char** argv)
       gpuErrchk(cudaDeviceSynchronize());
       gpuErrchk(cudaMemcpy(out_h, a3, BATCH_SIZE*size3*sizeof(float), cudaMemcpyDeviceToHost));
       gpuErrchk(cudaMemcpy(loss_h, loss, BATCH_SIZE*sizeof(float), cudaMemcpyDeviceToHost));
-      
+
       for (int i = 0; i < BATCH_SIZE; i++)
       {
         float max_1 = 0.f;
@@ -475,7 +475,7 @@ int main(int argc, char** argv)
             max_1 = out_h[i*labels_size + j];
             i1 = j;
           }
-          
+
           if (mnist_test_y[batch*BATCH_SIZE*labels_size + i*labels_size + j] > max_2)
           {
             max_2 = mnist_test_y[batch*BATCH_SIZE*labels_size + i*labels_size + j];

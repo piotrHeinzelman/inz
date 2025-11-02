@@ -11,13 +11,17 @@
 # https://keras.io/2/api/models/sequential/
 
 
+# INSTALL
+# https://www.reddit.com/r/deeplearning/comments/1iush30/how_to_successfully_install_tensorflow_with_gpu/
+
+
 import tensorflow as tf
 
 
-#import numpy as np
+import numpy as np
 import time
-#from tensorflow.keras.backend import clear_session
-#from tensorflow import keras
+from tensorflow.keras.backend import clear_session
+from tensorflow import keras
 
 import numpy as np
 from tensorflow.keras.utils import to_categorical
@@ -26,18 +30,18 @@ from tensorflow.keras.utils import to_categorical
 
 
 
+physical_devices = tf.config.list_physical_devices('GPU')
+if physical_devices:
+   for gpu in physical_devices:
+      tf.config.experimental.set_memory_growth(gpu, True)
+      print(gpu.device_type)
 
-#physical_devices = tf.config.list_physical_devices('GPU')
-#if physical_devices:
-#   for gpu in physical_devices:
-#      tf.config.experimental.set_memory_growth(gpu, True)
-#      print(gpu.device_type)
-
-#device_name = tf.test.gpu_device_name()
-#print(device_name)
+device_name = tf.test.gpu_device_name()
+print(device_name)
 
 # params
-epochs = 500 # 5000
+epochs = 500
+batch_size = 2000
 percent = 80
 num_classes = 10
 input_shape = (784, 1)
@@ -88,33 +92,30 @@ model.add(tf.keras.layers.Dense(64, activation='sigmoid'))
 model.add(tf.keras.layers.Dense(10, activation='softmax'))
 
 
-opt = tf.keras.optimizers.SGD(
-    learning_rate=0.01,
-    momentum=0.0,
-    nesterov=False,
-    clipnorm=None,
-    clipvalue=None,
-    name='sgd'
-)
+opt = keras.optimizers.SGD(learning_rate=0.01)
+# opt = tf.keras.optimizers.SGD(    learning_rate=0.01,    momentum=0.0,    nesterov=False,    clipnorm=None,    clipvalue=None,    name='sgd')
 
 
 
-cce = tf.keras.losses.CategoricalCrossentropy()
-met=tf.keras.metrics.CategoricalAccuracy() # metrics=['accuracy']
-
-model.compile(optimizer=opt,
-              loss='categorical_crossentropy',
-              metrics=['accuracy'])
+#cce = tf.keras.losses.CategoricalCrossentropy()
+#met=tf.keras.metrics.CategoricalAccuracy() # metrics=['accuracy']
 
 
-#model.summary()
+
+model.compile(loss="categorical_crossentropy", optimizer="sgd", metrics=["accuracy"])
+
+#model.compile(optimizer=opt,             loss='categorical_crossentropy',       metrics=['accuracy'])
+
+
+model.summary()
 
 
 
 timeTrainStart=time.time()
 
 with tf.device('/device:GPU:0'):
-   model.fit( trainX, trainY, epochs=epochs, verbose=0 )
+   model.fit( trainX, trainY, batch_size=batch_size, epochs=epochs, validation_split=0.0, verbose=0)
+#   model.fit(x_train, y_train, epochs=epochs, verbose=0 )
 
 timeTrainEnd=time.time()
 
@@ -136,6 +137,4 @@ print('# train: epochs=',epochs);
 print('# LoadDataTime=', timeLoadDataEnd-timeLoadDataStart)
 print('# trainTime=',timeTrainEnd-timeTrainStart);
 print('# propagation time:=',(timeForwardEnd-timeForwardStart) );
-
-
 

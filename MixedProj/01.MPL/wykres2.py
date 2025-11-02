@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-plt.title('dokładność klasyfikatorów (Matlab) zależność czas/dokładność')
+plt.title('Proces uczenia klasyfikatorów MLP i CNN (Matlab)')
 plt.style.use('_mpl-gallery')
 
 
@@ -84,10 +84,8 @@ train_time1[11]=2719.826507
 plt.plot(  train_time, accuracy, ':', color='tab:green')
 plt.plot(  train_time1, accuracy1, ':', color='tab:red')
 
-plt.legend(['dokładność MLP','dokładność CNN']); 
-plt.xlabel('czas [s]', size=10) 
-plt.ylabel('dokładność [%]', size=10)
+plt.legend(['dokładność MLP','dokładność CNN']);
+plt.xlabel('liczba epok')
+plt.ylabel('dokładność [%]')
 plt.savefig( 'czas_dokladnosc_MLP.pdf',dpi=400 )
 
-
- 

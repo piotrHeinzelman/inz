@@ -95,7 +95,7 @@ if (False):
 #net = snn.MLPClassifier(hidden_layer_sizes=(64,64,10), activation='logistic', solver='sgd', alpha=0.0001, learning_rate='constant', learning_rate_init=0.001, max_iter=5000 )
 
 start=time.time()
-net = snn.MLPClassifier( hidden_layer_sizes=(64,64), max_iter=epoch, random_state=1, alpha=0.0001,  early_stopping=False, activation='logistic', solver='sgd', learning_rate='constant', learning_rate_init=0.001 )
+net = snn.MLPClassifier( hidden_layer_sizes=(64,64), max_iter=epoch, random_state=1, alpha=0.0001,  early_stopping=False, activation='logistic', solver='sgd', learning_rate='constant', learning_rate_init=0.01 )
 end=time.time()
 TIME_createNet=end-start
 
