@@ -1,0 +1,7 @@
+echo "#    --- Matlab ---"
+
+echo "1" 
+/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run Matlab/matlab.m' >> matlab_out1
+ 
+echo "#    --- Matlab END ---"
+

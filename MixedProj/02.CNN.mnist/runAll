@@ -1,0 +1,9 @@
+
+
+
+echo "CNN " > out.txt
+
+./pyRun  >> out.txt
+./matRun >> out.txt
+
+cat out.txt
