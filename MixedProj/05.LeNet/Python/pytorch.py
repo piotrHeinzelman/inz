@@ -1,25 +1,36 @@
 # code from: https://www.datacamp.com/tutorial/pytorch-cnn-tutorial
 
 import numpy as np
+#import pandas as pd
+#import matplotlib.pyplot as plt
+
+
 import torch
 from torch import optim
 from torch import nn
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
+# !pip install torchvision
 import torchvision
 
 import torch.nn.functional as F
 import torchvision.datasets as datasets
 import torchvision.transforms as transforms
 
+# !pip install torchmetrics
+#import torchmetrics
 from torchmetrics import Accuracy
+
+#from torcheval.metrics import MulticlassAccuracy
+
 
 import inspect
 import os
 import time
 
 
+#os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "caching_allocator"
 os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:128"
 
 
@@ -58,7 +69,6 @@ def readFileY ( fileName , offset, percent, multi ):
     return data
 
 
-start=time.time() 
 
 trainX = readFileX ('../04.CNN/data/train-images-idx3-ubyte', 16, percent ,6 )
 trainY = readFileY ('../04.CNN/data/train-labels-idx1-ubyte', 8, percent, 6 )
@@ -74,13 +84,6 @@ testY = testY.astype("int")
 
 trainX = trainX.reshape(6*percent*100, 1, 28,28).astype("float32") / 255
 testX = testX.reshape(1*percent*100, 1, 28,28).astype("float32") / 255
-
-
-end=time.time() 
-loadTime=end-start
-
-
-
 
 class CNN(nn.Module):
    def __init__(self, in_channels, num_classes):
@@ -157,15 +160,16 @@ for epoch in range(epochs):
    optimizer.zero_grad()
    loss.backward()
    optimizer.step()
-   print( loss )
+   # print( loss )
 
 end=time.time()
-trainTime=end-start
 
 print(scores[0].shape)
 print(scores[1])
 
-print("# Python PyTorch 2.0 48000 Images, 20 Epoch Time: " , trainTime)
+end=time.time()
+d=end-start
+print("# Python PyTorch 2.0 48000 Images, 20 Epoch Time: " , d)
 
 
 
