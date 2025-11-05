@@ -3,6 +3,29 @@
 #include "loadcsv.h"
 #include "ctime"
 
+
+
+
+#include <Eigen/Core>
+/*
+#include <iostream>
+
+int main()
+{
+    std::cout << "Hello Eigen\t";
+    std::cout << EIGEN_WORLD_VERSION << "." << EIGEN_MAJOR_VERSION << "." << EIGEN_MINOR_VERSION << "\n";
+    std::cout << "Hello nvcc\t";
+    std::cout << __CUDACC_VER_MAJOR__ << "." << __CUDACC_VER_MINOR__ << "." << __CUDACC_VER_BUILD__ << "\n";
+    return 0;
+}
+*/
+
+
+
+
+
+
+
 int main(){
 
 //--------------LOAD CSV FILES------------------------
@@ -22,7 +45,6 @@ int main(){
     int num_images_train, rows_train, cols_train, num_labels_train;
     int num_images_test, rows_test, cols_test, num_labels_test;
 
-//    clock_t before=clock();
 
     //change path to where your MNIST data is
     MatrixXd train_images = load_mnist_images("../../../../inz_Hidden/MNIST/train-images-idx3-ubyte", num_images_train, rows_train, cols_train);
@@ -33,17 +55,18 @@ int main(){
     MatrixXd train_labels_oh {toOneHot(train_labels, 10)};
     MatrixXd test_labels_oh {toOneHot(test_labels, 10)};
 
-//    clock_t loadTime=clock()-before;
-//    std::cout << "Load data Time:" << (float) loadTime/CLOCKS_PER_SEC << "\n";
-
-
     NeuralNetwork nn {{784, 64, 64, 10}, {"relu", "relu", "softmax"}};
-    nn.learn(train_images, train_labels_oh, 30, 0.01, 32, "cross_entropy_loss", true);
-
     clock_t before=clock();
+    nn.learn(train_images, train_labels_oh, 1024, 0.01, 32, "cross_entropy_loss", true);
+    clock_t trainTime=clock()-before;
+    std::cout << "TrainTime:" << (float) trainTime/CLOCKS_PER_SEC << "\n";
+
+
+    before=clock();
     MatrixXd pred {nn.predict(test_images)};
     clock_t predTime=clock()-before;
     std::cout << "PredictionTime:" << (float) predTime/CLOCKS_PER_SEC << "\n";
+    return 1;
 
     for (int i {}; i<test_labels_oh.rows(); ++i){
         std::cout<<"Actual: "<<test_labels_oh.row(i)<<" Predicted: ";

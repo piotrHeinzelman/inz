@@ -1,0 +1,1 @@
+g++ -std=c++17  main.cpp NeuralNetwork.cpp -o NN -I/usr/src/eigen-5.0.0/Eigen

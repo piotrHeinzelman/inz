@@ -4,13 +4,39 @@
 # https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html
 
 
-import tensorflow as tf
-import numpy as np
-from tensorflow import keras
 
-import os
+import tensorflow as tf
+
+
+
+import numpy as np
 import time
-from tensorflow.keras.backend import clear_session
+#from tensorflow.keras.backend import clear_session
+
+#import numpy as np
+#from tensorflow.keras.utils import to_categorical
+
+
+
+
+
+#physical_devices = tf.config.list_physical_devices('GPU')
+#if physical_devices:
+#   for gpu in physical_devices:
+#      tf.config.experimental.set_memory_growth(gpu, True)
+#      print(gpu.device_type)
+
+#device_name = tf.test.gpu_device_name()
+#print(device_name)
+
+
+#import tensorflow as tf
+#import numpy as np
+#from tensorflow import keras
+
+#import os
+#import time
+#from tensorflow.keras.backend import clear_session
 # import matplotlib.pyplot as plt
 
 # from sklearn.metrics import classification_report, confusion_matrix, roc_curve, auc
@@ -21,10 +47,10 @@ from tensorflow.keras.backend import clear_session
 
 
 
-physical_devices = tf.config.list_physical_devices('GPU')
-if physical_devices:
-   for gpu in physical_devices:
-      tf.config.experimental.set_memory_growth(gpu, True)
+#physical_devices = tf.config.list_physical_devices('GPU')
+#if physical_devices:
+#   for gpu in physical_devices:
+#      tf.config.experimental.set_memory_growth(gpu, True)
 
 # params
 epochs = 20
@@ -70,10 +96,10 @@ def AlexNet():
 
 
 
-trainX = readFileX ('data/train-images-idx3-ubyte', 16, percent ,6 )
-trainY = readFileY ('data/train-labels-idx1-ubyte', 8, percent, 6 )
-testX = readFileX ('data/t10k-images-idx3-ubyte', 16, percent, 1  )
-testY = readFileY ('data/t10k-labels-idx1-ubyte', 8, percent, 1 )
+trainX = readFileX ('../../01.MLP/data/train-images-idx3-ubyte', 16, percent ,6 )
+trainY = readFileY ('../../01.MLP/data/train-labels-idx1-ubyte', 8, percent, 6 )
+testX = readFileX ( '../../01.MLP/data/t10k-images-idx3-ubyte', 16, percent, 1  )
+testY = readFileY ( '../../01.MLP/data/t10k-labels-idx1-ubyte', 8, percent, 1 )
 
 
 trainX = trainX.astype("float32") # / 255
