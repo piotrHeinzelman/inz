@@ -3,14 +3,20 @@
 # https://www.osc.edu/resources/getting_started/howto/howto_use_gpu_in_python
 # https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html
 
-
 import tensorflow as tf
-import numpy as np
-from tensorflow import keras
 
-import os
+
+import numpy as np
 import time
 from tensorflow.keras.backend import clear_session
+from tensorflow import keras
+
+import numpy as np
+from tensorflow.keras.utils import to_categorical
+
+
+
+
 # import matplotlib.pyplot as plt
 
 # from sklearn.metrics import classification_report, confusion_matrix, roc_curve, auc
