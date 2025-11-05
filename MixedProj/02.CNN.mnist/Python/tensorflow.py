@@ -3,6 +3,7 @@
 # https://www.osc.edu/resources/getting_started/howto/howto_use_gpu_in_python
 # https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html
 
+<<<<<<< HEAD
 
 
 import tensorflow as tf
@@ -15,10 +16,23 @@ import time
 
 #import numpy as np
 #from tensorflow.keras.utils import to_categorical
+=======
+import tensorflow as tf
+
+
+import numpy as np
+import time
+from tensorflow.keras.backend import clear_session
+from tensorflow import keras
+
+import numpy as np
+from tensorflow.keras.utils import to_categorical
+>>>>>>> db127628955069bf413cd72b735ae78828c421ca
 
 
 
 
+<<<<<<< HEAD
 
 #physical_devices = tf.config.list_physical_devices('GPU')
 #if physical_devices:
@@ -37,6 +51,8 @@ import time
 #import os
 #import time
 #from tensorflow.keras.backend import clear_session
+=======
+>>>>>>> db127628955069bf413cd72b735ae78828c421ca
 # import matplotlib.pyplot as plt
 
 # from sklearn.metrics import classification_report, confusion_matrix, roc_curve, auc

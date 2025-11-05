@@ -1,5 +1,5 @@
 
-cd C:\Users\John\Desktop\New folder\inz\MixedProj\03.MLP\java03\src\
+cd src
 javac pl/heinzelman/Main.java -d ../out
 cd ../out
 
