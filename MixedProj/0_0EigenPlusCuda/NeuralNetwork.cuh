@@ -120,7 +120,7 @@ void NeuralNetwork::initialize(int fan_in, int fan_out, const Initializer& initi
 	auto init{
 		[&](auto& dist, auto& weights) {
 			for (int row{}; row < weights.rows(); ++row) {
-				for (int col{}; col < weights.cols(); ++col) weights(row, col) = dist(mt);
+				for (int col{}; col < weights.cols(); ++col) weights(row, col) = .4;//dist(mt);
 			}
 		}
 	};
@@ -170,7 +170,7 @@ void NeuralNetwork::feedForwardCPU(const EigenMatrix& batch) {
 	//Lambda For Applying Activations On Pre Activation Matrix
 	auto computeActivation{
 	[&](const auto& preActivations, auto& activations, const auto& activationFn) {
-		if (activationFn == "sigmoid")
+/*		if (activationFn == "sigmoid")
 			activations = preActivations.unaryExpr(ActivationsLambdas::sigmoid);
 		else if (activationFn == "relu")
 			activations = preActivations.unaryExpr(ActivationsLambdas::relu);
@@ -181,8 +181,8 @@ void NeuralNetwork::feedForwardCPU(const EigenMatrix& batch) {
 		else if (activationFn == "tanh")
 			activations = preActivations.unaryExpr(ActivationsLambdas::tanh);
 		else if (activationFn == "linear")
-			activations = preActivations;
-		}
+			activations = preActivations; 
+	*/	}
 	};
 
 	//FeedForward Loop - Pass The Data From Each Layer
