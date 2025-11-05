@@ -1,0 +1,4 @@
+g++ main.cu
+echo "nvcc main.cu kernles.cu matrix.cu --std=c++17"
+
+echo " nn.learn(data.X_train, Y_train_ohe, 100, NeuralNetwork::TrainingDevice::GPU, false);"
