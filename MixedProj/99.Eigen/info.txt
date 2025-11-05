@@ -1,0 +1,3 @@
+https://github.com/Kikumu/Neural-networks-/blob/master/NeuralNetworkPointers/main.cpp
+
+

@@ -1,1 +1,6 @@
-g++ -std=c++17  main.cpp NeuralNetwork.cpp -o NN -I/usr/src/eigen-5.0.0/Eigen/
+g++ -std=c++17  main.cpp NeuralNetwork.cpp -o NN -I/usr/src/eigen-5.0.0/Eigen
+
+
+
+echo "https://eigen.tuxfamily.org/dox-devel/group__QuickRefPage.html"
+echo "https://stackoverflow.com/questions/57134411/fatal-error-eigen-core-no-such-file-or-directory-while-installing-opencv-on"
