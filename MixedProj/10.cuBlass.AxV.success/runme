@@ -1,0 +1,2 @@
+nvcc -o t247 main.cpp -lcublas -lcusolver
+./t247

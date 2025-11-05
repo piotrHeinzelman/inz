@@ -1,0 +1,12 @@
+
+cd ./gpu_unet
+make clean
+make -j 8
+
+./test bench_unet 1000
+
+./test test_unet 100
+
+./test mnist 10000
+
+./test bench_conv 1000
