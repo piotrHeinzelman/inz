@@ -34,7 +34,7 @@ public class Main {
         }
         xsr = xsr / size;
         ysr = ysr / size;
-
+        System.out.println( "# srX: " + xsr + "[sek.]");
         w1 = 0.0;
         w0 = 0.0;
         double sumTop = 0.0;

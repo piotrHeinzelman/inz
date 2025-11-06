@@ -20,11 +20,11 @@ int main() {
       X[i]=0.1*i;
       Y[i]=0.2*i;
    }
-   
+
    clock_t tableEnd = clock();
-   
+
    clock_t durationTable = tableEnd - tableStart;
-   
+
    cout << "table loaded: " <<  durationTable/(CLOCKS_PER_SEC/1000)  << "[msek.]\n";
 
 //-- start
@@ -43,7 +43,7 @@ int main() {
 
    double sumTop=0.0;
    double sumBottom=0.0;
-      for ( int i=0;i<len;i++ ){  
+      for ( int i=0;i<len;i++ ){
        sumTop   += ((X[i]-xsr)*(Y[i]-ysr));
       sumBottom += ((X[i]-xsr)*(X[i]-xsr));
       }
@@ -51,10 +51,10 @@ int main() {
       w0 = ysr -(w1 * xsr) ;
 
   clock_t duration = clock() - before;
-  
+
 
   cout << "create table time: " << (float) durationTable / CLOCKS_PER_SEC << " [sek.],  w0: "<<"\n";
   cout << "#  time: " << (float)duration / CLOCKS_PER_SEC << " [sek.]"  << "\n";
   return 0;
- 
+
 }

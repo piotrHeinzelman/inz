@@ -1,2 +1,2 @@
-nvcc kernel.cu
+nvcc main.cu
 ./a.out
