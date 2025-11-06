@@ -10,10 +10,10 @@ option( CORE_USE_CUDA    "Use CUDA to speed up certain parts of the code."      
 ######### CUDA decisions ####################
 if (CORE_USE_CUDA)
     MESSAGE( STATUS ">> --------------  USING CUDA --------------" )
-    set( CUDA_TOOLKIT_ROOT_DIR "/opt/cuda" )
+    set( CUDA_TOOLKIT_ROOT_DIR "/usr/local/cuda/" )
     if (APPLE OR UNIX)
-        set(CMAKE_C_COMPILER   /opt/cuda/bin/gcc)
-        set(CMAKE_CXX_COMPILER /opt/cuda/bin/g++)
+        set(CMAKE_C_COMPILER   /usr/bin/cc)
+        set(CMAKE_CXX_COMPILER /usr/bin/g++)
     elseif (WIN32)
         ### By default we use VS
         MESSAGE( STATUS ">> User compiler:             MSVC" )
@@ -67,8 +67,8 @@ set(SOURCE_FILES
 )
 
 set(HEADER_FILES
-    include/test.hpp
-    include/kernel.hpp
+    src/test.hpp
+    src/kernel.hpp
 )
 #############################################
 

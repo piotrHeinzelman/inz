@@ -1,5 +1,5 @@
-#include <test.hpp>
-#include <kernel.hpp>
+#include <test.h>
+#include <kernel.h>
 #include <Eigen/Core>
 
 namespace Test

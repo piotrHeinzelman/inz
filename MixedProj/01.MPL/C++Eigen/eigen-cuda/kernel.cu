@@ -1,6 +1,6 @@
 #ifdef USE_CUDA
 
-#include <kernel.hpp>
+#include <kernel.h>
 #include <Eigen/Core>
 
 #include <iostream>

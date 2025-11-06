@@ -1,6 +1,6 @@
 #ifndef USE_CUDA
 
-#include <kernel.hpp>
+#include <kernel.h>
 #include <Eigen/Core>
 
 // C++ Version

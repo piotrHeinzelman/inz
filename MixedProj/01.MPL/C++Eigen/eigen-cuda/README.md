@@ -1,3 +1,10 @@
+
+
+1) cd build
+cmake ..
+make
+../run
+
 # eigen-cuda
 Using the Eigen library in CUDA kernels
 
