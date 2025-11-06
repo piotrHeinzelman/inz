@@ -1,3 +1,0 @@
-
-end=time.time() 
-loadTime=end-start
