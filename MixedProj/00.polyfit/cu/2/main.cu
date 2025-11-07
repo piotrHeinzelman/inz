@@ -15,7 +15,6 @@ cudaError_t all     ( unsigned int size_bl, unsigned int size_th , unsigned int 
 cudaError_t sum     ( double* source, double * result, unsigned int size_bl, unsigned int size_th , double multi);
 cudaError_t sumMulti( double* ary,    double * avg,    double* ary2, double * avg2, unsigned int sizex, unsigned int sizey, double* value);
 
-
 __global__ void fillCU(double* ary, double* dest, float multi)
 {
 int i = threadIdx.x + blockIdx.x * blockDim.x;
@@ -29,14 +28,6 @@ int i = threadIdx.x + blockIdx.x * blockDim.x;
        dest[i]=sum;
     }
 }
-
-
-
-
-
-
-
-
 
 
 __global__ void  sumDest(double* source, double* destination, unsigned int vector_size, unsigned int dest_size ) //<<<1,sizex>>>(dev_destination, dev_destination_lev2 );
@@ -59,8 +50,15 @@ int i = threadIdx.x; // one block
 */
 
 
-__global__ void divVal( double* ary ){
-    ary[0]=ary[0]/64000000;
+__global__ void divVal( double* results, double* sumx, double* sumy ){
+    int i = threadIdx.x;
+    if (i==0) {
+       sumx[0]=sumx[0]/64000000;
+       sumy[0]=sumy[0]/64000000;
+
+       results[0]=sumx[0];
+       results[1]=sumy[0];
+    }
 }
 
 
@@ -110,9 +108,6 @@ int main()
        results[i]=(double)0.99*i;
     }
 
-    printf("\r\nResults[2]: %f\r\n", results[2] );
-
-
     clock_t start = clock();
 
     cudaError_t cudaStatus;
@@ -120,7 +115,8 @@ int main()
     if (cudaStatus == cudaSuccess) {
         cudaStatus = all( SIZE_BL, SIZE_TH, PAGE, results);
     }
-    printf("\r\nXsm (OK): %f \r\n", results[0] );
+    printf("\r\nResults[0] (OK): %f \r\n", results[0] );
+    printf("\r\nResults[1] (OK): %f \r\n", results[1] );
 
 //    cudaStatus = sumMulti( X, Xsm, X, Xsm, SIZE_BL, SIZE_TH, sumT);
 //    cudaStatus = sumMulti( X, Xsm, Y, Xsm, SIZE_BL, SIZE_TH, sumB);
@@ -162,7 +158,9 @@ cudaError_t all( unsigned int sizex, unsigned int sizey, unsigned int page, doub
     double *dev_X = 0;//=new double[sizex*sizey*page];
     double *dev_Y = 0;//=new double[sizex*sizey*page];
     double *dev_tmp = 0;//=new double[sizex*sizey*page];
-
+    double *dev_tmp2 = 0;//=new double[sizex*sizey*page];
+    double *dev_sumX = 0;
+    double *dev_sumY = 0;
 /*
 
     double * Xsm=new double[1];
@@ -225,7 +223,28 @@ cudaError_t all( unsigned int sizex, unsigned int sizey, unsigned int page, doub
     // Allocate GPU buffers for three vectors (two input, one output)    .
     cudaStatus = cudaMalloc((void**)&dev_tmp, sizex*sizey * sizeof(double));
     if (cudaStatus != cudaSuccess) {
-        fprintf(stderr, "cudaMalloc3 failed!");
+        fprintf(stderr, "cudaMalloc4 failed!");
+        goto Error;
+    }
+
+    // Allocate GPU buffers for three vectors (two input, one output)    .
+    cudaStatus = cudaMalloc((void**)&dev_tmp2, sizex * sizeof(double));
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "cudaMalloc5 failed!");
+        goto Error;
+    }
+
+    // Allocate GPU buffers for three vectors (two input, one output)    .
+    cudaStatus = cudaMalloc((void**)&dev_sumX, 1 * sizeof(double));
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "cudaMalloc6 failed!");
+        goto Error;
+    }
+
+    // Allocate GPU buffers for three vectors (two input, one output)    .
+    cudaStatus = cudaMalloc((void**)&dev_sumY, 1 * sizeof(double));
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "cudaMalloc7 failed!");
         goto Error;
     }
 
@@ -239,8 +258,30 @@ cudaError_t all( unsigned int sizex, unsigned int sizey, unsigned int page, doub
 //    }
 
     // Launch a kernel on the GPU with one thread for each element.
-    cudaStatus = cudaDeviceSynchronize();
+
+    // FILL dev_X
     fillCU<<<sizey, sizex>>>(dev_X, dev_tmp, 0.1);
+    cudaStatus = cudaDeviceSynchronize(); if (cudaStatus != cudaSuccess) { fprintf(stderr, "synch0 failed!"); goto Error; }
+
+    sumDest<<<1,sizex>>>(dev_tmp, dev_tmp2, sizey, sizex );
+    cudaStatus = cudaDeviceSynchronize(); if (cudaStatus != cudaSuccess) { fprintf(stderr, "s1 failed!"); goto Error; }
+
+    sumDest<<<1,1>>>(dev_tmp2, dev_sumX, sizex, 1 );
+    cudaStatus = cudaDeviceSynchronize(); if (cudaStatus != cudaSuccess) { fprintf(stderr, "s2 failed!"); goto Error; }
+
+    // FILL dev_Y
+    fillCU<<<sizey, sizex>>>(dev_Y, dev_tmp, 0.2);
+    cudaStatus = cudaDeviceSynchronize(); if (cudaStatus != cudaSuccess) { fprintf(stderr, "s3 failed!"); goto Error; }
+
+    sumDest<<<1,sizex>>>(dev_tmp, dev_tmp2, sizey, sizex );
+    cudaStatus = cudaDeviceSynchronize(); if (cudaStatus != cudaSuccess) { fprintf(stderr, "s4 failed!"); goto Error; }
+
+    sumDest<<<1,1>>>(dev_tmp2, dev_sumY, sizex, 1 );
+    cudaStatus = cudaDeviceSynchronize(); if (cudaStatus != cudaSuccess) { fprintf(stderr, "s5 failed!"); goto Error; }
+
+    // dev_sumX = sum/64000000; dev sumY = sum/64000000; result[0]=srX, result[1]=srY
+    divVal<<<1,2>>>(dev_results, dev_sumX, dev_sumY );
+    cudaStatus = cudaDeviceSynchronize(); if (cudaStatus != cudaSuccess) { fprintf(stderr, "synch1 failed!"); goto Error; }
 
 
 /*
@@ -268,16 +309,21 @@ cudaError_t all( unsigned int sizex, unsigned int sizey, unsigned int page, doub
     }
 
     // Copy output vector from GPU buffer to host memory.
-    //cudaStatus = cudaMemcpy(results, dev_results, 10 * sizeof(double), cudaMemcpyDeviceToHost);
-    //if (cudaStatus != cudaSuccess) {
-    //    fprintf(stderr, "cudaMemcpy failed!");
-    //    goto Error;
-    // }
+    cudaStatus = cudaMemcpy(results, dev_results, 10 * sizeof(double), cudaMemcpyDeviceToHost);
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "cudaMemcpy failed!");
+        goto Error;
+     }
 
 Error:
     cudaFree(dev_results);
     cudaFree(dev_X);
     cudaFree(dev_Y);
+    cudaFree(dev_tmp);
+    cudaFree(dev_tmp2);
+    cudaFree(dev_sumX);
+    cudaFree(dev_sumY);
+
 //    cudaFree(dev_destination);
 //    cudaFree(dev_destination_lev2);
 End:
