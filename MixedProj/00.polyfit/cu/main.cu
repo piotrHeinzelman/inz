@@ -10,8 +10,8 @@
 
 using namespace std;
 
-cudaError_t sum( double* source, double * result, unsigned int size_bl, unsigned int size_th , double multi);
 
+cudaError_t sum( double* source, double * result, unsigned int size_bl, unsigned int size_th , double multi);
 
 __global__ void sumCU(double* ary, double* dest, float multi)
 {
@@ -25,9 +25,35 @@ int i = threadIdx.x + blockIdx.x * blockDim.x;
        }
        dest[i]=sum;
     }
-
-    
 }
+
+__global__ void  sumDest(double* source, double* destination, unsigned int vector_size, unsigned int dest_size ) //<<<1,sizex>>>(dev_destination, dev_destination_lev2 );
+{
+int i = threadIdx.x; // one block
+    double sum=0.0;
+    if (i<dest_size ){
+       for (int j=0;j<vector_size;j++){
+          sum+=source[i*vector_size+j];
+       }
+    }
+    destination[i]=sum;
+}
+
+/*   vector_size  
+     -----------
+     |  |  |  |   ->   } dest_size
+     |  |  |  |   ->   
+     ----------
+*/
+
+
+
+
+
+
+
+
+
 
 __global__ void mulCU(double* ary, double* dest)
 {
@@ -43,8 +69,8 @@ int main()
     unsigned int const SIZE_BL =500; //=1*1000 / 10;
     double * X=new double[SIZE_TH*SIZE_BL*256];
     double * Y=new double[SIZE_TH*SIZE_BL*256];
-    double * Xsm=new double[SIZE_TH*SIZE_BL];
-    double * Ysm=new double[SIZE_TH*SIZE_BL];
+    double * Xsm=new double[1];
+    double * Ysm=new double[1];
 
     double srX=0.0;
     double srY=0.0;
@@ -60,17 +86,10 @@ int main()
     if (cudaStatus == cudaSuccess) {
         cudaStatus = sum( X, Xsm, SIZE_BL, SIZE_TH, 0.1);
         cudaStatus = sum( Y, Ysm, SIZE_BL, SIZE_TH, 0.2);
-        printf("\r\nsumX: %f \r\n", Xsm[0] );
-        printf("\r\nsumX: %f \r\n", Xsm[1000] );
-        printf("\r\nsumY: %f \r\n", Ysm[0] );
     }
-
-    for (int i=0;i<SIZE_TH*SIZE_BL;i++){
-        srX+=Xsm[i];
-        srY+=Ysm[i];
-    }
-        srX=srX/64000000;
-        srY=srY/64000000;
+    printf("\r\nXsm (OK): %f \r\n", Xsm[0] );
+        srX=Xsm[0]/64000000;
+        srY=Ysm[0]/64000000;
     printf("\r\nsrX (OK): %f \r\n", srX );
     printf("\r\nsrY (OK): %f \r\n", srY );
 
@@ -91,7 +110,8 @@ cudaError_t sum( double* source, double * destination, unsigned int sizex, unsig
 {
     double *dev_source = 0;
     double *dev_destination = 0;
-    double *dev_ = 0;
+    double *dev_destination_lev2 = 0;
+    double *dev_value = 0;
     cudaError_t cudaStatus;
 
     // Choose which GPU to run on, change this on a multi-GPU system.
@@ -114,7 +134,14 @@ cudaError_t sum( double* source, double * destination, unsigned int sizex, unsig
         goto Error;
     }
 
-    cudaStatus = cudaMalloc((void**)&dev_, 1* sizeof(double));
+    cudaStatus = cudaMalloc((void**)&dev_destination_lev2, sizey* sizeof(double));
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "cudaMalloc failed!");
+        goto Error;
+    }
+
+
+    cudaStatus = cudaMalloc((void**)&dev_value, 1* sizeof(double));
     if (cudaStatus != cudaSuccess) {
         fprintf(stderr, "cudaMalloc failed!");
         goto Error;
@@ -133,8 +160,16 @@ cudaError_t sum( double* source, double * destination, unsigned int sizex, unsig
 //    sumCU<<< 1, sizex >>>    (dev_destination, dev_source );
 
     cudaStatus = cudaDeviceSynchronize();
+
+    sumDest<<<1,sizex>>>(dev_destination, dev_destination_lev2, 500, 500 );
+
+    cudaStatus = cudaDeviceSynchronize();
+
+    sumDest<<<1,1>>>(dev_destination_lev2, dev_value, 500, 1 );
+
+
 //    sumCU<<< (sizex/sizey), sizex >>>(dev_destination, dev_);
-    mulCU<<< sizex, sizey >>>(dev_source, dev_destination, multi);
+//    mulCU<<< sizex, sizey >>>(dev_source, dev_destination, multi);
 
     cudaStatus = cudaDeviceSynchronize();
 
@@ -155,7 +190,7 @@ cudaError_t sum( double* source, double * destination, unsigned int sizex, unsig
     }
 
     // Copy output vector from GPU buffer to host memory.
-    cudaStatus = cudaMemcpy(destination, dev_destination, sizex*sizey * sizeof(double), cudaMemcpyDeviceToHost);
+    cudaStatus = cudaMemcpy(destination, dev_value, 1 * sizeof(double), cudaMemcpyDeviceToHost);
     if (cudaStatus != cudaSuccess) {
         fprintf(stderr, "cudaMemcpy failed!");
         goto Error;
