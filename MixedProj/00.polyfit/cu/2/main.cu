@@ -56,8 +56,19 @@ __global__ void divVal( double* results, double* sumx, double* sumy ){
        sumx[0]=sumx[0]/64000000;
        sumy[0]=sumy[0]/64000000;
 
-       results[0]=sumx[0];
-       results[1]=sumy[0];
+       results[0]=sumx[0];//xsr
+       results[1]=sumy[0];//ysr
+    }
+}
+
+
+__global__ void calc( double* results, double* sumT, double* sumB ){
+    int i = threadIdx.x;
+    if (i==0) {
+       results[2]=sumT[0];
+       results[3]=sumB[0];
+       results[4]=sumT[0]/sumB[0];//W1=sumT/sumB
+       results[5]=results[1]-(results[4]*results[0]);//W0=ysr-(W1*xsr)
     }
 }
 
@@ -96,7 +107,6 @@ int i = threadIdx.x + blockIdx.x * blockDim.x;
 
 
 
-
 int main()
 {
     unsigned int const SIZE_TH = 500; //=64*1000 / 10;
@@ -117,6 +127,8 @@ int main()
     }
     printf("\r\nResults[0] (OK): %f \r\n", results[0] );
     printf("\r\nResults[1] (OK): %f \r\n", results[1] );
+    printf("\r\nW0: %f \r\n", results[4] );
+    printf("\r\nW1: %f \r\n", results[5] );
 
 //    cudaStatus = sumMulti( X, Xsm, X, Xsm, SIZE_BL, SIZE_TH, sumT);
 //    cudaStatus = sumMulti( X, Xsm, Y, Xsm, SIZE_BL, SIZE_TH, sumB);
@@ -161,6 +173,8 @@ cudaError_t all( unsigned int sizex, unsigned int sizey, unsigned int page, doub
     double *dev_tmp2 = 0;//=new double[sizex*sizey*page];
     double *dev_sumX = 0;
     double *dev_sumY = 0;
+    double *dev_sumT = 0;
+    double *dev_sumB = 0;
 /*
 
     double * Xsm=new double[1];
@@ -248,6 +262,20 @@ cudaError_t all( unsigned int sizex, unsigned int sizey, unsigned int page, doub
         goto Error;
     }
 
+    // Allocate GPU buffers for three vectors (two input, one output)    .
+    cudaStatus = cudaMalloc((void**)&dev_sumT, 1 * sizeof(double));
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "cudaMalloc7 failed!");
+        goto Error;
+    }
+
+    // Allocate GPU buffers for three vectors (two input, one output)    .
+    cudaStatus = cudaMalloc((void**)&dev_sumB, 1 * sizeof(double));
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "cudaMalloc7 failed!");
+        goto Error;
+    }
+
 
 
     // Copy input vector from host memory to GPU buffer.
@@ -281,12 +309,36 @@ cudaError_t all( unsigned int sizex, unsigned int sizey, unsigned int page, doub
 
     // dev_sumX = sum/64000000; dev sumY = sum/64000000; result[0]=srX, result[1]=srY
     divVal<<<1,2>>>(dev_results, dev_sumX, dev_sumY );
-    cudaStatus = cudaDeviceSynchronize(); if (cudaStatus != cudaSuccess) { fprintf(stderr, "synch1 failed!"); goto Error; }
+    cudaStatus = cudaDeviceSynchronize(); if (cudaStatus != cudaSuccess) { fprintf(stderr, "s6 failed!"); goto Error; }
+
+
+
+
+    // SUM (X-xsr)*(Y-ysr)
+    sumMultiCU<<<sizey, sizex>>>(dev_X, dev_sumX, dev_Y, dev_sumY, dev_tmp);
+    cudaStatus = cudaDeviceSynchronize(); if (cudaStatus != cudaSuccess) { fprintf(stderr, "s7 failed!"); goto Error; }
+
+    sumDest<<<1,sizex>>>(dev_tmp, dev_tmp2, sizey, sizex );
+    cudaStatus = cudaDeviceSynchronize(); if (cudaStatus != cudaSuccess) { fprintf(stderr, "s8 failed!"); goto Error; }
+
+    sumDest<<<1,1>>>(dev_tmp2, dev_sumT, sizex, 1 );
+    cudaStatus = cudaDeviceSynchronize(); if (cudaStatus != cudaSuccess) { fprintf(stderr, "s9 failed!"); goto Error; }
+
+    // SUM (X-xsr)*(Y-ysr)
+    sumMultiCU<<<sizey, sizex>>>(dev_X, dev_sumX, dev_X, dev_sumX, dev_tmp);
+    cudaStatus = cudaDeviceSynchronize(); if (cudaStatus != cudaSuccess) { fprintf(stderr, "s7 failed!"); goto Error; }
+
+    sumDest<<<1,sizex>>>(dev_tmp, dev_tmp2, sizey, sizex );
+    cudaStatus = cudaDeviceSynchronize(); if (cudaStatus != cudaSuccess) { fprintf(stderr, "s8 failed!"); goto Error; }
+
+    sumDest<<<1,1>>>(dev_tmp2, dev_sumB, sizex, 1 );
+    cudaStatus = cudaDeviceSynchronize(); if (cudaStatus != cudaSuccess) { fprintf(stderr, "s9 failed!"); goto Error; }
+
+    calc<<<1,1>>>(dev_results, dev_sumT, dev_sumB );
+    cudaStatus = cudaDeviceSynchronize(); if (cudaStatus != cudaSuccess) { fprintf(stderr, "s10 failed!"); goto Error; }
 
 
 /*
-    sumMultiCU<<<sizey, sizex>>>(dev_ary, dev_avg, dev_ary2, dev_avg2, dev_destination);
-    cudaStatus = cudaDeviceSynchronize();
     sumDest<<<1,sizex>>>(dev_destination, dev_destination_lev2, sizey, sizex );
     cudaStatus = cudaDeviceSynchronize();
     sumDest<<<1,1>>>(dev_destination_lev2, dev_value, sizex, 1 );
