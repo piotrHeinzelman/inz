@@ -58,13 +58,11 @@ def readFileY ( fileName , offset, percent, multi ):
     return data
 
 
-start=time.time()
-
+start1=time.time()
 trainX = readFileX ('../../01.MPL/data/train-images-idx3-ubyte', 16, percent ,6 )
 trainY = readFileY ('../../01.MPL/data/train-labels-idx1-ubyte', 8, percent, 6 )
 testX = readFileX ('../../01.MPL/data/t10k-images-idx3-ubyte', 16, percent, 1  )
 testY = readFileY ('../../01.MPL/data/t10k-labels-idx1-ubyte', 8, percent, 1 )
-
 
 trainX = trainX.astype("float32")
 testX = testX.astype("float32")
@@ -75,9 +73,8 @@ testY = testY.astype("int")
 trainX = trainX.reshape(6*percent*100, 1, 28,28).astype("float32") # / 255
 testX = testX.reshape(1*percent*100, 1, 28,28).astype("float32") # / 255
 
-
-end=time.time()
-loadTime=end-start
+end1=time.time()
+timeLoadData=end1-start1
 
 
 
@@ -102,8 +99,8 @@ class CNN(nn.Module):
        # 2nd convolutional layer
        # self.conv2 = nn.Conv2d(in_channels=8, out_channels=16, kernel_size=3, padding=1)
        # Fully connected layer
-       self.fc1 = nn.Linear( 3380, 64 ) #  self.fc1 = nn.Linear( 64, num_classes) in, out
-       self.fc2 = nn.Linear( 64, num_classes )
+       self.fc1 = nn.Linear( 3380 , num_classes ) #  self.fc1 = nn.Linear( 64, num_classes) in, out
+
 
    def forward(self, x):
        """
@@ -119,21 +116,16 @@ class CNN(nn.Module):
        x = F.relu(self.conv1(x))  # Apply first convolution and ReLU activation
        x = self.norm(x)           # Apply Normalization
        x = self.pool(x)           # Apply max pooling
-#      x = F.utils.parameters_to_vector( x )
        x = x.reshape(x.shape[0], -1)  # Flatten the tensor
        x = self.fc1(x)            # Apply fully connected layer
-       x = self.fc2(x)            # Apply fully connected layer
        return x
 
 
 
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
-print(device)
-
+start2=time.time()
 modelGPU = CNN(in_channels=1, num_classes=10)
 model = modelGPU.to(device)
-
 
 # Define the loss function
 criterion = nn.CrossEntropyLoss()
@@ -141,34 +133,23 @@ criterion = nn.CrossEntropyLoss()
 # Define the optimizer
 optimizer = optim.Adam(model.parameters(), lr=0.01)
 
-print( trainX.shape )
-print( trainY[0] )
-
-
 data = torch.tensor( trainX , device=device)
 targets = torch.tensor(trainY, device=device)
+end2=time.time()
+timeDataTransfer=end2-start2
+
 
 start=time.time()
-
-
 for epoch in range(epochs):
    scores = model(data)
    loss = criterion(scores, targets)
    optimizer.zero_grad()
    loss.backward()
    optimizer.step()
-   print( loss )
+#   print( loss )
 
 end=time.time()
-trainTime=end-start
-
-print(scores[0].shape)
-print(scores[1])
-
-print("# Python PyTorch 2.0 48000 Images, 20 Epoch Time: " , trainTime)
-
-
-
+timeTrain=end-start
 
 
 # Set up of multiclass accuracy metric
@@ -181,12 +162,25 @@ model.eval()
 dataTest = torch.tensor( testX , device=device)
 targetsTest = torch.tensor(testY, device=device)
 
+start3=time.time()
 with torch.no_grad():
    outputs = model(dataTest)
    _, preds = torch.max(outputs, 1)
    preds = preds.to(device)
    acc(preds, targetsTest)
 
+end3=time.time()
+timeForward=end3-start3
+
 test_accuracy = acc.compute()
-print(f"Test accuracy: {test_accuracy}")
+
+print("# CNN 48000 img, epoch:",epochs)
+print("# timeLoadData: ",timeLoadData)
+print("# timeDataTransfer: ", timeDataTransfer)
+print("# timeTrain: ",timeTrain)
+print("# Epoch: " , epoch)
+print("# Score[0]:", scores[0])
+print("# timeForward: ", timeForward)
+print("Test accuracy: ",test_accuracy)
+
 
