@@ -20,9 +20,10 @@ import os
 import time
 
 
-os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:128"
-
-
+#os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:128"
+#os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "backend:cudaMallocAsync"
+#os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
+#os.environ["PYTORCH_NVML_BASED_CUDA_CHECK"]="1"
 
 if torch.cuda.is_available():
   print("CUDA available. Using GPU acceleration.")
@@ -36,8 +37,8 @@ else:
 
 # params
 epochs = 100
-percent = 10
-num_classes = 10
+percent = 80
+num_classes = 2
 
 
 def readFileX ( fileName ):
@@ -65,7 +66,12 @@ trainX = trainX.astype("float32")
 trainY = trainY.astype("int")
 
 trainX = trainX.reshape(percent*8, 3, 240,240).astype("float32") # / 255
-trainY = trainY.reshape(percent*8)
+#trainY = trainY.reshape(percent*8)
+
+print(trainX.shape)
+print(trainY.shape)
+print(trainY[0])
+
 
 end1=time.time()
 timeLoadData=end1-start1
@@ -86,19 +92,19 @@ class CNN(nn.Module):
        super(CNN, self).__init__()
 
        # 1st convolutional layer
-       self.conv1 = nn.Conv2d(in_channels=in_channels, out_channels=32, kernel_size=7) # , padding=1)
+       self.conv1 = nn.Conv2d(in_channels=in_channels, out_channels=32, kernel_size=7, padding=3) # , padding=1)
        self.norm1 = nn.BatchNorm2d(32)
        self.pool1 = nn.MaxPool2d(kernel_size=2, stride=2)
 
-       self.conv2 = nn.Conv2d(in_channels=32, out_channels=64, kernel_size=5)
+       self.conv2 = nn.Conv2d(in_channels=32, out_channels=64, kernel_size=5, padding=3)
        self.norm2 = nn.BatchNorm2d(64)
        self.pool2 = nn.MaxPool2d(kernel_size=2, stride=2)
 
-       self.conv3 = nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3)
+       self.conv3 = nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, padding=1)
        self.norm3 = nn.BatchNorm2d(128)
        self.pool3 = nn.MaxPool2d(kernel_size=2, stride=2)
 
-       self.conv4 = nn.Conv2d(in_channels=128, out_channels=256, kernel_size=3)
+       self.conv4 = nn.Conv2d(in_channels=128, out_channels=256, kernel_size=3, padding=1)
        self.norm4 = nn.BatchNorm2d(256)
        self.pool4 = nn.MaxPool2d(kernel_size=2, stride=2)
 
@@ -128,7 +134,7 @@ class CNN(nn.Module):
        # 2nd convolutional layer
        # self.conv2 = nn.Conv2d(in_channels=8, out_channels=16, kernel_size=3, padding=1)
        # Fully connected layer
-       self.fc1 = nn.Linear( 160 , num_classes ) #  self.fc1 = nn.Linear( 64, num_classes) in, out
+       self.fc1 = nn.Linear( 2 , num_classes ) #  self.fc1 = nn.Linear( 64, num_classes) in, out
 #       self.sm1 =  nn.Softmax(1)
 
 #    \item inputLayer(240, 240, 3)
@@ -225,8 +231,7 @@ class CNN(nn.Module):
        x = F.relu(self.conv9(x))
        x =        self.norm9(x)
        x =        self.pool9(x)
-       x = x.reshape(160)  # Flatten the tensor
-
+       x = x.reshape(x.shape[0],-1)  # Flatten the tensor
        x = self.fc1(x)            # Apply fully connected layer
 #       x = self.sm1(x)
        return x
