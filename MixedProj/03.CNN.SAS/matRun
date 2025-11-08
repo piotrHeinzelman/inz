@@ -2,6 +2,6 @@ echo "#    --- Matlab ---"
 echo " ** 1 ** " >> log/Matlab.log
 /usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run Matlab/trainCNN1classDedra_save_netCNN.m' >> log/Matlab.log
 echo " ** 2 ** " >> log/Matlab.log
-/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run Matlab/trainCNN2_save_detector.m' >> log/Matlab.log
+echo "/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run Matlab/trainCNN2_save_detector.m' >> log/Matlab.log"
 echo " ** 3 ** " >> log/Matlab.log
-/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run Matlab/trainCNN3MLP.m' >> log/Matlab.log
+echo "/usr/local/MATLAB/R2024a/bin/matlab  -nodisplay -nosplash -nodesktop -batch 'run Matlab/trainCNN3MLP.m' >> log/Matlab.log"

@@ -1,14 +1,15 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+plt.title('Yolo in Matlab - Dog2.jpg')
 plt.style.use('_mpl-gallery')
 
 
 # https://www.mathworks.com/matlabcentral/answers/1755450-how-to-add-numerical-value-in-the-stacked-bar-chart
 # https://www.datacamp.com/tutorial/python-bar-plot
 
-library=[None,None,None,None]
-librarye=[None,None,None,None]
+library=[None,None,None,None,None,None]
+librarye=[None,None,None,None,None,None]
 libraryf=[None,None,None,None]
 
 
@@ -17,10 +18,10 @@ d1=[None,None,None,None]
 d2=[None,None,None,None]
 d3=[None,None,None,None]
 
-e0=[None,None,None,None]
-e1=[None,None,None,None]
-e2=[None,None,None,None]
-e3=[None,None,None,None]
+e0=[None,None,None,None,None,None]
+e1=[None,None,None,None,None,None]
+e2=[None,None,None,None,None,None]
+e3=[None,None,None,None,None,None]
 
 f0=[None,None,None,None]
 f1=[None,None,None,None]
@@ -28,7 +29,7 @@ f2=[None,None,None,None]
 f3=[None,None,None,None]
 
 #################################
-
+"""
 # net: tiny-yolov2-coco; task:dog1; class: ? score: 0.000000;  prepare detectortime: :2.230185;
 # load image time: 0.083492; detect object time: 1.877422
 library[ 0 ]=" tiny-yolov2-coco\n score:0, find(0) "
@@ -53,30 +54,45 @@ library[ 3 ]=" tiny-coco\n score:0.76 find(1) "
 d0[3]=2.496382
 d1[3]=0.008481
 d2[3]=1.285220
+"""
 # net: tiny-yolov2-coco; task:dog2; class: dog score: 0.879725;  prepare detectortime: :0.523928;
 # load image time: 0.020516; detect object time: 0.320706
 librarye[ 0 ]=" tiny-yolov2-coco\n score:0.87 find(1) "
-e0[0]=0.523928 
-e1[0]=0.020516 
-e2[0]=0.320706 
-# net: tiny-yolov3-coco; task:dog2; class: dog score: 0.936445;  prepare detectortime: :0.404241; 
-# load image time: 0.007615; detect object time: 0.318037 
+e0[0]=0.523928
+e1[0]=0.020516
+e2[0]=0.320706
+# net: tiny-yolov3-coco; task:dog2; class: dog score: 0.936445;  prepare detectortime: :0.404241;
+# load image time: 0.007615; detect object time: 0.318037
 librarye[ 1 ]=" tiny-yolov3-coco\n score:0.93 find(1)"
-e0[1]=0.404241 
-e1[1]=0.007615 
-e2[1]=0.318037 
-# net: tiny-yolov4-coco; task:dog2; class: dog score: 0.588947;  prepare detectortime: :0.371717; 
-# load image time: 0.005622; detect object time: 0.299549 
+e0[1]=0.404241
+e1[1]=0.007615
+e2[1]=0.318037
+# net: tiny-yolov4-coco; task:dog2; class: dog score: 0.588947;  prepare detectortime: :0.371717;
+# load image time: 0.005622; detect object time: 0.299549
 librarye[ 2 ]=" tiny-yolov4-coco\n score:0.58 find(1)"
-e0[2]=0.371717 
-e1[2]=0.005622 
-e2[2]=0.299549 
-# net: tiny-coco; task:dog2; class: dog score: 0.922000;  prepare detectortime: :1.426154; 
-# load image time: 0.005423; detect object time: 0.646664 
+e0[2]=0.371717
+e1[2]=0.005622
+e2[2]=0.299549
+# net: tiny-coco; task:dog2; class: dog score: 0.922000;  prepare detectortime: :1.426154;
+# load image time: 0.005423; detect object time: 0.646664
 librarye[ 3 ]=" tiny-coco\n score:0.92 find(1)"
-e0[3]=1.426154 
-e1[3]=0.005423 
-e2[3]=0.646664 
+e0[3]=1.426154
+e1[3]=0.005423
+e2[3]=0.646664
+
+librarye[ 4 ]="Python\nYolo8"
+e0[4]=0.045
+e1[4]=0
+e2[4]=0.445
+
+librarye[ 5 ]="C++ \nTorch"
+e0[5]=0.00
+e1[5]=0
+e2[5]=0.399
+
+
+
+"""
 # net: tiny-yolov2-coco; task:team; class: person score: 0.707635;  prepare detectortime: :0.340283; 
 # load image time: 0.053012; detect object time: 0.186609 
 libraryf[ 0 ]=" tiny-yolov2-coco\n score:0.70 find(6)"
@@ -101,7 +117,7 @@ libraryf[ 3 ]=" tiny-coco\n score:0.87 find(7)"
 f0[3]=1.249539 
 f1[3]=0.007218 
 f2[3]=0.594101 
-
+"""
 
 ################################
 
@@ -113,10 +129,10 @@ f2[3]=0.594101
 # Number of Enthusiasts for different regions
 #enthusiasts_north = [2000, 1500, 2500, 2000]
 #enthusiasts_south = [1500, 1300, 2000, 1800]
-bar_width = 0.28
+bar_width = 0.45
 x = np.arange( len(library) )
 offset = bar_width
-
+"""
 # Grouped Bar Plot
 plt.bar( x-offset         , d0, bar_width, label='przygotowanie detektora')
 plt.bar( x         , d1, bar_width, label='wczytanie obrazów z dysku')
@@ -132,25 +148,25 @@ plt.title('Yolo in Matlab - Dog1.jpg')
 plt.savefig( '03_Yolo_MATLAB_dog1.pdf',dpi=400 )
 #plt.show()
 #plt.close()
-
+"""
 
 ######################################
 
+library = ['Matlab\nYolo2', 'Matlab\nYolo3', 'Matlab\nYolo4', 'Matlab\nYolo5', 'Python\nYolo3','C++ Torch\nYolo 8']
 
-plt.title('Yolo in Matlab - Team.jpg')
-plt.style.use('_mpl-gallery')
+#plt.style.use('_mpl-gallery')
 
 # Grouped Bar Plot
-plt.bar( x-offset         , e0, bar_width, label='przygotowanie detektora')
-plt.bar( x         , e1, bar_width, label='wczytanie obrazów z dysku')
-plt.bar( x+offset         , e2, bar_width, label='detekcja F')
+#plt.bar( x-0.5*offset         , e0, bar_width, label='przygotowanie detektora')
+#plt.bar( x                , e1, bar_width, label='wczytanie obrazów z dysku')
+plt.bar( x+0.1*offset         , e2, bar_width, label='detekcja')
 
 # Adding labels and title
 #plt.xlabel('Yolo ')
 plt.ylabel('Time[s]')
 plt.xticks(x, library, size=5)
 plt.legend(title='Time[s]')
-plt.title('Yolo in Matlab - Dog2.jpg')
+#plt.title('Yolo in Matlab - Dog2.jpg')
 
 plt.savefig( '03_Yolo_MATLAB_dog2.pdf',dpi=400 )
 #plt.show()
@@ -159,7 +175,7 @@ plt.savefig( '03_Yolo_MATLAB_dog2.pdf',dpi=400 )
 
 #########################################
 
-
+"""
 plt.title('Yolo in Matlab - Team.jpg')
 plt.style.use('_mpl-gallery')
 
@@ -178,7 +194,7 @@ plt.title('Yolo in Matlab - Team.jpg')
 plt.savefig( '03_Yolo_MATLAB_team.pdf',dpi=400 )
 #plt.show()
 #plt.close()
-
+"""
 
 
 

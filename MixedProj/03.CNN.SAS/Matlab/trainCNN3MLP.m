@@ -1,7 +1,7 @@
 % https://www.mathworks.com/help/deeplearning/ref/dlnetwork.initialize.html
 %
 gpuDevice();
-epoch=100;
+epoch=333;
 load("trainData.mat");
 load('detector');
 

@@ -36,8 +36,8 @@ else:
 
 
 # params
-epochs = 100
-percent = 80
+epochs = 50
+percent = 30
 num_classes = 2
 
 

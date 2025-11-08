@@ -1,0 +1,11 @@
+ ** 1 ** 
+ ** 1 ** 
+ ** 1 ** 
+## Epoch:50, GPU:, loadData:1.335113, createLayers:1.298705, trainTime:95.888218, timeAccuracy:3.563795, accuracy: 0.976636
+library[0]="Matlab GPU"
+d0[0]=1.335113
+d1[0]=1.298705
+d2[0]=95.888218/50
+d3[0]=3.563795
+ ** 2 ** 
+ ** 3 ** 

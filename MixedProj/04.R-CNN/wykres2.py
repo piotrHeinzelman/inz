@@ -77,7 +77,7 @@ d5[0]=1.316632
 # Number of Enthusiasts for different regions
 #enthusiasts_north = [2000, 1500, 2500, 2000]
 #enthusiasts_south = [1500, 1300, 2000, 1800]
-bar_width = 0.14
+bar_width = 0.25
 x = np.arange( len(library) )
 off = bar_width
 
