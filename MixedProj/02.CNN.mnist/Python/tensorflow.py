@@ -6,7 +6,7 @@ from tensorflow import keras
 from tensorflow.keras.backend import clear_session
 from tensorflow.keras.utils import to_categorical
 
-
+"""
 physical_devices = tf.config.list_physical_devices('GPU')
 if physical_devices:
    for gpu in physical_devices:
@@ -15,12 +15,12 @@ if physical_devices:
 
 device_name = tf.test.gpu_device_name()
 print(device_name)
-
+"""
 
 
 # params
 epochs = 20
-percent = 1
+percent = 100
 num_classes = 10
 input_shape = (28, 28, 1)
 
@@ -86,16 +86,16 @@ model.compile(optimizer='adam',
 
 
 start=time.time()
-with tf.device('/device:GPU:0'):
-   model.fit(trainX, trainY, epochs=epochs, verbose=0)
+#with tf.device('/device:GPU:0'):
+model.fit(trainX, trainY, epochs=epochs, verbose=0)
 
 end=time.time()
 timeTrain=end-start
 
 
 start3=time.time()
-with tf.device('/device:GPU:0'):
-   score = model.evaluate(testX, testY, verbose=1 )
+#with tf.device('/device:GPU:0'):
+score = model.evaluate(testX, testY, verbose=1 )
 end3=time.time()
 timeForward=end3-start3
 
