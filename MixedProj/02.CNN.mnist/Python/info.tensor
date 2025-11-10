@@ -1,2 +1,0 @@
-pip3 install  tensorflow-gpu==2.11.0 keras==2.11
-

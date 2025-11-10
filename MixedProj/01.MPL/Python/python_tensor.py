@@ -29,7 +29,7 @@ from tensorflow.keras.utils import to_categorical
 
 
 
-
+"""
 physical_devices = tf.config.list_physical_devices('GPU')
 if physical_devices:
    for gpu in physical_devices:
@@ -38,7 +38,7 @@ if physical_devices:
 
 device_name = tf.test.gpu_device_name()
 print(device_name)
-
+"""
 # params
 epochs = 500
 batch_size = 2000
@@ -113,16 +113,16 @@ model.summary()
 
 timeTrainStart=time.time()
 
-with tf.device('/device:GPU:0'):
-   model.fit( trainX, trainY, batch_size=batch_size, epochs=epochs, validation_split=0.0, verbose=0)
+#with tf.device('/device:GPU:0'):
+model.fit( trainX, trainY, batch_size=batch_size, epochs=epochs, validation_split=0.0, verbose=0)
 #   model.fit(x_train, y_train, epochs=epochs, verbose=0 )
 
 timeTrainEnd=time.time()
 
 timeForwardStart=time.time()
 
-with tf.device('/device:GPU:0'):
-   result = model.evaluate( testX, testY )
+#with tf.device('/device:GPU:0'):
+result = model.evaluate( testX, testY )
 timeForwardEnd=time.time()
 
 

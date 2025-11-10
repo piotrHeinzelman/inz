@@ -8,76 +8,72 @@ plt.style.use('_mpl-gallery')
 # https://www.mathworks.com/matlabcentral/answers/1755450-how-to-add-numerical-value-in-the-stacked-bar-chart
 # https://www.datacamp.com/tutorial/python-bar-plot
 
-library=[None,None,None,None,None,None]
+library=[None,None,None,None,None,None,None]
 
-d0=[None,None,None,None,None,None]
-d1=[None,None,None,None,None,None]
-d2=[None,None,None,None,None,None]
-d3=[None,None,None,None,None,None]
+d0=[None,None,None,None,None,None,None]
+d1=[None,None,None,None,None,None,None]
+d2=[None,None,None,None,None,None,None]
+d3=[None,None,None,None,None,None,None]
 
 #################################
 
 
 # Matlab, MLP: 2x 64 Neu, epoch=5000, data size=60000, accuracy:0.815000%
 library[0]="Matlab GPU"
-d0[0]=0.69
+d0[0]=0.639
 d1[0]=0.21
 d2[0]=20.77 /100
 #d4[0]=0.81
 
-#################################
 
-# Python, MLP: 2x 64 Neu, data size= 60000
-# accuracy= 0.9496999979019165
-# train: epochs= 50
-# LoadDataTime= 0.22016596794128418
-# trainTime= 111.7593162059784
-# propagation time:= 0.6048471927642822
 
-library[1]="Python\n Tensorflow"
-d0[1]=0.18
-d1[1]=2.73
-d2[1]=113.54 /100
-#d4[1]=0.53
+# net: tiny-coco; task:dog1; class: dog score: 0.762755;  prepare detectortime: :2.496382;
+# load image time: 0.008481; detect object time: 1.285220
+library[ 1 ]="Python\n PyTorch"
+d0[1]=0.31
+d1[1]=0.06
+d2[1]=1.001 /100
+#d4[3]=0.77
+
 
 # net: tiny-yolov4-coco; task:dog1; class: ? score: 0.000000;  prepare detectortime: :0.718696;
 # load image time: 0.011418; detect object time: 0.780485
-library[ 2 ]="Python\n Scikit-learn"
+library[ 2 ]="Python\n Scikit"
 d0[2]=0.222
 d1[2]=0.091
 d2[2]=263.45 /100
 #d4[2]=0.94
 
 
-# net: tiny-coco; task:dog1; class: dog score: 0.762755;  prepare detectortime: :2.496382;
-# load image time: 0.008481; detect object time: 1.285220
-library[ 3 ]="Python\n PyTorch"
-d0[3]=0.31
-d1[3]=0.06
-d2[3]=1.001 /100
-#d4[3]=0.77
+
+library[3]="Python\n Tensorflow"
+d0[3]=0.172
+d1[3]=0.43
+d2[3]=33.20 /100
+#d4[1]=0.53
 
 
 
-
-library[ 4 ]="C++ Eigen"
-d0[4]=4.7
-d1[4]=8.13
-d2[4]=3373 / 100
+library[ 4 ]="Cuda"
+d0[4]=0.65
+d1[4]=0.04
+d2[4]=23.142 / 100
 #d4[4]=d2[0]*.0
 
 
 
-library[ 5 ]="Cuda"
-d0[5]=0.65
-d1[5]=0.04
-d2[5]=23.142 / 100
+library[ 5 ]="C++ Eigen"
+d0[5]=4.7
+d1[5]=8.13
+d2[5]=3373 / 100
 #d4[4]=d2[0]*.0
 
-library[ 5 ]="Java"
-d0[5]=0.25
-d1[5]=0.45
-d2[5]=1728 / 100
+
+
+library[ 6 ]="Java"
+d0[6]=0.25
+d1[6]=0.45
+d2[6]=1728 / 100
 
 
 
