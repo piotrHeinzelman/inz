@@ -10,8 +10,8 @@ from tensorflow.keras.utils import to_categorical
 
 
 # params
-epochs = 2 # 50
-percent = 1 # 30
+epochs = 50 # 50
+percent = 0 # 30
 num_classes = 2
 
 
@@ -36,23 +36,23 @@ def CNN():
    return keras.models.Sequential([
       keras.layers.Input(shape=(240,240,3) ),
 
-      keras.layers.Conv2D(name='conv1', filters=32, kernel_size=(7,7), padding=3, activation='relu' ),
+      keras.layers.Conv2D(name='conv1', filters=32, kernel_size=(7,7), activation='relu' ),
       keras.layers.BatchNormalization(),
       keras.layers.MaxPool2D(pool_size=(2,2), strides=(2,2)),
 
-      keras.layers.Conv2D(name='conv2', filters=64, kernel_size=(5,5), padding=3, activation='relu' ),
+      keras.layers.Conv2D(name='conv2', filters=64, kernel_size=(5,5), activation='relu' ),
       keras.layers.BatchNormalization(),
       keras.layers.MaxPool2D(pool_size=(2,2), strides=(2,2)),
 
-      keras.layers.Conv2D(name='conv3', filters=128, kernel_size=(3,3), padding=1, activation='relu' ),
+      keras.layers.Conv2D(name='conv3', filters=128, kernel_size=(3,3), activation='relu' ),
       keras.layers.BatchNormalization(),
       keras.layers.MaxPool2D(pool_size=(2,2), strides=(2,2)),
 
-      keras.layers.Conv2D(name='conv4', filters=256, kernel_size=(3,3), padding=1, activation='relu' ),
+      keras.layers.Conv2D(name='conv4', filters=256, kernel_size=(3,3), activation='relu' ),
       keras.layers.BatchNormalization(),
       keras.layers.MaxPool2D(pool_size=(2,2), strides=(2,2)),
 
-      keras.layers.Conv2D(name='conv5', filters=256, kernel_size=(1,1), padding=1, activation='relu' ),
+      keras.layers.Conv2D(name='conv5', filters=256, kernel_size=(1,1), activation='relu' ),
       keras.layers.BatchNormalization(),
       keras.layers.MaxPool2D(pool_size=(1,1)),
 
@@ -99,6 +99,9 @@ trainY = trainY.astype("int")
 
 trainX = trainX.reshape(percent*8, 240,240,3).astype("float32")
 
+testX = trainX
+testY = trainY
+
 end1=time.time()
 timeLoadData=end1-start1
 
@@ -114,19 +117,18 @@ model.compile(optimizer='adam',
 start=time.time()
 #with tf.device('/device:CPU:0'):
 with tf.device('/device:GPU:0'):
-   model.fit(trainX, trainY, epochs=epochs, verbose=0)
+    model.fit(trainX, trainY, epochs=epochs, verbose=0)
 
 end=time.time()
 timeTrain=end-start
 
 
 start3=time.time()
-#with tf.device('/device:GPU:0'):
-score = model.evaluate(testX, testY, verbose=1 )
+with tf.device('/device:GPU:0'):
+    score = model.evaluate(testX, testY, verbose=1 )
 end3=time.time()
 timeForward=end3-start3
 
-clear_session()
 
 
 
@@ -138,3 +140,4 @@ print("Test loss:", score[0])
 print("Test accuracy:", score[1])
 
 
+clear_session()
