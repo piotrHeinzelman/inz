@@ -5,16 +5,8 @@ from tensorflow import keras
 from tensorflow.keras.backend import clear_session
 from tensorflow.keras.utils import to_categorical
 
-"""
-physical_devices = tf.config.list_physical_devices('GPU')
-if physical_devices:
-   for gpu in physical_devices:
-      tf.config.experimental.set_memory_growth(gpu, True)
-      print(gpu.device_type)
 
-device_name = tf.test.gpu_device_name()
-print(device_name)
-"""
+
 
 
 # params
@@ -41,64 +33,60 @@ def readFileY ( fileName ):
 
 
 def CNN():
-   NUMBER_OF_CLASSES = 10
    return keras.models.Sequential([
       keras.layers.Input(shape=(240,240,3) ),
-      keras.layers.Conv2D(name='conv1', filters=20, kernel_size=(5,5), activation='relu' ),
+
+      keras.layers.Conv2D(name='conv1', filters=32, kernel_size=(7,7), padding=3, activation='relu' ),
       keras.layers.BatchNormalization(),
       keras.layers.MaxPool2D(pool_size=(2,2), strides=(2,2)),
+
+      keras.layers.Conv2D(name='conv2', filters=64, kernel_size=(5,5), padding=3, activation='relu' ),
+      keras.layers.BatchNormalization(),
+      keras.layers.MaxPool2D(pool_size=(2,2), strides=(2,2)),
+
+      keras.layers.Conv2D(name='conv3', filters=128, kernel_size=(3,3), padding=1, activation='relu' ),
+      keras.layers.BatchNormalization(),
+      keras.layers.MaxPool2D(pool_size=(2,2), strides=(2,2)),
+
+      keras.layers.Conv2D(name='conv4', filters=256, kernel_size=(3,3), padding=1, activation='relu' ),
+      keras.layers.BatchNormalization(),
+      keras.layers.MaxPool2D(pool_size=(2,2), strides=(2,2)),
+
+      keras.layers.Conv2D(name='conv5', filters=256, kernel_size=(1,1), padding=1, activation='relu' ),
+      keras.layers.BatchNormalization(),
+      keras.layers.MaxPool2D(pool_size=(1,1)),
+
+      keras.layers.Conv2D(name='conv6', filters=18, kernel_size=(1,1), activation='relu' ),
+      keras.layers.BatchNormalization(),
+      keras.layers.MaxPool2D(pool_size=(2,2)),
+
+      keras.layers.Conv2D(name='conv7', filters=8, kernel_size=(1,1), activation='relu' ),
+      keras.layers.BatchNormalization(),
+      keras.layers.MaxPool2D(pool_size=(2,2)),
+
+      keras.layers.Conv2D(name='conv8', filters=6, kernel_size=(1,1), activation='relu' ),
+      keras.layers.BatchNormalization(),
+      keras.layers.MaxPool2D(pool_size=(2,2)),
+
+      keras.layers.Conv2D(name='conv9', filters=2, kernel_size=(1,1), activation='relu' ),
+      keras.layers.BatchNormalization(),
+
+
       keras.layers.Flatten(),
       keras.layers.Dense(num_classes, activation='softmax')
 ])
 
 
-"""
 
-       # 1st convolutional layer
-       self.conv1 = nn.Conv2d(in_channels=in_channels, out_channels=32, kernel_size=7, padding=3) # , padding=1)
-       self.norm1 = nn.BatchNorm2d(32)
-       self.pool1 = nn.MaxPool2d(kernel_size=2, stride=2)
+physical_devices = tf.config.list_physical_devices('GPU')
+if physical_devices:
+   for gpu in physical_devices:
+      tf.config.experimental.set_memory_growth(gpu, True)
+      print(gpu.device_type)
 
-       self.conv2 = nn.Conv2d(in_channels=32, out_channels=64, kernel_size=5, padding=3)
-       self.norm2 = nn.BatchNorm2d(64)
-       self.pool2 = nn.MaxPool2d(kernel_size=2, stride=2)
+device_name = tf.test.gpu_device_name()
+print(device_name)
 
-       self.conv3 = nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, padding=1)
-       self.norm3 = nn.BatchNorm2d(128)
-       self.pool3 = nn.MaxPool2d(kernel_size=2, stride=2)
-
-       self.conv4 = nn.Conv2d(in_channels=128, out_channels=256, kernel_size=3, padding=1)
-       self.norm4 = nn.BatchNorm2d(256)
-       self.pool4 = nn.MaxPool2d(kernel_size=2, stride=2)
-
-       self.conv5 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=1)
-       self.norm5 = nn.BatchNorm2d(256)
-       self.pool5 = nn.MaxPool2d(kernel_size=1)
-
-
-       self.conv6 = nn.Conv2d(in_channels=256, out_channels=18, kernel_size=1)
-       self.norm6 = nn.BatchNorm2d(18)
-       self.pool6 = nn.MaxPool2d(kernel_size=2)
-
-       self.conv7 = nn.Conv2d(in_channels=18, out_channels=8, kernel_size=1)
-       self.norm7 = nn.BatchNorm2d(8)
-       self.pool7 = nn.MaxPool2d(kernel_size=2)
-
-       self.conv8 = nn.Conv2d(in_channels=8, out_channels=6, kernel_size=1)
-       self.norm8 = nn.BatchNorm2d(6)
-       self.pool8 = nn.MaxPool2d(kernel_size=2)
-
-       self.conv9 = nn.Conv2d(in_channels=6, out_channels=2, kernel_size=1)
-       self.norm9 = nn.BatchNorm2d(2)
-       self.pool9 = nn.MaxPool2d(kernel_size=1)
-
-
-
-       # 2nd convolutional layer
-       # self.conv2 = nn.Conv2d(in_channels=8, out_channels=16, kernel_size=3, padding=1)
-       # Fully connected layer
-       self.fc1 = nn.Linear( 2 , num_classes ) 
-"""
 
 
 start1=time.time()
@@ -124,8 +112,9 @@ model.compile(optimizer='adam',
 
 
 start=time.time()
-#with tf.device('/device:GPU:0'):
-model.fit(trainX, trainY, epochs=epochs, verbose=0)
+#with tf.device('/device:CPU:0'):
+with tf.device('/device:GPU:0'):
+   model.fit(trainX, trainY, epochs=epochs, verbose=0)
 
 end=time.time()
 timeTrain=end-start
