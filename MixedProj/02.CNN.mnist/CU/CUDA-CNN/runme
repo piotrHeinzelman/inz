@@ -1,0 +1,1 @@
+nvcc -lcuda -lcublas *.cu -o CNN

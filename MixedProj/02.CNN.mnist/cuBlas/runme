@@ -1,0 +1,2 @@
+nvcc cublas_copy_example.cu -lcudnn
+./a.out
