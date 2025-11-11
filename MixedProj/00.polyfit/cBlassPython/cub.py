@@ -1,0 +1,117 @@
+import torch
+import cudnn
+
+# https://github.com/NVIDIA/cudnn-frontend/blob/main/samples/python/00_introduction.ipynb
+
+#  print(cudnn.backend_version())
+
+
+"""
+torch.manual_seed(42)
+assert torch.cuda.is_available()
+device = torch.device("cuda")
+
+handle = cudnn.create_handle()
+
+# Create tensor in NHWC format then permute to NCHW
+X_gpu = torch.randn(8, 56, 56, 64, device=device, dtype=torch.float16).permute(
+    0, 3, 1, 2
+)
+W_gpu = torch.randn(32, 3, 3, 64, device=device, dtype=torch.float16).permute(
+    0, 3, 1, 2
+)
+
+print( X_gpu )
+
+exit()
+
+"""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"""
+# Create a tensor on the GPU
+gpu_tensor = torch.tensor([4.0, 5.0, 6.0], device='cuda:0')
+
+# Move the tensor to the CPU
+cpu_tensor = gpu_tensor.cpu()
+
+# Convert the CPU tensor to a NumPy array
+numpy_array = cpu_tensor.numpy()
+
+print("GPU Tensor:", gpu_tensor)
+print("CPU Tensor:", cpu_tensor)
+print("NumPy Array:", numpy_array)
+"""
+
+
+
+
+
+
+# Prepare sample input data. nvmath-python accepts input tensors from pytorch, cupy, and
+# numpy.
+b, m, n, k = 1, 1024, 1024, 512
+A = torch.randn(b, m, k, dtype=torch.float32, device="cuda")
+B = torch.randn(b, k, n, dtype=torch.float32, device="cuda")
+bias = torch.randn(b, m, 1, dtype=torch.float32, device="cuda")
+
+result = torch.empty(b, m, n, dtype=torch.float32, device="cuda")
+
+# Use the stateful Graph object in order to perform multiple matrix multiplications
+# without replanning. The cudnn API allows us to fine-tune our operations by, for
+# example, selecting a mixed-precision compute type.
+graph = cudnn.pygraph(
+   intermediate_data_type=cudnn.data_type.FLOAT,
+   compute_data_type=cudnn.data_type.FLOAT,
+)
+
+a_cudnn_tensor    = graph.tensor_like(A)
+b_cudnn_tensor    = graph.tensor_like(B)
+bias_cudnn_tensor = graph.tensor_like(bias)
+
+c_cudnn_tensor = graph.matmul(name="matmul", A=a_cudnn_tensor, B=b_cudnn_tensor)
+d_cudnn_tensor = graph.bias(name="bias", input=c_cudnn_tensor, bias=bias_cudnn_tensor)
+
+# Build the matrix multiplication. Building returns a sequence of algorithms that can be
+# configured. Each algorithm is a JIT generated function that can be executed on the GPU.
+
+graph.build([cudnn.heur_mode.A])
+workspace = torch.empty(graph.get_workspace_size(), device="cuda", dtype=torch.uint8)
+
+# Execute the matrix multiplication.
+graph.execute(
+   {
+       a_cudnn_tensor: A,
+       b_cudnn_tensor: B,
+       bias_cudnn_tensor: bias,
+       d_cudnn_tensor: result,
+   },
+   workspace
+)
+
+torch.cuda.synchronize()
+print(graph)
+
+#D=d_cudnn_tensor.set_output(True)
+
+#res = d_cudnn_tensor.data.cpu().numpy()
+
+#print (A)
+#print (B)
+print (d_cudnn_tensor)
+
+#np_arr = d_cudnn_tensor.detach().cpu().numpy()
+#print (workspace)
