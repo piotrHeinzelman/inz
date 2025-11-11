@@ -1,2 +1,0 @@
-nvcc main.cpp -lcudnn
-./a.out
