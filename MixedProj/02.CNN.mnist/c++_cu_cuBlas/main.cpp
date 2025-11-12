@@ -22,6 +22,23 @@ void load_images( double* out, const std::string& filename, int num_images, int 
           }
        }
     }
+    file.close();
+}
+
+void load_labels( double* out, const std::string& filename, int num_images, int class_num ) {
+    char* buff = new char[ num_images ];
+    std::ifstream file(filename, std::ios::binary);
+    if (!file.is_open()) { throw std::runtime_error("Cannot open image file!"); } else { std::cout << "file open" << std::endl;  }
+    file.read( reinterpret_cast<char*>(buff), 8);
+    file.read( reinterpret_cast<char*>(buff), num_images );
+    for (int im=0;im<num_images;im++){
+       for (int c=0;c<class_num;c++){
+            int i=im*class_num + c;
+            out[i]=0;
+       }
+       out[im*class_num+buff[im]]=1;
+    }
+    file.close();
 }
 
 
@@ -29,22 +46,17 @@ void load_images( double* out, const std::string& filename, int num_images, int 
 
 int main() {
    int const percent = 1;
+   int const class_num=10;
    long const len = percent*100;
    const long CYCLES = 500;
 
    std::cout << "#  --- C++ ---\n";
 
    double* X = new double[ len*784*6 ];
-   double* Y = new double[ len*  1*6 ];
+   double* Y = new double[ len* class_num*6 ];
 
    load_images( X,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", len*6, 28, 28);
-//   load_mnist_images( X,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", len*6, 28, 28);
-
-
-//   std::ifstream  inputFileStreamX( "runme" , std::ios::binary); // 16, percent, 6)
-//   std::ifstream  inputFileStreamX( "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte" , std::ios::binary); // 16, percent, 6)
-//   if (!inputFileStreamX.is_open()) throw std::runtime_error("Cannot open label file!");
-//   std::ifstream  inputFileStreamY( "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte" , std::ios::in | std::ios::binary); //  8, percent, 6)
+   load_labels( Y,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", len, class_num);
 /*
    std::cout << inputFileStreamX.is_open() << "\n"; // Displays 0 because the file is not open
 
@@ -60,7 +72,16 @@ int main() {
 */
    for (int i=0;i<28;i++){
      for (int j=0;j<28;j++){
-        std::cout << X[ i*28 + j ]<<" ";
+        int ii=(int)0+16*X[i*28+j];
+        if (ii==0)
+          std::cout <<" ";
+        else if(ii<=5)
+          std::cout <<"+";
+        else if(ii<=10)
+          std::cout <<"*";
+        else
+          std::cout <<"#";
+
      }
      std::cout << std::endl;
    }
