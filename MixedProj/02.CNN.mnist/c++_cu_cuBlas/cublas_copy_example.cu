@@ -15,6 +15,9 @@
  * limitations under the License.
  */
 
+// inclide cudnn_frontend.h 
+// run:
+// nvcc cublas_copy_example.cu -lcublas -lcudnn -I/usr/include/
 
 #include <cstdio>
 #include <cstdlib>
@@ -56,7 +59,7 @@ int main(int argc, char *argv[]) {
     CUBLAS_CHECK(cublasCreate(&handle));
 
     CUDA_CHECK(cudaStreamCreateWithFlags(&stream, cudaStreamNonBlocking));
-    CUBLAS_CHECK(cublasSetStream(cublasH, stream));
+    CUBLAS_CHECK(cublasSetStream(handle, stream));
 
     /* step 2: copy data to device */
     CUDA_CHECK(cudaMalloc(reinterpret_cast<void **>(&d_A), sizeof(data_type) * A.size()));
