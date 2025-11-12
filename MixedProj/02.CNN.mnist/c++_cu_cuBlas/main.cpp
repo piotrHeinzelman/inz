@@ -1,13 +1,31 @@
+// https://forums.developer.nvidia.com/t/how-use-the-cudnn-graph-api-for-do-a-convolution/321806
+//
+// run: 
+// nvcc -lcuda -lcublas -lcudnn *.cu -o CNN
+
+
 #include <iostream>
 #include <ctime>
 #include <fstream>
 #include <stdio.h>
 #include <string.h>
 #include <vector>
-
+#include "tools.cu"
 //using namespace std;
 
 
+
+
+
+
+
+
+
+
+
+
+
+/*
 void showImage(const double* ary, int h, int w){
    for (int i=0;i<h;i++){
      for (int j=0;j<w;j++){
@@ -59,7 +77,7 @@ void load_labels( double* out, const std::string& filename, int num_images, int 
     }
     file.close();
 }
-
+*/
 
 
 

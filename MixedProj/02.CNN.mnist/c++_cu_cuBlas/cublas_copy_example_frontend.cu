@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-// inclide cudnn_frontend.h 
+// inclide cudnn_frontend.h
 // run:
 // nvcc cublas_copy_example.cu -lcublas -lcudnn -I/usr/include/
 

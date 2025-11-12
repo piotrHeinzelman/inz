@@ -1,2 +1,2 @@
-nvcc -lcuda -lcublas *.cu -o CNN
+nvcc main.cpp -lcuda -lcublas  -o CNN
 ./CNN
