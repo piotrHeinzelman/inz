@@ -7,6 +7,25 @@
 
 //using namespace std;
 
+
+void showImage(const double* ary, int h, int w){
+   for (int i=0;i<h;i++){
+     for (int j=0;j<w;j++){
+        int ii=(int)0+16*ary[i*w+j];
+        if (ii==0)
+          std::cout <<".";
+        else if(ii<=1)
+          std::cout <<"+";
+        else if(ii<=10)
+          std::cout <<"*";
+        else
+          std::cout <<"#";
+
+     }
+     std::cout << std::endl;
+   }
+}
+
 void load_images( double* out, const std::string& filename, int num_images, int rows, int cols) {
     char* buff = new char[ num_images*rows*cols ];
     std::ifstream file(filename, std::ios::binary);
@@ -70,21 +89,8 @@ int main() {
    inputFileStreamX.close();
    inputFileStreamY.close();
 */
-   for (int i=0;i<28;i++){
-     for (int j=0;j<28;j++){
-        int ii=(int)0+16*X[i*28+j];
-        if (ii==0)
-          std::cout <<" ";
-        else if(ii<=5)
-          std::cout <<"+";
-        else if(ii<=10)
-          std::cout <<"*";
-        else
-          std::cout <<"#";
-
-     }
-     std::cout << std::endl;
-   }
+   showImage(X,28,28);
+   showImage(Y,28,10);
 
    delete X;
    delete Y;
