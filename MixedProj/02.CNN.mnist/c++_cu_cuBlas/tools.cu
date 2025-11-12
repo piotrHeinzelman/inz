@@ -1,10 +1,12 @@
+
 #include <iostream>
 #include <ctime>
 #include <fstream>
 #include <stdio.h>
 #include <string.h>
 #include <vector>
-
+#include <cuda_runtime.h>
+#include <cudnn.h>
 
 
 void showImage(const double* ary, int h, int w){
