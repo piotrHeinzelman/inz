@@ -38,19 +38,23 @@ int main() {
 
     double* X = new double[m]{ 0.2, -0.3, 0.1 };
     double* Z = new double[n];
+    double* S = new double[m]{ 1.0, 0.0 };
 
-    Layer* lay = new Layer( PERCEPTRON_SIGMOID, n, m);
+    //Layer* lay = new Layer( PERCEPTRON_SIGMOID, n, m);
+    Layer* lay = new Layer( PERCEPTRON_SOFTMAX_MULTICLASS, n, m);
            lay->Forward( Z, X );// X
 
     double* eIn = new double[n];
     for (int j=0;j<n;j++) {
-//        std::cout<<"Z["<<j<<"]:"<<Z[j]<< "  eIn[" << j << "]: "<< eIn[j] << std::endl;
+//        std::cout<<"Z["<<j<<"]:"<<Z[j]<< "  eIn[" << j << "]: "<< Z[j] << std::endl;
         eIn[j]=0.4*Z[j] ;
 //        std::cout<<"Z["<<j<<"]:"<<Z[j]<< "  eIn["<<j<<"]: " << eIn[j] << std::endl;
     }
     double* eOut=new double[n];
            lay->Backward(eOut, eIn);
 
+
+    std::cout << "CrossEntropy:" << (double)lay->crossEntropyMulticlassError(Z, S) << std::endl;
 
    if ( false ) { // load images from file
    std::cout << "#  --- C++ ---\n";

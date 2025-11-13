@@ -27,12 +27,14 @@ class Layer {
       Layer(  const int type_,  const int n_,  const int m_ );
 
       //type1
-      void Forward (double Z[], const double X[]);
-      double F( double y) const;
-      void Backward (double eOut[], const double eIn[]);
-      double getMax( double const Y[] );//n
+     void Forward (double Z[], const double X[]);
+   double F       ( double y) const;
+     void Backward(double eOut[], const double eIn[]);
+   double getMax  ( double const Y[] );//n
       //void Forward (double Z[], const double X[]);
-      void print();
+     void print();
+   double crossEntropyMulticlassError( double* Z, double * S);
+     void vectorSsubZ(double* resultSsubZ, double* S, double *Z);
 
 };
 

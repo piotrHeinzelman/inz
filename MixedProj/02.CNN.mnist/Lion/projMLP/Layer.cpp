@@ -95,7 +95,7 @@ void Layer::Backward ( double eOut[], const double eIn[] ){
                 for (int j=0;j<m;j++) {
                     W[i][j]+=dFE[i]*muX[j];   // update Weight dFE * X * um;
                     eOut[j]+=dFE[i]*W[i][j];  // prepare eOUT ( sum by M  dFE[neuron]*W[neuron][m] )
-                    std::cout<<"eIn["<<i<<"]:"<<eOut[i]<<std::endl;
+                    //std::cout<<"eIn["<<i<<"]:"<<eOut[i]<<std::endl;
                 }
             }
         }
@@ -125,3 +125,22 @@ void Layer::print(){
     std::cout<<std::endl;
   }
 }
+
+
+
+double Layer::crossEntropyMulticlassError( double* Z, double * S){
+    double out = 0.0;
+    for ( int i=0;i<n; i++ ){
+        out += S[i]*log(Z[i]);
+    }
+    return -1*out;
+}
+
+
+void Layer::vectorSsubZ(double* resultSsubZ, double* S, double *Z) {
+    for ( int i=0;i<n; i++ ){
+       resultSsubZ[i]=S[i]-Z[i];
+    }
+}
+
+
