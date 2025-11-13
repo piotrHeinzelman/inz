@@ -1,0 +1,29 @@
+#include <iostream>
+#include <ctime>
+#include <fstream>
+#include <stdio.h>
+#include <string.h>
+#include <vector>
+
+
+   int const percent = 80;
+   long const len = percent*100;
+   const long CYCLES = 500;
+
+   double X[ len*784*6 ];
+   double Y[ len*  1*6 ];
+   ifstream  inputFileStreamX( "data/train-images-idx3-ubyte" , ios::in | ios::binary); // 16, percent, 6)
+   ifstream  inputFileStreamY( "data/train-labels-idx1-ubyte" , ios::in | ios::binary); //  8, percent, 6)
+
+
+   inputFileStreamX.ignore( 16*sizeof(double) );
+   inputFileStreamY.ignore(  8*sizeof(double) );
+
+
+   inputFileStreamX.read( (char*) &X, percent * 100 * 784 * 6 * sizeof( double )  );
+   inputFileStreamY.read( (char*) &Y, percent * 100 *   1 * 6 * sizeof( double )  );
+
+
+   inputFileStreamX.close();
+   inputFileStreamY.close();
+
