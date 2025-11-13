@@ -40,10 +40,17 @@ int main() {
     double* Z = new double[n];
 
     Layer* lay = new Layer( PERCEPTRON_SIGMOID, n, m);
-           lay->print();
            lay->Forward( Z, X );// X
 
-    std::cout << "z:" << Z[0] << std::endl;
+    double* eIn = new double[n];
+    for (int j=0;j<n;j++) {
+//        std::cout<<"Z["<<j<<"]:"<<Z[j]<< "  eIn[" << j << "]: "<< eIn[j] << std::endl;
+        eIn[j]=0.4*Z[j] ;
+//        std::cout<<"Z["<<j<<"]:"<<Z[j]<< "  eIn["<<j<<"]: " << eIn[j] << std::endl;
+    }
+    double* eOut=new double[n];
+           lay->Backward(eOut, eIn);
+
 
    if ( false ) { // load images from file
    std::cout << "#  --- C++ ---\n";
