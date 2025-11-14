@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <cmath>
+//#include "tools.cu"
 
 class Layer {
    // type 1=sigmoid, 3=softmaxMultiClass, 10=flatten, 20=CNN
@@ -44,55 +45,82 @@ class Layer {
             for ( int i=0;i<n;i++){
                 W[i]=new double[m];
                 for (int j=0;j<m;j++){
-                    W[i][j]=(-1.0+0.01*( rand()%200 ))/1;
+                    W[i][j]=(-1.0+0.01*( rand()%200 )); //(m*0.5);//m;
+                    //std::cout<<W[i][j]<<std::endl;
                     //  W[i][j]=0.01*( rand()%200 );
                 }
             }
         }
     }
 
+
+
+
+    double getMax( const double Y[], int len ) {
+        double max=Y[0];
+        for (int i=1;i<len;i++) {
+            if (Y[i]>max) { max=Y[i]; }
+        }
+        return max;
+    }
+
+    double getSum( const double Y[], int len ) {
+        double sum=0.0;
+        for (int i=0;i<len;i++) {
+            sum+=Y[i];
+        }
+        return sum;
+    }
+
+    void expAryminusMax(  double Y[], double max ,int len ) {
+        for (int i=0;i<len;i++) {
+            Y[i]=std::exp(Y[i]-max);
+        }
+    }
+
+    void mullAryByValue(  double Y[], double value ,int len ) {
+        for (int i=0;i<len;i++) {
+            Y[i]=Y[i]/value;
+        }
+    }
+
+
+
+
+
+
       //type1
     void Forward ( double Z[] , const double X[]){
+        for (int i=0;i<n;i++) { Z[i]=0.0; myY[i]=0.0;}
         switch(type){
             case 1: case 3: { //PERCEPTRON_SIGMOID
                 for (int i=0;i<n;i++){
-                    double y=0.0;
                     for (int j=0;j<m;j++){
-                        y+=X[j]*W[i][j];
+                        myY[i]+=X[j]*W[i][j];
                     }
-                    double z=F(y);
-                    dF[i]=z*(1-z);
-                    Z[i]=z;
+                    if (type==1) {
+                        double z=F(myY[i]);
+                        dF[i]=z*(1-z);
+                        Z[i]=z;
+                    }
+                    if (type==3) {
+                        dF[i]=1;
+                        Z[i]=myY[i];
+                    }
                 }
                 // save X * mu for backprop;
                 for (int j=0;j<m;j++) {
-                    muX[j]=X[j]*mu;
+                    muX[j]=mu*X[j];
                 }
-                break;
-            }
-            case 4: { //PERCEPTRON_SOFTMAX_MULTICLASS
-                for (int i=0;i<n;i++) {
-                    myY[i]=0.0;
-                    for (int j=0;j<m;j++){
-                        myY[i]+=X[j]*W[i][j];
-                        std::cout<<"  " <<X[j];//"   X[" << i <<"]: " <<
-                    }
-                    std::cout<<" myY[" << i <<"]: " << X[i] << std::endl;
+                if (type==1) break;
+                             //PERCEPTRON_SOFTMAX_MULTICLASS
+                             //std::cout<<" Z[" << 0 <<"]: " << Z[0] << std::endl;
 
-                } std::cout<<std::endl;
-                /*
-                const double maxOfY = getMax( myY );
-  // printVec100( &X[0] ); // <<<----- !!!
-                double sumOfY = 0.0;
-                //df=1
-                for (int i=0;i<n;i++) {
-                    myY[i]=std::exp( myY[i]- maxOfY );
-                    sumOfY+=myY[i];
-                }
-                for (int i=0;i<n;i++) {
-                    dF[i]=1.0;
-                    Z[i]=myY[i]/sumOfY;
-                } */
+                double max = getMax( Z, n );
+                 expAryminusMax(Z, max, n );
+                double sum = getSum( Z, n );
+                mullAryByValue( Z, sum ,n );
+
                 break;
             }
         }
@@ -117,16 +145,16 @@ class Layer {
     void Backward ( double eOut[], const double eIn[] ){
         switch (type) {
             case 1/*PERCEPTRON_SIGMOID*/: case 3/*PERCEPTRON_SOFTMAX_MULTICLASS*/: {
+                for (int j=0;j<m;j++){ eOut[j]=0.0;}
                 for (int i=0;i<n;i++){
-                    eOut[i]=0.0;
                     dFE[i]=eIn[i]*dF[i];     // prepare dFE from dF[neuron] * eIn[neuron]
                 }
                 // SYNCHRO !!!!
                 for (int i=0;i<n;i++){
                     for (int j=0;j<m;j++) {
-                        W[i][j]+=dFE[i]*muX[j];   // update Weight dFE * X * um;
                         eOut[j]+=dFE[i]*W[i][j];  // prepare eOUT ( sum by M  dFE[neuron]*W[neuron][m] )
-                        //std::cout<<"eIn["<<i<<"]:"<<eOut[i]<<std::endl;
+                        W[i][j]+=dFE[i]*muX[j];   // update Weight dFE * X * um;
+                        //if (i==0) { std::cout<<"dFE[i]: "<<dFE[i]<<" muX"<<muX[j]<<std::endl; }
                     }
                 }
             }
@@ -134,26 +162,24 @@ class Layer {
     }
 
 
-
-    double getMax( const double Y[] ) {
-        double max=Y[0];
-        for (int i=1;i<n;i++) {
-            if (Y[i]>max) { max=Y[i]; }
-        }
-        return max;
-    }
-
-
-
-
     double crossEntropyMulticlassError( double* Z, double * S){
         double out = 0.0;
         for ( int i=0;i<n; i++ ){
             out += S[i]*log(Z[i]);
+            //std::cout<<"S["<<i<<"]: "<<S[i]<<", Z["<<i<<"]:"<< Z[i]<<std::endl;
         }
         return -1*out;
     }
 
+    /*
+
+    double sum = 0.0;
+        for ( int i=0;i<n; i++ ){
+            sum+= S[i]*log(Z[i]) + (1-S[i])*log(1-Z[i]);
+        }
+        return sum/n;
+
+   */
 
     void vectorSsubZ(double* resultSsubZ, double* S, double *Z) {
         for ( int i=0;i<n; i++ ){
@@ -162,7 +188,9 @@ class Layer {
     }
 
 
-
+    int getN() {
+        return n;
+    }
 };
 
 #endif //INZ_LAYER_H

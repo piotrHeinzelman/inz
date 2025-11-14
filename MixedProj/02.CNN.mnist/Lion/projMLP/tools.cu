@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <vector>
+#include<cmath>
 // #include <cuda_runtime.h>
 // #include <cudnn.h>
 
@@ -39,7 +40,7 @@ void load_images( double** out, const std::string& filename, int num_images, int
        for (int r=0;r<rows;r++){
           for (int c=0;c<cols;c++){
             int i=r*cols + c;
-            double val =  ((unsigned char)buff[im*rows*cols + i])/1.0;///256.0;
+            double val =  ((unsigned char)buff[im*rows*cols + i])/256.0;
             out[im][i]= val;
           }
        }
@@ -78,4 +79,3 @@ void printVec10( double ary[] ) {
     std::cout<<std::endl<<"one-hot: ";
     for (int i=0;i<10;i++) { std::cout<<" ["<<i<<"] "<<ary[i]; }
 }
-

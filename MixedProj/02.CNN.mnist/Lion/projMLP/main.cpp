@@ -31,12 +31,14 @@
 
 
 int main() {
-   int const percent = 1;
+   int const percent = 80;
    int const class_num=10;
-   long const len = percent*100;
+   int layer_num=3;
+   long const len = percent*10;
    const long epochs = 500;
    const int PERCEPTRON_SIGMOID=1;
    const int PERCEPTRON_SOFTMAX_MULTICLASS=3;
+   double* S_Z = new double[ class_num ];
 
    double** X = new double*[ (len*6) ];
    double** Y = new double*[ (len*6) ];
@@ -63,18 +65,24 @@ int main() {
 
 
 
-   NNet * net = new NNet(2);
+   NNet * net = new NNet(layer_num);
 
    net->addL(0, PERCEPTRON_SIGMOID, 64, 28*28 );
-   net->addL(1, PERCEPTRON_SOFTMAX_MULTICLASS, 10, 64 ); // PERCEPTRON_SOFTMAX_MULTICLASS
-
-   for (int i=0;i<5/*len*6*/;i++) {
-      net->Forward(Z[i], X[i]);
-      printVec10(Z[i]);
+   net->addL(1, PERCEPTRON_SIGMOID, 64, 64 );
+   net->addL(2, PERCEPTRON_SOFTMAX_MULTICLASS, 10, 64 ); // PERCEPTRON_SOFTMAX_MULTICLASS
+   for (int e=0;e<epochs;e++) {
+       double loss=0.0;
+       for (int i=0;i<80/*len*6*/;i++) {
+           net->Forward(Z[i], X[i]);
+           loss += net->crossEntropyMulticlassError( Z[i], Y[i] );
+           net->vectorSsubZ(S_Z, Y[i], Z[i]);
+           //printVec10(S_Z);
+           net->Backward(S_Z);
+       }
+       double acc=0.0;
+          acc= net->accuracy( X,  Y, len*6, class_num);
+       std::cout<<"ACC: " << acc << ", LOSS: "<<loss<<std::endl;
    }
-
-
-
    //( const int type_, const int n_, const int m_ )
     /*
     Layer* lay0 = new Layer(PERCEPTRON_SIGMOID,99,128);

@@ -35,40 +35,52 @@ public:
     }
 
     void Backward(const double eIn[]) {
-
-        // prepare
-        Layer* lay0 = new Layer(PERCEPTRON_SIGMOID,99,128);
-        double* lay0_to1 = new double[99];
-        Layer* lay1 = new Layer(PERCEPTRON_SOFTMAX_MULTICLASS,10,99);
-        double* ZZ = new double[10];
-
-        //Forward
-        double* XX = new double[2]{0.2,0.3};
-        lay0->Forward(lay0_to1, XX);
-        lay1->Forward(ZZ, lay0_to1);
+       layers[layer_num-1]->Backward(interArray[layer_num-2], eIn); // Backward ( double eOut[], const double eIn[] ){
+       for (int i=(layer_num-2);i>=1;i--) {
+            layers[i]->Forward(interArray[i], interArray[i-1]);
+       //    std::cout<<std::endl<<std::endl<<"i:"<<i<<std::endl;
+       }
+       layers[0]->Forward( dn, interArray[0] );
+    }
 
 
+    void Forward (double Z[], const double X[]){
+        layers[0]->Forward( interArray[0], X );
+        for (int i=1;i<layer_num-1;i++) {
+           layers[i]->Forward(interArray[i], interArray[i-1]);
+        }
+        layers[layer_num-1]->Forward(Z, interArray[layer_num-2]);
+    }
 
 
-        //Backward ( double eOut[], const double eIn[] )
-        lay1->Backward(lay0_to1, ZZ);
-        double* devnull=new double[128];
-        lay0->Backward(devnull, lay0_to1);
+    double crossEntropyMulticlassError( double* Z, double * S){
+        return layers[layer_num-1]->crossEntropyMulticlassError( Z, S );
+    }
+
+    void vectorSsubZ(double* resultSsubZ, double* S, double *Z) {
+        return layers[layer_num-1]->vectorSsubZ(  resultSsubZ, S, Z );
+    }
+
+
+    double accuracy(double * X[], double * Y[], int len, int class_num) {
+        int goal=0;
+        double* result=new double[class_num];
+        for (int i=0;i<len;i++) {
+            Forward( result, X[i] ); //double Z[], const double X[]
+            if ( getMaxIndex( result, class_num ) == getMaxIndex( Y[i], class_num )){ goal++; }
+        }
+        return 100.0*goal/len;
     }
 
 
 
 
-    void Forward (double Z[], const double X[]){
-        layers[0]->Forward( interArray[0], X );
-
-
-        //layers[0]->Forward( Z, X );
-        for (int i=1;i<layer_num-2;i++) {
-           layers[i]->Forward(interArray[i], interArray[i-1]);
+    int getMaxIndex(double* ary ,int len) {
+        int ind=0; double val=ary[0];
+        for (int i=1;i<len;i++) {
+            if (ary[i]>val){ val=ary[i]; ind=i; }
         }
-        //layers[(layer_num-1)]->Forward( Z, interArray[(layer_num-1)] );
-        layers[layer_num-1]->Forward(Z, interArray[layer_num-2]);
+        return ind;
     }
 
 };
