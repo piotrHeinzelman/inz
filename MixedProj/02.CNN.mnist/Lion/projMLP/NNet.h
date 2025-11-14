@@ -61,10 +61,14 @@ public:
 
     void Forward (double Z[], const double X[]){
         layers[0]->Forward( interArray[0], X );
-        for (int i=1;i<layer_num-1;i++) {
-            layers[i]->Forward(interArray[i], interArray[i-1]);
+
+
+        //layers[0]->Forward( Z, X );
+        for (int i=1;i<layer_num-2;i++) {
+           layers[i]->Forward(interArray[i], interArray[i-1]);
         }
-        layers[(layer_num-1)]->Forward( Z, interArray[(layer_num-1)] );
+        //layers[(layer_num-1)]->Forward( Z, interArray[(layer_num-1)] );
+        layers[layer_num-1]->Forward(Z, interArray[layer_num-2]);
     }
 
 };

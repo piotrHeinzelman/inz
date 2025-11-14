@@ -58,27 +58,11 @@ int main() {
     load_labels( Y,  "../../../01.MPL/data/train-labels-idx1-ubyte", len*6, class_num);
 
     // obraz 2:
-     printVec100(X[0]);
-     printVec10(Y[0]);
+    // printVec100(X[0]);
+    // printVec10(Y[0]);
 
-   // printVec100(Y[1]);
-   // printVec100(Y[2]);
-/*
-    for (int i=0;i<28;i++) {
-        for (int j=0;j<28;j++) {
-            std::cout<< X[0][i*28+j];
-        }
-        std::cout<<std::endl;
-    }
-*/
-    /*
-    for (int i=0;i<10;i++) {
-        for (int j=0;j<10;j++) {
-            std::cout<< Y[i][j];
-        }
-        std::cout<<std::endl;
-    }
-*/
+
+
    NNet * net = new NNet(2);
 
    net->addL(0, PERCEPTRON_SIGMOID, 64, 28*28 );
@@ -86,6 +70,7 @@ int main() {
 
    for (int i=0;i<5/*len*6*/;i++) {
       net->Forward(Z[i], X[i]);
+      printVec10(Z[i]);
    }
 
 

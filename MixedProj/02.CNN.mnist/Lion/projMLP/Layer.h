@@ -54,7 +54,7 @@ class Layer {
       //type1
     void Forward ( double Z[] , const double X[]){
         switch(type){
-            case 1: { //PERCEPTRON_SIGMOID
+            case 1: case 3: { //PERCEPTRON_SIGMOID
                 for (int i=0;i<n;i++){
                     double y=0.0;
                     for (int j=0;j<m;j++){
@@ -70,18 +70,21 @@ class Layer {
                 }
                 break;
             }
-            case 3: { //PERCEPTRON_SOFTMAX_MULTICLASS
+            case 4: { //PERCEPTRON_SOFTMAX_MULTICLASS
                 for (int i=0;i<n;i++) {
                     myY[i]=0.0;
                     for (int j=0;j<m;j++){
                         myY[i]+=X[j]*W[i][j];
+                        std::cout<<"  " <<X[j];//"   X[" << i <<"]: " <<
                     }
-                }
+                    std::cout<<" myY[" << i <<"]: " << X[i] << std::endl;
+
+                } std::cout<<std::endl;
+                /*
                 const double maxOfY = getMax( myY );
   // printVec100( &X[0] ); // <<<----- !!!
                 double sumOfY = 0.0;
                 //df=1
-
                 for (int i=0;i<n;i++) {
                     myY[i]=std::exp( myY[i]- maxOfY );
                     sumOfY+=myY[i];
@@ -89,7 +92,7 @@ class Layer {
                 for (int i=0;i<n;i++) {
                     dF[i]=1.0;
                     Z[i]=myY[i]/sumOfY;
-                }
+                } */
                 break;
             }
         }
@@ -101,6 +104,9 @@ class Layer {
         switch(type){
             case 1: { //PERCEPTRON_SIGMOID
                 return y*(1-y);
+            }
+            case 3: { //PERCEPTRON_SOFTMAX_MULTICLASS
+                return y;
             }
         }
         return 0.0;
