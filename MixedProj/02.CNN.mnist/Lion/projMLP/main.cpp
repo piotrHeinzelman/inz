@@ -21,11 +21,13 @@
 // #include <cublas.h>
 // #include <cuda.h>
 #include "tools.cu"
-#include "Net.h"
 #include "Layer.h"
+#include "NNet.h"
+
 // #include "Layer.cpp"
 //   #include "Net.cpp"
 //using namespace std;
+
 
 
 int main() {
@@ -33,15 +35,52 @@ int main() {
    int const class_num=10;
    long const len = percent*100;
    const long epochs = 500;
+   const int PERCEPTRON_SIGMOID=1;
+   const int PERCEPTRON_SOFTMAX_MULTICLASS=3;
 
-  double* X1 =  new double[128];
+   double** X = new double*[ len* 6 ];
+   double** Y = new double*[ len* 6 ];
+   double** Z = new double*[ len* 6 ];
+    for (int i=0;i<(len*6);i++) {
+        X[i]=new double[28*28];
+        Y[i]=new double[class_num];
+        Z[i]=new double[class_num];
+    }
 
-   Net * net = new Net( 2 );
-   net->addLayerAt(0, PERCEPTRON_SIGMOID, 64, 128 );
-   net->addLayerAt(1, PERCEPTRON_SOFTMAX_MULTICLASS, 10, 64 );
+   load_images( X,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", len*6, 28, 28);
+   load_labels( Y,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", len*6, class_num);
+/*
+    for (int i=0;i<28;i++) {
+        for (int j=0;j<28;j++) {
+            std::cout<< X[0][i*28+j];
+        }
+        std::cout<<std::endl;
+    }
+*/
+    /*
+    for (int i=0;i<10;i++) {
+        for (int j=0;j<10;j++) {
+            std::cout<< Y[i][j];
+        }
+        std::cout<<std::endl;
+    }
+*/
+   NNet * net = new NNet(2);
 
+   net->addL(0, PERCEPTRON_SIGMOID, 64, 28*28 );
+   net->addL(1, PERCEPTRON_SIGMOID, 10, 64 ); // PERCEPTRON_SOFTMAX_MULTICLASS
 
-    //( const int type_, const int n_, const int m_ )
+   for (int i=0;i<5/*len*6*/;i++) {
+      net->Forward(Z[i], X[i]);
+   }
+    for (int i=0;i<10;i++) {
+      //  for (int j=0;j<10;j++) {
+            std::cout<< Z[3][i] << " ";
+     //   }
+        std::cout<<std::endl;
+    }
+
+   //( const int type_, const int n_, const int m_ )
     /*
     Layer* lay0 = new Layer(PERCEPTRON_SIGMOID,99,128);
     double* lay0_to1 = new double[99];
@@ -65,12 +104,11 @@ int main() {
     std::cout << std::endl;
     */
 
-
-   return 0;
-
-
+    return 0;
+}
 
 
+/*
 
     std::cout << "#  --- start main ---\n";
     int n = 2;
@@ -170,10 +208,8 @@ int main() {
     cudaFree(x);
 //    return 0;
 */
-   }  // ***********
 
 
-   return 0;
 /*
 
 //-- start
@@ -220,9 +256,6 @@ int main() {
   cout << "\nc[]=" << (float)duration / CLOCKS_PER_SEC << "\n" ;
 
 */
-
-  return 0;
-}
 
 
 
