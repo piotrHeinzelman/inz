@@ -38,17 +38,31 @@ int main() {
    const int PERCEPTRON_SIGMOID=1;
    const int PERCEPTRON_SOFTMAX_MULTICLASS=3;
 
-   double** X = new double*[ len* 6 ];
-   double** Y = new double*[ len* 6 ];
-   double** Z = new double*[ len* 6 ];
+   double** X = new double*[ (len*6) ];
+   double** Y = new double*[ (len*6) ];
+   double** Z = new double*[ (len*6) ];
     for (int i=0;i<(len*6);i++) {
         X[i]=new double[28*28];
+    }
+    for (int i=0;i<(len*6);i++) {
         Y[i]=new double[class_num];
+    }
+    for (int i=0;i<(len*6);i++) {
         Z[i]=new double[class_num];
     }
 
-   load_images( X,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", len*6, 28, 28);
-   load_labels( Y,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", len*6, class_num);
+//   load_images( X,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", len*6, 28, 28);
+//   load_labels( Y,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", len*6, class_num);
+
+    load_images( X,  "../../../01.MPL/data/train-images-idx3-ubyte", len*6, 28, 28);
+    load_labels( Y,  "../../../01.MPL/data/train-labels-idx1-ubyte", len*6, class_num);
+
+    // obraz 2:
+     printVec100(X[0]);
+     printVec10(Y[0]);
+
+   // printVec100(Y[1]);
+   // printVec100(Y[2]);
 /*
     for (int i=0;i<28;i++) {
         for (int j=0;j<28;j++) {
@@ -68,17 +82,13 @@ int main() {
    NNet * net = new NNet(2);
 
    net->addL(0, PERCEPTRON_SIGMOID, 64, 28*28 );
-   net->addL(1, PERCEPTRON_SIGMOID, 10, 64 ); // PERCEPTRON_SOFTMAX_MULTICLASS
+   net->addL(1, PERCEPTRON_SOFTMAX_MULTICLASS, 10, 64 ); // PERCEPTRON_SOFTMAX_MULTICLASS
 
    for (int i=0;i<5/*len*6*/;i++) {
       net->Forward(Z[i], X[i]);
    }
-    for (int i=0;i<10;i++) {
-      //  for (int j=0;j<10;j++) {
-            std::cout<< Z[3][i] << " ";
-     //   }
-        std::cout<<std::endl;
-    }
+
+
 
    //( const int type_, const int n_, const int m_ )
     /*

@@ -33,13 +33,14 @@ void load_images( double** out, const std::string& filename, int num_images, int
     if (!file.is_open()) { throw std::runtime_error("Cannot open image file!"); } else { std::cout << "file open" << std::endl;  }
     file.read( reinterpret_cast<char*>(buff), 16);
     file.read( reinterpret_cast<char*>(buff), num_images*rows*cols );
+
     for (int im=0;im<num_images;im++){
        //out[im]=new double[rows*cols];
        for (int r=0;r<rows;r++){
           for (int c=0;c<cols;c++){
             int i=r*cols + c;
-            out[im][i]= ((unsigned char)buff[i])/256.0;
-             // std::cout<<i<<"   "<<out[im][i]<<"    "<<std::endl;
+            double val =  ((unsigned char)buff[im*rows*cols + i])/1.0;///256.0;
+            out[im][i]= val;
           }
        }
     }
@@ -57,11 +58,24 @@ void load_labels( double** out, const std::string& filename, int num_images, int
        for (int c=0;c<class_num;c++){
             out[im][c]=0.0;
        }
-       out[im][buff[im]]=1.0;
+       int val= (unsigned char ) buff[im] *1;
+       if (val==10) {val=0;} //else {val++;}
+       //std::cout << "Label:" << im << " , val" << val << " !! ";
+       out[im][ val ]=1.0;
     }
     file.close();
 }
 
 
+void printVec100( double ary[] ) {
+    for (int i=0;i<28*28;i++) { std::cout<<" "<<ary[i]; if (i%28==0){std::cout<<std::endl;} }
+}
+void printVec100( const double ary[] ) {
+    for (int i=0;i<28*28;i++) { std::cout<<" "<<ary[i]; } std::cout<<std::endl;
+}
 
+void printVec10( double ary[] ) {
+    std::cout<<std::endl<<"one-hot: ";
+    for (int i=0;i<10;i++) { std::cout<<" ["<<i<<"] "<<ary[i]; }
+}
 

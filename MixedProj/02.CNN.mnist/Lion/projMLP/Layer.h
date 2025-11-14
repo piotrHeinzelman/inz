@@ -22,6 +22,7 @@ class Layer {
        double* muX;
        double* dF;
        double* dFE;
+       double* myY;
        float mu=0.01;
 
 
@@ -38,11 +39,12 @@ class Layer {
             W = new double*[n];
             dF = new double [n];
             dFE = new double [n];
+            myY = new double [n];
             muX = new double [m];
             for ( int i=0;i<n;i++){
                 W[i]=new double[m];
                 for (int j=0;j<m;j++){
-                    W[i][j]=(-1.0+0.01*( rand()%200 ))/m;
+                    W[i][j]=(-1.0+0.01*( rand()%200 ))/1;
                     //  W[i][j]=0.01*( rand()%200 );
                 }
             }
@@ -69,24 +71,24 @@ class Layer {
                 break;
             }
             case 3: { //PERCEPTRON_SOFTMAX_MULTICLASS
-                double* Y=dF; // ;)
                 for (int i=0;i<n;i++) {
+                    myY[i]=0.0;
                     for (int j=0;j<m;j++){
-                        if (i==0){ Y[i]=0.0; }
-                        Y[i]+=X[j]*W[i][j];
+                        myY[i]+=X[j]*W[i][j];
                     }
                 }
-                const double maxOfY = getMax( Y );
+                const double maxOfY = getMax( myY );
+  // printVec100( &X[0] ); // <<<----- !!!
                 double sumOfY = 0.0;
                 //df=1
 
                 for (int i=0;i<n;i++) {
-                    Y[i]=std::exp( Y[i]- maxOfY );
-                    sumOfY+=Y[i];
+                    myY[i]=std::exp( myY[i]- maxOfY );
+                    sumOfY+=myY[i];
                 }
                 for (int i=0;i<n;i++) {
                     dF[i]=1.0;
-                    Z[i]=Y[i]/sumOfY;
+                    Z[i]=myY[i]/sumOfY;
                 }
                 break;
             }
@@ -152,6 +154,8 @@ class Layer {
             resultSsubZ[i]=S[i]-Z[i];
         }
     }
+
+
 
 };
 
