@@ -31,11 +31,12 @@
 
 
 int main() {
-   int const percent = 10;
+    bool saveTime=false;
+   int const percent = 80;
    int const class_num=10;
    int layer_num=3;
    long const len = percent*600;
-   const long epochs = 5;
+   const long epochs = 500;
    const int PERCEPTRON_SIGMOID=1;
    const int PERCEPTRON_SOFTMAX_MULTICLASS=3;
    double* S_Z = new double[ class_num ];
@@ -70,6 +71,11 @@ int main() {
    net->addL(0, PERCEPTRON_SIGMOID, 64, 28*28 );
    net->addL(1, PERCEPTRON_SIGMOID, 64, 64 );
    net->addL(2, PERCEPTRON_SOFTMAX_MULTICLASS, 10, 64 ); // PERCEPTRON_SOFTMAX_MULTICLASS
+
+   clock_t startAccuracy=clock();;
+   clock_t endAccuracy =clock();;
+   clock_t startTrain = clock();
+
    for (int e=0;e<epochs;e++) {
        double loss=0.0;
        for (int i=0;i<len;i++) {
@@ -79,10 +85,22 @@ int main() {
            //printVec10(S_Z);
            net->Backward(S_Z);
        }
+
+
+       if (!saveTime){
        double acc=0.0;
-          acc= net->accuracy( X,  Y, len, class_num);
-          std::cout<<"ACC: " << acc << ", LOSS: "<<loss<<std::endl;
+           startAccuracy = clock();
+            acc= net->accuracy( X,  Y, len, class_num);
+           endAccuracy = clock();
+       std::cout<<"ACC: " << acc << ", LOSS: "<<loss<<std::endl; }
    }
+
+
+
+    clock_t endTrain = clock();
+    std::cout << "#  train time: " << (float)( endTrain - startTrain ) / CLOCKS_PER_SEC << " [sek.]" << std::endl;
+    if (! saveTime ) { std::cout << "#  accuracy time: " << (float)( endAccuracy - startAccuracy ) / CLOCKS_PER_SEC << " [sek.]" << std::endl; }
+
    //( const int type_, const int n_, const int m_ )
     /*
     Layer* lay0 = new Layer(PERCEPTRON_SIGMOID,99,128);
