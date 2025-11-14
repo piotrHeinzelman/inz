@@ -31,33 +31,33 @@
 
 
 int main() {
-   int const percent = 80;
+   int const percent = 10;
    int const class_num=10;
    int layer_num=3;
-   long const len = percent*10;
-   const long epochs = 500;
+   long const len = percent*600;
+   const long epochs = 5;
    const int PERCEPTRON_SIGMOID=1;
    const int PERCEPTRON_SOFTMAX_MULTICLASS=3;
    double* S_Z = new double[ class_num ];
 
-   double** X = new double*[ (len*6) ];
-   double** Y = new double*[ (len*6) ];
-   double** Z = new double*[ (len*6) ];
-    for (int i=0;i<(len*6);i++) {
+   double** X = new double*[ (len) ];
+   double** Y = new double*[ (len) ];
+   double** Z = new double*[ (len) ];
+    for (int i=0;i<(len);i++) {
         X[i]=new double[28*28];
     }
-    for (int i=0;i<(len*6);i++) {
+    for (int i=0;i<(len);i++) {
         Y[i]=new double[class_num];
     }
-    for (int i=0;i<(len*6);i++) {
+    for (int i=0;i<(len);i++) {
         Z[i]=new double[class_num];
     }
 
-//   load_images( X,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", len*6, 28, 28);
-//   load_labels( Y,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", len*6, class_num);
+ //  load_images( X,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", len, 28, 28);
+ //  load_labels( Y,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", len, class_num);
 
-    load_images( X,  "../../../01.MPL/data/train-images-idx3-ubyte", len*6, 28, 28);
-    load_labels( Y,  "../../../01.MPL/data/train-labels-idx1-ubyte", len*6, class_num);
+    load_images( X,  "../../../01.MPL/data/train-images-idx3-ubyte", len, 28, 28);
+    load_labels( Y,  "../../../01.MPL/data/train-labels-idx1-ubyte", len, class_num);
 
     // obraz 2:
     // printVec100(X[0]);
@@ -72,16 +72,16 @@ int main() {
    net->addL(2, PERCEPTRON_SOFTMAX_MULTICLASS, 10, 64 ); // PERCEPTRON_SOFTMAX_MULTICLASS
    for (int e=0;e<epochs;e++) {
        double loss=0.0;
-       for (int i=0;i<80/*len*6*/;i++) {
+       for (int i=0;i<len;i++) {
            net->Forward(Z[i], X[i]);
-           loss += net->crossEntropyMulticlassError( Z[i], Y[i] );
+           loss += net->crossEntropyMulticlassError( Z[i]);
            net->vectorSsubZ(S_Z, Y[i], Z[i]);
            //printVec10(S_Z);
            net->Backward(S_Z);
        }
        double acc=0.0;
-          acc= net->accuracy( X,  Y, len*6, class_num);
-       std::cout<<"ACC: " << acc << ", LOSS: "<<loss<<std::endl;
+          acc= net->accuracy( X,  Y, len, class_num);
+          std::cout<<"ACC: " << acc << ", LOSS: "<<loss<<std::endl;
    }
    //( const int type_, const int n_, const int m_ )
     /*

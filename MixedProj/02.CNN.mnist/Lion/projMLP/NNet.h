@@ -46,15 +46,15 @@ public:
 
     void Forward (double Z[], const double X[]){
         layers[0]->Forward( interArray[0], X );
-        for (int i=1;i<layer_num-1;i++) {
+        for (int i=1;i<(layer_num-1);i++) {
            layers[i]->Forward(interArray[i], interArray[i-1]);
         }
         layers[layer_num-1]->Forward(Z, interArray[layer_num-2]);
     }
 
 
-    double crossEntropyMulticlassError( double* Z, double * S){
-        return layers[layer_num-1]->crossEntropyMulticlassError( Z, S );
+    double crossEntropyMulticlassError( double* Z){
+        return layers[layer_num-1]->crossEntropyMulticlassError( Z );
     }
 
     void vectorSsubZ(double* resultSsubZ, double* S, double *Z) {

@@ -24,7 +24,7 @@ class Layer {
        double* dF;
        double* dFE;
        double* myY;
-       float mu=0.01;
+       float mu=0.001;
 
 
    public:
@@ -93,34 +93,30 @@ class Layer {
     void Forward ( double Z[] , const double X[]){
         for (int i=0;i<n;i++) { Z[i]=0.0; myY[i]=0.0;}
         switch(type){
-            case 1: case 3: { //PERCEPTRON_SIGMOID
-                for (int i=0;i<n;i++){
-                    for (int j=0;j<m;j++){
-                        myY[i]+=X[j]*W[i][j];
+            case 1: case 3: {
+                for (int i=0;i<n;i++) {
+                    for (int j=0;j<m;j++) {
+                        double xj=X[j];
+                        double wij=W[i][j];
+                        double xw=xj*wij;
+                        myY[i]+=xw;
+                        //myY[i]+=W[i][j]*X[j];
                     }
-                    if (type==1) {
-                        double z=F(myY[i]);
-                        dF[i]=z*(1-z);
-                        Z[i]=z;
-                    }
-                    if (type==3) {
-                        dF[i]=1;
-                        Z[i]=myY[i];
-                    }
+                }
+                for (int i=0;i<n;i++) {
+                    Z[i]=F(myY[i]);
+                    dF[i]=dFun(Z[i]);
                 }
                 // save X * mu for backprop;
                 for (int j=0;j<m;j++) {
                     muX[j]=mu*X[j];
                 }
                 if (type==1) break;
-                             //PERCEPTRON_SOFTMAX_MULTICLASS
-                             //std::cout<<" Z[" << 0 <<"]: " << Z[0] << std::endl;
 
                 double max = getMax( Z, n );
-                 expAryminusMax(Z, max, n );
+                expAryminusMax(Z, max, n );
                 double sum = getSum( Z, n );
                 mullAryByValue( Z, sum ,n );
-
                 break;
             }
         }
@@ -130,11 +126,23 @@ class Layer {
 
     double F  ( double y) const {
         switch(type){
+            case 1: case 3:{ //PERCEPTRON_SIGMOID //PERCEPTRON_SOFTMAX_MULTICLASS
+                return /* Z= */ 1.0/(1.0+std::exp(-y));
+            }
+            case 0: {
+                return y;
+            }
+        }
+        return 0.0;
+    }
+
+    double dFun  ( double z) const {
+        switch(type){
             case 1: { //PERCEPTRON_SIGMOID
-                return y*(1-y);
+                return z*(1-z);
             }
             case 3: { //PERCEPTRON_SOFTMAX_MULTICLASS
-                return y;
+                return 1;
             }
         }
         return 0.0;
@@ -162,24 +170,13 @@ class Layer {
     }
 
 
-    double crossEntropyMulticlassError( double* Z, double * S){
+    double crossEntropyMulticlassError( double* Z){
         double out = 0.0;
         for ( int i=0;i<n; i++ ){
-            out += S[i]*log(Z[i]);
-            //std::cout<<"S["<<i<<"]: "<<S[i]<<", Z["<<i<<"]:"<< Z[i]<<std::endl;
+            out += -log(Z[i]);
         }
         return -1*out;
     }
-
-    /*
-
-    double sum = 0.0;
-        for ( int i=0;i<n; i++ ){
-            sum+= S[i]*log(Z[i]) + (1-S[i])*log(1-Z[i]);
-        }
-        return sum/n;
-
-   */
 
     void vectorSsubZ(double* resultSsubZ, double* S, double *Z) {
         for ( int i=0;i<n; i++ ){
