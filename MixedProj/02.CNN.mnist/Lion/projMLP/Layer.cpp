@@ -17,7 +17,7 @@ Layer::Layer( const int type_, const int n_, const int m_ )    // n - neurons nu
         dF = new double [n];
         dFE = new double [n];
         muX = new double [m];
-        for ( int i=0;i<m;i++){
+        for ( int i=0;i<n;i++){
            W[i]=new double[m];
            for (int j=0;j<m;j++){
              W[i][j]=-1.0+0.01*( rand()%200 );

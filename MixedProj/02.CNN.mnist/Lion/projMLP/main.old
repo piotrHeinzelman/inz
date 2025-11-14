@@ -21,10 +21,8 @@
 // #include <cublas.h>
 // #include <cuda.h>
 #include "tools.cu"
-#include "Net.h"
 #include "Layer.h"
-// #include "Layer.cpp"
-//   #include "Net.cpp"
+   #include "Layer.cpp"
 //using namespace std;
 
 
@@ -32,45 +30,7 @@ int main() {
    int const percent = 1;
    int const class_num=10;
    long const len = percent*100;
-   const long epochs = 500;
-
-  double* X1 =  new double[128];
-
-   Net * net = new Net( 2 );
-   net->addLayerAt(0, PERCEPTRON_SIGMOID, 64, 128 );
-   net->addLayerAt(1, PERCEPTRON_SOFTMAX_MULTICLASS, 10, 64 );
-
-
-    //( const int type_, const int n_, const int m_ )
-    /*
-    Layer* lay0 = new Layer(PERCEPTRON_SIGMOID,99,128);
-    double* lay0_to1 = new double[99];
-    Layer* lay1 = new Layer(PERCEPTRON_SOFTMAX_MULTICLASS,10,99);
-    double* ZZ = new double[10];
-
-    double* XX = new double[2]{0.2,0.3};
-    lay0->Forward(lay0_to1, XX);
-    lay1->Forward(ZZ, lay0_to1);
-
-    //Backward ( double eOut[], const double eIn[] )
-    lay1->Backward(lay0_to1, ZZ);
-    double* devnull=new double[128];
-    lay0->Backward(devnull, lay0_to1);
-
-
-
-    for (int i=0;i<10;i++) {
-        std::cout  << ZZ[i];
-    }
-    std::cout << std::endl;
-    */
-
-
-   return 0;
-
-
-
-
+   const long CYCLES = 500;
 
     std::cout << "#  --- start main ---\n";
     int n = 2;
