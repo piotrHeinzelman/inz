@@ -24,7 +24,7 @@ class Layer {
        double* dF;
        double* dFE;
        double* myY;
-       float mu=0.001;
+       float mu=0.003;
 
 
    public:

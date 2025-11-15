@@ -36,7 +36,7 @@ int main() {
    int const class_num=10;
    int layer_num=3;
    long const len = percent*600;
-   const long epochs = 500;
+   const long epochs = 1;
    const int PERCEPTRON_SIGMOID=1;
    const int PERCEPTRON_SOFTMAX_MULTICLASS=3;
    double* S_Z = new double[ class_num ];
@@ -92,7 +92,8 @@ int main() {
            startAccuracy = clock();
             acc= net->accuracy( X,  Y, len, class_num);
            endAccuracy = clock();
-       std::cout<<"ACC: " << acc << ", LOSS: "<<loss<<std::endl; }
+       std::cout<<"ACC: " << acc << ", LOSS: "<<loss<<std::endl;
+       }
    }
 
 
