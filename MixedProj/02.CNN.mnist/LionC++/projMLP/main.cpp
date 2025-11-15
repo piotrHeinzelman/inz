@@ -7,36 +7,34 @@
 //
 // run:
 // nvcc -lcuda -lcublas -lcudnn *.cu -o CNN
+//
+// echo 'g++ main.cpp -o CNN'
+// nvcc main.cpp  -lcuda -lcublas -lcudnn -o CNN
 
 
 
 #include <iostream>
 #include <ctime>
 #include <fstream>
-#include <stdio.h>
 #include <string.h>
-#include <vector>
-// #include <cuda_runtime.h>
-// #include <cudnn.h>
-// #include <cublas.h>
-// #include <cuda.h>
+
 #include "tools.cu"
 #include "Layer.h"
 #include "NNet.h"
 
-// #include "Layer.cpp"
-//   #include "Net.cpp"
-//using namespace std;
-
+//#include <cuda_runtime.h>
+//#include <cudnn.h>
+//#include <cublas.h>
+//#include <cuda.h>
 
 
 int main() {
     bool saveTime=false;
-   int const percent = 80;
+   int const percent = 5; //80
    int const class_num=10;
    int layer_num=3;
    long const len = percent*600;
-   const long epochs = 1;
+   const long epochs = 5; //500
    const int PERCEPTRON_SIGMOID=1;
    const int PERCEPTRON_SOFTMAX_MULTICLASS=3;
    double* S_Z = new double[ class_num ];
@@ -60,11 +58,9 @@ int main() {
     load_images( X,  "../../../01.MPL/data/train-images-idx3-ubyte", len, 28, 28);
     load_labels( Y,  "../../../01.MPL/data/train-labels-idx1-ubyte", len, class_num);
 
-    // obraz 2:
-    // printVec100(X[0]);
-    // printVec10(Y[0]);
-
-
+// obraz 2:
+//     printVec100(X[0]);
+//     printVec10(Y[0]);
 
    NNet * net = new NNet(layer_num);
 
@@ -82,7 +78,6 @@ int main() {
            net->Forward(Z[i], X[i]);
            loss += net->crossEntropyMulticlassError( Z[i]);
            net->vectorSsubZ(S_Z, Y[i], Z[i]);
-           //printVec10(S_Z);
            net->Backward(S_Z);
        }
 
@@ -100,31 +95,9 @@ int main() {
 
     clock_t endTrain = clock();
     std::cout << "#  train time: " << (float)( endTrain - startTrain ) / CLOCKS_PER_SEC << " [sek.]" << std::endl;
-    if (! saveTime ) { std::cout << "#  accuracy time: " << (float)( endAccuracy - startAccuracy ) / CLOCKS_PER_SEC << " [sek.]" << std::endl; }
-
-   //( const int type_, const int n_, const int m_ )
-    /*
-    Layer* lay0 = new Layer(PERCEPTRON_SIGMOID,99,128);
-    double* lay0_to1 = new double[99];
-    Layer* lay1 = new Layer(PERCEPTRON_SOFTMAX_MULTICLASS,10,99);
-    double* ZZ = new double[10];
-
-    double* XX = new double[2]{0.2,0.3};
-    lay0->Forward(lay0_to1, XX);
-    lay1->Forward(ZZ, lay0_to1);
-
-    //Backward ( double eOut[], const double eIn[] )
-    lay1->Backward(lay0_to1, ZZ);
-    double* devnull=new double[128];
-    lay0->Backward(devnull, lay0_to1);
-
-
-
-    for (int i=0;i<10;i++) {
-        std::cout  << ZZ[i];
+    if (! saveTime ) {
+        std::cout << "#  accuracy time: " << (float)( endAccuracy - startAccuracy ) / CLOCKS_PER_SEC << " [sek.]" << std::endl;
     }
-    std::cout << std::endl;
-    */
 
     return 0;
 }

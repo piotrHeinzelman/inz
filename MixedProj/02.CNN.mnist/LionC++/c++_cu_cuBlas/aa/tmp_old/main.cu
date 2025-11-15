@@ -1,0 +1,260 @@
+#include "cuda_runtime.h"
+#include "device_launch_parameters.h"
+#include <stdio.h>
+#include <stdint.h>
+#include <iostream>
+#include <ctime>
+#include <fstream>
+#include <string.h>
+#include <vector>
+
+using namespace std;
+
+
+cudaError_t sum( double* source, double * result, unsigned int size_bl, unsigned int size_th , double multi);
+
+__global__ void sumCU(double* ary, double* dest, float multi)
+{
+int i = threadIdx.x + blockIdx.x * blockDim.x;
+    if (i<250000){
+       double sum=0.0;
+       for (int j=0;j<256;j++){
+          double val=(i*256+j)*multi;
+          ary[i*256+j]=val;
+          sum+=val;
+       }
+       dest[i]=sum;
+    }
+}
+
+__global__ void  sumDest(double* source, double* destination, unsigned int vector_size, unsigned int dest_size ) //<<<1,sizex>>>(dev_destination, dev_destination_lev2 );
+{
+int i = threadIdx.x; // one block
+    double sum=0.0;
+    if (i<dest_size ){
+       for (int j=0;j<vector_size;j++){
+          sum+=source[i*vector_size+j];
+       }
+    }
+    destination[i]=sum;
+}
+
+/*   vector_size  
+     -----------
+     |  |  |  |   ->   } dest_size
+     |  |  |  |   ->   
+     ----------
+*/
+
+
+
+
+
+
+
+
+
+
+__global__ void mulCU(double* ary, double* dest)
+{
+int i = threadIdx.x + blockIdx.x * blockDim.x;
+    double c=ary[i];
+    dest[blockIdx.x] += c;
+}
+
+
+int main()
+{
+    unsigned int const SIZE_TH =500; //=64*1000 / 10;
+    unsigned int const SIZE_BL =500; //=1*1000 / 10;
+    double * X=new double[SIZE_TH*SIZE_BL*256];
+    double * Y=new double[SIZE_TH*SIZE_BL*256];
+    double * Xsm=new double[1];
+    double * Ysm=new double[1];
+
+    double srX=0.0;
+    double srY=0.0;
+    double sumT=0.0;
+    double sumB=0.0;
+    double w1=0.0;
+    double w0=0.0;
+    clock_t start = clock();
+
+    cudaError_t cudaStatus;
+
+    cudaStatus = cudaDeviceReset();
+    if (cudaStatus == cudaSuccess) {
+        cudaStatus = sum( X, Xsm, SIZE_BL, SIZE_TH, 0.1);
+        cudaStatus = sum( Y, Ysm, SIZE_BL, SIZE_TH, 0.2);
+    }
+    printf("\r\nXsm (OK): %f \r\n", Xsm[0] );
+        srX=Xsm[0]/64000000;
+        srY=Ysm[0]/64000000;
+    printf("\r\nsrX (OK): %f \r\n", srX );
+    printf("\r\nsrY (OK): %f \r\n", srY );
+
+
+
+    clock_t end = clock();
+    clock_t myTime = end - start;
+    printf("\r\ntime: %lu [clocks tick], %ld[sek]\r\n", myTime, myTime/CLOCKS_PER_SEC );
+
+	if (true) return 0;
+
+}
+
+
+
+
+cudaError_t sum( double* source, double * destination, unsigned int sizex, unsigned int sizey, double multi )
+{
+    double *dev_source = 0;
+    double *dev_destination = 0;
+    double *dev_destination_lev2 = 0;
+    double *dev_value = 0;
+    cudaError_t cudaStatus;
+
+    // Choose which GPU to run on, change this on a multi-GPU system.
+    cudaStatus = cudaSetDevice(0);
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "cudaSetDevice failed!  Do you have a CUDA-capable GPU installed?");
+        goto Error;
+    }
+
+    // Allocate GPU buffers for three vectors (two input, one output)    .
+    cudaStatus = cudaMalloc((void**)&dev_source, 256*sizex*sizey * sizeof(double));
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "cudaMalloc failed!");
+        goto Error;
+    }
+
+    cudaStatus = cudaMalloc((void**)&dev_destination, sizey*sizex* sizeof(double));
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "cudaMalloc failed!");
+        goto Error;
+    }
+
+    cudaStatus = cudaMalloc((void**)&dev_destination_lev2, sizey* sizeof(double));
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "cudaMalloc failed!");
+        goto Error;
+    }
+
+
+    cudaStatus = cudaMalloc((void**)&dev_value, 1* sizeof(double));
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "cudaMalloc failed!");
+        goto Error;
+    }
+
+
+    // Copy input vector from host memory to GPU buffer.
+//    cudaStatus = cudaMemcpy(source, dev_source, sizex*sizey * sizeof(double), cudaMemcpyHostToDevice);
+//    if (cudaStatus != cudaSuccess) {
+//        fprintf(stderr, "cudaMemcpy failed!");
+//        goto Error;
+//    }
+
+    // Launch a kernel on the GPU with one thread for each element.
+    sumCU<<< sizex, sizey >>>(dev_source, dev_destination, multi);
+//    sumCU<<< 1, sizex >>>    (dev_destination, dev_source );
+
+    cudaStatus = cudaDeviceSynchronize();
+
+    sumDest<<<1,sizex>>>(dev_destination, dev_destination_lev2, 500, 500 );
+
+    cudaStatus = cudaDeviceSynchronize();
+
+    sumDest<<<1,1>>>(dev_destination_lev2, dev_value, 500, 1 );
+
+
+//    sumCU<<< (sizex/sizey), sizex >>>(dev_destination, dev_);
+//    mulCU<<< sizex, sizey >>>(dev_source, dev_destination, multi);
+
+    cudaStatus = cudaDeviceSynchronize();
+
+
+    // Check for any errors launching the kernel
+    cudaStatus = cudaGetLastError();
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "addKernel launch failed: %s\n", cudaGetErrorString(cudaStatus));
+        goto Error;
+    }
+
+    // cudaDeviceSynchronize waits for the kernel to finish, and returns
+    // any errors encountered during the launch.
+    cudaStatus = cudaDeviceSynchronize();
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "cudaDeviceSynchronize returned error code %d after launching addKernel!\n", cudaStatus);
+        goto Error;
+    }
+
+    // Copy output vector from GPU buffer to host memory.
+    cudaStatus = cudaMemcpy(destination, dev_value, 1 * sizeof(double), cudaMemcpyDeviceToHost);
+    if (cudaStatus != cudaSuccess) {
+        fprintf(stderr, "cudaMemcpy failed!");
+        goto Error;
+    }
+
+Error:
+    cudaFree(dev_source);
+    cudaFree(dev_destination);
+    return cudaStatus;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+    // Copy output vector from GPU buffer to host memory.
+    //cudaStatus = cudaMemcpy(c, dev_c, size * sizeof(float), cudaMemcpyDeviceToHost);
+    //if (cudaStatus != cudaSuccess) {
+    //    fprintf(stderr, "cudaMemcpy failed!");
+    //    goto Error;
+    //}
+
+
+
+
+
+
+/*
+// Inside kernel:
+	// Block index
+	int bx = blockIdx.x;
+	int by = blockIdx.y;
+
+	// Thread index
+	int tx = threadIdx.x;
+	int ty = threadIdx.y;
+
+	// Grid dimensions
+        int gx = gridDim.x
+        int gy = gridDim.y
+
+	// Element index
+	int I = bx*BLOCK_SIZE_SQ*gy + by*BLOCK_SIZE + tx*BLOCK_SIZE*gy + ty;
+
+//Example use:
+
+// Ignore first row and first and last columns
+
+        if( (by == 0 && ty == 0) || (k == 0 && bx == 0 && tx == 0) || (k == N && bx == gx-1 && tx == BLOCK_SIZE-1) )
+	{	}
+	else if( act_s[ty+1][tx] && act_s[ty][tx] )
+	{
+
+		float ttmp = gplus[I-1] + gminus[I];
+		tvde[I] = ttmp * detm1[I];
+		tvdu[I] = ttmp * dqxm1[I];
+		tvdv[I] = ttmp * dqym1[I];
+	}
+*/
