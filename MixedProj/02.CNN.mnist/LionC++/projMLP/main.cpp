@@ -74,10 +74,11 @@ int main() {
 
 
     tens** XT = new tens*[len];
-    double**  Y = new double*[len];
+    double** Y = new double*[len];
     load_images_asTensor( XT, "../../../01.MPL/data/train-images-idx3-ubyte", len, height, width, channel ); // int N, int H, int W, int C )
     //load_images( X,  "../../../01.MPL/data/train-images-idx3-ubyte", len, 28, 28);
-    load_labels( Y,  "../../../01.MPL/data/train-labels-idx1-ubyte", len, class_num);
+     load_labels( Y,  "../../../01.MPL/data/train-labels-idx1-ubyte", len, class_num);
+
 
     tens* t=XT[0];
     t->myPrint();

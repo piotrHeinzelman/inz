@@ -10,17 +10,16 @@
 //double* data;
 //  data = new double[H*W*C];
 
-int tens::getH(){ return this->H; }
-int tens::getW(){ return this->W; }
-int tens::getC(){ return this->C; }
+int tens::getH(){ return this->H; };
+int tens::getW(){ return this->W; };
+int tens::getC(){ return this->C; };
 
 double tens::getPoint( int h, int w, int c) {
     return data[ h*C*W + w*C +c ];
 };
 
 
-
-void tens::setPoint( int h, int w, int c, double value ) {
+void tens::setPoint(int h, int w, int c, double value) {
     data[ h*C*W + w*C +c ]=value;
 };
 
@@ -28,7 +27,12 @@ double* tens::getRows( int h, int w_start, int w_end ) {
     return data+( h*W + w_start);
 };
 
-void tens::setRows( int h, int w_start, int w_end, double*ary ){};
+void tens::setRows( int h, int w_start, int w_end, double*ary ) {
+
+};
+
+void tens::loadFrom(double *buff) {
+};
 
 
 void tens::myPrint() {
@@ -42,4 +46,4 @@ void tens::myPrint() {
             std::cout<<" | "<<std::endl;
         }
     }
-}
+};

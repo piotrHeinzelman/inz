@@ -7,7 +7,7 @@
 #include <vector>
 #include<cmath>
 
-#include "tens.h"
+#include "tens.cpp"
 
 // #include <cuda_runtime.h>
 // #include <cudnn.h>
@@ -44,13 +44,14 @@ void load_images_asTensor( tens** tensors, const std::string& filename, int N, i
 
 
     for (int n=0;n<N;n++){
-        tensors[n] = new tens(H,W,C);
+        tens* t = new tens(H,W,C);
+        tensors[n]=t;
         for (int h=0;h<H;h++){
             for (int w=0;w<W;w++){
                 for ( int c=0;c<C;c++) {
                     int i= h*CW + w*C + c;
                     double val =  ((unsigned char)buff[i + n*HCW])/256.0;
-                    tensors[n]->setPoint( h, w, c, val);
+                    t->setPoint( h, w, c, val);
                 }
             }
         }
@@ -87,7 +88,7 @@ void load_labels( double** out, const std::string& filename, int num_images, int
     file.read( reinterpret_cast<char*>(buff), 8);
     file.read( reinterpret_cast<char*>(buff), num_images );
     for (int im=0;im<num_images;im++){
-       //out[im]=new double[class_num];
+       out[im]=new double[class_num];
        for (int c=0;c<class_num;c++){
             out[im][c]=0.0;
        }

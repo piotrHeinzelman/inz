@@ -17,16 +17,17 @@ public:
     , W{W}
     , C{C} {
         data = new double[H*W*C];
-    }
+    };
 
     ~tens() {
         delete data;
-    }
+    };
 
 
     int getH(); int getW(); int getC(); void myPrint();
     double getPoint(int h, int w, int c);
-    void   setPoint(int h, int w, int c, double value);
+
+    void setPoint(int h, int w, int c, double value);
     double* getRows(int h, int w_start, int w_end );
     void    setRows(int h, int w_start, int w_end, double* ary );
     void   loadFrom(double*buff);
