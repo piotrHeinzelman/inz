@@ -99,23 +99,24 @@ int main() {
     load_labels( Y,  "../../../01.MPL/data/train-labels-idx1-ubyte", len, class_num);
 
 
-    int H=3, W=2, C=1;
-    double* tmpX = new double[H*W*C]{1,2,3, 4,5,6};
+    int H=3, W=3, C=2;
+    double* tmpX = new double[H*W*C]{1,1, 2,2, 3,3, 4,4, 5,5, 6,6,  7,7, 8,8, 9,9};
+    //printTensor(tmpX,H,W,C);
 
     NNet * netTmp = new NNet(layer_num);
     //   out size    inp size
-    netTmp->addL(0, CNN_LAYER, H*W*1, H*W*C );// ( int ind, int typ,  int n,  int m)
-    double* tempZ = new double[H*W*1];
+    netTmp->addL(0, CNN_LAYER, H*W*C, H*W*C );// ( int ind, int typ,  int n,  int m)
+    double* tempZ = new double[H*W*C];
 
-    netTmp->setupCNN(0, 1, 1, W, H, C); // ( int layerIndex, int filterSize, int channelOut, int tensorW, int tensorH, int tensorC)
+    netTmp->setupCNN(0, 3, C, W, H, C); // ( int layerIndex, int filterSize, int channelOut, int tensorW, int tensorH, int tensorC)
     //net->addL(0, PERCEPTRON_SIGMOID, 64, 28*28 );
 
-    netTmp->addL(1, CNN_LAYER, H*W*1, H*W*C );// ( int ind, int typ,  int n,  int m)
-    netTmp->setupCNN(1, 1, 1, W, H, 1);
+    netTmp->addL(1, CNN_LAYER, H*W*C, H*W*C );// ( int ind, int typ,  int n,  int m)
+    netTmp->setupCNN(1, 3, C, W, H, C);
 
     netTmp->Forward( tempZ , tmpX );
 
-    printTensor(tempZ,H,W,1); //( double* X, int H, int W, int C)
+    //printTensor(tempZ,H,W,C); //( double* X, int H, int W, int C)
 
     return 0;
 
