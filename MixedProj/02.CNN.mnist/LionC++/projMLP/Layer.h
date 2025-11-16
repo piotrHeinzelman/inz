@@ -253,43 +253,34 @@ class Layer {
     void CNNForward( double Z[] , const double X[] ) {
         for (int c=0;c<channelOut;c++) {
             int offset=c*tensorH*tensorW;
-            CNNForwardOneChannel( Z+offset , X,  Filter[c] );
+            CNN( Z+offset, X, Filter[c], filterSize, tensorH, tensorW, tensorC, padding, expandedX );
         }
     }
 
-    void CNNForwardOneChannel(double Z[] , const double X[], double* F ) {
-        extendAry( expandedX, X );
-        //printTensor(expandedX, 5,5,2  );//double* X, int H, int W, int C
-        int tWF1 = tensorW+filterSize-1;
-        int yStep=(tWF1*tensorC);
-        int xStep=tensorC;
-        for (int y=0;y<0+tensorH;y++) {
-            for (int x=0;x< 0+tensorW ;x++) {
 
+
+
+
+
+    void CNN ( double* Z, const double* X, double* F, int filterSize, int H, int W, int C, int padding, double* expandX  ) {
+        extendAry( expandX, X, filterSize,  H, W, C, padding  );
+        int tWF1 = W+filterSize-1;
+        int yStep=(tWF1*C);
+        int xStep=C;
+        for (int y=0;y<0+H;y++) {
+            for (int x=0;x< 0+W ;x++) {
                 double val=0;
                 for (int _y=0;_y<filterSize;_y++) {
-                        for (int _xc=0;_xc<filterSize*tensorC;_xc++) {
-                            // std::cout<<"X:"<< expandedX[ y*yStep + x*xStep + _y*yStep +_xc] << std::endl;
-                            val +=  expandedX[ y*yStep + x*xStep + _y*yStep +_xc ]* F[ _y*filterSize*tensorC + _xc];
-                            // + pozostale wartosci z kadratu
-                            // std::cout<<"F: ["<< _y*filterSize*tensorC+ _xc<<"]="<< F[ _y*filterSize*tensorC+ _xc]<<  std::endl;
-                            // std::cout<<"X: ["<< (_y+y)*tensorW*tensorC+ ( x*tensorC + _xc )<<"]="<< extendAry[ (_y+y)*tensorW*tensorC+ ( x*tensorC + _xc )]<<  std::endl;
-                        }
+                    for (int _xc=0;_xc<filterSize*C;_xc++) {
+                        val +=  expandX[ y*yStep + x*xStep + _y*yStep +_xc ]* F[ _y*filterSize*C + _xc];
+                    }
                 }
-                //std::cout<<"y:"<< y <<", x:" << x <<", X[x,y]:"<< val<<std::endl;
-                //std::cout<<"SaveValue:["<<x<<","<<y<<"]: "<< val << std::endl;
-                Z[ y*tensorW + x]=val;
+                Z[ y*W + x]=val;
             }
         }
-        //delete expandedX;
-        //printTensor(Z, tensorH,tensorW, tensorC  );
-        //std::cout<<"*** END OF CONVOUTIONS ***"<<std::endl;
+
     }
 
-
-   void CNN () {
-        
-    }
 
 
     void CNNBackward( double eOut[], const double eIn[] ){
@@ -297,17 +288,18 @@ class Layer {
     }
 
 
-    void extendAry( double* outX , const double* X ){
-        int Hpp=( tensorH+filterSize-1 );
-        int Wpp=( tensorW+filterSize-1 );
-        for (int i=0;i<Hpp * Wpp * tensorC;i++){ outX[i]=0.0; }
 
-        int startOffset=(tensorW + 2*padding + 1 )*padding*tensorC;
-        int heightOffset= (2*padding)*tensorC;
+    void extendAry( double* outX , const double* X, int filterSize, int H, int W, int C, int padding  ){
+        int Hpp=( H+filterSize-1 );
+        int Wpp=( W+filterSize-1 );
+        for (int i=0;i<Hpp * Wpp * C;i++){ outX[i]=0.0; }
 
-        for (int i=0;i<tensorH;i++) {
-            for (int j=0;j<tensorC*tensorW;j++) {
-                outX[startOffset + i* heightOffset + i*tensorW*tensorC+j] = X[i*tensorW*tensorC+j];
+        int startOffset=(W + 2*padding + 1 )*padding*C;
+        int heightOffset= (2*padding)*C;
+
+        for (int i=0;i<H;i++) {
+            for (int j=0;j<C*W;j++) {
+                outX[startOffset + i* heightOffset + i*W*C+j] = X[i*W*C+j];
             }
         }
     }
