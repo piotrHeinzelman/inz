@@ -1,3 +1,3 @@
 echo 'g++ main.cpp -o CNN'
-nvcc main.cpp  -lcuda -lcublas -lcudnn -o CNN
+nvcc main.cpp  -lcuda -lcublas -lcudnn -o MLP
 ./CNN

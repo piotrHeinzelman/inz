@@ -87,8 +87,8 @@ public:
 
 
 
-    void setupCNN( int layerIndex, int filterSize, int padding, int tensorW, int tensorH, int tensorC, int channelOut ) {
-        return layers[layerIndex]->setupCNN( filterSize,  padding,  tensorW,  tensorH,  tensorC, channelOut);
+    void setupCNN( int layerIndex, int filterSize, int channelOut, int tensorW, int tensorH, int tensorC) {
+        return layers[layerIndex]->setupCNN( filterSize,  channelOut, tensorW,  tensorH,  tensorC );
     }
 
     Layer* getLayer(int index) {

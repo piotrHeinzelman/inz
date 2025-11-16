@@ -33,9 +33,9 @@ class Layer {
         int padding=0;
         int filterSize=0;
         int channelOut=0;
-        int delta=0;
 
        double** Filter;
+       double* expandedX;
 
    // CNN input = C*W*H
    //    filter = F;
@@ -207,9 +207,8 @@ class Layer {
     }
 
 
-    int getN() {
-        return n;
-    }
+    int getN() { return n; }
+    double* getFilter(int i){ return Filter[i];}
 
 
     void FlattenForward( double Z[] , const double X[] ) { // int n_ out,  int m_ in )
@@ -223,21 +222,21 @@ class Layer {
 
 // CNN !!!
 
-    void setupCNN( int filterSize, int padding, int tensorW, int tensorH, int tensorC, int channelOut ) {
+    void setupCNN( int filterSize, int channelOut, int tensorW, int tensorH, int tensorC ) {
         this->tensorC=tensorC;
         this->tensorW=tensorW;
         this->tensorH=tensorH;
-        this->padding=padding;
+        this->padding=(filterSize-1)/2;
         this->filterSize=filterSize;
         this->channelOut=channelOut;
 
-        this->delta= padding*2 - (filterSize-1)/2;
-        this->m=tensorC*tensorH*tensorW;
-        this->n=channelOut*(tensorH+delta)*(tensorW+delta);
+        this->m=tensorC*tensorH*tensorW;    // in
+        this->n=channelOut*tensorH*tensorW; // out
         this->myY = new double [n];
+        this->expandedX=new double[(tensorW+filterSize-1)*(tensorH+filterSize-1)*tensorC];
 
         std::cout<<"inputSize= "<<m<< std::endl;
-        std::cout<<"outputSize="<<n<<" = ("<<  tensorH << " * " << tensorW << " * "<< tensorC << ") " << delta <<  std::endl;
+        std::cout<<"outputSize="<<n<<" = ("<<  tensorH << " * " << tensorW << " * "<< tensorC << ") "  <<  std::endl;
 
 
         srand(time(0));
@@ -246,48 +245,34 @@ class Layer {
         for (int i=0;i<channelOut;i++) {
             Filter[i] = new double[HWC];
             for (int j=0;j<HWC;j++){
-                Filter[i][j] = (-1.0+0.01*( rand()%200 ));
+                Filter[i][j] = 1;// (-1.0+0.01*( rand()%200 ));
             }
         }
     }
 
     void CNNForward( double Z[] , const double X[] ) {
         for (int c=0;c<channelOut;c++) {
-            int offset=c*(tensorH+delta)*(tensorW+delta)*tensorC;
+            int offset=c*tensorH*tensorW;
             CNNForwardOneChannel( Z+offset , X,  Filter[c] );
         }
     }
 
     void CNNForwardOneChannel(double Z[] , const double X[], double* F ) {
-        int x0 = (filterSize-1)/2;
-        int y0 = x0;
+        extendAry( expandedX, X );
+        int tWF1 = tensorW-filterSize+1;
+        for (int y=0;y<tensorH-filterSize+1;y++) {
+            for (int x=0;x< tWF1 ;x++) {
 
-        double val=0.0;
-        for (int j=-x0*tensorC ; j<=x0*tensorC; j++ ) {
-
-        }
-
-
-
-
-
-
-        // dodac wiecej kanalow !!
-        for (int i=0;i<(n);i++)Z[i]=0.0;
-        for (int h=0;h<(tensorH+delta);h++) {
-            for (int w=0;w<tensorW+delta;w++){
-                for (int c=0;c<tensorC;c++) {
-                    double val=0.0;
-                    int targI= h*tensorC*(tensorW+delta) +w*tensorC+c;
-
-                    //=X[]*   Filter[ (0+filterOffset)*filterSize + 0+filterOffset];
-                    Z[targI]=val;
+                double val=0;
+                for (int _y=0;_y<filterSize;_y++) {
+                        for (int _xc=0;_xc<filterSize*tensorC;_xc++) {
+                            val += 0+ X[ (_y+y)*tensorW*tensorC+ ( x*tensorC + _xc )] + ( F[ _y*filterSize*tensorC+ _xc] );
+                        }
                 }
+                Z[ y*tWF1 + x]=val;
             }
         }
-
-        //
-
+        delete expandedX;
     }
 
     void CNNBackward( double eOut[], const double eIn[] ){
@@ -295,6 +280,20 @@ class Layer {
     }
 
 
+    void extendAry( double* outX , const double* X ){
+        int Hpp=( tensorH+filterSize-1 );
+        int Wpp=( tensorW+filterSize-1 );
+        for (int i=0;i<Hpp * Wpp * tensorC;i++){ outX[i]=0.0; }
+
+        int startOffset=(tensorW + 2*padding + 1 )*padding*tensorC;
+        int heightOffset= (2*padding)*tensorC;
+
+        for (int i=0;i<tensorH;i++) {
+            for (int j=0;j<tensorC*tensorW;j++) {
+                outX[startOffset + i* heightOffset + i*tensorW*tensorC+j] = X[i*tensorW*tensorC+j];
+            }
+        }
+    }
 };
 
 #endif //INZ_LAYER_H

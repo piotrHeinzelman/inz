@@ -67,7 +67,7 @@ int main() {
    int height=28;
 
    int const class_num=10;
-   int layer_num=3;
+   int layer_num=2;
    const long epochs = 1; //500
 
 
@@ -99,17 +99,23 @@ int main() {
     load_labels( Y,  "../../../01.MPL/data/train-labels-idx1-ubyte", len, class_num);
 
 
-    int H=3, W=2, C=3;
-    double* tmpX = new double[H*W*C]{1,2,3, 4,5,6, 7,8,9, 1,2,3, 4,5,6, 7,8,9};
+    int H=3, W=2, C=1;
+    double* tmpX = new double[H*W*C]{1,2,3, 4,5,6};
 
-    printTensor(tmpX,H,W,C); //( double* X, int H, int W, int C)
-    tmpX = extendAry(tmpX, 1, H, W, C); //( double* X, int padding, int tensorH, int tensorW, int tensorC )
+    NNet * netTmp = new NNet(layer_num);
+    //   out size    inp size
+    netTmp->addL(0, CNN_LAYER, H*W*1, H*W*C );// ( int ind, int typ,  int n,  int m)
+    double* tempZ = new double[H*W*1];
 
-    std::cout<<std::endl;
-    std::cout<<std::endl;
-    std::cout<<std::endl;
+    netTmp->setupCNN(0, 1, 1, W, H, C); // ( int layerIndex, int filterSize, int channelOut, int tensorW, int tensorH, int tensorC)
+    //net->addL(0, PERCEPTRON_SIGMOID, 64, 28*28 );
 
-    printTensor( tmpX,H+2,W+2,C);
+    netTmp->addL(1, CNN_LAYER, H*W*1, H*W*C );// ( int ind, int typ,  int n,  int m)
+    netTmp->setupCNN(1, 1, 1, W, H, 1);
+
+    netTmp->Forward( tempZ , tmpX );
+
+    printTensor(tempZ,H,W,1); //( double* X, int H, int W, int C)
 
     return 0;
 
@@ -119,7 +125,7 @@ int main() {
 //     printVec10(Y[0]);
    NNet * net = new NNet(layer_num);
                           //   out size    inp size
-   net->addL(0, CNN_LAYER, (28-2)*(28-2)*2, 28*28*1 ); net->setupCNN(0, 5, 0, 28, 28, 1, 2); //( int layerIndex, int filterSize, int padding, int tensorW, int tensorH, int tensorC )
+   net->addL(0, CNN_LAYER, (28-2)*(28-2)*2, 28*28*1 ); net->setupCNN(0, 5, 2, 28, 28, 1); //( int layerIndex, int filterSize, int channelOut, int tensorW, int tensorH, int tensorC)
    //net->addL(0, PERCEPTRON_SIGMOID, 64, 28*28 );
    net->addL(1, PERCEPTRON_SIGMOID, 64, 1352 );
    net->addL(2, PERCEPTRON_SOFTMAX_MULTICLASS, 10, 64 ); // PERCEPTRON_SOFTMAX_MULTICLASS

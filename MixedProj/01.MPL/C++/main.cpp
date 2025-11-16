@@ -36,7 +36,7 @@ int main() {
    int const class_num=10;
    int layer_num=3;
    long const len = percent*600;
-   const long epochs = 500;
+   const long epochs = 5;//00; //00;
    const int PERCEPTRON_SIGMOID=1;
    const int PERCEPTRON_SOFTMAX_MULTICLASS=3;
    double* S_Z = new double[ class_num ];
@@ -57,8 +57,8 @@ int main() {
  //  load_images( X,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", len, 28, 28);
  //  load_labels( Y,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", len, class_num);
 
-    load_images( X,  "../../../01.MPL/data/train-images-idx3-ubyte", len, 28, 28);
-    load_labels( Y,  "../../../01.MPL/data/train-labels-idx1-ubyte", len, class_num);
+    load_images( X,  "../../01.MPL/data/train-images-idx3-ubyte", len, 28, 28);
+    load_labels( Y,  "../../01.MPL/data/train-labels-idx1-ubyte", len, class_num);
 
     // obraz 2:
     // printVec100(X[0]);
@@ -80,25 +80,26 @@ int main() {
        double loss=0.0;
        for (int i=0;i<len;i++) {
            net->Forward(Z[i], X[i]);
-           loss += net->crossEntropyMulticlassError( Z[i]);
+//           loss += net->crossEntropyMulticlassError( Z[i]);
            net->vectorSsubZ(S_Z, Y[i], Z[i]);
            //printVec10(S_Z);
            net->Backward(S_Z);
-       }
+        }
+      }
+    clock_t endTrain = clock();
 
 
-       if (!saveTime){
+//       if (!saveTime || true ){
        double acc=0.0;
            startAccuracy = clock();
             acc= net->accuracy( X,  Y, len, class_num);
            endAccuracy = clock();
-       std::cout<<"ACC: " << acc << ", LOSS: "<<loss<<std::endl;
-       }
-   }
+       std::cout<<"ACC: " << acc <<std::endl;
+//       }
+ //  }
 
 
 
-    clock_t endTrain = clock();
     std::cout << "#  train time: " << (float)( endTrain - startTrain ) / CLOCKS_PER_SEC << " [sek.]" << std::endl;
     if (! saveTime ) { std::cout << "#  accuracy time: " << (float)( endAccuracy - startAccuracy ) / CLOCKS_PER_SEC << " [sek.]" << std::endl; }
 
