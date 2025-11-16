@@ -233,7 +233,8 @@ class Layer {
 
         this->delta= padding*2 - (filterSize-1)/2;
         this->m=tensorC*tensorH*tensorW;
-        this->n=channelOut*tensorC*(tensorH+delta)*(tensorW+delta);
+        this->n=channelOut*(tensorH+delta)*(tensorW+delta);
+        this->myY = new double [n];
 
         std::cout<<"inputSize= "<<m<< std::endl;
         std::cout<<"outputSize="<<n<<" = ("<<  tensorH << " * " << tensorW << " * "<< tensorC << ") " << delta <<  std::endl;
@@ -248,8 +249,6 @@ class Layer {
                 Filter[i][j] = (-1.0+0.01*( rand()%200 ));
             }
         }
-
-
     }
 
     void CNNForward( double Z[] , const double X[] ) {
@@ -294,13 +293,6 @@ class Layer {
     void CNNBackward( double eOut[], const double eIn[] ){
 
     }
-
-
-
-
-
-
-
 
 
 };

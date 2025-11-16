@@ -32,6 +32,8 @@ public:
 
         layers[ind] = new Layer(typ, n, m); // ( type, n, m )
         interArray[ind] = new double[ n ];
+        //std::cout <<"Z["<<ind<<"] size ="<<n<<std::endl;
+        //std::cout <<"dn: "<<m<<std::endl;
     }
 
     void Backward(const double eIn[]) {
@@ -85,10 +87,13 @@ public:
 
 
 
-    void setupCNN( int layerIndex, int filterSize, int padding, int tensorW, int tensorH, int tensorC ) {
-        return layers[layerIndex]->setupCNN( filterSize,  padding,  tensorW,  tensorH,  tensorC);
+    void setupCNN( int layerIndex, int filterSize, int padding, int tensorW, int tensorH, int tensorC, int channelOut ) {
+        return layers[layerIndex]->setupCNN( filterSize,  padding,  tensorW,  tensorH,  tensorC, channelOut);
     }
 
+    Layer* getLayer(int index) {
+        return layers[index];
+    }
 
 
 

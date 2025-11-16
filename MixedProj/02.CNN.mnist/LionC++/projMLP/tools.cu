@@ -107,3 +107,36 @@ void printVec10( double ary[] ) {
     std::cout<<std::endl<<"one-hot: ";
     for (int i=0;i<10;i++) { std::cout<<" ["<<i<<"] "<<ary[i]; }
 }
+
+
+
+double* extendAry( double* X, int padding, int tensorH, int tensorW, int tensorC ){
+    int Hpp=( tensorH+padding+padding );
+    int Wpp=( tensorW+padding+padding );
+    double* outX = new double [ Hpp * Wpp * tensorC ];
+    for (int i=0;i<Hpp * Wpp * tensorC;i++){ outX[i]=0.0; }
+
+    int startOffset=(tensorW + 2*padding + 1 )*padding*tensorC;
+    int heightOffset= (2*padding)*tensorC;
+
+    for (int i=0;i<tensorH;i++) {
+        for (int j=0;j<tensorC*tensorW;j++) {
+            outX[startOffset + i* heightOffset + i*tensorW*tensorC+j] = X[i*tensorW*tensorC+j];
+        }
+    }
+    delete X;
+    return outX;
+}
+
+void printTensor( double* X, int H, int W, int C) {
+    for ( int h=0;h<H;h++) {
+        std::cout << std::endl << "** h: " << h <<" **"<< std::endl;
+        for (int w=0;w<W;w++) {
+            std::cout << "| ";
+            for (int c=0;c<C;c++) {
+                std::cout << X[ h*W*C + w*C + c] << " ";
+            }
+            std::cout << " |" << std::endl;
+        }
+    }
+}

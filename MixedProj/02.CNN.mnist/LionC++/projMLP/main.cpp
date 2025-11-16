@@ -99,14 +99,29 @@ int main() {
     load_labels( Y,  "../../../01.MPL/data/train-labels-idx1-ubyte", len, class_num);
 
 
+    int H=3, W=2, C=3;
+    double* tmpX = new double[H*W*C]{1,2,3, 4,5,6, 7,8,9, 1,2,3, 4,5,6, 7,8,9};
+
+    printTensor(tmpX,H,W,C); //( double* X, int H, int W, int C)
+    tmpX = extendAry(tmpX, 1, H, W, C); //( double* X, int padding, int tensorH, int tensorW, int tensorC )
+
+    std::cout<<std::endl;
+    std::cout<<std::endl;
+    std::cout<<std::endl;
+
+    printTensor( tmpX,H+2,W+2,C);
+
+    return 0;
+
+
 // obraz 2:
-//     printVec100(XT[0]);
+     printVec100(XT[0]);
 //     printVec10(Y[0]);
    NNet * net = new NNet(layer_num);
-
-   net->addL(0, CNN_LAYER, 0, 0 ); net->setupCNN(0, 5, 0, 28, 28, 1); //( int layerIndex, int filterSize, int padding, int tensorW, int tensorH, int tensorC )
+                          //   out size    inp size
+   net->addL(0, CNN_LAYER, (28-2)*(28-2)*2, 28*28*1 ); net->setupCNN(0, 5, 0, 28, 28, 1, 2); //( int layerIndex, int filterSize, int padding, int tensorW, int tensorH, int tensorC )
    //net->addL(0, PERCEPTRON_SIGMOID, 64, 28*28 );
-   net->addL(1, PERCEPTRON_SIGMOID, 64, 64 );
+   net->addL(1, PERCEPTRON_SIGMOID, 64, 1352 );
    net->addL(2, PERCEPTRON_SOFTMAX_MULTICLASS, 10, 64 ); // PERCEPTRON_SOFTMAX_MULTICLASS
 
    clock_t startAccuracy=clock();;
