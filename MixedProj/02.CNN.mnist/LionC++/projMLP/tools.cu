@@ -6,6 +6,9 @@
 #include <string.h>
 #include <vector>
 #include<cmath>
+
+#include "tens.h"
+
 // #include <cuda_runtime.h>
 // #include <cudnn.h>
 
@@ -29,7 +32,7 @@ void showImage(const double* ary, int h, int w){
 }
 
 
-void load_images_asTensor( double** out, const std::string& filename, int N, int H, int W, int C ) { // n-images num, h- height, w-width, c-channels
+void load_images_asTensor( tens** tensors, const std::string& filename, int N, int H, int W, int C ) { // n-images num, h- height, w-width, c-channels
     int HCW = H*C*W;
     int CW  = C*W;
 
@@ -41,12 +44,13 @@ void load_images_asTensor( double** out, const std::string& filename, int N, int
 
 
     for (int n=0;n<N;n++){
+        tensors[n] = new tens(H,W,C);
         for (int h=0;h<H;h++){
             for (int w=0;w<W;w++){
                 for ( int c=0;c<C;c++) {
                     int i= h*CW + w*C + c;
                     double val =  ((unsigned char)buff[i + n*HCW])/256.0;
-                    out[n][i]= val;
+                    tensors[n]->setPoint( h, w, c, val);
                 }
             }
         }

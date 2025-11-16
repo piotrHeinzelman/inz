@@ -172,7 +172,7 @@ class Layer {
 
     void Backward ( double eOut[], const double eIn[] ){
         switch (type) {
-            case 20: return CNNBackward(  eOut, eIn );
+            case 20: return CNNBackward(  eOut, eIn  );
             case 10: return FlattenBackward(  eOut, eIn );
             case 1/*PERCEPTRON_SIGMOID*/: case 3/*PERCEPTRON_SOFTMAX_MULTICLASS*/: {
                 for (int j=0;j<m;j++){ eOut[j]=0.0;}
@@ -253,7 +253,8 @@ class Layer {
     void CNNForward( double Z[] , const double X[] ) {
         for (int c=0;c<channelOut;c++) {
             int offset=c*tensorH*tensorW;
-            CNN( Z+offset, X, Filter[c], filterSize, tensorH, tensorW, tensorC, padding, expandedX );
+            extendAry( expandedX, X, filterSize,  tensorH, tensorW, tensorC, padding  );
+            CNN( Z+offset, expandedX, Filter[c], filterSize, tensorH, tensorW, tensorC );
         }
     }
 
@@ -262,8 +263,7 @@ class Layer {
 
 
 
-    void CNN ( double* Z, const double* X, double* F, int filterSize, int H, int W, int C, int padding, double* expandX  ) {
-        extendAry( expandX, X, filterSize,  H, W, C, padding  );
+    void CNN ( double* Z, const double* X, double* F, int filterSize, int H, int W, int C  ) {
         int tWF1 = W+filterSize-1;
         int yStep=(tWF1*C);
         int xStep=C;
@@ -272,7 +272,7 @@ class Layer {
                 double val=0;
                 for (int _y=0;_y<filterSize;_y++) {
                     for (int _xc=0;_xc<filterSize*C;_xc++) {
-                        val +=  expandX[ y*yStep + x*xStep + _y*yStep +_xc ]* F[ _y*filterSize*C + _xc];
+                        val +=  X[ y*yStep + x*xStep + _y*yStep +_xc ]* F[ _y*filterSize*C + _xc];
                     }
                 }
                 Z[ y*W + x]=val;
@@ -283,7 +283,34 @@ class Layer {
 
 
 
-    void CNNBackward( double eOut[], const double eIn[] ){
+    void CNNBackward( double eOut[], const double* eIn ){
+        for (int c=0;c<tensorC;c++) {
+        }
+
+/*
+        public float[][][] Backward( float[][][] dLdO ) {
+            float[][][] dOUT = new float[ channels ][xsize][xsize];
+
+            for (int c=0;c<channels;c++){
+                float [][] dOUTc = new float[ xsize ][ xsize ];
+
+                for (int f=0;f<filterForChannel;f++){
+                   float[][] OUTDeltafc = Conv.fullConv( dLdO[f], filters[ f*channels + c ].getRot180() , 1   ); // !!! ?
+                    dOUTc = Tools.aryAdd( dOUTc, OUTDeltafc );
+                    float[][] deltaW = Conv.conv( X[ c ], dLdO[f], 0  );
+                    filters[ f*channels + c ].trainW( deltaW );
+                }
+                dOUT[c] = dOUTc;
+            }
+
+            for (int f=0;f<filterForChannel;f++){
+                if (false ) biases[f].trainW( dLdO[f] );
+            }
+
+            return dOUT;*/
+
+
+
 
     }
 
@@ -303,6 +330,33 @@ class Layer {
             }
         }
     }
+
+double** getRot180(){
+        double** Rot180=new double*[ channelOut ];
+        for (int i=0;i<channelOut;i++) {
+            double** Filter=new double *[ tensorH*tensorW*channelOut ];
+            for (int j=0;j<filterSize;j++) {
+                for (int k=0;k<filterSize;k++) {
+                    for (int c=0;c<tensorC;c++) {
+                        Rot180[i][(filterSize-j-1)*filterSize*tensorC + (filterSize-k-1)*tensorC + c] = Filter[i][j*filterSize*tensorC + k*tensorC + c ];
+                    }
+
+                }
+            }
+        }
+        return Rot180;
+        }
+
+
+
+
+    double relu( double x ){
+        return x>0?x:0;
+    }
+
+
+
+
 };
 
 #endif //INZ_LAYER_H

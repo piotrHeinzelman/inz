@@ -21,8 +21,6 @@
 #include "tools.cu"
 #include "Layer.h"
 #include "NNet.h"
-#include "tens.h"
-
 
 //#include <cuda_runtime.h>
 //#include <cudnn.h>
@@ -59,28 +57,105 @@
 
 
 int main() {
+    bool saveTime=false;
+
+
    int const percent = 1; //80
    long const len = percent*600;
+   int channel=1;
+   int width=28;
+   int height=28;
+
    int const class_num=10;
    int layer_num=2;
    const long epochs = 1; //500
 
 
+   const int PERCEPTRON_SIGMOID=1;
+   const int PERCEPTRON_SOFTMAX_MULTICLASS=3;
+   const int FLATTEN_LAYER=10;
+   const int CNN_LAYER=20;
+   double* S_Z = new double[ class_num ];
+
+   //double** X = new double*[ (len) ];
+   double** XT = new double*[ (len) ];
+   double** Y = new double*[ (len) ];
+   double** Z = new double*[ (len) ];
+    for (int i=0;i<(len);i++) {
+        XT[i]=new double[width*height*channel];
+    }
+    for (int i=0;i<(len);i++) {
+        Y[i]=new double[class_num];
+    }
+    for (int i=0;i<(len);i++) {
+        Z[i]=new double[class_num];
+    }
 
  //  load_images( X,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", len, 28, 28);
  //  load_labels( Y,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", len, class_num);
 
-    int height=28, width=28, channel=1;
-
-
-    tens** XT = new tens*[len];
-    double**  Y = new double*[len];
     load_images_asTensor( XT, "../../../01.MPL/data/train-images-idx3-ubyte", len, height, width, channel ); // int N, int H, int W, int C )
     //load_images( X,  "../../../01.MPL/data/train-images-idx3-ubyte", len, 28, 28);
     load_labels( Y,  "../../../01.MPL/data/train-labels-idx1-ubyte", len, class_num);
 
-    tens* t=XT[0];
-    t->myPrint();
+
+    int H=3, W=3, C=2;
+    double* tmpX = new double[H*W*C]{1,1, 2,2, 3,3, 4,4, 5,5, 6,6,  7,7, 8,8, 9,9};
+    //printTensor(tmpX,H,W,C);
+
+    NNet * netTmp = new NNet(layer_num);
+    //   out size    inp size
+    netTmp->addL(0, CNN_LAYER, H*W*C, H*W*C );// ( int ind, int typ,  int n,  int m)
+    double* tempZ = new double[H*W*C];
+
+    netTmp->setupCNN(0, 3, C, W, H, C); // ( int layerIndex, int filterSize, int channelOut, int tensorW, int tensorH, int tensorC)
+    //net->addL(0, PERCEPTRON_SIGMOID, 64, 28*28 );
+
+    netTmp->addL(1, CNN_LAYER, H*W*C, H*W*C );// ( int ind, int typ,  int n,  int m)
+    netTmp->setupCNN(1, 3, C, W, H, C);
+
+    netTmp->Forward( tempZ , tmpX );
+
+    //printTensor(tempZ,H,W,C); //( double* X, int H, int W, int C)
+
+    return 0;
+
+
+// obraz 2:
+     printVec100(XT[0]);
+//     printVec10(Y[0]);
+   NNet * net = new NNet(layer_num);
+                          //   out size    inp size
+   net->addL(0, CNN_LAYER, (28-2)*(28-2)*2, 28*28*1 ); net->setupCNN(0, 5, 2, 28, 28, 1); //( int layerIndex, int filterSize, int channelOut, int tensorW, int tensorH, int tensorC)
+   //net->addL(0, PERCEPTRON_SIGMOID, 64, 28*28 );
+   net->addL(1, PERCEPTRON_SIGMOID, 64, 1352 );
+   net->addL(2, PERCEPTRON_SOFTMAX_MULTICLASS, 10, 64 ); // PERCEPTRON_SOFTMAX_MULTICLASS
+
+   clock_t startAccuracy=clock();;
+   clock_t endAccuracy =clock();;
+   clock_t startTrain = clock();
+
+   for (int e=0;e<epochs;e++) {
+       double loss=0.0;
+       for (int i=0;i<len;i++) {
+           net->Forward(Z[i], XT[i]);
+           loss += net->crossEntropyMulticlassError( Z[i]);
+           net->vectorSsubZ(S_Z, Y[i], Z[i]);
+           net->Backward(S_Z);
+       }
+
+
+       double acc=0.0;
+           startAccuracy = clock();
+            acc= net->accuracy( XT,  Y, len, class_num);
+           endAccuracy = clock();
+       std::cout<<"ACC: " << acc << ", LOSS: "<<loss<<std::endl;
+   }
+
+
+    clock_t endTrain = clock();
+    std::cout << "#  train time: " << (float)( endTrain - startTrain ) / CLOCKS_PER_SEC << " [sek.]" << std::endl;
+    std::cout << "#  accuracy time: " << (float)( endAccuracy - startAccuracy ) / CLOCKS_PER_SEC << " [sek.]" << std::endl;
 
     return 0;
 }
