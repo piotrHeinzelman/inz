@@ -28,6 +28,34 @@ void showImage(const double* ary, int h, int w){
    }
 }
 
+
+void load_images_asTensor( double** out, const std::string& filename, int N, int H, int W, int C ) { // n-images num, h- height, w-width, c-channels
+    int HCW = H*C*W;
+    int CW  = C*W;
+
+    char* buff = new char[ N*HCW ];
+    std::ifstream file(filename, std::ios::binary);
+    if (!file.is_open()) { throw std::runtime_error("Cannot open image file!"); } else { std::cout << "file open" << std::endl;  }
+    file.read( reinterpret_cast<char*>(buff), 16);
+    file.read( reinterpret_cast<char*>(buff), N*HCW );
+
+
+    for (int n=0;n<N;n++){
+        for (int h=0;h<H;h++){
+            for (int w=0;w<W;w++){
+                for ( int c=0;c<C;c++) {
+                    int i= h*CW + w*C + c;
+                    double val =  ((unsigned char)buff[i + n*HCW])/256.0;
+                    out[n][i]= val;
+                }
+            }
+        }
+    }
+    file.close();
+}
+
+
+
 void load_images( double** out, const std::string& filename, int num_images, int rows, int cols) {
     char* buff = new char[ num_images*rows*cols ];
     std::ifstream file(filename, std::ios::binary);

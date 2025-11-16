@@ -83,6 +83,18 @@ public:
         return ind;
     }
 
+
+
+    void setupCNN( int layerIndex, int filterSize, int padding, int tensorW, int tensorH, int tensorC ) {
+        return layers[layerIndex]->setupCNN( filterSize,  padding,  tensorW,  tensorH,  tensorC);
+    }
+
+
+
+
+
+
+
 };
 
 

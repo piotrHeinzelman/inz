@@ -28,22 +28,61 @@
 //#include <cuda.h>
 
 
+// notation NHWC = first iteration by Channel (RGB), next by width (ABC), next by high (012) lastly by image numger
+//    R       G       B
+// 0 ***   0 ***   0 ***    <-like chess
+// 1 ***   1 ***   1 ***
+// 2 ***   2 ***   2 ***
+//   abc     abc     abc
+//
+//   0   1   2   3   4   5   6   7   8   9
+//  Ra0 Ga0 Ba0 Rb0 Gb0 Bb0 Rc0 Gc0 Bc0 R...
+//
+// image i = i*HWC
+//
+// w-th row in image start At:  i*HWC + w*HC
+//
+// h-th pix in row   start At:  i*HWC + w*HC + h*C
+//
+// value of channel = R: start of pix, G: start +1, B: start +2
+//
+
+//
+//     for i=0;i<I
+//       for h=0; h<H
+//         for w=0; w<W
+//           for c=0; c<C
+
+
+
+
 int main() {
     bool saveTime=false;
-   int const percent = 5; //80
+
+
+   int const percent = 1; //80
+   long const len = percent*600;
+   int channel=1;
+   int width=28;
+   int height=28;
+
    int const class_num=10;
    int layer_num=3;
-   long const len = percent*600;
-   const long epochs = 5; //500
+   const long epochs = 1; //500
+
+
    const int PERCEPTRON_SIGMOID=1;
    const int PERCEPTRON_SOFTMAX_MULTICLASS=3;
+   const int FLATTEN_LAYER=10;
+   const int CNN_LAYER=20;
    double* S_Z = new double[ class_num ];
 
-   double** X = new double*[ (len) ];
+   //double** X = new double*[ (len) ];
+   double** XT = new double*[ (len) ];
    double** Y = new double*[ (len) ];
    double** Z = new double*[ (len) ];
     for (int i=0;i<(len);i++) {
-        X[i]=new double[28*28];
+        XT[i]=new double[width*height*channel];
     }
     for (int i=0;i<(len);i++) {
         Y[i]=new double[class_num];
@@ -55,16 +94,18 @@ int main() {
  //  load_images( X,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", len, 28, 28);
  //  load_labels( Y,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", len, class_num);
 
-    load_images( X,  "../../../01.MPL/data/train-images-idx3-ubyte", len, 28, 28);
+    load_images_asTensor( XT, "../../../01.MPL/data/train-images-idx3-ubyte", len, height, width, channel ); // int N, int H, int W, int C )
+    //load_images( X,  "../../../01.MPL/data/train-images-idx3-ubyte", len, 28, 28);
     load_labels( Y,  "../../../01.MPL/data/train-labels-idx1-ubyte", len, class_num);
 
-// obraz 2:
-//     printVec100(X[0]);
-//     printVec10(Y[0]);
 
+// obraz 2:
+//     printVec100(XT[0]);
+//     printVec10(Y[0]);
    NNet * net = new NNet(layer_num);
 
-   net->addL(0, PERCEPTRON_SIGMOID, 64, 28*28 );
+   net->addL(0, CNN_LAYER, 0, 0 ); net->setupCNN(0, 5, 0, 28, 28, 1); //( int layerIndex, int filterSize, int padding, int tensorW, int tensorH, int tensorC )
+   //net->addL(0, PERCEPTRON_SIGMOID, 64, 28*28 );
    net->addL(1, PERCEPTRON_SIGMOID, 64, 64 );
    net->addL(2, PERCEPTRON_SOFTMAX_MULTICLASS, 10, 64 ); // PERCEPTRON_SOFTMAX_MULTICLASS
 
@@ -75,29 +116,24 @@ int main() {
    for (int e=0;e<epochs;e++) {
        double loss=0.0;
        for (int i=0;i<len;i++) {
-           net->Forward(Z[i], X[i]);
+           net->Forward(Z[i], XT[i]);
            loss += net->crossEntropyMulticlassError( Z[i]);
            net->vectorSsubZ(S_Z, Y[i], Z[i]);
            net->Backward(S_Z);
        }
 
 
-       if (!saveTime){
        double acc=0.0;
            startAccuracy = clock();
-            acc= net->accuracy( X,  Y, len, class_num);
+            acc= net->accuracy( XT,  Y, len, class_num);
            endAccuracy = clock();
        std::cout<<"ACC: " << acc << ", LOSS: "<<loss<<std::endl;
-       }
    }
-
 
 
     clock_t endTrain = clock();
     std::cout << "#  train time: " << (float)( endTrain - startTrain ) / CLOCKS_PER_SEC << " [sek.]" << std::endl;
-    if (! saveTime ) {
-        std::cout << "#  accuracy time: " << (float)( endAccuracy - startAccuracy ) / CLOCKS_PER_SEC << " [sek.]" << std::endl;
-    }
+    std::cout << "#  accuracy time: " << (float)( endAccuracy - startAccuracy ) / CLOCKS_PER_SEC << " [sek.]" << std::endl;
 
     return 0;
 }

@@ -17,8 +17,8 @@ class Layer {
    // type 1=sigmoid, 3=softmaxMultiClass, 10=flatten, 20=CNN
    private:
        const int type;
-       const int n;
-       const int m;
+        int n;
+        int m;
        double** W;
        double* muX;
        double* dF;
@@ -26,6 +26,21 @@ class Layer {
        double* myY;
        float mu=0.003;
 
+
+        int tensorC=0;
+        int tensorW=0;
+        int tensorH=0;
+        int padding=0;
+        int filterSize=0;
+        int channelOut=0;
+        int delta=0;
+
+       double** Filter;
+
+   // CNN input = C*W*H
+   //    filter = F;
+   //     delta = padding*2 -(F-1)/2
+   //    output = C * (W+delta) * (H+delta)
 
    public:
     Layer(  int type_,  int n_,  int m_ )    // n - neurons num, output size , W[n][m], Y[n]
@@ -50,6 +65,9 @@ class Layer {
                     //  W[i][j]=0.01*( rand()%200 );
                 }
             }
+        }
+        if (type==20) {
+            //CNN
         }
     }
 
@@ -93,6 +111,8 @@ class Layer {
     void Forward ( double Z[] , const double X[]){
         for (int i=0;i<n;i++) { Z[i]=0.0; myY[i]=0.0;}
         switch(type){
+            case 20: return CNNForward(Z, X);
+            case 10: return FlattenForward(Z, X);
             case 1: case 3: {
                 for (int i=0;i<n;i++) {
                     for (int j=0;j<m;j++) {
@@ -152,6 +172,8 @@ class Layer {
 
     void Backward ( double eOut[], const double eIn[] ){
         switch (type) {
+            case 20: return CNNBackward(  eOut, eIn );
+            case 10: return FlattenBackward(  eOut, eIn );
             case 1/*PERCEPTRON_SIGMOID*/: case 3/*PERCEPTRON_SOFTMAX_MULTICLASS*/: {
                 for (int j=0;j<m;j++){ eOut[j]=0.0;}
                 for (int i=0;i<n;i++){
@@ -188,6 +210,99 @@ class Layer {
     int getN() {
         return n;
     }
+
+
+    void FlattenForward( double Z[] , const double X[] ) { // int n_ out,  int m_ in )
+        for (int i=0;i<n;i++){ Z[i]=X[i]; }
+    }
+
+    void FlattenBackward( double eOut[], const double eIn[] ) {
+        for (int i=0;i<n;i++){ eOut[i]=eIn[i]; }
+    }
+
+
+// CNN !!!
+
+    void setupCNN( int filterSize, int padding, int tensorW, int tensorH, int tensorC, int channelOut ) {
+        this->tensorC=tensorC;
+        this->tensorW=tensorW;
+        this->tensorH=tensorH;
+        this->padding=padding;
+        this->filterSize=filterSize;
+        this->channelOut=channelOut;
+
+        this->delta= padding*2 - (filterSize-1)/2;
+        this->m=tensorC*tensorH*tensorW;
+        this->n=channelOut*tensorC*(tensorH+delta)*(tensorW+delta);
+
+        std::cout<<"inputSize= "<<m<< std::endl;
+        std::cout<<"outputSize="<<n<<" = ("<<  tensorH << " * " << tensorW << " * "<< tensorC << ") " << delta <<  std::endl;
+
+
+        srand(time(0));
+        int HWC=tensorC*tensorH*tensorW;
+        Filter = new double*[channelOut];
+        for (int i=0;i<channelOut;i++) {
+            Filter[i] = new double[HWC];
+            for (int j=0;j<HWC;j++){
+                Filter[i][j] = (-1.0+0.01*( rand()%200 ));
+            }
+        }
+
+
+    }
+
+    void CNNForward( double Z[] , const double X[] ) {
+        for (int c=0;c<channelOut;c++) {
+            int offset=c*(tensorH+delta)*(tensorW+delta)*tensorC;
+            CNNForwardOneChannel( Z+offset , X,  Filter[c] );
+        }
+    }
+
+    void CNNForwardOneChannel(double Z[] , const double X[], double* F ) {
+        int x0 = (filterSize-1)/2;
+        int y0 = x0;
+
+        double val=0.0;
+        for (int j=-x0*tensorC ; j<=x0*tensorC; j++ ) {
+
+        }
+
+
+
+
+
+
+        // dodac wiecej kanalow !!
+        for (int i=0;i<(n);i++)Z[i]=0.0;
+        for (int h=0;h<(tensorH+delta);h++) {
+            for (int w=0;w<tensorW+delta;w++){
+                for (int c=0;c<tensorC;c++) {
+                    double val=0.0;
+                    int targI= h*tensorC*(tensorW+delta) +w*tensorC+c;
+
+                    //=X[]*   Filter[ (0+filterOffset)*filterSize + 0+filterOffset];
+                    Z[targI]=val;
+                }
+            }
+        }
+
+        //
+
+    }
+
+    void CNNBackward( double eOut[], const double eIn[] ){
+
+    }
+
+
+
+
+
+
+
+
+
 };
 
 #endif //INZ_LAYER_H
