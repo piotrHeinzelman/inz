@@ -28,9 +28,9 @@ int main() {
    int const percent = 1;
    int const class_num=10;
    long const len = percent*100;
-   const long CYCLES = 500;
+   const long CYCLES = 5;
 
-   if ( false ) { // load images from file
+   if ( true ) { // load images from file
    std::cout << "#  --- C++ ---\n";
 
    double* X = new double[ len*784*6 ];
@@ -47,7 +47,7 @@ int main() {
    }
 
 
-   if (false){ // *************
+   if (true){ // *************
 
     cudaSetDevice(0); // use GPU0
     int device;
