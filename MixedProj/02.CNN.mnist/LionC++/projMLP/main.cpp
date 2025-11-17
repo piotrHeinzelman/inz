@@ -79,9 +79,15 @@ int main() {
     //load_images( X,  "../../../01.MPL/data/train-images-idx3-ubyte", len, 28, 28);
      load_labels( Y,  "../../../01.MPL/data/train-labels-idx1-ubyte", len, class_num);
 
+    double* row=new double[9]{1,2,3,4,5,6,7,8,9};
+    tens* t1=new tens(3,1,1); t1->setRows(2,0,0,row);
+    tens* t2=new tens(1,3,1); t2->setRows(0,0,0,row);
+    tens* t3 = t1->add(t2);
+    //      t1->setRows( 0, 0, 1, row ); //int h, int w_start, int w_end, double*ary
+          t3->myPrint();
 
-    tens* t=XT[0];
-    t->myPrint();
+    //tens* t=XT[0];
+    //      t->myPrint();
 
     return 0;
 }

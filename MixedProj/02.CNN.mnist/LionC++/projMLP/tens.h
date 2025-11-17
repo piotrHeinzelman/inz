@@ -17,6 +17,7 @@ public:
     , W{W}
     , C{C} {
         data = new double[H*W*C];
+        for (int i=0;i<H*W*C;i++) data[i]=0;
     };
 
     ~tens() {
@@ -30,8 +31,9 @@ public:
     void setPoint(int h, int w, int c, double value);
     double* getRows(int h, int w_start, int w_end );
     void    setRows(int h, int w_start, int w_end, double* ary );
-    void   loadFrom(double*buff);
-
+    // Without operator overloading:
+    tens* add( tens* const  y);
+    tens* mul( tens* x,  double mul);
 
 };
 
