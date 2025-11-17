@@ -67,7 +67,7 @@ public:
     double getSum( const double Y[], int len );
     void expAryminusMax(  double Y[], double max ,int len );
     void mullAryByValue(  double Y[], double value ,int len );
-
+    void showShape();
     //tens* WXSigmoid( tens* result, tens* dF, tens* X);
 
 

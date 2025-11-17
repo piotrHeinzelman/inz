@@ -194,3 +194,7 @@ void tens::mullAryByValue(  double Y[], double value ,int len ) {
         Y[i]=Y[i]/value;
     }
 };
+
+void tens::showShape() {
+    std::cout<<"N: "<<N<<", H: "<<H<<", W: "<<W<<", C:"<<C<<std::endl;
+}
