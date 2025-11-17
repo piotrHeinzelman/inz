@@ -61,6 +61,13 @@ public:
     void to3D(int n, int h, int w, int c);
 
     void WX( tens* result,  tens* dF,  tens* X ); //N11
+    void WXSoftmax( tens* result, tens* X ); //N11
+
+    double getMax( const double Y[], int len );
+    double getSum( const double Y[], int len );
+    void expAryminusMax(  double Y[], double max ,int len );
+    void mullAryByValue(  double Y[], double value ,int len );
+
     //tens* WXSigmoid( tens* result, tens* dF, tens* X);
 
 

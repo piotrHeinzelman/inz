@@ -59,7 +59,7 @@
 
 
 int main() {
-   int const percent = 1; //80
+   int const percent = 80; //80
    long  len = percent*600;
    int const class_num=10;
    int layer_num=2;
@@ -72,7 +72,7 @@ int main() {
     //  load_images( X,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", len, 28, 28);
     //  load_labels( Y,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", len, class_num);
 
-    int height=28, width=28, channel=1;
+    int height=28*28, width=1, channel=1;
     len=3;
 
     tens* XT = load_images_asTensor( "../../../01.MPL/data/train-images-idx3-ubyte", len, height, width, channel ); // int N, int H, int W, int C )
@@ -83,12 +83,14 @@ int main() {
     weight->rand(-1,1);
     //weight->myPrint();
 
-    tens* ZT=nullptr;
-    tens* dF=nullptr;
-    weight->WX( ZT, dF, XT );
+    // X*W, Layer sigmoid
+    tens* ZT=new tens(len, 2, 1,1 );
+    tens* dF=new tens(len, 2, 1, 1);
+    //weight->WX( ZT, dF, XT );
+    weight->WXSoftmax( ZT, XT );
 
     ZT->myPrint();
-    //dF->myPrint();
+    dF->myPrint();
     //XT->myPrint();
 
 

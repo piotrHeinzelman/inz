@@ -105,24 +105,53 @@ void tens::WX( tens* result, tens* dF, tens* X ) { //H, W, 1   W[H,W,1]  X[H,1,1
     double y=0;
     double z=0;
     //std::cout<<Xn<<std::endl;
-    if (result==nullptr) { result = new tens(Xn, W, 1,1); }// W -> W[ij]*F[i]=Y[j] W[hw]*F[h]=Z[h]
-    if (dF==nullptr)     {    dF = new tens(Xn, W, 1,1); } //   [n*HWC + h*WC + w*C + c]
+    //if (result==nullptr) { result = new tens(Xn, W, 1,1); }// W -> W[ij]*F[i]=Y[j] W[hw]*F[h]=Z[h]
+    //if (dF==nullptr)     {     dF = new tens(Xn, W, 1,1); } //   [n*HWC + h*WC + w*C + c]
 
     for (int n=0;n<Xn;n++) {
-
         for (int w=0;w<W;w++) {
             y=0;
             for (int h=0; h<H; h++) {
-                y += data[ n*HWC+ h*W + w ] * X->data[ n*Xh*WC + h];
+                y += data[ w*Xh + h ] * X->data[ n*Xh + h];
             }
             z  = 1.0/(1.0+std::exp(-y));
-            result->data[ n*WC + w]= z;        // <- W IS OK !!! (shape change)
-                dF->data[ n*WC + w]= z*(1-z); // F'
+            result->data[ n*WC + w] = z;        // <- W IS OK !!! (shape change)
+                dF->data[ n*WC + w] = z*(1-z); // F'
         }
-
-
     }
 };
+
+
+
+void tens::WXSoftmax( tens* result, /* !! dF=1 !! */ tens* X ) { //H, W, 1   W[H,W,1]  X[H,1,1], result Y[H,1,1]
+    int Xn=X->getN();// X images number
+    int Xh=X->getH();// X size
+    double y=0;
+    double max=0;
+    double sum=0;
+    double* z=new double[W];
+    for (int n=0;n<Xn;n++) {
+        for (int w=0;w<W;w++) {
+            y=0;
+            for (int h=0; h<H; h++) {
+                y += data[ w*Xh + h ] * X->data[ n*Xh + h];
+            }
+            z[w] = y; //1.0/(1.0+std::exp(-y));
+        }
+          double max = getMax( z, W );
+          expAryminusMax(z, max,  W );
+          double sum = getSum( z, W );
+          mullAryByValue( z, sum ,W );
+
+        for (int w=0;w<W;w++) {
+            result->data[ n*WC + w] = z[w];
+        }
+    }
+
+
+
+};
+
 /*
 
 tens* tens::WXSigmoid( tens* result, tens* dF,  tens* X ) { // H, W, 1   W[H,W,1]  X[H,1,1], result Y[H,1,1]
@@ -137,3 +166,31 @@ tens* tens::WXSigmoid( tens* result, tens* dF,  tens* X ) { // H, W, 1   W[H,W,1
     }
 };
 */
+double tens::getMax( const double Y[], int len ) {
+    double max=Y[0];
+    for (int i=1;i<len;i++) {
+        if (Y[i]>max) { max=Y[i]; }
+    }
+    return max;
+};
+
+
+double tens::getSum( const double Y[], int len ) {
+    double sum=0.0;
+    for (int i=0;i<len;i++) {
+        sum+=Y[i];
+    }
+    return sum;
+};
+
+void tens::expAryminusMax(  double Y[], double max ,int len ) {
+    for (int i=0;i<len;i++) {
+        Y[i]=std::exp(Y[i]-max);
+    }
+};
+
+void tens::mullAryByValue(  double Y[], double value ,int len ) {
+    for (int i=0;i<len;i++) {
+        Y[i]=Y[i]/value;
+    }
+};
