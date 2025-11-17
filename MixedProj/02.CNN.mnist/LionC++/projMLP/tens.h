@@ -8,16 +8,34 @@
 
 class tens {
 private:
-    int H, W, C;
-    double* data;
+    int N=0, H=0, W=0, C=0, NHWC=0, HWC=0, WC=0;
+
 
 public:
-    tens(int H,int W,int C)
-    : H{H}
+    double* data;
+
+    tens(int N, int H,int W,int C)
+    : N{N}
+    , H{H}
     , W{W}
     , C{C} {
-        data = new double[H*W*C];
-        for (int i=0;i<H*W*C;i++) data[i]=0;
+         NHWC=N*H*W*C;
+         HWC=H*W*C;
+         WC=W*C;
+        data = new double[ NHWC ];
+        for (int i=0; i<NHWC; i++) data[i]=0;
+    };
+
+    tens(int N, int H,int W,int C, double* ary)
+    : N{N}
+    , H{H}
+    , W{W}
+    , C{C} {
+        NHWC=N*H*W*C;
+        HWC=H*W*C;
+        WC=W*C;
+        data = new double[ NHWC ];
+        for (int i=0; i<NHWC; i++) ary[i]=0;
     };
 
     ~tens() {
@@ -25,15 +43,27 @@ public:
     };
 
 
-    int getH(); int getW(); int getC(); void myPrint();
-    double getPoint(int h, int w, int c);
+    int getH(); int getW(); int getC(); int getN(); void myPrint();
 
-    void setPoint(int h, int w, int c, double value);
-    double* getRows(int h, int w_start, int w_end );
-    void    setRows(int h, int w_start, int w_end, double* ary );
+    double getPoint(        int h, int w, int c );
+    double getPoint( int n, int h, int w, int c );
+    void   setPoint(        int h, int w, int c, double value );
+    void   setPoint( int n, int h, int w, int c, double value );
+    void       rand( int min, int max );
+
+
+
     // Without operator overloading:
-    tens* add( tens* const  y);
-    tens* mul( tens* x,  double mul);
+    tens* addN1( tens* const  y );
+    tens* mulN1( tens* x,  double mul );
+
+    void toFlat();
+    void to3D(int n, int h, int w, int c);
+
+    void WX( tens* result,  tens* dF,  tens* X ); //N11
+    //tens* WXSigmoid( tens* result, tens* dF, tens* X);
+
+
 
 };
 

@@ -60,31 +60,56 @@
 
 int main() {
    int const percent = 1; //80
-   long const len = percent*600;
+   long  len = percent*600;
    int const class_num=10;
    int layer_num=2;
    const long epochs = 1; //500
 
 
 
- //  load_images( X,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", len, 28, 28);
- //  load_labels( Y,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", len, class_num);
+
+
+    //  load_images( X,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", len, 28, 28);
+    //  load_labels( Y,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", len, class_num);
 
     int height=28, width=28, channel=1;
+    len=3;
+
+    tens* XT = load_images_asTensor( "../../../01.MPL/data/train-images-idx3-ubyte", len, height, width, channel ); // int N, int H, int W, int C )
+    tens* YT = load_labels( "../../../01.MPL/data/train-labels-idx1-ubyte", len, class_num);
 
 
-    tens** XT = new tens*[len];
-    double** Y = new double*[len];
-    load_images_asTensor( XT, "../../../01.MPL/data/train-images-idx3-ubyte", len, height, width, channel ); // int N, int H, int W, int C )
+    tens* weight = new tens(1,(28*28),2,1); // <- H - input size, W output size (neuron number)
+    weight->rand(-1,1);
+    //weight->myPrint();
+
+    tens* ZT=nullptr;
+    tens* dF=nullptr;
+    weight->WX( ZT, dF, XT );
+
+    ZT->myPrint();
+    //dF->myPrint();
+    //XT->myPrint();
+
+
+
+
+
     //load_images( X,  "../../../01.MPL/data/train-images-idx3-ubyte", len, 28, 28);
-     load_labels( Y,  "../../../01.MPL/data/train-labels-idx1-ubyte", len, class_num);
+    //
 
-    double* row=new double[9]{1,2,3,4,5,6,7,8,9};
-    tens* t1=new tens(3,1,1); t1->setRows(2,0,0,row);
-    tens* t2=new tens(1,3,1); t2->setRows(0,0,0,row);
-    tens* t3 = t1->add(t2);
+    //double* row=new double[9]{1,2,3,4,5,6,7,8,9};
+    //tens* t1=new tens(1,9,1,1, row);
+    //t1->myPrint();
+    //tens* t2=new tens(1,3,1); t2->setRows(0,0,0,row);
+
+    //XT->to3D(1,28,28,1);
+    //XT->myPrint();
+    //YT->myPrint();
+    return 0;
+    //tens* t3 = t1->addN1(t1);
     //      t1->setRows( 0, 0, 1, row ); //int h, int w_start, int w_end, double*ary
-          t3->myPrint();
+    //      t3->myPrint();
 
     //tens* t=XT[0];
     //      t->myPrint();
