@@ -59,11 +59,11 @@
 
 
 int main() {
-   int const percent = 40; //80
+   int const percent = 80; //80
    long  len = percent*600;
    int const class_num=10;
    int layer_num=2;
-   const long epochs = 25; //500
+   const long epochs = 50; //500
 
 
 
