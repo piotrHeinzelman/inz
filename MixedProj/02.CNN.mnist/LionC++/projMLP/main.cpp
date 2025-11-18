@@ -74,8 +74,54 @@ int main() {
     int Out1=3, In2=3;
     int Out2=2;
 
+/*  in       layer     out    =    in  -->
+    X   ---> [ F ] --> Z      =    X   -->
+             [ F ] --> dF
+    Eout <-- [ B ] <-- Ein    =   Eout <--
+*/
 
 
+    tens*    W1 = new tens(1, Out1, In1 ,1); // <- H - output size, W input size (neuron number)
+    tens*    X1 = new tens(1,1,In1,1);
+    tens* Eout1 = new tens(1,1,In1,1);
+// -----
+    tens*    Z1 = new tens(1,1,Out1,1);
+    tens*   dF1 = new tens(1,1,Out1,1);
+
+    tens*    W2 = new tens(1, Out2, In2 ,1); // <- H - output size, W input size (neuron number)
+    tens*    X2 = new tens(1,1,In2,1);
+    tens* Eout2 = new tens(1,1,In2,1);
+    // -----
+    tens*    Z2 = new tens(1,1,Out2,1);
+    tens*   dF2 = new tens(1,1,Out2,1);
+
+    tens*    S2 = new tens(1,1,Out2,1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    return 0;
+/*  Example1
     tens* W1 = new tens(1, Out1, In1 ,1); // <- H - output size, W input size (neuron number)
     tens* W2 = new tens(1, Out2, In2 ,1); // <- H - output size, W input size (neuron number)
 
@@ -139,13 +185,8 @@ int main() {
 
     W1->BackWX( Eou1, dF1, Eout2,  X);
     W1->myPrint();
+    */
 
-    //S->myPrint();
-
-    //S->addN1(res2->mulN1(-1));
-    //S->mulN1(-1.0);
-    //res2->addN1(S);
-    //res2->myPrint();
      return 0;
   // *******************
 
