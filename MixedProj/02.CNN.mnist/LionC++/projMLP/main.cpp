@@ -24,6 +24,7 @@
 #include "tens.h"
 
 
+
 //#include <cuda_runtime.h>
 //#include <cudnn.h>
 //#include <cublas.h>
@@ -65,7 +66,18 @@ int main() {
    int layer_num=2;
    const long epochs = 50; //500
 
+  // *******************
 
+
+
+
+
+
+
+
+
+     return 0;
+  // *******************
 
 
 
