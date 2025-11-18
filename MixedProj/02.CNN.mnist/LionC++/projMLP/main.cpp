@@ -89,7 +89,7 @@ int main() {
     tens*   dF1 = new tens(1,1,Out1,1);
 
     tens*    W2 = new tens(1, Out2, In2 ,1); // <- H - output size, W input size (neuron number)
-    tens*    X2 = new tens(1,1,In2,1);
+    tens*    X2 = Z1 ; //new tens(1,1,In2,1);
     tens* Eout2 = new tens(1,1,In2,1);
     // -----
     tens*    Z2 = new tens(1,1,Out2,1);
@@ -97,8 +97,15 @@ int main() {
 
     tens*    S2 = new tens(1,1,Out2,1);
 
+    X1->setPoint(0,0,0,0,1); X1->setPoint(0,0,1,0,2); W1->setPoint(0,0,0,0, 1.0); W1->setPoint(0,0,1,0,-1.0); W1->setPoint(0,1,0,0, 1.0); W1->setPoint(0,1,1,0, 1.0); W1->setPoint(0,2,0,0,-1.0); W1->setPoint(0,2,1,0, 1.0); W2->setPoint(0,0,0,0, 1.0); W2->setPoint(0,0,1,0,-1.0); W2->setPoint(0,0,2,0, 1.0); W2->setPoint(0,1,0,0,-1.0); W2->setPoint(0,1,1,0, 1.0); W2->setPoint(0,1,2,0,-1.0);
 
+    W1->WX(Z1, dF1, X1);
 
+    //Z1->myPrint();
+
+    W2->WXSoftmax(Z2, X2);
+
+    Z2->myPrint();
 
 
 

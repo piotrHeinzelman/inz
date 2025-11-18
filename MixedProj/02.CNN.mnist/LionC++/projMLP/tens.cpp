@@ -91,23 +91,11 @@ void tens::myPrint() {
 };
 
 
-
-
-
-
-
-
-
-
-
-
-
 void tens::WX( tens* result, tens* dF, tens* X ) { //H, W, 1   W[H,W,1]  X[H,1,1], result Y[H,1,1]
     int Xn=X->getN();// X images number
     double y=0;
     double z=0;
     for (int n=0;n<Xn;n++) {
-
 
         for (int h=0; h<H; h++) {
             y=0;
@@ -118,8 +106,6 @@ void tens::WX( tens* result, tens* dF, tens* X ) { //H, W, 1   W[H,W,1]  X[H,1,1
             result->data[ n*HWC + h ] = z;        // <- W IS OK !!! (shape change)
                 dF->data[ n*HWC + h ] = (z*(1-z)); // F'
         }
-
-
     }
 };
 
@@ -132,6 +118,41 @@ void tens::WX( tens* result, tens* dF, tens* X ) { //H, W, 1   W[H,W,1]  X[H,1,1
 
 
 void tens::WXSoftmax( tens* result, tens* X ) {
+    int Xn=X->getN();// X images number
+    double y=0;
+    double sum=0;
+    for (int n=0;n<Xn;n++) {
+
+        sum=0;
+        for (int h=0; h<H; h++) {
+            y=0;
+            for (int wc=0;wc<WC;wc++) {
+                y += ( data[ h*WC + wc]) * ( X->data[ n*HWC + wc ]);
+            }
+            std::cout<< " y : " << y << " - " << exp(y) << std::endl;
+            result->data[ n*HWC + h ] = exp(y);
+            sum += exp(y); // save Y
+        }
+        for (int h=0; h<H; h++) { 
+            result->data[ n*HWC + h ] = result->data[ n*HWC + h ]/sum;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
     int Xn=X->getN();// X images number
     double y=0;
     double* AryZ=new double[H];
@@ -156,7 +177,7 @@ void tens::WXSoftmax( tens* result, tens* X ) {
         }
 
 
-    }
+    } */
 };
 
 
