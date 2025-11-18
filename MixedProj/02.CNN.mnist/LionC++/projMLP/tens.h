@@ -61,8 +61,8 @@ public:
     void toFlat();
     void to3D(int n, int h, int w, int c);
 
-    void WX( tens* result,  tens* dF,  tens* X ); //N11
-    void WXSoftmax( tens* result, tens* X ); //N11
+    void WX       ( tens* result, tens* dF, tens* X );
+    void WXSoftmax( tens* result, tens* X );
 
     double getMax( const double Y[], int len );
     double getSum( const double Y[], int len );
@@ -70,8 +70,8 @@ public:
     void mullAryByValue(  double Y[], double value ,int len );
     void showShape();
     void calculateGradientAtEndSoftmax(tens* S);
-    void BackWX( tens* Eout, tens* dF, tens* eIn, tens* X );
-    void BackSoftmax( tens* result, tens* eIn, tens* X );
+    void BackWX(      tens* Eout, tens* dF, tens* eIn, tens* X );
+    void BackSoftmax( tens* Eout, tens* S_Z, tens* X );
     void getAccuracy(tens* S);
 
     //tens* WXSigmoid( tens* result, tens* dF, tens* X);

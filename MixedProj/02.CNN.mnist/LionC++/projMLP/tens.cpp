@@ -129,11 +129,10 @@ void tens::WXSoftmax( tens* result, tens* X ) {
             for (int wc=0;wc<WC;wc++) {
                 y += ( data[ h*WC + wc]) * ( X->data[ n*HWC + wc ]);
             }
-            std::cout<< " y : " << y << " - " << exp(y) << std::endl;
             result->data[ n*HWC + h ] = exp(y);
             sum += exp(y); // save Y
         }
-        for (int h=0; h<H; h++) { 
+        for (int h=0; h<H; h++) {
             result->data[ n*HWC + h ] = result->data[ n*HWC + h ]/sum;
         }
     }
@@ -207,22 +206,23 @@ void tens::BackSoftmax( tens* Eout, tens* eIn, tens* X ) {
     int Xn=X->getN(); // number of images
     for (int n=0;n<Xn;n++) { // by images
 
-        for (int i=0;i<Xh;i++) { // x[Xh] = 64 (input size)
+
+
+        for (int w=0;w<W;w++) { // x[Xh] = 64 (input size)
             sum=0;
-            for (int neu=0;neu<W;neu++) { //10
+            for (int h=0;h<H;h++) { //10
                // prepare Eout
                // sum[] = W[m]   * Ein  <-- over n
                // sum[] = W[i64, 10neu] * Ein[neu10 , n]         <--over neu
-               sum += (data[i*WC + neu])*(eIn->data[ n*Xh   + i ]);
+               sum += (data[h*WC + w])*(eIn->data[ n*H + h ]);
 
 
                //update
                // W[m] = W[m] - ( X[m] * Ein )  <-- over n
                // W[m] = W[i64 , 10neu] - ( X[i64 , n] * Ein[10neo , n] )
-               data[i*WC + neu]=data[i*WC + neu] - mu*eIn->data[n*W + i]* X->data[n*H + i];
-
+               data[h*WC + w]=data[h*WC + w] + mu * eIn->data[n*H + h]* X->data[n*Xn + w];
             }
-             Eout->data[ n*H + i ]=sum;
+             Eout->data[ n*W + w ]=sum;
         }
     }
 };
@@ -275,9 +275,11 @@ void tens::showShape() {
 
 
 void tens::calculateGradientAtEndSoftmax(tens* S) { // this is Z
-    // if correct label out = Z-1
-    // else             out = Z
-     for (int i=0;i<NHWC;i++){ data[i]= + S->data[i]+ (( S->data[i]-.5)*2)*data[i]  -1*( S->data[i]) ; }
+    //   [1] - [0.54]
+    //   [0] - [0.47]
+     for (int i=0;i<NHWC;i++) {
+         data[i]= S->data[i] - data[i];
+     }
     //for (int i=0;i<NHWC;i++){ data[i]=data[i] -1*S->data[i]; }
     //for (int i=0;i<NHWC;i++){ data[i]= -.3+ S->data[i]; }
 }

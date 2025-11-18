@@ -93,20 +93,29 @@ int main() {
     tens* Eout2 = new tens(1,1,In2,1);
     // -----
     tens*    Z2 = new tens(1,1,Out2,1);
-    tens*   dF2 = new tens(1,1,Out2,1);
+    //tens*   dF2 = new tens(1,1,Out2,1);
 
     tens*    S2 = new tens(1,1,Out2,1);
 
     X1->setPoint(0,0,0,0,1); X1->setPoint(0,0,1,0,2); W1->setPoint(0,0,0,0, 1.0); W1->setPoint(0,0,1,0,-1.0); W1->setPoint(0,1,0,0, 1.0); W1->setPoint(0,1,1,0, 1.0); W1->setPoint(0,2,0,0,-1.0); W1->setPoint(0,2,1,0, 1.0); W2->setPoint(0,0,0,0, 1.0); W2->setPoint(0,0,1,0,-1.0); W2->setPoint(0,0,2,0, 1.0); W2->setPoint(0,1,0,0,-1.0); W2->setPoint(0,1,1,0, 1.0); W2->setPoint(0,1,2,0,-1.0);
+    S2->setPoint(0,0,0,0,1.0);
 
     W1->WX(Z1, dF1, X1);
 
-    //Z1->myPrint();
-
     W2->WXSoftmax(Z2, X2);
 
-    Z2->myPrint();
 
+    Z2->myPrint();
+    Z2->calculateGradientAtEndSoftmax( S2 );
+    tens* S_Z = Z2;
+
+    W2->BackSoftmax( Eout2, S_Z, X2 ); //tens* Eout, tens* dF, tens* S_Z, tens* X
+    S_Z->myPrint();
+    //dF2->myPrint();
+    W2->myPrint();
+
+    W1->BackWX(Eout1, dF1, Eout2, X1);
+    W1->myPrint();
 
 
 
