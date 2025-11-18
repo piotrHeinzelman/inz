@@ -55,8 +55,8 @@ public:
 
 
     // Without operator overloading:
-    tens* addN1( tens* const  y );
-    tens* mulN1( tens* x,  double mul );
+    void addN1( tens* const  y );
+    void mulN1( double mul );
 
     void toFlat();
     void to3D(int n, int h, int w, int c);

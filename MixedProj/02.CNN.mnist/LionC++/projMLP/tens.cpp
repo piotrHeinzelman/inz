@@ -27,12 +27,12 @@ double tens::getPoint( int n, int h, int w, int c) {
 
 
 void tens::setPoint(int h, int w, int c, double value) {
-    if ( h>=H || w>=W || c>=C || h<0 || w<0 || c<0 ) return;
+   // if ( h>=H || w>=W || c>=C || h<0 || w<0 || c<0 ) return;
     data[1*HWC + h*WC + w*C + c]=value;
 };
 
 void tens::setPoint(int n, int h, int w, int c, double value) {
-    if ( n>N || h>=H || w>=W || c>=C || n<0 || h<0 || w<0 || c<0 ) return;
+    //if ( n>N || h>=H || w>=W || c>=C || n<0 || h<0 || w<0 || c<0 ) return;
     data[n*HWC + h*WC + w*C + c]=value;
 };
 
@@ -42,26 +42,17 @@ void tens::rand(int min, int max) {
     for (int i=0;i<NHWC;i++) data[i]=( min+0.001*( std::rand()%(delta*1000) )); //(m*0.5);//m;;
 };
 
-tens* tens::addN1( tens* const y) {
-    tens* t=new tens( 1, std::max(this->H,y->H), std::max(this->W,y->W), std::max(this->C,y->C) );
-    for (int h=0;h<H;h++) {
-        for (int w=0;w<W;w++) {
-            for (int c=0;c<C;c++) {
-                double val=this->getPoint(h,w,c)+y->getPoint(h,w,c);
-                t->setPoint( h, w, c, val);
-            }
-        }
+void tens::addN1( tens* const y ) {
+    for (int i=0;i<NHWC;i++){
+        data[i]+=y->data[i];
     }
-    return t;
 }
 
 
-tens* tens::mulN1( tens* x,  double mul){
-    tens* t=new tens( 1, x->H, x->W, x->C );
+void tens::mulN1( double mul ){
     for ( int i=0;i<HWC;i++){
-        t->data[i]=mul*x->data[i];
+        data[i]=mul*data[i];
     }
-    return t;
 }
 
 void tens::toFlat() {
@@ -90,7 +81,6 @@ void tens::myPrint() {
     for (int n=0;n<N;n++) {
         std::cout<<std::endl<<"n: "<<n<<std::endl;
         for (int h=0;h<H;h++) {
-            //std::cout<<std::endl<<"h: "<<h<<std::endl;
             std::cout<<" | ";
             for (int wc=0;wc<(W*C);wc++) {
                 std::cout << data[n*HWC + h*WC + wc] <<" "; //   getPoint(n,h,w,c) // n*HWC + h*WC + w*C + c]
@@ -105,78 +95,85 @@ void tens::myPrint() {
 
 
 
+
+
+
+
+
+
+
 void tens::WX( tens* result, tens* dF, tens* X ) { //H, W, 1   W[H,W,1]  X[H,1,1], result Y[H,1,1]
     int Xn=X->getN();// X images number
-    int Xh=X->getH();// X size
     double y=0;
     double z=0;
-    //std::cout<<Xn<<std::endl;
-    //if (result==nullptr) { result = new tens(Xn, W, 1,1); }// W -> W[ij]*F[i]=Y[j] W[hw]*F[h]=Z[h]
-    //if (dF==nullptr)     {     dF = new tens(Xn, W, 1,1); } //   [n*HWC + h*WC + w*C + c]
-
     for (int n=0;n<Xn;n++) {
-        for (int w=0;w<W;w++) {
+
+
+        for (int h=0; h<H; h++) {
             y=0;
-            for (int h=0; h<H; h++) {
-                y += data[ w*Xh + h ] * X->data[ n*Xh + h];
+            for (int wc=0;wc<WC;wc++) {
+                y += ( data[ h*WC + wc]) * ( X->data[ n*HWC + wc ]);
             }
-            z  = 1.0/(1.0+std::exp(-y));
-            result->data[ n*WC + w] = z;        // <- W IS OK !!! (shape change)
-                dF->data[ n*WC + w] = z*(1-z); // F'
+            z  = 1.0/(1.0 + std::exp(-y));
+            result->data[ n*HWC + h ] = z;        // <- W IS OK !!! (shape change)
+                dF->data[ n*HWC + h ] = (z*(1-z)); // F'
         }
+
+
     }
 };
 
 
 
-void tens::WXSoftmax( tens* result, /* !! dF=1 !! */ tens* X ) { //H, W, 1   W[H,W,1]  X[H,1,1], result Y[H,1,1]
+
+
+
+
+
+
+void tens::WXSoftmax( tens* result, tens* X ) {
     int Xn=X->getN();// X images number
-    int Xh=X->getH();// X size
     double y=0;
-    double max=0;
-    double sum=0;
-    double* z=new double[W];
+    double* AryZ=new double[H];
     for (int n=0;n<Xn;n++) {
-        for (int w=0;w<W;w++) {
-            y=0;
-            for (int h=0; h<H; h++) {
-                y += data[ w*Xh + h ] * X->data[ n*Xh + h];
-            }
-            z[w] = y; //1.0/(1.0+std::exp(-y));
-        }
-          double max = getMax( z, W );
-          expAryminusMax(z, max,  W );
-          double sum = getSum( z, W );
-          mullAryByValue( z, sum ,W );
 
-        for (int w=0;w<W;w++) {
-            result->data[ n*WC + w] = z[w];
+
+        for (int h=0; h<H; h++) {
+            y=0;
+            for (int wc=0;wc<WC;wc++) {
+                y += ( data[ h*WC + wc]) * ( X->data[ n*HWC + wc ]);
+            }
+            AryZ[h] = 1.0/(1.0 + std::exp(-y));
+
         }
+        double max = getMax( AryZ, W );
+        expAryminusMax( AryZ, max,  W );
+        double sum = getSum(  AryZ, W );
+        mullAryByValue(  AryZ, sum ,W );
+
+        for (int h=0;h<W;h++) {
+            result->data[ n*WC + h] =  AryZ[h];
+        }
+
+
     }
 };
 
 
-void tens::BackWX( tens* Eout, tens* dF, tens* eIn, tens* X ) { //H, W, 1   W[H,W,1]  X[H,1,1], result Y[H,1,1]
+void tens::BackWX( tens* Eout, tens* dF, tens* eIn, tens* X ) {
     double sum=0;
-    int Xh=X->getH();
     int Xn=X->getN(); // number of images
     for (int n=0;n<Xn;n++) { // by images
 
-        for (int i=0;i<Xh;i++) { // x[Xh] = 64 (input size)
+        for (int w=0;w<W;w++) { //           W = 64 (input size)
             sum=0;
-            for (int neu=0;neu<W;neu++) { //10
+            for (int h=0;h<H;h++) { // H = 10 (output size)
                 // prepare Eout
-                // sum[] = W[m]   * Ein  <-- over n
-                // sum[] = W[i64, 10neu] * Ein[neu10 , n]         <--over neu
-               // std::cout<<(eIn->data[ n*Xh  + i])<<std::endl;
-                sum += (data[i*WC + neu])*(eIn->data[ n*Xh   + i ]);
-
-                //update
-                // W[m] = W[m] - ( X[m] * Ein )  <-- over n
-                // W[m] = W[i64 , 10neu] - ( X[i64 , n] * Ein[10neo , n] )
-               data[i*WC + neu]=data[i*WC + neu] - mu*eIn->data[n*W + i]* X->data[n*Xh + i];
+                // sum[] = W[m]   * Ein*dF <-- over n
+                sum += (data[ h*W + w ]) * (eIn->data[ n*H + h ]) * (dF->data[n*H + h]);
+                data[h*W + w ]=data[h*W + w ] + mu*  (eIn->data[ n*H + h ]) * (dF->data[n*H + h])  * X->data[n*Xn + w];
             }
-            Eout->data[ n*Xh + i ]=sum;
+            Eout->data[n*W + w]=sum;
         }
     }
 };
@@ -221,20 +218,7 @@ void tens::BackSoftmax( tens* Eout, tens* eIn, tens* X ) {
 
 
 
-/*
 
-tens* tens::WXSigmoid( tens* result, tens* dF,  tens* X ) { // H, W, 1   W[H,W,1]  X[H,1,1], result Y[H,1,1]
-    for (int w=0;w<W;w++) {                                 // setRows( int h, int w_start, int w_end, double*ary )
-        double y=0;
-        for (int h=0; h<this->H; h++) {
-            y+=data[ h*W + w ] * X->data[h];
-        }
-        double z = ( 1.0f/(1.0f + std::exp( -y ) ));
-        result->data[w]=z;
-            dF->data[w]=z*(1-z);
-    }
-};
-*/
 double tens::getMax( const double Y[], int len ) {
     double max=Y[0];
     for (int i=1;i<len;i++) {
