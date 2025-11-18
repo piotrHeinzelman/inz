@@ -55,6 +55,7 @@ tens* tens::addN1( tens* const y) {
     return t;
 }
 
+
 tens* tens::mulN1( tens* x,  double mul){
     tens* t=new tens( 1, x->H, x->W, x->C );
     for ( int i=0;i<HWC;i++){
@@ -98,6 +99,11 @@ void tens::myPrint() {
         }std::cout<<std::endl;
     }
 };
+
+
+
+
+
 
 void tens::WX( tens* result, tens* dF, tens* X ) { //H, W, 1   W[H,W,1]  X[H,1,1], result Y[H,1,1]
     int Xn=X->getN();// X images number
@@ -147,10 +153,73 @@ void tens::WXSoftmax( tens* result, /* !! dF=1 !! */ tens* X ) { //H, W, 1   W[H
             result->data[ n*WC + w] = z[w];
         }
     }
-
-
-
 };
+
+
+void tens::BackWX( tens* Eout, tens* dF, tens* eIn, tens* X ) { //H, W, 1   W[H,W,1]  X[H,1,1], result Y[H,1,1]
+    double sum=0;
+    int Xh=X->getH();
+    int Xn=X->getN(); // number of images
+    for (int n=0;n<Xn;n++) { // by images
+
+        for (int i=0;i<Xh;i++) { // x[Xh] = 64 (input size)
+            sum=0;
+            for (int neu=0;neu<W;neu++) { //10
+                // prepare Eout
+                // sum[] = W[m]   * Ein  <-- over n
+                // sum[] = W[i64, 10neu] * Ein[neu10 , n]         <--over neu
+               // std::cout<<(eIn->data[ n*Xh  + i])<<std::endl;
+                sum += (data[i*WC + neu])*(eIn->data[ n*Xh   + i ]);
+
+                //update
+                // W[m] = W[m] - ( X[m] * Ein )  <-- over n
+                // W[m] = W[i64 , 10neu] - ( X[i64 , n] * Ein[10neo , n] )
+               data[i*WC + neu]=data[i*WC + neu] - mu*eIn->data[n*W + i]* X->data[n*Xh + i];
+            }
+            Eout->data[ n*Xh + i ]=sum;
+        }
+    }
+};
+
+
+
+void tens::BackSoftmax( tens* Eout, tens* eIn, tens* X ) {
+    double sum=0;
+    int Xh=X->getH();
+    int Xn=X->getN(); // number of images
+    for (int n=0;n<Xn;n++) { // by images
+
+        for (int i=0;i<Xh;i++) { // x[Xh] = 64 (input size)
+            sum=0;
+            for (int neu=0;neu<W;neu++) { //10
+               // prepare Eout
+               // sum[] = W[m]   * Ein  <-- over n
+               // sum[] = W[i64, 10neu] * Ein[neu10 , n]         <--over neu
+               sum += (data[i*WC + neu])*(eIn->data[ n*Xh   + i ]);
+
+
+               //update
+               // W[m] = W[m] - ( X[m] * Ein )  <-- over n
+               // W[m] = W[i64 , 10neu] - ( X[i64 , n] * Ein[10neo , n] )
+               data[i*WC + neu]=data[i*WC + neu] - mu*eIn->data[n*W + i]* X->data[n*H + i];
+
+            }
+             Eout->data[ n*H + i ]=sum;
+        }
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 
@@ -197,4 +266,26 @@ void tens::mullAryByValue(  double Y[], double value ,int len ) {
 
 void tens::showShape() {
     std::cout<<"N: "<<N<<", H: "<<H<<", W: "<<W<<", C:"<<C<<std::endl;
+}
+
+
+void tens::calculateGradientAtEndSoftmax(tens* S) { // this is Z
+    // if correct label out = Z-1
+    // else             out = Z
+     for (int i=0;i<NHWC;i++){ data[i]= + S->data[i]+ (( S->data[i]-.5)*2)*data[i]  -1*( S->data[i]) ; }
+    //for (int i=0;i<NHWC;i++){ data[i]=data[i] -1*S->data[i]; }
+    //for (int i=0;i<NHWC;i++){ data[i]= -.3+ S->data[i]; }
+}
+
+void tens::getAccuracy(tens* S) { //Z-S
+    float max=0; int index; int acc=0;
+    for (int n=0;n<N;n++) {
+        max=0; index=0;
+        for ( int i=0;i<H;i++ ) {
+            if (data[ n*HWC + i*WC]>max){ max=data[ n*HWC + i*WC]; index=i; }
+        }
+        //std::cout<<"?:"<<data[ n*HWC + index*WC] << " : " <<  S->data[ n*HWC + index] << std::endl;
+        if ( (S->data[ n*HWC + index]) > 0.8 ) { acc++; }
+    }
+    std::cout<<"ACC:"<< (100*acc)/N<<"%"<<std::endl;
 }

@@ -9,6 +9,7 @@
 class tens {
 private:
     int N=0, H=0, W=0, C=0, NHWC=0, HWC=0, WC=0;
+    static constexpr double mu=0.01;
 
 
 public:
@@ -68,6 +69,11 @@ public:
     void expAryminusMax(  double Y[], double max ,int len );
     void mullAryByValue(  double Y[], double value ,int len );
     void showShape();
+    void calculateGradientAtEndSoftmax(tens* S);
+    void BackWX( tens* Eout, tens* dF, tens* eIn, tens* X );
+    void BackSoftmax( tens* result, tens* eIn, tens* X );
+    void getAccuracy(tens* S);
+
     //tens* WXSigmoid( tens* result, tens* dF, tens* X);
 
 
