@@ -115,7 +115,7 @@ int main() {
 
 
     // F->CNN( T->addPadding(1) );
-    T->addPadding(2)->myPrint();
+
     tens* Conv = F->CNN( T->addPadding(2) );
     Conv->myPrint();
 
