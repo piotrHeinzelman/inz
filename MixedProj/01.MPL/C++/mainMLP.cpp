@@ -19,8 +19,8 @@
 #include <string.h>
 
 #include "tools.cu"
-#include "Layer.h"
-#include "NNet.h"
+//#include "Layer.h"
+//#include "NNet.h"
 #include "tens.h"
 
 
@@ -67,98 +67,29 @@ int main() {
    int const percent = 80; //80
    long  LEN = percent*600;
    int const class_num=10;
-   const long epochs = 50; //500
+   const long epochs = 1;// *10 //500
 
     clock_t start_loadData, end_loadData, start_train, end_train, start_accu, end_accu;
     start_loadData = clock();
   // *******************
 
-    int h=28,  w=28, c=1;
-    LEN=1;
+
+    //  load_images( X,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", len, 28, 28);
+    //  load_labels( Y,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", len, class_num);
+
+    int h=1,  w=28*28, c=1;
+    // LEN=150;
 
     //len=7;
+    int In1 =(28*28);
+    int Out1=64, In2=64;
+    int Out2=64, In3=64;
+    int Out3=10;
 
 
 
-    if (false) {
-        tens* XT = load_images_asTensor( "../../../01.MPL/data/train-images-idx3-ubyte", LEN, 1, 28*28, c ); // int N, int H, int W, int C )
-        tens* ST = load_labels( "../../../01.MPL/data/train-labels-idx1-ubyte", LEN, class_num);
-    }
-
-    tens* T = new tens(1,5,5,1);
-          T->setPoint(0,0,0,0,1);
-          T->setPoint(0,0,1,0,2);
-          T->setPoint(0,0,2,0,3);
-          T->setPoint(0,0,3,0,4);
-          T->setPoint(0,0,4,0,5);
-          T->setPoint(0,1,0,0,6);
-          T->setPoint(0,1,1,0,7);
-          T->setPoint(0,1,2,0,8);
-          T->setPoint(0,1,3,0,9);
-          T->setPoint(0,1,4,0,0);
-          T->setPoint(0,2,0,0,1);
-          T->setPoint(0,2,1,0,2);
-          T->setPoint(0,2,2,0,3);
-          T->setPoint(0,2,3,0,4);
-          T->setPoint(0,2,4,0,5);
-          T->setPoint(0,3,0,0,6);
-          T->setPoint(0,3,1,0,7);
-          T->setPoint(0,3,2,0,8);
-          T->setPoint(0,3,3,0,9);
-          T->setPoint(0,3,4,0,0);
-          T->setPoint(0,4,0,0,1);
-          T->setPoint(0,4,1,0,2);
-          T->setPoint(0,4,2,0,3);
-          T->setPoint(0,4,3,0,4);
-          T->setPoint(0,4,4,0,5);
-
-          T->myPrint();
-
-
-    tens* T3 = new tens(1,3,3,1);
-    T3->setPoint(0,0,0,0,1);
-    T3->setPoint(0,0,1,0,2);
-    T3->setPoint(0,0,2,0,3);
-    T3->setPoint(0,1,0,0,4);
-    T3->setPoint(0,1,1,0,5);
-    T3->setPoint(0,1,2,0,6);
-    T3->setPoint(0,2,0,0,7);
-    T3->setPoint(0,2,1,0,8);
-    T3->setPoint(0,2,2,0,9);
-
-
-    tens* F = new tens(1,3,3,1);
-    F->setPoint(0,0,0,0,1);
-    F->setPoint(0,0,1,0,0);
-    F->setPoint(0,0,2,0,1);
-    F->setPoint(0,1,0,0,0);
-    F->setPoint(0,1,1,0,1);
-    F->setPoint(0,1,2,0,0);
-    F->setPoint(0,2,0,0,1);
-    F->setPoint(0,2,1,0,0);
-    F->setPoint(0,2,2,0,1);
-
-    F->myPrint();
-
-    tens* result;
-    result = F->CNN(T3,1);
-    std::cout<<"RESULT:"<<std::endl;
-    result->myPrint();
-
-
-    // F->CNN( T->addPadding(1) );
-
-    //tens* Conv = F->CNN( T->addPadding(2) );
-    //Conv->myPrint();
-
-    F->myPrint();
-
-
-
-
-
-/* Example 3 MLP 48000 images, 28*28 * 64 + 64*64 + 64*10
-
+    tens* XT = load_images_asTensor( "../data/train-images-idx3-ubyte", LEN, 1, 28*28, c ); // int N, int H, int W, int C )
+    tens* ST = load_labels( "../data/train-labels-idx1-ubyte", LEN, class_num);
 
     //XT->myPrint();
     //ST->myPrint();
@@ -193,10 +124,9 @@ int main() {
     end_loadData = clock();
     start_train = clock();
 
-
-for (int x=0;x<10;x++) {
-    for (int e=0;e<epochs;e++) {
-        std::cout << "Epoch: " << x*10+e << std::endl;
+for (int e=0;e<epochs;e++) {
+	for (int x=0;x<10;x++) {
+        std::cout << "Epoch: " << x+ 10*e << std::endl;
         W1->WX(Z1, dF1, XT); //W1->showShape();
         W2->WX(Z2, dF2, X2);
         W3->WXSoftmax(Z3, X3);
@@ -242,13 +172,13 @@ for (int x=0;x<10;x++) {
     (Z3->getOneN( TEST ))->myPrint();
     (ST->getOneN( TEST ))->myPrint();
 
-    std::cout << "LOAD: " << (end_loadData-start_loadData)*1000 << "[msek.]" << std::endl;
-    std::cout << "Train: "<< (end_train-start_train)*1000 << "[msek.]" << std::endl;
-    std::cout << "Accu: " << (end_accu-start_accu)*1000 << "[msek.]" << std::endl;
+    std::cout << "LOAD: " << (float)(end_loadData-start_loadData)*1000/CLOCKS_PER_SEC << "[msek.]" << std::endl;
+    std::cout << "Train: "<< (float)(end_train-start_train)*1000/CLOCKS_PER_SEC << "[msek.]" << std::endl;
+    std::cout << "Accu: " << (float)(end_accu-start_accu)*1000/CLOCKS_PER_SEC << "[msek.]" << std::endl;
     return 0;
 
 
-*/
+
 
 
     /*

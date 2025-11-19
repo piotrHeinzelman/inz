@@ -306,33 +306,19 @@ tens* tens::addPadding(int p) {
 };
 
 
-// CNN 3*3 x 3*3
-// a) Full padding (F-1)  input = output
-// b) Half center of Filter over all images padding (F-1)/2
-
-
-tens* tens::CNN( tens* Xin , double OneHalfOrZero ) { // I am a FILTER !
-
-    int p=W-1; // start=end=0 Full convolution | start=end=(F-1)/2 Half convolution | start=end=(F-1) Inner convolution
-    if (OneHalfOrZero<.7 && OneHalfOrZero>.1){p=(W-1)/2;}
-    if (OneHalfOrZero<.1){ p=0;}
-    tens* X = Xin->addPadding(p);
-
-    std::cout<<"X:"<<std::endl;
-    X->myPrint();
-
-   int W0= X->W -W + 1;
-   int H0= X->H -H + 1;
+tens* tens::CNN( tens* X ) {
+   int W0= X->W -W - 1;
+   int H0= X->H -H - 1;
    double sum=0;
    tens* t = new tens(N, H0, W0, C);
    for (int n=0;n<N;n++) {
 
 
-       for (int h=0;h<(H0);h++) {
-           for (int cw=0;cw<(W0-0);cw++) {
+       for (int h=0;h<H;h++) {
+           for (int cw=0;cw<WC;cw++) {
                sum=0;
                //calc [h,wc]
-               for (int i=0;i<H;i++) {
+               for (int i=0;i<W;i++) {
                    for (int j=0;j<W;j++) {
                         sum+=data[ n*HWC + i*WC + j] *  X->data[ n*X->HWC + (h+i)*X->WC + cw+j]; //sum+=data[n, i, j] *  X->data[n, h+i, cw+j];
                         }
@@ -341,7 +327,6 @@ tens* tens::CNN( tens* Xin , double OneHalfOrZero ) { // I am a FILTER !
                }
            }
        }
-    delete X;
     return t;
    };
 

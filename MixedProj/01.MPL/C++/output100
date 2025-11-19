@@ -1,0 +1,728 @@
+Epoch: 0
+ACC:0.112625 
+Epoch: 1
+ACC:0.153958 
+Epoch: 2
+ACC:0.187354 
+Epoch: 3
+ACC:0.216438 
+Epoch: 4
+ACC:0.247083 
+Epoch: 5
+ACC:0.256042 
+Epoch: 6
+ACC:0.279438 
+Epoch: 7
+ACC:0.295063 
+Epoch: 8
+ACC:0.318229 
+Epoch: 9
+ACC:0.335125 
+ACC:0.358021 
+
+n: 0
+ | 0.0110123 0.51559 0.025834 0.0216127 0.0917316 0.00832189 0.0835256 0.0904349 0.112371 0.0395665  | 
+
+
+n: 0
+ | 0 1 0 0 0 0 0 0 0 0  | 
+
+LOAD: 759.488[msek.]
+Train: 428512[msek.]
+Accu: 9662[msek.]
+
+
+
+
+file open
+Epoch: 0
+ACC:0.103875 
+Epoch: 1
+ACC:0.135708 
+Epoch: 2
+ACC:0.15225 
+Epoch: 3
+ACC:0.192229 
+Epoch: 4
+ACC:0.219688 
+Epoch: 5
+ACC:0.249958 
+Epoch: 6
+ACC:0.278271 
+Epoch: 7
+ACC:0.304667 
+Epoch: 8
+ACC:0.330625 
+Epoch: 9
+ACC:0.355979 
+Epoch: 10
+ACC:0.380604 
+Epoch: 11
+ACC:0.402458 
+Epoch: 12
+ACC:0.424292 
+Epoch: 13
+ACC:0.443688 
+Epoch: 14
+ACC:0.463542 
+Epoch: 15
+ACC:0.481375 
+Epoch: 16
+ACC:0.497604 
+Epoch: 17
+ACC:0.513125 
+Epoch: 18
+ACC:0.526438 
+Epoch: 19
+ACC:0.538771 
+Epoch: 20
+ACC:0.550375 
+Epoch: 21
+ACC:0.560917 
+Epoch: 22
+ACC:0.571208 
+Epoch: 23
+ACC:0.580792 
+Epoch: 24
+ACC:0.589479 
+Epoch: 25
+ACC:0.598729 
+Epoch: 26
+ACC:0.605812 
+Epoch: 27
+ACC:0.612896 
+Epoch: 28
+ACC:0.619292 
+Epoch: 29
+ACC:0.625729 
+Epoch: 30
+ACC:0.631417 
+Epoch: 31
+ACC:0.636687 
+Epoch: 32
+ACC:0.642479 
+Epoch: 33
+ACC:0.647437 
+Epoch: 34
+ACC:0.652646 
+Epoch: 35
+ACC:0.657375 
+Epoch: 36
+ACC:0.661813 
+Epoch: 37
+ACC:0.666271 
+Epoch: 38
+ACC:0.670375 
+Epoch: 39
+ACC:0.6745 
+Epoch: 40
+ACC:0.678083 
+Epoch: 41
+ACC:0.681583 
+Epoch: 42
+ACC:0.684375 
+Epoch: 43
+ACC:0.687521 
+Epoch: 44
+ACC:0.690521 
+Epoch: 45
+ACC:0.693917 
+Epoch: 46
+ACC:0.697 
+Epoch: 47
+ACC:0.699792 
+Epoch: 48
+ACC:0.702646 
+Epoch: 49
+ACC:0.705354 
+Epoch: 10
+ACC:0.708146 
+Epoch: 11
+ACC:0.710812 
+Epoch: 12
+ACC:0.713229 
+Epoch: 13
+ACC:0.715688 
+Epoch: 14
+ACC:0.718125 
+Epoch: 15
+ACC:0.720479 
+Epoch: 16
+ACC:0.722917 
+Epoch: 17
+ACC:0.724708 
+Epoch: 18
+ACC:0.726812 
+Epoch: 19
+ACC:0.728521 
+Epoch: 20
+ACC:0.730729 
+Epoch: 21
+ACC:0.732646 
+Epoch: 22
+ACC:0.734521 
+Epoch: 23
+ACC:0.736313 
+Epoch: 24
+ACC:0.738208 
+Epoch: 25
+ACC:0.739688 
+Epoch: 26
+ACC:0.741583 
+Epoch: 27
+ACC:0.743167 
+Epoch: 28
+ACC:0.744229 
+Epoch: 29
+ACC:0.745979 
+Epoch: 30
+ACC:0.747625 
+Epoch: 31
+ACC:0.749042 
+Epoch: 32
+ACC:0.750437 
+Epoch: 33
+ACC:0.751938 
+Epoch: 34
+ACC:0.753333 
+Epoch: 35
+ACC:0.754542 
+Epoch: 36
+ACC:0.75575 
+Epoch: 37
+ACC:0.756979 
+Epoch: 38
+ACC:0.758375 
+Epoch: 39
+ACC:0.759542 
+Epoch: 40
+ACC:0.761 
+Epoch: 41
+ACC:0.762167 
+Epoch: 42
+ACC:0.763271 
+Epoch: 43
+ACC:0.764375 
+Epoch: 44
+ACC:0.76575 
+Epoch: 45
+ACC:0.766979 
+Epoch: 46
+ACC:0.767979 
+Epoch: 47
+ACC:0.768938 
+Epoch: 48
+ACC:0.77 
+Epoch: 49
+ACC:0.771271 
+Epoch: 50
+ACC:0.772354 
+Epoch: 51
+ACC:0.773563 
+Epoch: 52
+ACC:0.774542 
+Epoch: 53
+ACC:0.7755 
+Epoch: 54
+ACC:0.776292 
+Epoch: 55
+ACC:0.777125 
+Epoch: 56
+ACC:0.777792 
+Epoch: 57
+ACC:0.778667 
+Epoch: 58
+ACC:0.779521 
+Epoch: 59
+ACC:0.780583 
+Epoch: 20
+ACC:0.781521 
+Epoch: 21
+ACC:0.782521 
+Epoch: 22
+ACC:0.783479 
+Epoch: 23
+ACC:0.784167 
+Epoch: 24
+ACC:0.785042 
+Epoch: 25
+ACC:0.786104 
+Epoch: 26
+ACC:0.787188 
+Epoch: 27
+ACC:0.787917 
+Epoch: 28
+ACC:0.788792 
+Epoch: 29
+ACC:0.789604 
+Epoch: 30
+ACC:0.790396 
+Epoch: 31
+ACC:0.791125 
+Epoch: 32
+ACC:0.791875 
+Epoch: 33
+ACC:0.792542 
+Epoch: 34
+ACC:0.793375 
+Epoch: 35
+ACC:0.794146 
+Epoch: 36
+ACC:0.794771 
+Epoch: 37
+ACC:0.795438 
+Epoch: 38
+ACC:0.796125 
+Epoch: 39
+ACC:0.796708 
+Epoch: 40
+ACC:0.797354 
+Epoch: 41
+ACC:0.798188 
+Epoch: 42
+ACC:0.799104 
+Epoch: 43
+ACC:0.800063 
+Epoch: 44
+ACC:0.800687 
+Epoch: 45
+ACC:0.801542 
+Epoch: 46
+ACC:0.802083 
+Epoch: 47
+ACC:0.802583 
+Epoch: 48
+ACC:0.803312 
+Epoch: 49
+ACC:0.803813 
+Epoch: 50
+ACC:0.804542 
+Epoch: 51
+ACC:0.805292 
+Epoch: 52
+ACC:0.805958 
+Epoch: 53
+ACC:0.806562 
+Epoch: 54
+ACC:0.807292 
+Epoch: 55
+ACC:0.807937 
+Epoch: 56
+ACC:0.808688 
+Epoch: 57
+ACC:0.809208 
+Epoch: 58
+ACC:0.809854 
+Epoch: 59
+ACC:0.81025 
+Epoch: 60
+ACC:0.810854 
+Epoch: 61
+ACC:0.811458 
+Epoch: 62
+ACC:0.812187 
+Epoch: 63
+ACC:0.812729 
+Epoch: 64
+ACC:0.813167 
+Epoch: 65
+ACC:0.813896 
+Epoch: 66
+ACC:0.814521 
+Epoch: 67
+ACC:0.815021 
+Epoch: 68
+ACC:0.815646 
+Epoch: 69
+ACC:0.816125 
+Epoch: 30
+ACC:0.816833 
+Epoch: 31
+ACC:0.817417 
+Epoch: 32
+ACC:0.818042 
+Epoch: 33
+ACC:0.818333 
+Epoch: 34
+ACC:0.818813 
+Epoch: 35
+ACC:0.819083 
+Epoch: 36
+ACC:0.819625 
+Epoch: 37
+ACC:0.819813 
+Epoch: 38
+ACC:0.820229 
+Epoch: 39
+ACC:0.820771 
+Epoch: 40
+ACC:0.821458 
+Epoch: 41
+ACC:0.821875 
+Epoch: 42
+ACC:0.822438 
+Epoch: 43
+ACC:0.822792 
+Epoch: 44
+ACC:0.823208 
+Epoch: 45
+ACC:0.823708 
+Epoch: 46
+ACC:0.824083 
+Epoch: 47
+ACC:0.824542 
+Epoch: 48
+ACC:0.824958 
+Epoch: 49
+ACC:0.825292 
+Epoch: 50
+ACC:0.825688 
+Epoch: 51
+ACC:0.826229 
+Epoch: 52
+ACC:0.826708 
+Epoch: 53
+ACC:0.827146 
+Epoch: 54
+ACC:0.8275 
+Epoch: 55
+ACC:0.827854 
+Epoch: 56
+ACC:0.828167 
+Epoch: 57
+ACC:0.828688 
+Epoch: 58
+ACC:0.829063 
+Epoch: 59
+ACC:0.829479 
+Epoch: 60
+ACC:0.829833 
+Epoch: 61
+ACC:0.83025 
+Epoch: 62
+ACC:0.830625 
+Epoch: 63
+ACC:0.831104 
+Epoch: 64
+ACC:0.831625 
+Epoch: 65
+ACC:0.831937 
+Epoch: 66
+ACC:0.832229 
+Epoch: 67
+ACC:0.832625 
+Epoch: 68
+ACC:0.833 
+Epoch: 69
+ACC:0.833333 
+Epoch: 70
+ACC:0.833667 
+Epoch: 71
+ACC:0.834042 
+Epoch: 72
+ACC:0.8345 
+Epoch: 73
+ACC:0.834854 
+Epoch: 74
+ACC:0.835187 
+Epoch: 75
+ACC:0.8355 
+Epoch: 76
+ACC:0.835771 
+Epoch: 77
+ACC:0.836167 
+Epoch: 78
+ACC:0.83625 
+Epoch: 79
+ACC:0.836521 
+Epoch: 40
+ACC:0.836938 
+Epoch: 41
+ACC:0.837333 
+Epoch: 42
+ACC:0.837812 
+Epoch: 43
+ACC:0.838021 
+Epoch: 44
+ACC:0.838354 
+Epoch: 45
+ACC:0.838625 
+Epoch: 46
+ACC:0.838854 
+Epoch: 47
+ACC:0.83925 
+Epoch: 48
+ACC:0.839708 
+Epoch: 49
+ACC:0.840146 
+Epoch: 50
+ACC:0.840542 
+Epoch: 51
+ACC:0.840896 
+Epoch: 52
+ACC:0.841229 
+Epoch: 53
+ACC:0.841458 
+Epoch: 54
+ACC:0.841812 
+Epoch: 55
+ACC:0.842208 
+Epoch: 56
+ACC:0.842562 
+Epoch: 57
+ACC:0.842979 
+Epoch: 58
+ACC:0.843313 
+Epoch: 59
+ACC:0.843562 
+Epoch: 60
+ACC:0.843708 
+Epoch: 61
+ACC:0.843896 
+Epoch: 62
+ACC:0.844271 
+Epoch: 63
+ACC:0.844708 
+Epoch: 64
+ACC:0.845021 
+Epoch: 65
+ACC:0.845354 
+Epoch: 66
+ACC:0.845562 
+Epoch: 67
+ACC:0.845812 
+Epoch: 68
+ACC:0.845958 
+Epoch: 69
+ACC:0.846187 
+Epoch: 70
+ACC:0.846437 
+Epoch: 71
+ACC:0.846792 
+Epoch: 72
+ACC:0.847167 
+Epoch: 73
+ACC:0.847396 
+Epoch: 74
+ACC:0.847688 
+Epoch: 75
+ACC:0.847938 
+Epoch: 76
+ACC:0.848125 
+Epoch: 77
+ACC:0.848313 
+Epoch: 78
+ACC:0.848625 
+Epoch: 79
+ACC:0.848833 
+Epoch: 80
+ACC:0.849021 
+Epoch: 81
+ACC:0.849354 
+Epoch: 82
+ACC:0.849646 
+Epoch: 83
+ACC:0.849708 
+Epoch: 84
+ACC:0.849875 
+Epoch: 85
+ACC:0.850125 
+Epoch: 86
+ACC:0.850458 
+Epoch: 87
+ACC:0.850604 
+Epoch: 88
+ACC:0.851021 
+Epoch: 89
+ACC:0.851292 
+Epoch: 50
+ACC:0.851583 
+Epoch: 51
+ACC:0.851729 
+Epoch: 52
+ACC:0.852083 
+Epoch: 53
+ACC:0.852354 
+Epoch: 54
+ACC:0.852604 
+Epoch: 55
+ACC:0.852833 
+Epoch: 56
+ACC:0.853042 
+Epoch: 57
+ACC:0.853271 
+Epoch: 58
+ACC:0.853437 
+Epoch: 59
+ACC:0.853729 
+Epoch: 60
+ACC:0.854062 
+Epoch: 61
+ACC:0.854187 
+Epoch: 62
+ACC:0.854354 
+Epoch: 63
+ACC:0.8545 
+Epoch: 64
+ACC:0.85475 
+Epoch: 65
+ACC:0.855 
+Epoch: 66
+ACC:0.855208 
+Epoch: 67
+ACC:0.855375 
+Epoch: 68
+ACC:0.855479 
+Epoch: 69
+ACC:0.855667 
+Epoch: 70
+ACC:0.85575 
+Epoch: 71
+ACC:0.856042 
+Epoch: 72
+ACC:0.856292 
+Epoch: 73
+ACC:0.856563 
+Epoch: 74
+ACC:0.856792 
+Epoch: 75
+ACC:0.857042 
+Epoch: 76
+ACC:0.857208 
+Epoch: 77
+ACC:0.857396 
+Epoch: 78
+ACC:0.857667 
+Epoch: 79
+ACC:0.857875 
+Epoch: 80
+ACC:0.857938 
+Epoch: 81
+ACC:0.858229 
+Epoch: 82
+ACC:0.858375 
+Epoch: 83
+ACC:0.858583 
+Epoch: 84
+ACC:0.858771 
+Epoch: 85
+ACC:0.859187 
+Epoch: 86
+ACC:0.859458 
+Epoch: 87
+ACC:0.859667 
+Epoch: 88
+ACC:0.859896 
+Epoch: 89
+ACC:0.860167 
+Epoch: 90
+ACC:0.860271 
+Epoch: 91
+ACC:0.860375 
+Epoch: 92
+ACC:0.860563 
+Epoch: 93
+ACC:0.860688 
+Epoch: 94
+ACC:0.860938 
+Epoch: 95
+ACC:0.861187 
+Epoch: 96
+ACC:0.861417 
+Epoch: 97
+ACC:0.8615 
+Epoch: 98
+ACC:0.861688 
+Epoch: 99
+ACC:0.861771 
+Epoch: 60
+ACC:0.862 
+Epoch: 61
+ACC:0.862187 
+Epoch: 62
+ACC:0.862417 
+Epoch: 63
+ACC:0.862667 
+Epoch: 64
+ACC:0.862729 
+Epoch: 65
+ACC:0.862854 
+Epoch: 66
+ACC:0.863 
+Epoch: 67
+ACC:0.863146 
+Epoch: 68
+ACC:0.863229 
+Epoch: 69
+ACC:0.863292 
+Epoch: 70
+ACC:0.863521 
+Epoch: 71
+ACC:0.863771 
+Epoch: 72
+ACC:0.863875 
+Epoch: 73
+ACC:0.864042 
+Epoch: 74
+ACC:0.864187 
+Epoch: 75
+ACC:0.864437 
+Epoch: 76
+ACC:0.864563 
+Epoch: 77
+ACC:0.864667 
+Epoch: 78
+ACC:0.864833 
+Epoch: 79
+ACC:0.865 
+Epoch: 80
+ACC:0.865187 
+Epoch: 81
+ACC:0.865437 
+Epoch: 82
+ACC:0.865542 
+Epoch: 83
+ACC:0.865646 
+Epoch: 84
+ACC:0.865792 
+Epoch: 85
+ACC:0.865979 
+Epoch: 86
+ACC:0.866083 
+Epoch: 87
+ACC:0.866313 
+Epoch: 88
+ACC:0.866417 
+Epoch: 89
+ACC:0.866521 
+Epoch: 90
+ACC:0.866708 
+Epoch: 91
+ACC:0.866896 
+Epoch: 92
+ACC:0.866958 
+Epoch: 93
+ACC:0.867146 
+Epoch: 94
+ACC:0.867396 
+Epoch: 95
+ACC:0.867625 
+Epoch: 96
+ACC:0.867833 
+Epoch: 97
+ACC:0.868021 
+Epoch: 98
+ACC:0.868167 
+Epoch: 99
+ACC:0.868333 
+Epoch: 100
+ACC:0.8685 
+Epoch: 101
+ACC:0.868542 
+Epoch: 102
+ACC:0.868625 
+Epoch: 103
+ACC:0.868729 
+Epoch: 104
+ACC:0.868854 
+Epoch: 105
