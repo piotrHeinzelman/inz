@@ -225,3 +225,8 @@ static void test()
 	fprintf(stdout, "Error Rate: %.2lf%%\n",
 		double(error) / double(test_cnt) * 100.0);
 }
+/*
+
+clock_t start_loadData, end_loadData, start_train, end_train, start_accu, end_accu;
+
+*/

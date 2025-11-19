@@ -64,12 +64,13 @@
 
 
 int main() {
-   int const percent = 80; //80
+   int const percent = 10; //80
    long  LEN = percent*600;
    int const class_num=10;
-   int layer_num=2;
    const long epochs = 50; //500
 
+    clock_t start_loadData, end_loadData, start_train, end_train, start_accu, end_accu;
+    start_loadData = clock();
   // *******************
 
 
@@ -119,8 +120,13 @@ int main() {
     tens*   dF3 = new tens(1,1,Out3,1);
 
 
+    end_loadData = clock();
+    start_train = clock();
+
+
 for (int x=0;x<10;x++) {
     for (int e=0;e<epochs;e++) {
+        std::cout << "Epoch: " << e*x << std::endl;
         W1->WX(Z1, dF1, XT); //W1->showShape();
         W2->WX(Z2, dF2, X2);
         W3->WXSoftmax(Z3, X3);
@@ -136,26 +142,38 @@ for (int x=0;x<10;x++) {
         W2->BackWX(Eout2, dF2, Eout3, X2);
         W1->BackWX(Eout1, dF1, Eout2, X1);
     }
+}
+
+    end_train = clock();
+    start_accu = clock();
+
     W1->WX(Z1, dF1, XT); //W1->showShape();
     W2->WX(Z2, dF2, X2);
     W3->WXSoftmax(Z3, X3);
     //Z3->calculateGradientAtEndSoftmax(ST);
     Z3->getAccuracy(ST);
-}
+
+    end_accu = clock();
+
     //X2->myPrint();
 
     W1->WX(Z1, dF1, XT); //W1->showShape();
     W2->WX(Z2, dF2, X2);
     W3->WXSoftmax(Z3, X3);
-    tens* X0=XT->getOneN( 0 );
+
+    int TEST=3;
+    tens* X0=XT->getOneN( TEST );
 
     W1->WX(Z1, dF1, X0); //W1->showShape();
     W2->WX(Z2, dF2, X2);
     W3->WXSoftmax(Z3, X3);
-    Z3->myPrint();
+    //Z3->myPrint();
+    (Z3->getOneN( TEST ))->myPrint();
+    (ST->getOneN( TEST ))->myPrint();
 
-
-
+    std::cout << "LOAD: " << (end_loadData-start_loadData)*1000 << "[msek.]" << std::endl;
+    std::cout << "Train: "<< (end_train-start_train)*1000 << "[msek.]" << std::endl;
+    std::cout << "Accu: " << (end_accu-start_accu)*1000 << "[msek.]" << std::endl;
     return 0;
 
 
