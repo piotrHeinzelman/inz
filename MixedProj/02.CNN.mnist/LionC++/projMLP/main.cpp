@@ -133,6 +133,7 @@ for (int x=0;x<10;x++) {
 
         //Z3->myPrint();
         //ST->myPrint();
+        Z3->getAccuracy(ST);
         Z3->calculateGradientAtEndSoftmax(ST);
         tens*S_Z=Z3;
 
