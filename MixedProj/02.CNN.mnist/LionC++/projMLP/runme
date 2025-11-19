@@ -1,3 +1,3 @@
-g++ main.cpp tens.cpp -o CNN
-echo 'nvcc main.cpp  -lcuda -lcublas -lcudnn -o CNN'
+echo 'g++ main.cpp tens.cpp -o CNN'
+nvcc main.cpp  -lcuda -lcublas -lcudnn -o CNN
 ./CNN

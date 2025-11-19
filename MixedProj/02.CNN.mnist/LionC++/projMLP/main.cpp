@@ -64,8 +64,8 @@
 
 
 int main() {
-   int const percent = 1; //80
-   long  len = percent*600;
+   int const percent = 80; //80
+   long  LEN = percent*600;
    int const class_num=10;
    int layer_num=2;
    const long epochs = 50; //500
@@ -76,64 +76,96 @@ int main() {
     //  load_images( X,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", len, 28, 28);
     //  load_labels( Y,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", len, class_num);
 
-    int h=28*28, w=1, c=1;
-    len=3;
+    int h=1,  w=28*28, c=1;
+    // LEN=150;
 
     //len=7;
-    int In1 =28*28;
+    int In1 =(28*28);
     int Out1=64, In2=64;
     int Out2=64, In3=64;
     int Out3=10;
 
 
 
-    tens* XT = load_images_asTensor( "../../../01.MPL/data/train-images-idx3-ubyte", len, 1, 28*28, c ); // int N, int H, int W, int C )
-    tens* ST = load_labels( "../../../01.MPL/data/train-labels-idx1-ubyte", len, class_num);
+    tens* XT = load_images_asTensor( "../../../01.MPL/data/train-images-idx3-ubyte", LEN, 1, 28*28, c ); // int N, int H, int W, int C )
+    tens* ST = load_labels( "../../../01.MPL/data/train-labels-idx1-ubyte", LEN, class_num);
     //XT->myPrint();
     //ST->myPrint();
 //W1
     tens*    W1 = new tens(1, Out1, In1 ,1); // <- H - output size, W input size (neuron number)
              W1->rand(-1,1);
     tens*    X1 = XT;// new tens(1,1,In1,1);
-    tens* Eout1 = new tens(1,1,In1,1);
+    tens* Eout1 = new tens(LEN,1,In1,1);
     // -----
-    tens*    Z1 = new tens(1,1,Out1,1);
-    tens*   dF1 = new tens(1,1,Out1,1);
+    tens*    Z1 = new tens(LEN,1,Out1,1);
+    tens*   dF1 = new tens(LEN,1,Out1,1);
 
 //W2
     tens*    W2 = new tens(1, Out2, In2 ,1); // <- H - output size, W input size (neuron number)
              W2->rand(-1,1);
     tens*    X2 = Z1; //= new tens(1,1,In2,1);
-    tens* Eout2 = new tens(1,1,In2,1);
+    tens* Eout2 = new tens(LEN,1,In2,1);
     // -----
-    tens*    Z2 = new tens(1,1,Out2,1);
-    tens*   dF2 = new tens(1,1,Out2,1);
+    tens*    Z2 = new tens(LEN,1,Out2,1);
+    tens*   dF2 = new tens(LEN,1,Out2,1);
 
 //W3
     tens*    W3 = new tens(1, Out3, In3 ,1); // <- H - output size, W input size (neuron number)
              W3->rand(-1,1);
     tens*    X3 = Z2; //new tens(1,1,In3,1);
-    tens* Eout3 = new tens(1,1,In3,1);
+    tens* Eout3 = new tens(LEN,1,In3,1);
     // -----
-    tens*    Z3 = new tens(1,1,Out3,1);
+    tens*    Z3 = new tens(LEN,1,Out3,1);
     tens*   dF3 = new tens(1,1,Out3,1);
 
 
-    W1->WX(Z1, dF1, X1); //XT->myPrint(); XT->showShape();
-    //W2->WX(Z2, dF2, X2);
-    //W3->WX(Z3, dF3, X3);
-    //Z3->myPrint();
-    //ST->myPrint();
+for (int x=0;x<10;x++) {
+    for (int e=0;e<epochs;e++) {
+        W1->WX(Z1, dF1, XT); //W1->showShape();
+        W2->WX(Z2, dF2, X2);
+        W3->WXSoftmax(Z3, X3);
+
+        //Z3->myPrint();
+        //ST->myPrint();
+        Z3->calculateGradientAtEndSoftmax(ST);
+        tens*S_Z=Z3;
+
+        //S_Z->myPrint();
+
+        W3->BackSoftmax(Eout3, S_Z, X3);
+        W2->BackWX(Eout2, dF2, Eout3, X2);
+        W1->BackWX(Eout1, dF1, Eout2, X1);
+    }
+    W1->WX(Z1, dF1, XT); //W1->showShape();
+    W2->WX(Z2, dF2, X2);
+    W3->WXSoftmax(Z3, X3);
     //Z3->calculateGradientAtEndSoftmax(ST);
+    Z3->getAccuracy(ST);
+}
+    //X2->myPrint();
+
+    W1->WX(Z1, dF1, XT); //W1->showShape();
+    W2->WX(Z2, dF2, X2);
+    W3->WXSoftmax(Z3, X3);
+    tens* X0=XT->getOneN( 0 );
+
+    W1->WX(Z1, dF1, X0); //W1->showShape();
+    W2->WX(Z2, dF2, X2);
+    W3->WXSoftmax(Z3, X3);
+    Z3->myPrint();
+
+
+
     return 0;
 
 
 
 
 
+    /*
 
-    /* **** Example 2 ****
-
+   // /* **** Example 2 ****
+      h=1,  w=3, c=1;
     tens*    W1 = new tens(1, Out1, In1 ,1); // <- H - output size, W input size (neuron number)
     tens*    X1 = new tens(1,1,In1,1);
     tens* Eout1 = new tens(1,1,In1,1);

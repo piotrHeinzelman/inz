@@ -9,7 +9,7 @@
 class tens {
 private:
     int N=0, H=0, W=0, C=0, NHWC=0, HWC=0, WC=0;
-    static constexpr double mu=0.1;
+    static constexpr double mu=0.01;
 
 
 public:
@@ -66,6 +66,7 @@ public:
 
     double getMax( const double Y[], int len );
     double getSum( const double Y[], int len );
+    tens* getOneN(  int id );
     void expAryminusMax(  double Y[], double max ,int len );
     void mullAryByValue(  double Y[], double value ,int len );
     void showShape();
