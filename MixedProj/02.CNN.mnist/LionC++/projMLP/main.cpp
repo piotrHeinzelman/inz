@@ -73,23 +73,54 @@ int main() {
     start_loadData = clock();
   // *******************
 
-
-    //  load_images( X,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", len, 28, 28);
-    //  load_labels( Y,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", len, class_num);
-
-    int h=1,  w=28*28, c=1;
-    // LEN=150;
+    int h=28,  w=28, c=1;
+    LEN=1;
 
     //len=7;
-    int In1 =(28*28);
-    int Out1=64, In2=64;
-    int Out2=64, In3=64;
-    int Out3=10;
 
 
 
-    tens* XT = load_images_asTensor( "../../../01.MPL/data/train-images-idx3-ubyte", LEN, 1, 28*28, c ); // int N, int H, int W, int C )
-    tens* ST = load_labels( "../../../01.MPL/data/train-labels-idx1-ubyte", LEN, class_num);
+    if (false) {
+        tens* XT = load_images_asTensor( "../../../01.MPL/data/train-images-idx3-ubyte", LEN, 1, 28*28, c ); // int N, int H, int W, int C )
+        tens* ST = load_labels( "../../../01.MPL/data/train-labels-idx1-ubyte", LEN, class_num);
+    }
+
+    tens* T = new tens(2,3,3,1);
+          T->setPoint(0,0,0,0,1);
+          T->setPoint(0,0,1,0,2);
+          T->setPoint(0,0,2,0,3);
+          T->setPoint(0,1,0,0,4);
+          T->setPoint(0,1,1,0,5);
+          T->setPoint(0,1,2,0,6);
+          T->setPoint(0,2,0,0,7);
+          T->setPoint(0,2,1,0,8);
+          T->setPoint(0,2,2,0,9);
+
+    T->setPoint(1,0,0,0,2);
+    T->setPoint(1,0,1,0,4);
+    T->setPoint(1,0,2,0,6);
+    T->setPoint(1,1,0,0,8);
+    T->setPoint(1,1,1,0,0);
+    T->setPoint(1,1,2,0,2);
+    T->setPoint(1,2,0,0,4);
+    T->setPoint(1,2,1,0,6);
+    T->setPoint(1,2,2,0,8);
+
+
+
+
+
+    tens* T2 = T->addPadding(2);
+    T->myPrint();
+    T2->myPrint();
+
+
+
+
+
+
+/* Example 3 MLP 48000 images, 28*28 * 64 + 64*64 + 64*10
+
 
     //XT->myPrint();
     //ST->myPrint();
@@ -179,7 +210,7 @@ for (int x=0;x<10;x++) {
     return 0;
 
 
-
+*/
 
 
     /*

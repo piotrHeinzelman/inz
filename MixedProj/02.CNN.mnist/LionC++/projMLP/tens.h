@@ -73,7 +73,9 @@ public:
     void calculateGradientAtEndSoftmax(tens* S);
     void BackWX(      tens* Eout, tens* dF, tens* eIn, tens* X );
     void BackSoftmax( tens* Eout, tens* S_Z, tens* X );
-    void getAccuracy(tens* S);
+    void getAccuracy( tens* S);
+    tens* addPadding(int padding);
+
 
     //tens* WXSigmoid( tens* result, tens* dF, tens* X);
 

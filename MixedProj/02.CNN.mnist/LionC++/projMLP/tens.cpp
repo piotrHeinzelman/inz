@@ -47,14 +47,14 @@ void tens::addN1( tens* const y ) {
     for (int i=0;i<NHWC;i++){
         data[i]+=y->data[i];
     }
-}
+};
 
 
 void tens::mulN1( double mul ){
     for ( int i=0;i<HWC;i++){
         data[i]=mul*data[i];
     }
-}
+};
 
 void tens::toFlat() {
    N=1;
@@ -63,7 +63,7 @@ void tens::toFlat() {
    C=1;
    HWC=H*W*C;
    WC=W*C;
-}
+};
 
 
 void tens::to3D( int N, int H, int W, int C ) {
@@ -74,7 +74,7 @@ void tens::to3D( int N, int H, int W, int C ) {
     NHWC=N*H*W*C;
     HWC=H*W*C;
     WC=W*C;
-}
+};
 
 
 
@@ -238,7 +238,7 @@ void tens::mullAryByValue(  double Y[], double value ,int len ) {
 
 void tens::showShape() {
     std::cout<<"N: "<<N<<", H: "<<H<<", W: "<<W<<", C:"<<C<<std::endl;
-}
+};
 
 
 void tens::calculateGradientAtEndSoftmax(tens* S) { // this is Z
@@ -249,7 +249,7 @@ void tens::calculateGradientAtEndSoftmax(tens* S) { // this is Z
      }
     //for (int i=0;i<NHWC;i++){ data[i]=data[i] -1*S->data[i]; }
     //for (int i=0;i<NHWC;i++){ data[i]= -.3+ S->data[i]; }
-}
+};
 
 void tens::getAccuracy(tens* S) { //Z-S
     float max=0; int index; double acc=0;
@@ -262,10 +262,45 @@ void tens::getAccuracy(tens* S) { //Z-S
         if ( (S->data[ n*HWC + index]) > 0.8 ) { acc++; }
     }
     std::cout<<"ACC:"<<(acc/N)<<" "<<std::endl;
-}
+};
 
 tens* tens::getOneN( int index ) {
     tens* t = new tens(1, H, W, C );
     for (int i=0;i<HWC;i++){ t->data[i]=data[index*HWC + i]; }
     return t;
-}
+};
+
+/*
+    p    W    p
+   ### ##### ###
+ p ### ##### ###  p           c( 2p*p + Wp + p  )
+   ### ##### ###
+
+ 1 ### ooooo ###
+   ### ooooo ###
+       ...
+         ooo ***
+
+   ### ##### ###
+p  ### ##### ###  p
+   ### ##### ###
+
+*/
+
+
+
+tens* tens::addPadding(int p) {
+    tens* t=new tens(N, H+p+p, W+p+p, C);
+    int offset=     C*( p*(p+p+W+1) );
+    int NSize = t->HWC;
+    for (int n=0;n<N;n++) {
+        for (int h=0;h<H;h++) {
+            for (int cw=0;cw<WC;cw++) {
+                t->data[ n*NSize + offset + h*t->WC + cw] = data[n*HWC + h*WC +cw ];
+            }
+        }
+    }
+    //std::cout << "SIZE:" << t->NHWC<<std::endl;
+    std::cout << "offset:" << t->NHWC<<std::endl;
+    return t;
+};
