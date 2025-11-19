@@ -64,7 +64,7 @@
 
 
 int main() {
-   int const percent = 10; //80
+   int const percent = 80; //80
    long  LEN = percent*600;
    int const class_num=10;
    const long epochs = 50; //500
@@ -126,7 +126,7 @@ int main() {
 
 for (int x=0;x<10;x++) {
     for (int e=0;e<epochs;e++) {
-        std::cout << "Epoch: " << e*x << std::endl;
+        std::cout << "Epoch: " << x*10+e << std::endl;
         W1->WX(Z1, dF1, XT); //W1->showShape();
         W2->WX(Z2, dF2, X2);
         W3->WXSoftmax(Z3, X3);

@@ -5,6 +5,7 @@
 #include "tens.h"
 
 #include <iostream>
+#include <cmath>
 
 //int H, W, C;
 //double* data;
