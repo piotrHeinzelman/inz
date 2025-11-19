@@ -75,6 +75,7 @@ public:
     void BackSoftmax( tens* Eout, tens* S_Z, tens* X );
     void getAccuracy( tens* S);
     tens* addPadding(int padding);
+    tens* CNN( tens* X );
 
 
     //tens* WXSigmoid( tens* result, tens* dF, tens* X);

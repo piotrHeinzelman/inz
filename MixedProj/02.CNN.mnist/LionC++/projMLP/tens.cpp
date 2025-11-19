@@ -301,6 +301,32 @@ tens* tens::addPadding(int p) {
         }
     }
     //std::cout << "SIZE:" << t->NHWC<<std::endl;
-    std::cout << "offset:" << t->NHWC<<std::endl;
+    //std::cout << "offset:" << t->NHWC<<std::endl;
     return t;
 };
+
+
+tens* tens::CNN( tens* X ) {
+   int W0= X->W -W - 1;
+   int H0= X->H -H - 1;
+   double sum=0;
+   tens* t = new tens(N, H0, W0, C);
+   for (int n=0;n<N;n++) {
+
+
+       for (int h=0;h<H;h++) {
+           for (int cw=0;cw<WC;cw++) {
+               sum=0;
+               //calc [h,wc]
+               for (int i=0;i<W;i++) {
+                   for (int j=0;j<W;j++) {
+                        sum+=data[ n*HWC + i*WC + j] *  X->data[ n*X->HWC + (h+i)*X->WC + cw+j]; //sum+=data[n, i, j] *  X->data[n, h+i, cw+j];
+                        }
+                   }
+               t->data[n*t->HWC + h*t->WC + cw] = sum; //t->data[n,h,cw] = sum;
+               }
+           }
+       }
+    return t;
+   };
+

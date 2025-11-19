@@ -85,7 +85,7 @@ int main() {
         tens* ST = load_labels( "../../../01.MPL/data/train-labels-idx1-ubyte", LEN, class_num);
     }
 
-    tens* T = new tens(2,3,3,1);
+    tens* T = new tens(1,3,3,1);
           T->setPoint(0,0,0,0,1);
           T->setPoint(0,0,1,0,2);
           T->setPoint(0,0,2,0,3);
@@ -96,23 +96,29 @@ int main() {
           T->setPoint(0,2,1,0,8);
           T->setPoint(0,2,2,0,9);
 
-    T->setPoint(1,0,0,0,2);
-    T->setPoint(1,0,1,0,4);
-    T->setPoint(1,0,2,0,6);
-    T->setPoint(1,1,0,0,8);
-    T->setPoint(1,1,1,0,0);
-    T->setPoint(1,1,2,0,2);
-    T->setPoint(1,2,0,0,4);
-    T->setPoint(1,2,1,0,6);
-    T->setPoint(1,2,2,0,8);
+          T->myPrint();
+
+
+    tens* F = new tens(1,3,3,1);
+    F->setPoint(0,0,0,0,1);
+    F->setPoint(0,0,1,0,0);
+    F->setPoint(0,0,2,0,1);
+    F->setPoint(0,1,0,0,0);
+    F->setPoint(0,1,1,0,1);
+    F->setPoint(0,1,2,0,0);
+    F->setPoint(0,2,0,0,1);
+    F->setPoint(0,2,1,0,0);
+    F->setPoint(0,2,2,0,1);
+
+    F->myPrint();
 
 
 
+    // F->CNN( T->addPadding(1) );
+    T->addPadding(2)->myPrint();
+    tens* Conv = F->CNN( T->addPadding(2) );
+    Conv->myPrint();
 
-
-    tens* T2 = T->addPadding(2);
-    T->myPrint();
-    T2->myPrint();
 
 
 
