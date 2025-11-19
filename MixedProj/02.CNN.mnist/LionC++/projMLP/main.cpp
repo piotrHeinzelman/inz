@@ -56,11 +56,15 @@
 //         for w=0; w<W
 //           for c=0; c<C
 
-
+/*  in       layer     out    =    in  -->
+    X   ---> [ F ] --> Z      =    X   -->
+             [ F ] --> dF
+    Eout <-- [ B ] <-- Ein    =   Eout <--
+*/
 
 
 int main() {
-   int const percent = 80; //80
+   int const percent = 1; //80
    long  len = percent*600;
    int const class_num=10;
    int layer_num=2;
@@ -68,18 +72,67 @@ int main() {
 
   // *******************
 
-    int height=3, width=1, channel=1;
+
+    //  load_images( X,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", len, 28, 28);
+    //  load_labels( Y,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", len, class_num);
+
+    int h=28*28, w=1, c=1;
+    len=3;
+
     //len=7;
-    int In1 =2;
-    int Out1=3, In2=3;
-    int Out2=2;
+    int In1 =28*28;
+    int Out1=64, In2=64;
+    int Out2=64, In3=64;
+    int Out3=10;
 
-/*  in       layer     out    =    in  -->
-    X   ---> [ F ] --> Z      =    X   -->
-             [ F ] --> dF
-    Eout <-- [ B ] <-- Ein    =   Eout <--
-*/
 
+
+    tens* XT = load_images_asTensor( "../../../01.MPL/data/train-images-idx3-ubyte", len, 1, 28*28, c ); // int N, int H, int W, int C )
+    tens* ST = load_labels( "../../../01.MPL/data/train-labels-idx1-ubyte", len, class_num);
+    //XT->myPrint();
+    //ST->myPrint();
+//W1
+    tens*    W1 = new tens(1, Out1, In1 ,1); // <- H - output size, W input size (neuron number)
+             W1->rand(-1,1);
+    tens*    X1 = XT;// new tens(1,1,In1,1);
+    tens* Eout1 = new tens(1,1,In1,1);
+    // -----
+    tens*    Z1 = new tens(1,1,Out1,1);
+    tens*   dF1 = new tens(1,1,Out1,1);
+
+//W2
+    tens*    W2 = new tens(1, Out2, In2 ,1); // <- H - output size, W input size (neuron number)
+             W2->rand(-1,1);
+    tens*    X2 = Z1; //= new tens(1,1,In2,1);
+    tens* Eout2 = new tens(1,1,In2,1);
+    // -----
+    tens*    Z2 = new tens(1,1,Out2,1);
+    tens*   dF2 = new tens(1,1,Out2,1);
+
+//W3
+    tens*    W3 = new tens(1, Out3, In3 ,1); // <- H - output size, W input size (neuron number)
+             W3->rand(-1,1);
+    tens*    X3 = Z2; //new tens(1,1,In3,1);
+    tens* Eout3 = new tens(1,1,In3,1);
+    // -----
+    tens*    Z3 = new tens(1,1,Out3,1);
+    tens*   dF3 = new tens(1,1,Out3,1);
+
+
+    W1->WX(Z1, dF1, X1); //XT->myPrint(); XT->showShape();
+    //W2->WX(Z2, dF2, X2);
+    //W3->WX(Z3, dF3, X3);
+    //Z3->myPrint();
+    //ST->myPrint();
+    //Z3->calculateGradientAtEndSoftmax(ST);
+    return 0;
+
+
+
+
+
+
+    /* **** Example 2 ****
 
     tens*    W1 = new tens(1, Out1, In1 ,1); // <- H - output size, W input size (neuron number)
     tens*    X1 = new tens(1,1,In1,1);
@@ -117,26 +170,9 @@ int main() {
     W1->BackWX(Eout1, dF1, Eout2, X1);
     W1->myPrint();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     return 0;
+*/
+
 /*  Example1
     tens* W1 = new tens(1, Out1, In1 ,1); // <- H - output size, W input size (neuron number)
     tens* W2 = new tens(1, Out2, In2 ,1); // <- H - output size, W input size (neuron number)
@@ -203,25 +239,12 @@ int main() {
     W1->myPrint();
     */
 
-     return 0;
+
   // *******************
 
 
 
-    //  load_images( X,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", len, 28, 28);
-    //  load_labels( Y,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", len, class_num);
 
-    int h=28*28, w=1, c=1;
-    //len=7;
-    int L1In =28*28;
-    int L1Out=64;
-    int L2Out=64;
-
-    len=1;
-    tens* XT = load_images_asTensor( "../../../01.MPL/data/train-images-idx3-ubyte", len, 1, 28*28, channel ); // int N, int H, int W, int C )
-    tens* ST = load_labels( "../../../01.MPL/data/train-labels-idx1-ubyte", len, class_num);
-    XT->myPrint();
-    return 0;
 
 }
 

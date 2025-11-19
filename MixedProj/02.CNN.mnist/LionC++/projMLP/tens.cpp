@@ -100,11 +100,12 @@ void tens::WX( tens* result, tens* dF, tens* X ) { //H, W, 1   W[H,W,1]  X[H,1,1
         for (int h=0; h<H; h++) {
             y=0;
             for (int wc=0;wc<WC;wc++) {
-                y += ( data[ h*WC + wc]) * ( X->data[ n*HWC + wc ]);
+                //std::cout<< X->data[ n*HWC + wc ] <<std::endl;
+                y += ( data[ h*WC + wc]) * ( X->data[ n*WC + wc ]);
             }
             z  = 1.0/(1.0 + std::exp(-y));
-            result->data[ n*HWC + h ] = z;        // <- W IS OK !!! (shape change)
-                dF->data[ n*HWC + h ] = (z*(1-z)); // F'
+            result->data[ n*WC + h ] = z;        // <- W IS OK !!! (shape change)
+                dF->data[ n*WC + h ] = (z*(1-z)); // F'
         }
     }
 };
@@ -127,13 +128,13 @@ void tens::WXSoftmax( tens* result, tens* X ) {
         for (int h=0; h<H; h++) {
             y=0;
             for (int wc=0;wc<WC;wc++) {
-                y += ( data[ h*WC + wc]) * ( X->data[ n*HWC + wc ]);
+                y += ( data[ h*WC + wc]) * ( X->data[ n*WC + wc ]);
             }
-            result->data[ n*HWC + h ] = exp(y);
+            result->data[ n*WC + h ] = exp(y);
             sum += exp(y); // save Y
         }
         for (int h=0; h<H; h++) {
-            result->data[ n*HWC + h ] = result->data[ n*HWC + h ]/sum;
+            result->data[ n*WC + h ] = result->data[ n*WC + h ]/sum;
         }
     }
 

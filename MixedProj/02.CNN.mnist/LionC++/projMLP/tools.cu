@@ -99,7 +99,7 @@ tens* load_labels(  const std::string& filename, int num_images, int class_num )
     file.read( reinterpret_cast<char*>(buff), 8);
     file.read( reinterpret_cast<char*>(buff), num_images );
 
-    tens* t = new tens(num_images,class_num,1,1);
+    tens* t = new tens(num_images,1, class_num,1);
     //for (int i=0; i<(num_images*class_num); i++){ t->data[ i ]=0.0; }
     for (int n=0;n<num_images;n++){
        int val= (unsigned char) buff[n] *1;
