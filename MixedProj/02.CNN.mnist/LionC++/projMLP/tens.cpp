@@ -312,36 +312,54 @@ tens* tens::addPadding(int p) {
 
 
 tens* tens::CNN( tens* Xin , double OneHalfOrZero ) { // I am a FILTER !
-
+    int Xn=Xin->getN();
     int p=W-1; // start=end=0 Full convolution | start=end=(F-1)/2 Half convolution | start=end=(F-1) Inner convolution
     if (OneHalfOrZero<.7 && OneHalfOrZero>.1){p=(W-1)/2;}
     if (OneHalfOrZero<.1){ p=0;}
     tens* X = Xin->addPadding(p);
 
-    std::cout<<"X:"<<std::endl;
-    X->myPrint();
+    //std::cout<<"X:"<<std::endl;
+    //X->myPrint();
 
    int W0= X->W -W + 1;
    int H0= X->H -H + 1;
    double sum=0;
-   tens* t = new tens(N, H0, W0, C);
-   for (int n=0;n<N;n++) {
+   tens* t = new tens(Xn, H0, W0, N);
 
+   for (int n=0;n<Xn;n++) { // over images
+     for (int ch=0;ch<N;ch++) {
+         for (int h=0;h<(H0);h++) {
+             for (int w=0;w<(W0);w++) {
+                 sum=0;
+                 //
 
-       for (int h=0;h<(H0);h++) {
-           for (int cw=0;cw<(W0-0);cw++) {
-               sum=0;
-               //calc [h,wc]
-               for (int i=0;i<H;i++) {
-                   for (int j=0;j<W;j++) {
-                        sum+=data[ n*HWC + i*WC + j] *  X->data[ n*X->HWC + (h+i)*X->WC + cw+j]; //sum+=data[n, i, j] *  X->data[n, h+i, cw+j];
-                        }
-                   }
-               t->data[n*t->HWC + h*t->WC + cw] = sum; //t->data[n,h,cw] = sum;
-               }
-           }
+                     //calc [h,wc]
+                     for (int i=0;i<H;i++) {
+                         for (int wc=0;wc<WC;wc++) {
+                                 sum+=data[ ch*HWC + i*WC + wc] *  X->data[ n*X->HWC + (h+i)*X->WC + wc+w]; //sum+=data[n, i, j] *  X->data[n, h+i, cw+j];
+                         }
+                     }
+                     t->data[n*t->H*W*N + h*t->W*N + w*N + ch] = sum; //t->data[n,h,cw] = sum;
+                 }
+             }
        }
+    }
     delete X;
     return t;
    };
 
+tens* tens::Rot180() {
+    tens* t = new tens( N,H,W,C );
+    int W1=W-1;
+    int H1=H-1;
+    for (int n=0;n<N;n++) {
+        for (int h=0;h<H;h++) {
+            for (int w=0;w<W;w++) {
+                for (int c=0;c<C;c++) {
+                    t->data[n*HWC + h*WC + w*C + c ] =  data[ n*HWC + (H1-h)*WC + (W1-w)*C + c ];
+                }
+            }
+        }
+    }
+    return t;
+}

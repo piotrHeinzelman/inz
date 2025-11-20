@@ -61,29 +61,24 @@
              [ F ] --> dF
     Eout <-- [ B ] <-- Ein    =   Eout <--
 */
+/*  Example 5
 
+tens* T = new tens(1,3,3,1);
+    T->setPoint(0,0,0,0,1);
+    T->setPoint(0,0,1,0,2);
+    T->setPoint(0,0,2,0,3);
+    T->setPoint(0,1,0,0,4);
+    T->setPoint(0,1,1,0,5);
+    T->setPoint(0,1,2,0,6);
+    T->setPoint(0,2,0,0,7);
+    T->setPoint(0,2,1,0,8);
+    T->setPoint(0,2,2,0,9);
 
-int main() {
-   int const percent = 80; //80
-   long  LEN = percent*600;
-   int const class_num=10;
-   const long epochs = 50; //500
-
-    clock_t start_loadData, end_loadData, start_train, end_train, start_accu, end_accu;
-    start_loadData = clock();
-  // *******************
-
-    int h=28,  w=28, c=1;
-    LEN=1;
-
-    //len=7;
-
-
-
-    if (false) {
-        tens* XT = load_images_asTensor( "../../../01.MPL/data/train-images-idx3-ubyte", LEN, 1, 28*28, c ); // int N, int H, int W, int C )
-        tens* ST = load_labels( "../../../01.MPL/data/train-labels-idx1-ubyte", LEN, class_num);
-    }
+    T->myPrint();
+    tens* T2 = T->Rot180();
+    T2->myPrint();
+*/
+/* Example 4
 
     tens* T = new tens(1,5,5,1);
           T->setPoint(0,0,0,0,1);
@@ -154,9 +149,7 @@ int main() {
     F->myPrint();
 
 
-
-
-
+*/
 /* Example 3 MLP 48000 images, 28*28 * 64 + 64*64 + 64*10
 
 
@@ -249,9 +242,7 @@ for (int x=0;x<10;x++) {
 
 
 */
-
-
-    /*
+/*
 
    // /* **** Example 2 ****
       h=1,  w=3, c=1;
@@ -293,7 +284,6 @@ for (int x=0;x<10;x++) {
 
     return 0;
 */
-
 /*  Example1
     tens* W1 = new tens(1, Out1, In1 ,1); // <- H - output size, W input size (neuron number)
     tens* W2 = new tens(1, Out2, In2 ,1); // <- H - output size, W input size (neuron number)
@@ -360,12 +350,56 @@ for (int x=0;x<10;x++) {
     W1->myPrint();
     */
 
+/*
 
+private LayerConv conv = new LayerConv( 5 , 20, null, null  );
+    private LayerPoolingMax poolMax = new LayerPoolingMax(2,2);
+    private LayerFlatten flatten = new LayerFlatten();
+    private LayerSoftmaxMultiClass softmax = new LayerSoftmaxMultiClass( 12*12*20, 10 );
+
+    public float[] forward_( float[][] X ){
+        float[][][] oneX = new float[1][][];
+        oneX[0]=X;
+        return softmax.nForward( flatten.Forward( poolMax.Forward( conv.Forward( oneX ))));
+    }
+
+    public float[][][] backward_( float[] gradient ){
+        return conv.Backward(  poolMax.Backward( flatten.Backward(  softmax.nBackward( gradient ))));
+    }
+
+
+*/
+
+int main() {
+   int const percent = 80; //80
+   long  LEN = percent*600;
+   int const class_num=10;
+   const long epochs = 50; //500
+
+    clock_t start_loadData, end_loadData, start_train, end_train, start_accu, end_accu;
+    start_loadData = clock();
   // *******************
 
+    int h=28,  w=28, c=1;
+    LEN=1;
+
+    //len=7;
+
+    //if (false) {
+        tens* XT = load_images_asTensor( "../../../01.MPL/data/train-images-idx3-ubyte", LEN, h, w, c ); // int N, int H, int W, int C )
+        tens* ST = load_labels( "../../../01.MPL/data/train-labels-idx1-ubyte", LEN, class_num);
+    //}
 
 
+    //tens( outputChannelNum, h, w, imageChannels);
+    tens* F = new tens(5,28,28,1);
+          F->rand(-1,1);
+    tens* Y = F->CNN(XT, 0.5);
 
+
+    std::cout<<"Y:"<<std::endl;
+    Y->myPrint();
+    Y->showShape();
 
 }
 

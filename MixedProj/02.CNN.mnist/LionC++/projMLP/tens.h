@@ -76,6 +76,7 @@ public:
     void getAccuracy( tens* S);
     tens* addPadding(int padding);
     tens* CNN( tens* X, double OneHalfOrZero );
+    tens* Rot180();
 
 
     //tens* WXSigmoid( tens* result, tens* dF, tens* X);
