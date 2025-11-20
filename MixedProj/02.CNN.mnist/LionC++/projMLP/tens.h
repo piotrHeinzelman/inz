@@ -57,6 +57,7 @@ public:
     // Without operator overloading:
     void addN1( tens* const  y );
     void mulN1( double mul );
+    void HamandMullAry( tens* Y );
 
     void toFlat();
     void to3D(int n, int h, int w, int c);

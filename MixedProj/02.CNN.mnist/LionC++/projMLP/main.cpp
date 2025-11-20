@@ -380,7 +380,7 @@ int main() {
     start_loadData = clock();
   // *******************
 
-    int h=28,  w=28, c=1;
+    int h=5,  w=5, c=1;
     LEN=1;
 
     //len=7;
@@ -391,19 +391,59 @@ int main() {
     //}
 
 
+    XT->setPoint(0,0,0,0,0);
+    XT->setPoint(0,0,1,0,1);
+    XT->setPoint(0,0,2,0,2);
+    XT->setPoint(0,0,3,0,3);
+    XT->setPoint(0,0,4,0,4);
+    XT->setPoint(0,1,0,0,5);
+    XT->setPoint(0,1,1,0,6);
+    XT->setPoint(0,1,2,0,7);
+    XT->setPoint(0,1,3,0,8);
+    XT->setPoint(0,1,4,0,9);
+    XT->setPoint(0,2,0,0,10);
+    XT->setPoint(0,2,1,0,11);
+    XT->setPoint(0,2,2,0,12);
+    XT->setPoint(0,2,3,0,13);
+    XT->setPoint(0,2,4,0,14);
+    XT->setPoint(0,3,0,0,15);
+    XT->setPoint(0,3,1,0,16);
+    XT->setPoint(0,3,2,0,17);
+    XT->setPoint(0,3,3,0,18);
+    XT->setPoint(0,3,4,0,19);
+    XT->setPoint(0,4,0,0,20);
+    XT->setPoint(0,4,1,0,21);
+    XT->setPoint(0,4,2,0,22);
+    XT->setPoint(0,4,3,0,23);
+    XT->setPoint(0,4,4,0,24);
+
+
     //tens( outputChannelNum, h, w, imageChannels);
-    tens* F = new tens(20,5,5,1);
+    tens* F = new tens(2,3,3,1); // 20,5,5,1
           F->rand(-1,1);
 
     // Forward
     tens* Y = F->CNN(XT, 0);
+    XT->myPrint();
 
+
+
+
+
+    tens* dF = new tens(1, 5, 5, 1); // size X
+    tens* XXX = XT->poolMax(dF, 2);
+    XXX->myPrint();
+    dF->myPrint();
+
+    Y->myPrint();
+    Y->HamandMullAry(dF);
 
     std::cout<<"Y:"<<std::endl;
-    Y->myPrint();
-    Y->showShape();
 
-    tens* dF = new tens(1, 24, 24, 20); // size X
+    Y->myPrint();
+
+
+
     Y->poolMax(dF, 2);
 
 

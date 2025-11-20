@@ -56,6 +56,12 @@ void tens::mulN1( double mul ){
     }
 };
 
+void tens::HamandMullAry( tens* Y ){
+    for ( int i=0;i<HWC;i++){
+        data[i] = data[i] * Y->data[i];
+    }
+};
+
 void tens::toFlat() {
    N=1;
    H=NHWC;
@@ -317,7 +323,7 @@ tens* tens::CNN( tens* Xin , double OneHalfOrZero ) { // I am a FILTER !
     int p=0;
     if (OneHalfOrZero>.7){p=W-1; X = Xin->addPadding(p);} // start=end=0 Full convolution | start=end=(F-1)/2 Half convolution | start=end=(F-1) Inner convolution
     if (OneHalfOrZero<.7 && OneHalfOrZero>.1){p=(W-1)/2; X = Xin->addPadding(p);}
-    if (OneHalfOrZero<.1){ p=0; X=Xin; }
+    if (OneHalfOrZero<.1){ p=0; X=Xin->addPadding(0); }
 
 
     //std::cout<<"X:"<<std::endl;
@@ -370,16 +376,27 @@ tens* tens::Rot180() {
 
 
 tens* tens::poolMax(tens* dF, int size) {
+    int maxI, maxJ;
+    double maxVal;
     tens* t = new tens(N, H/size, W/size, C);
-    for (int n=0;n<N;n++,n++) {
-        for (int h=0;h<H;h++,h++) {
-            for (int w=0;w<W;w++) {
-                for (int c=0;c<C;c++) {
-                    getMaxIn
+    for (int n=0;n<N;n++) {
+        for (int c=0;c<C;c++) {
 
-                    data[n*HWC + h*WC + w*C + c];
+            for (int h=0;h<H/size;h++) {
+                for (int w=0;w<W/size;w++) {
 
-
+                    maxVal=0;maxI=0;maxJ=0;
+                    for (int i=0;i<size;i++){
+                         for (int j=0;j<size;j++){
+                            if ( data[n*HWC + (h*size+i)*WC + (w*size+j)*C + c] > maxVal ) {  maxVal=data[n*HWC + (h*size+i)*WC + (w*size+j)*C + c]; maxI=i; maxJ=j; }
+                         }
+                    }
+                    int t0=n*HWC;
+                    int t1=(h*size+maxI)*WC;
+                    int t2=(w*size+maxJ)*C;
+                    int t3=c;
+                    dF->data[n*HWC + (h*size+maxI)*WC + (w*size+maxJ)*C + c]=1;
+                    t->data[n*(H/size)*(W/size)*C + h*(W/size)*C + w*C + c]=maxVal;
                 }
             }
         }
