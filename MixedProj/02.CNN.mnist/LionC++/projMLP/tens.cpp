@@ -313,10 +313,12 @@ tens* tens::addPadding(int p) {
 
 tens* tens::CNN( tens* Xin , double OneHalfOrZero ) { // I am a FILTER !
     int Xn=Xin->getN();
-    int p=W-1; // start=end=0 Full convolution | start=end=(F-1)/2 Half convolution | start=end=(F-1) Inner convolution
-    if (OneHalfOrZero<.7 && OneHalfOrZero>.1){p=(W-1)/2;}
-    if (OneHalfOrZero<.1){ p=0;}
-    tens* X = Xin->addPadding(p);
+    tens* X=nullptr;
+    int p=0;
+    if (OneHalfOrZero>.7){p=W-1; X = Xin->addPadding(p);} // start=end=0 Full convolution | start=end=(F-1)/2 Half convolution | start=end=(F-1) Inner convolution
+    if (OneHalfOrZero<.7 && OneHalfOrZero>.1){p=(W-1)/2; X = Xin->addPadding(p);}
+    if (OneHalfOrZero<.1){ p=0; X=Xin; }
+
 
     //std::cout<<"X:"<<std::endl;
     //X->myPrint();
@@ -339,7 +341,7 @@ tens* tens::CNN( tens* Xin , double OneHalfOrZero ) { // I am a FILTER !
                                  sum+=data[ ch*HWC + i*WC + wc] *  X->data[ n*X->HWC + (h+i)*X->WC + wc+w]; //sum+=data[n, i, j] *  X->data[n, h+i, cw+j];
                          }
                      }
-                     t->data[n*t->H*W*N + h*t->W*N + w*N + ch] = sum; //t->data[n,h,cw] = sum;
+                     t->data[n*t->H*t->W*N + h*t->W*N + w*N + ch] = sum; //t->data[n,h,cw] = sum;
                  }
              }
        }
@@ -347,6 +349,7 @@ tens* tens::CNN( tens* Xin , double OneHalfOrZero ) { // I am a FILTER !
     delete X;
     return t;
    };
+
 
 tens* tens::Rot180() {
     tens* t = new tens( N,H,W,C );
@@ -362,4 +365,37 @@ tens* tens::Rot180() {
         }
     }
     return t;
-}
+};
+
+
+
+tens* tens::poolMax(tens* dF, int size) {
+    tens* t = new tens(N, H/size, W/size, C);
+    for (int n=0;n<N;n++,n++) {
+        for (int h=0;h<H;h++,h++) {
+            for (int w=0;w<W;w++) {
+                for (int c=0;c<C;c++) {
+                    getMaxIn
+
+                    data[n*HWC + h*WC + w*C + c];
+
+
+                }
+            }
+        }
+    }
+    return t;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+

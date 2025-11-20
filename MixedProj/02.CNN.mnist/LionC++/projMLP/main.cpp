@@ -392,14 +392,22 @@ int main() {
 
 
     //tens( outputChannelNum, h, w, imageChannels);
-    tens* F = new tens(5,28,28,1);
+    tens* F = new tens(20,5,5,1);
           F->rand(-1,1);
-    tens* Y = F->CNN(XT, 0.5);
+
+    // Forward
+    tens* Y = F->CNN(XT, 0);
 
 
     std::cout<<"Y:"<<std::endl;
     Y->myPrint();
     Y->showShape();
+
+    tens* dF = new tens(1, 24, 24, 20); // size X
+    Y->poolMax(dF, 2);
+
+
+
 
 }
 
