@@ -455,7 +455,7 @@ private LayerConv conv = new LayerConv( 5 , 20, null, null  );
 */
 
 int main() {
-    int const percent = 80; //80
+    int const percent = 5; //80
     long  LEN = percent*600;
     int const class_num=10;
     const long epochs = 50; //500
@@ -465,7 +465,7 @@ int main() {
     // *******************
 
     int h0=28,  w0=28, c0=1;
-    LEN=1;
+    LEN=120;
 
     //len=7;
 
@@ -473,18 +473,21 @@ int main() {
     tens* XT = load_images_asTensor( "../../../01.MPL/data/train-images-idx3-ubyte", LEN, h0, w0, c0 ); // int N, int H, int W, int C )
     tens* ST = load_labels( "../../../01.MPL/data/train-labels-idx1-ubyte", LEN, class_num);
 
-    XT->showShape();
+    //XT->showShape();
 
     //Forward
     // CNN 5*5, output 20*
-    int c1=20; int F1size=5; int pool=2;
-    tens* F1 = new tens(c1, F1size, F1size, c0); // CNN 5X5, 20 channel out
-    tens* deltaF1 = new tens(c1, F1size, F1size, c0);
-    tens* Y1 = new tens(LEN,   h0-F1size+1,     w0-F1size+1, c1 );
-    tens* Y12 = new tens(LEN, Y1->getH(),      Y1->getW(), c1 );
-    tens*dF12 = new tens(LEN, Y1->getH(),      Y1->getW(), c1 );
-    tens* Y13 = new tens(LEN, Y1->getH()/pool, Y1->getW()/pool, c1 );
-    tens*Ein13= new tens(LEN, Y1->getH()/pool, Y1->getW()/pool, c1 );
+    int c1=20; int F1size=5; int pool1=2;
+    tens*     F1 = new tens(c1, F1size, F1size, c0); // CNN 5X5, 20 channel out
+    tens* F1delta = new tens( 1, F1size, F1size, c1 );
+
+    tens*    Y1 = new tens(LEN,   h0-F1size+1,     w0-F1size+1, c1 );
+    tens*  EIn1 = Y1;
+    tens* dY1Pool = new tens(Y1);
+
+
+    tens* Y1Pool = new tens(LEN, Y1->getH()/pool1, Y1->getW()/pool1, c1 );
+    tens* Ein1Pool = Y1Pool;
 
     F1->rand(-1,1);
 
@@ -500,33 +503,46 @@ int main() {
 
     tens*    W2 = new tens(1, Out2, In2 ,1); // <- H - output size, W input size (neuron number)
              W2->rand(-1,1);
-    tens*    X21 = Y13;
-    tens*  Eout2 = Y13;
+
+
     // -----
     tens*    Z2 = new tens(LEN,1,Out2,1);
-    tens*   dF2 = new tens(LEN,1,Out2,1);
+    tens*   dF2 = new tens(Z2);
     tens*   S_Z = new tens(LEN,1,class_num,1 );
 
+
+for (int e=0;e<epochs;e++) {
     // FORWARD
     F1->CNN( Y1, XT  );
-    Y1->poolMax(Y13, dF12, pool);
+    Y1->poolMax(Y1Pool, dY1Pool, pool1);
 
-    Y13->toFlat();
+    Y1Pool->toFlat(); tens*  X21 = Y1Pool;
 
     W2->WXSoftmax(Z2, X21);
 
     Z2->getAccuracy(ST);
     Z2->calculateGradientAtEndSoftmax(S_Z, ST);
 
+    W2->BackSoftmax(Ein1Pool, S_Z, X21);
+    Ein1Pool->to3D(1,12,12,c1);
 
-    //S_Z->myPrint();
-    //ST->myPrint();
+    Ein1Pool->poolMaxRev(EIn1, dY1Pool, pool1);
 
-    W2->BackSoftmax(Y13, S_Z, X21);
-    Y13->to3D(1,12,12,c1);
+    //EIn1->myPrint();
+    //std::cout<<"Ein1"<<std::endl;
+    //EIn1->showShape();
+    //std::cout<<"F1delta"<<std::endl;
+    //F1delta->showShape();
+    //std::cout<<"XT"<<std::endl;
+    //XT->showShape();
+    //break;
+    EIn1->CNN(F1delta, XT);
+   //XT->CNN(F1delta, EIn1);
 
-    Eout2->poolMaxRev(Ein13, dF12, pool);
-    Ein13->showShape();
+    F1->F_updateFilter( F1delta );
+    //F1->myPrint();
+}
+    //Ein13->showShape();
 
 
 

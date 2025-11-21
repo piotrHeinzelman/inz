@@ -9,8 +9,8 @@
 class tens {
 private:
     int N=0, H=0, W=0, C=0, NHWC=0, HWC=0, WC=0;
-    static constexpr double mu=0.00001;
-
+    //static constexpr double mu=0.00001;
+    static constexpr double mu=0.1;
 
 public:
     double* data;
@@ -27,16 +27,16 @@ public:
         for (int i=0; i<NHWC; i++) data[i]=0;
     };
 
-    tens(int N, int H,int W,int C, double* ary)
-    : N{N}
-    , H{H}
-    , W{W}
-    , C{C} {
+    tens( tens* like )
+    : N{like->getN()}
+    , H{like->getH()}
+    , W{like->getW()}
+    , C{like->getC()} {
         NHWC=N*H*W*C;
         HWC=H*W*C;
         WC=W*C;
         data = new double[ NHWC ];
-        for (int i=0; i<NHWC; i++) ary[i]=0;
+        for (int i=0; i<NHWC; i++) this->data[i]=0;
     };
 
     ~tens() {
@@ -66,6 +66,7 @@ public:
     tens* getOneN(  int id );
     void expAryminusMax(  double Y[], double max ,int len );
     void mullAryByValue(  double Y[], double value ,int len );
+    void F_updateFilter(tens* delta);
 
 
 

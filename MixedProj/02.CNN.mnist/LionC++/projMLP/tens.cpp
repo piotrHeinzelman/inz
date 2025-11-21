@@ -315,6 +315,15 @@ void tens::addPadding( tens* result, int p) { //result = new tens(N, H+p+p, W+p+
 // b) Half center of Filter over all images padding (F-1)/2
 
 
+//  Y = X - F + 1   (min)
+
+//  Y = X + F - 1   (Full)
+
+// forward:  Y = X*F  ->  F.CNN(Y,X)
+
+// backward: delta  = Conv(X,Ein)   ->   Ein.CNN(delta, X); F=F-u*delta
+
+
 void tens::CNN( tens* result, tens* X  ) { // I am a FILTER ! // result = new tens(Xn, H0, W0, N); // W0= X->W -W + 1;
                                                                    // min p=0
                                                                    // Same p=(W-1)/2
@@ -343,6 +352,8 @@ void tens::CNN( tens* result, tens* X  ) { // I am a FILTER ! // result = new te
                                  sum+=data[ ch*HWC + i*WC + wc] *  X->data[ n*X->HWC + (h+i)*X->WC + wc+w]; //sum+=data[n, i, j] *  X->data[n, h+i, cw+j];
                          }
                      }
+                    //result->showShape();
+                    //std::cout<<"n*H0*W0*N: "<<n*H0*W0*N << ", h*W0*N: "<< h*W0*N << ", w*N: "<< w*N << ", ch: " << ch <<std::endl;
                      result->data[n*H0*W0*N + h*W0*N + w*N + ch] = sum; //t->data[n,h,cw] = sum;
                  }
              }
@@ -421,7 +432,11 @@ void tens::poolMaxRev(tens* result, tens* dF, int size) { // result = new tens(N
 
 
 
-
+void tens::F_updateFilter(tens* delta) { // F = F -u * delta
+    for (int i=8;i<NHWC;i++) {
+        data[i]= data[i] + mu*delta->data[i];
+    }
+}
 
 
 
