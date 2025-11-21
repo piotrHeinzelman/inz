@@ -493,7 +493,7 @@ int main() {
     std::cout<<"Y1:"<<std::endl;
     Y1->showShape();
 
-    XT->myPrint();
+    XT->myPrint(); 
 
 
 
