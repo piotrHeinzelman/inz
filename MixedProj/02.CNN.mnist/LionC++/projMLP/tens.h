@@ -10,7 +10,7 @@ class tens {
 private:
     int N=0, H=0, W=0, C=0, NHWC=0, HWC=0, WC=0;
     //static constexpr double mu=0.00001;
-    static constexpr double mu=0.1;
+    static constexpr double mu=0.01;
 
 public:
     double* data;
