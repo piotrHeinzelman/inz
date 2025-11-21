@@ -464,7 +464,7 @@ int main() {
     start_loadData = clock();
     // *******************
 
-    int h0=28,  w0=28, c0=2;
+    int h0=5,  w0=5, c0=2;
     LEN=2;
 
     //len=7;
@@ -473,9 +473,93 @@ int main() {
     tens* XT = load_images_asTensor( "../../../01.MPL/data/train-images-idx3-ubyte", LEN, h0, w0, c0 ); // int N, int H, int W, int C )
     tens* ST = load_labels( "../../../01.MPL/data/train-labels-idx1-ubyte", LEN, class_num);
 
+    tens* X0 = new tens(2,h0,w0,2);
+
+    tens* W0 = new tens(2,3,3,6);
+    {
+        W0->setPoint(0,0,0,0,1.1);
+        W0->setPoint(0,0,1,0,2.1);
+        W0->setPoint(0,0,2,0,3.1);
+        W0->setPoint(0,1,0,0,4.1);
+        W0->setPoint(0,1,1,0,5.1);
+        W0->setPoint(0,1,2,0,6.1);
+        W0->setPoint(0,2,0,0,7.1);
+        W0->setPoint(0,2,1,0,8.1);
+        W0->setPoint(0,2,2,0,9.1);
+
+        W0->setPoint(0,0,0,1,1.2);
+        W0->setPoint(0,0,1,1,2.2);
+        W0->setPoint(0,0,2,1,3.2);
+        W0->setPoint(0,1,0,1,4.2);
+        W0->setPoint(0,1,1,1,5.2);
+        W0->setPoint(0,1,2,1,6.2);
+        W0->setPoint(0,2,0,1,7.2);
+        W0->setPoint(0,2,1,1,8.2);
+        W0->setPoint(0,2,2,1,9.2);
+
+        W0->setPoint(0,0,0,2,1.3);
+        W0->setPoint(0,0,1,2,2.3);
+        W0->setPoint(0,0,2,2,3.3);
+        W0->setPoint(0,1,0,2,4.3);
+        W0->setPoint(0,1,1,2,5.3);
+        W0->setPoint(0,1,2,2,6.3);
+        W0->setPoint(0,2,0,2,7.3);
+        W0->setPoint(0,2,1,2,8.3);
+        W0->setPoint(0,2,2,2,9.3);
+
+        W0->setPoint(0,0,0,3,1.4);
+        W0->setPoint(0,0,1,3,2.4);
+        W0->setPoint(0,0,2,3,3.4);
+        W0->setPoint(0,1,0,3,4.4);
+        W0->setPoint(0,1,1,3,5.4);
+        W0->setPoint(0,1,2,3,6.4);
+        W0->setPoint(0,2,0,3,7.4);
+        W0->setPoint(0,2,1,3,8.4);
+        W0->setPoint(0,2,2,3,9.4);
+
+        W0->setPoint(0,0,0,4,1.5);
+        W0->setPoint(0,0,1,4,2.5);
+        W0->setPoint(0,0,2,4,3.5);
+        W0->setPoint(0,1,0,4,4.5);
+        W0->setPoint(0,1,1,4,5.5);
+        W0->setPoint(0,1,2,4,6.5);
+        W0->setPoint(0,2,0,4,7.5);
+        W0->setPoint(0,2,1,4,8.5);
+        W0->setPoint(0,2,2,4,9.5);
+
+        W0->setPoint(0,0,0,5,1.6);
+        W0->setPoint(0,0,1,5,2.6);
+        W0->setPoint(0,0,2,5,3.6);
+        W0->setPoint(0,1,0,5,4.6);
+        W0->setPoint(0,1,1,5,5.6);
+        W0->setPoint(0,1,2,5,6.6);
+        W0->setPoint(0,2,0,5,7.6);
+        W0->setPoint(0,2,1,5,8.6);
+        W0->setPoint(0,2,2,5,9.6);
+
+
+
+        X0->setPoint(0,0,0,0,1.1);
+        X0->setPoint(0,0,0,1,1.2);
+        X0->setPoint(0,0,0,2,1.3);
+        X0->setPoint(0,0,1,0,2.1);
+        X0->setPoint(0,0,1,1,2.2);
+        X0->setPoint(0,0,1,2,2.3);
+        X0->setPoint(0,2,0,0,0.1);
+        X0->setPoint(0,2,0,0,0.2);
+        X0->setPoint(0,2,0,0,0.3);
+    }
+    //W0->setPoint(1,0,0,0,7.7);
+
+    //X0->myPrint();
+
+    tens* Y0 = new tens(2, 3, 3, 2);
+
+
+
     // layer 1 CNN
     // Filter size:
-    int FSize = 5;
+    int FSize = 2;
     // Output channel:
     int c1 = 3; //20 //
     // output sizes:
@@ -484,21 +568,26 @@ int main() {
     tens* W1 = new tens(LEN, h0, w0, c0*c1 ); W1->rand(-1,1);
     tens* Y1 = new tens(LEN, h1, w1, c1);
 
-    std::cout<<"X1:"<<std::endl;
-    XT->showShape();
+    //std::cout<<"X1:"<<std::endl;
+    //XT->showShape();
 
-    std::cout<<"W1:"<<std::endl;
-    W1->showShape();
+    //std::cout<<"W1:"<<std::endl;
+    //W1->showShape();
 
-    std::cout<<"Y1:"<<std::endl;
-    Y1->showShape();
+    //std::cout<<"Y1:"<<std::endl;
+    //Y1->showShape();
 
-    XT->myPrint(); 
+    //XT->myPrint();
+    X0->rand(-1,1);
+    W0->rand(-1,1);
 
+    W0->CNN( Y0, X0 );
 
+    //sY0->myPrint();
 
-
-
+    std::cout<<"Y0:"<<std::endl;
+    Y0->showShape();
+    Y0->myPrint();
 
 
     return 0;

@@ -329,7 +329,8 @@ void tens::CNN( tens* result, tens* X  ) { // I am a FILTER ! // result = new te
                                                                    // Same p=(W-1)/2
                                                                    // FULL  p=W-1;
     int Xn=X->getN();                                              // tens* X = new tens(N, H+p+p, W+p+p, C);
-
+    int ChannelOut = result->getC();
+    int ChannelIn  = X->getC();
     // int p=0;
     // if (OneHalfOrZero>.7){ p=W-1; } // start=end=0 Full convolution | start=end=(F-1)/2 Half convolution | start=end=(F-1) Inner convolution
     // if (OneHalfOrZero<.7 && OneHalfOrZero>.1){ p=(W-1)/2;  }
@@ -337,28 +338,61 @@ void tens::CNN( tens* result, tens* X  ) { // I am a FILTER ! // result = new te
 
    int W0= X->W -W + 1;
    int H0= X->H -H + 1;
+
+  // show info !
+   std::cout<<"res: (n:"<<Xn<<", h:"<<H0<<", w:"<<W0<<", c:" << ChannelOut << "); "<<std::endl;
+  //  result->showShape();
+   int W0Cin = W0*ChannelIn;
    double sum=0;
 
 
+        for (int n=0; n<X->getN(); n++ ) {
+            for (int h=0; h<H0; h++ ) {  // over image
+                for (int w=0; w<W0; w++) {
+
+                    for (int co=0; co<ChannelOut; co++ ) {
+                    sum=0;
+                    for (int y=0; y<H; y++) {  // over filter
+                        for (int x=0; x<W; x++ ) {
+
+                                for (int ci=0; ci<ChannelIn; ci++) {
+
+                                    // std::cout << "?" <<std::endl;
+                                    //if ( n==1 && h==0 && y==1 && w==0 && x==0  && co==0  ) {
+                                    //    std::cout<< "ci:" << ci << ", "<< X->data[ n*Xn*X->W*ChannelIn +  (y+h)*X->W*ChannelIn  + (w+x)*ChannelIn + co*0 + ci]  <<std::endl;
+                                    //    std::cout << data[ n*HWC + (h+y)*WC + (w+x)*C + co*ChannelIn + ci ]<<std::endl;
+                                    //}
+                                    sum += data[ n*0 + (h+y)*WC + (w+x)*C + co*ChannelIn + ci ] * X->data[ n*X->H*X->W*ChannelIn +  (y+h)*X->W*ChannelIn  + (w+x)*ChannelIn + co*0 + ci];
+
+                                }
+                            }
+                        }
+                       result->data[ n*W0*H0*ChannelOut + h*W0*ChannelOut + w*ChannelOut + co ]=sum;
+                    }
+                }
+            }
+        }
+
+
+
+/*
    for (int n=0;n<Xn;n++) { // over images
      for (int ch=0;ch<N;ch++) {
          for (int h=0;h<(H0);h++) {
              for (int w=0;w<(W0);w++) {
                  sum=0;
                  //
-                     //calc [h,wc]
                      for (int i=0;i<H;i++) {
                          for (int wc=0;wc<WC;wc++) {
                                  sum+=data[ ch*HWC + i*WC + wc] *  X->data[ n*X->HWC + (h+i)*X->WC + wc+w]; //sum+=data[n, i, j] *  X->data[n, h+i, cw+j];
                          }
                      }
-                    //result->showShape();
-                    //std::cout<<"n*H0*W0*N: "<<n*H0*W0*N << ", h*W0*N: "<< h*W0*N << ", w*N: "<< w*N << ", ch: " << ch <<std::endl;
                      result->data[n*H0*W0*N + h*W0*N + w*N + ch] = sum; //t->data[n,h,cw] = sum;
                  }
              }
        }
     }
+  */
    };
 
 
