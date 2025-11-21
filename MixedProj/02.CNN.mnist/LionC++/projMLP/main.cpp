@@ -61,6 +61,90 @@
              [ F ] --> dF
     Eout <-- [ B ] <-- Ein    =   Eout <--
 */
+
+/*  EXAMPLE 06
+
+XT->setPoint(0,0,0,0,1);
+XT->setPoint(0,0,1,0,2);
+XT->setPoint(0,0,2,0,3);
+XT->setPoint(0,0,3,0,4);
+XT->setPoint(0,0,4,0,5);
+XT->setPoint(0,1,0,0,6);
+XT->setPoint(0,1,1,0,7);
+XT->setPoint(0,1,2,0,8);
+XT->setPoint(0,1,3,0,9);
+XT->setPoint(0,1,4,0,10);
+XT->setPoint(0,2,0,0,10);
+XT->setPoint(0,2,1,0,11);
+XT->setPoint(0,2,2,0,12);
+XT->setPoint(0,2,3,0,13);
+XT->setPoint(0,2,4,0,14);
+XT->setPoint(0,3,0,0,15);
+XT->setPoint(0,3,1,0,16);
+XT->setPoint(0,3,2,0,17);
+XT->setPoint(0,3,3,0,18);
+XT->setPoint(0,3,4,0,19);
+XT->setPoint(0,4,0,0,20);
+XT->setPoint(0,4,1,0,21);
+XT->setPoint(0,4,2,0,22);
+XT->setPoint(0,4,3,0,23);
+XT->setPoint(0,4,4,0,24);
+
+std::cout<<"XT:"<<std::endl;
+XT->myPrint();
+
+
+//tens( outputChannelNum, h, w, imageChannels);
+int Fsize=3;
+tens* F = new tens(2,Fsize,Fsize,1); // 20,5,5,1
+      F->rand(-1,1);
+
+
+// FULL p=0  // Same p=(W-1)/2  // Min  p=(W-1);
+int p= 0 *((Fsize-1)/2);
+tens* XTp = new tens(XT->getN(), (XT->getH()+p+p), (XT->getW()+p+p), XT->getC() );
+       XT->addPadding( XTp, p ); ////result = new tens(N, H+p+p, W+p+p, C);
+
+
+// Forward
+tens* Y = new tens( XTp->getN(), XTp->getH()-Fsize+1, XTp->getW()-Fsize+1, (2) );
+
+
+F->CNN( Y, XTp );
+Y->myPrint();
+
+//get Delta F
+F->myPrint();
+
+F->Rot180(F);
+
+//result = new tens(); // W0= X->W -W + 1;
+
+*/
+
+/*
+
+
+tens* dF = new tens(1, 5, 5, 1); // size X
+tens* XXX;
+XT->poolMax(XXX, dF, 2);
+XXX->myPrint();
+dF->myPrint();
+
+Y->myPrint();
+Y->HamandMullAry(Y, dF);
+
+std::cout<<"Y:"<<std::endl;
+
+Y->myPrint();
+
+
+
+Y->poolMax(Y, dF, 2);
+
+
+*/
+
 /*  Example 5
 
 tens* T = new tens(1,3,3,1);
@@ -371,83 +455,86 @@ private LayerConv conv = new LayerConv( 5 , 20, null, null  );
 */
 
 int main() {
-   int const percent = 80; //80
-   long  LEN = percent*600;
-   int const class_num=10;
-   const long epochs = 50; //500
+    int const percent = 80; //80
+    long  LEN = percent*600;
+    int const class_num=10;
+    const long epochs = 50; //500
 
     clock_t start_loadData, end_loadData, start_train, end_train, start_accu, end_accu;
     start_loadData = clock();
-  // *******************
+    // *******************
 
-    int h=5,  w=5, c=1;
+    int h0=28,  w0=28, c0=1;
     LEN=1;
 
     //len=7;
 
-    //if (false) {
-        tens* XT = load_images_asTensor( "../../../01.MPL/data/train-images-idx3-ubyte", LEN, h, w, c ); // int N, int H, int W, int C )
-        tens* ST = load_labels( "../../../01.MPL/data/train-labels-idx1-ubyte", LEN, class_num);
-    //}
+
+    tens* XT = load_images_asTensor( "../../../01.MPL/data/train-images-idx3-ubyte", LEN, h0, w0, c0 ); // int N, int H, int W, int C )
+    tens* ST = load_labels( "../../../01.MPL/data/train-labels-idx1-ubyte", LEN, class_num);
+
+    XT->showShape();
+
+    //Forward
+    // CNN 5*5, output 20*
+    int c1=20; int F1size=5; int pool=2;
+    tens* F1 = new tens(c1, F1size, F1size, c0); // CNN 5X5, 20 channel out
+    tens* deltaF1 = new tens(c1, F1size, F1size, c0);
+    tens* Y1 = new tens(LEN,   h0-F1size+1,     w0-F1size+1, c1 );
+    tens* Y12 = new tens(LEN, Y1->getH(),      Y1->getW(), c1 );
+    tens*dF12 = new tens(LEN, Y1->getH(),      Y1->getW(), c1 );
+    tens* Y13 = new tens(LEN, Y1->getH()/pool, Y1->getW()/pool, c1 );
+    tens*Ein13= new tens(LEN, Y1->getH()/pool, Y1->getW()/pool, c1 );
+
+    F1->rand(-1,1);
+
+//    F1->CNN( Y1, XT  );
+//    Y1->poolMax(Y13, dF12, pool);
+
+//    Y13->toFlat();
+
+    // MLP
+
+    int In2 =(12*12*c1);
+    int Out2=10;
+
+    tens*    W2 = new tens(1, Out2, In2 ,1); // <- H - output size, W input size (neuron number)
+             W2->rand(-1,1);
+    tens*    X21 = Y13;
+    tens*  Eout2 = Y13;
+    // -----
+    tens*    Z2 = new tens(LEN,1,Out2,1);
+    tens*   dF2 = new tens(LEN,1,Out2,1);
+    tens*   S_Z = new tens(LEN,1,class_num,1 );
+
+    // FORWARD
+    F1->CNN( Y1, XT  );
+    Y1->poolMax(Y13, dF12, pool);
+
+    Y13->toFlat();
+
+    W2->WXSoftmax(Z2, X21);
+
+    Z2->getAccuracy(ST);
+    Z2->calculateGradientAtEndSoftmax(S_Z, ST);
 
 
-    XT->setPoint(0,0,0,0,0);
-    XT->setPoint(0,0,1,0,1);
-    XT->setPoint(0,0,2,0,2);
-    XT->setPoint(0,0,3,0,3);
-    XT->setPoint(0,0,4,0,4);
-    XT->setPoint(0,1,0,0,5);
-    XT->setPoint(0,1,1,0,6);
-    XT->setPoint(0,1,2,0,7);
-    XT->setPoint(0,1,3,0,8);
-    XT->setPoint(0,1,4,0,9);
-    XT->setPoint(0,2,0,0,10);
-    XT->setPoint(0,2,1,0,11);
-    XT->setPoint(0,2,2,0,12);
-    XT->setPoint(0,2,3,0,13);
-    XT->setPoint(0,2,4,0,14);
-    XT->setPoint(0,3,0,0,15);
-    XT->setPoint(0,3,1,0,16);
-    XT->setPoint(0,3,2,0,17);
-    XT->setPoint(0,3,3,0,18);
-    XT->setPoint(0,3,4,0,19);
-    XT->setPoint(0,4,0,0,20);
-    XT->setPoint(0,4,1,0,21);
-    XT->setPoint(0,4,2,0,22);
-    XT->setPoint(0,4,3,0,23);
-    XT->setPoint(0,4,4,0,24);
+    //S_Z->myPrint();
+    //ST->myPrint();
 
+    W2->BackSoftmax(Y13, S_Z, X21);
+    Y13->to3D(1,12,12,c1);
 
-    //tens( outputChannelNum, h, w, imageChannels);
-    tens* F = new tens(2,3,3,1); // 20,5,5,1
-          F->rand(-1,1);
-
-    // Forward
-    tens* Y = F->CNN(XT, 0);
-    XT->myPrint();
-
-
-
-
-
-    tens* dF = new tens(1, 5, 5, 1); // size X
-    tens* XXX = XT->poolMax(dF, 2);
-    XXX->myPrint();
-    dF->myPrint();
-
-    Y->myPrint();
-    Y->HamandMullAry(dF);
-
-    std::cout<<"Y:"<<std::endl;
-
-    Y->myPrint();
-
-
-
-    Y->poolMax(dF, 2);
-
+    Eout2->poolMaxRev(Ein13, dF12, pool);
+    Ein13->showShape();
 
 
 
-}
 
+
+
+    //W1->BackWX(Eout1, dF1, Eout2, X1);
+
+
+
+};

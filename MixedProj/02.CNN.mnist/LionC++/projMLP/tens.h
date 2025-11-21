@@ -53,32 +53,52 @@ public:
     void       rand( int min, int max );
 
 
-
-    // Without operator overloading:
-    void addN1( tens* const  y );
-    void mulN1( double mul );
-    void HamandMullAry( tens* Y );
-
     void toFlat();
     void to3D(int n, int h, int w, int c);
+
+
+    double getMax( const double Y[], int len );
+    double getSum( const double Y[], int len );
+
+    void showShape();
+    void getAccuracy( tens* S);
+
+    tens* getOneN(  int id );
+    void expAryminusMax(  double Y[], double max ,int len );
+    void mullAryByValue(  double Y[], double value ,int len );
+
+
 
     void WX       ( tens* result, tens* dF, tens* X );
     void WXSoftmax( tens* result, tens* X );
 
-    double getMax( const double Y[], int len );
-    double getSum( const double Y[], int len );
-    tens* getOneN(  int id );
-    void expAryminusMax(  double Y[], double max ,int len );
-    void mullAryByValue(  double Y[], double value ,int len );
-    void showShape();
-    void calculateGradientAtEndSoftmax(tens* S);
+
+
+    void addN1( tens* result, tens* const  y );
+    void mulN1( tens* result, double mul );
+    void HamandMullAry( tens* result, tens* Y );
+    void calculateGradientAtEndSoftmax(tens* result, tens* S);
+
     void BackWX(      tens* Eout, tens* dF, tens* eIn, tens* X );
     void BackSoftmax( tens* Eout, tens* S_Z, tens* X );
-    void getAccuracy( tens* S);
-    tens* addPadding(int padding);
-    tens* CNN( tens* X, double OneHalfOrZero );
-    tens* Rot180();
-    tens* poolMax(tens* dF, int size);
+
+    void addPadding( tens* result, int padding);
+    void CNN( tens* result,  tens* X );
+    void Rot180( tens* result );
+    void poolMax( tens* result, tens* dF, int size);
+    void poolMaxRev(tens* result, tens* dF, int size);
+    void ReLU   ( tens* result );
+
+
+
+
+
+
+
+
+
+
+
 
 
     //tens* WXSigmoid( tens* result, tens* dF, tens* X);

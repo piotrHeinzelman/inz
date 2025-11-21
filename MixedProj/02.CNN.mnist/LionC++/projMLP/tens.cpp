@@ -43,29 +43,29 @@ void tens::rand(int min, int max) {
     for (int i=0;i<NHWC;i++) data[i]=( min+0.001*( std::rand()%(delta*1000) )); //(m*0.5);//m;;
 };
 
-void tens::addN1( tens* const y ) {
+void tens::addN1(  tens* result, tens* const y ) {
     for (int i=0;i<NHWC;i++){
-        data[i]+=y->data[i];
+        result->data[i]=data[i] + y->data[i];
     }
 };
 
 
-void tens::mulN1( double mul ){
+void tens::mulN1(  tens* result, double mul ){
     for ( int i=0;i<HWC;i++){
-        data[i]=mul*data[i];
+        result->data[i]=data[i]*mul;
     }
 };
 
-void tens::HamandMullAry( tens* Y ){
+void tens::HamandMullAry(  tens* result, tens* Y ){
     for ( int i=0;i<HWC;i++){
-        data[i] = data[i] * Y->data[i];
+        result->data[i] = data[i] * Y->data[i];
     }
 };
 
 void tens::toFlat() {
    N=1;
-   H=NHWC;
-   W=1;
+   H=1;
+   W=NHWC;
    C=1;
    HWC=H*W*C;
    WC=W*C;
@@ -247,11 +247,11 @@ void tens::showShape() {
 };
 
 
-void tens::calculateGradientAtEndSoftmax(tens* S) { // this is Z
+void tens::calculateGradientAtEndSoftmax( tens* result, tens* S) { // this is Z
     //   [1] - [0.54]
     //   [0] - [0.47]
      for (int i=0;i<NHWC;i++) {
-         data[i]= S->data[i] - data[i];
+         result->data[i]= S->data[i] - data[i];
      }
     //for (int i=0;i<NHWC;i++){ data[i]=data[i] -1*S->data[i]; }
     //for (int i=0;i<NHWC;i++){ data[i]= -.3+ S->data[i]; }
@@ -295,20 +295,18 @@ p  ### ##### ###  p
 
 
 
-tens* tens::addPadding(int p) {
-    tens* t=new tens(N, H+p+p, W+p+p, C);
+void tens::addPadding( tens* result, int p) { //result = new tens(N, H+p+p, W+p+p, C);
     int offset=     C*( p*(p+p+W+1) );
-    int NSize = t->HWC;
+    int NSize = (N *(H+p+p) * (W+p+p) * C);
     for (int n=0;n<N;n++) {
         for (int h=0;h<H;h++) {
             for (int cw=0;cw<WC;cw++) {
-                t->data[ n*NSize + offset + h*t->WC + cw] = data[n*HWC + h*WC +cw ];
+                result->data[ n*NSize + offset + h*(W+p+p)*C + cw] = data[n*HWC + h*WC +cw ];
             }
         }
     }
     //std::cout << "SIZE:" << t->NHWC<<std::endl;
     //std::cout << "offset:" << t->NHWC<<std::endl;
-    return t;
 };
 
 
@@ -317,22 +315,21 @@ tens* tens::addPadding(int p) {
 // b) Half center of Filter over all images padding (F-1)/2
 
 
-tens* tens::CNN( tens* Xin , double OneHalfOrZero ) { // I am a FILTER !
-    int Xn=Xin->getN();
-    tens* X=nullptr;
-    int p=0;
-    if (OneHalfOrZero>.7){p=W-1; X = Xin->addPadding(p);} // start=end=0 Full convolution | start=end=(F-1)/2 Half convolution | start=end=(F-1) Inner convolution
-    if (OneHalfOrZero<.7 && OneHalfOrZero>.1){p=(W-1)/2; X = Xin->addPadding(p);}
-    if (OneHalfOrZero<.1){ p=0; X=Xin->addPadding(0); }
+void tens::CNN( tens* result, tens* X  ) { // I am a FILTER ! // result = new tens(Xn, H0, W0, N); // W0= X->W -W + 1;
+                                                                   // min p=0
+                                                                   // Same p=(W-1)/2
+                                                                   // FULL  p=W-1;
+    int Xn=X->getN();                                              // tens* X = new tens(N, H+p+p, W+p+p, C);
 
+    // int p=0;
+    // if (OneHalfOrZero>.7){ p=W-1; } // start=end=0 Full convolution | start=end=(F-1)/2 Half convolution | start=end=(F-1) Inner convolution
+    // if (OneHalfOrZero<.7 && OneHalfOrZero>.1){ p=(W-1)/2;  }
 
-    //std::cout<<"X:"<<std::endl;
-    //X->myPrint();
 
    int W0= X->W -W + 1;
    int H0= X->H -H + 1;
    double sum=0;
-   tens* t = new tens(Xn, H0, W0, N);
+
 
    for (int n=0;n<Xn;n++) { // over images
      for (int ch=0;ch<N;ch++) {
@@ -340,45 +337,40 @@ tens* tens::CNN( tens* Xin , double OneHalfOrZero ) { // I am a FILTER !
              for (int w=0;w<(W0);w++) {
                  sum=0;
                  //
-
                      //calc [h,wc]
                      for (int i=0;i<H;i++) {
                          for (int wc=0;wc<WC;wc++) {
                                  sum+=data[ ch*HWC + i*WC + wc] *  X->data[ n*X->HWC + (h+i)*X->WC + wc+w]; //sum+=data[n, i, j] *  X->data[n, h+i, cw+j];
                          }
                      }
-                     t->data[n*t->H*t->W*N + h*t->W*N + w*N + ch] = sum; //t->data[n,h,cw] = sum;
+                     result->data[n*H0*W0*N + h*W0*N + w*N + ch] = sum; //t->data[n,h,cw] = sum;
                  }
              }
        }
     }
-    delete X;
-    return t;
    };
 
 
-tens* tens::Rot180() {
-    tens* t = new tens( N,H,W,C );
+void tens::Rot180( tens* result ) { //result = new tens( N,H,W,C );
     int W1=W-1;
     int H1=H-1;
     for (int n=0;n<N;n++) {
         for (int h=0;h<H;h++) {
             for (int w=0;w<W;w++) {
                 for (int c=0;c<C;c++) {
-                    t->data[n*HWC + h*WC + w*C + c ] =  data[ n*HWC + (H1-h)*WC + (W1-w)*C + c ];
+                    result->data[n*HWC + h*WC + w*C + c ] =  data[ n*HWC + (H1-h)*WC + (W1-w)*C + c ];
                 }
             }
         }
     }
-    return t;
 };
 
 
 
-tens* tens::poolMax(tens* dF, int size) {
+void tens::poolMax(tens* result, tens* dF, int size) { // result = new tens(N, H/size, W/size, C);
     int maxI, maxJ;
     double maxVal;
-    tens* t = new tens(N, H/size, W/size, C);
+
     for (int n=0;n<N;n++) {
         for (int c=0;c<C;c++) {
 
@@ -396,17 +388,56 @@ tens* tens::poolMax(tens* dF, int size) {
                     int t2=(w*size+maxJ)*C;
                     int t3=c;
                     dF->data[n*HWC + (h*size+maxI)*WC + (w*size+maxJ)*C + c]=1;
-                    t->data[n*(H/size)*(W/size)*C + h*(W/size)*C + w*C + c]=maxVal;
+                    result->data[n*(H/size)*(W/size)*C + h*(W/size)*C + w*C + c]=maxVal;
                 }
             }
         }
     }
-    return t;
+};
+
+
+void tens::poolMaxRev(tens* result, tens* dF, int size) { // result = new tens(N, H/size, W/size, C); // I-am Ein
+    double val;
+    for (int n=0;n<N;n++) {
+        for (int c=0;c<C;c++) {
+
+            for (int h=0;h<H/size;h++) {
+                for (int w=0;w<W/size;w++) {
+
+                    val = data[n*(H/size)*(W/size)*C + h*(W/size)*C + w*C + c];
+                    for (int i=0;i<size;i++){
+                        for (int j=0;j<size;j++){
+
+   result->data[n*HWC + (h*size+i)*WC + (w*size+i)*C + c] = val * dF->data[n*HWC + (h*size+i)*WC + (w*size+i)*C + c];
+                        }
+                    }
+                }
+            }
+        }
+    }
 };
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+void tens::ReLU( tens* result ) {
+    for (int i=0;i<HWC;i++) {
+        result->data[i]= (data[i]>0)? data[i]:0;
+    }
+}
 
 
 
