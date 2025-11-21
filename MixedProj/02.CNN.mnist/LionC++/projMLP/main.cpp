@@ -458,142 +458,44 @@ int main() {
     int const percent = 80; //80
     long  LEN = percent*600;
     int const class_num=10;
-    const long epochs = 2; //500
+    const long epochs = 120; //500
 
     clock_t start_loadData, end_loadData, start_train, end_train, start_accu, end_accu;
     start_loadData = clock();
     // *******************
 
-    int h0=5,  w0=5, c0=2;
-    LEN=2;
-
-    //len=7;
+    int h0=28,  w0=28, c0=1;
+    LEN=50;
 
 
     tens* XT = load_images_asTensor( "../../../01.MPL/data/train-images-idx3-ubyte", LEN, h0, w0, c0 ); // int N, int H, int W, int C )
     tens* ST = load_labels( "../../../01.MPL/data/train-labels-idx1-ubyte", LEN, class_num);
 
-    tens* X0 = new tens(2,h0,w0,2);
 
-    tens* W0 = new tens(2,3,3,6);
-    {
-        W0->setPoint(0,0,0,0,1.1);
-        W0->setPoint(0,0,1,0,2.1);
-        W0->setPoint(0,0,2,0,3.1);
-        W0->setPoint(0,1,0,0,4.1);
-        W0->setPoint(0,1,1,0,5.1);
-        W0->setPoint(0,1,2,0,6.1);
-        W0->setPoint(0,2,0,0,7.1);
-        W0->setPoint(0,2,1,0,8.1);
-        W0->setPoint(0,2,2,0,9.1);
-
-        W0->setPoint(0,0,0,1,1.2);
-        W0->setPoint(0,0,1,1,2.2);
-        W0->setPoint(0,0,2,1,3.2);
-        W0->setPoint(0,1,0,1,4.2);
-        W0->setPoint(0,1,1,1,5.2);
-        W0->setPoint(0,1,2,1,6.2);
-        W0->setPoint(0,2,0,1,7.2);
-        W0->setPoint(0,2,1,1,8.2);
-        W0->setPoint(0,2,2,1,9.2);
-
-        W0->setPoint(0,0,0,2,1.3);
-        W0->setPoint(0,0,1,2,2.3);
-        W0->setPoint(0,0,2,2,3.3);
-        W0->setPoint(0,1,0,2,4.3);
-        W0->setPoint(0,1,1,2,5.3);
-        W0->setPoint(0,1,2,2,6.3);
-        W0->setPoint(0,2,0,2,7.3);
-        W0->setPoint(0,2,1,2,8.3);
-        W0->setPoint(0,2,2,2,9.3);
-
-        W0->setPoint(0,0,0,3,1.4);
-        W0->setPoint(0,0,1,3,2.4);
-        W0->setPoint(0,0,2,3,3.4);
-        W0->setPoint(0,1,0,3,4.4);
-        W0->setPoint(0,1,1,3,5.4);
-        W0->setPoint(0,1,2,3,6.4);
-        W0->setPoint(0,2,0,3,7.4);
-        W0->setPoint(0,2,1,3,8.4);
-        W0->setPoint(0,2,2,3,9.4);
-
-        W0->setPoint(0,0,0,4,1.5);
-        W0->setPoint(0,0,1,4,2.5);
-        W0->setPoint(0,0,2,4,3.5);
-        W0->setPoint(0,1,0,4,4.5);
-        W0->setPoint(0,1,1,4,5.5);
-        W0->setPoint(0,1,2,4,6.5);
-        W0->setPoint(0,2,0,4,7.5);
-        W0->setPoint(0,2,1,4,8.5);
-        W0->setPoint(0,2,2,4,9.5);
-
-        W0->setPoint(0,0,0,5,1.6);
-        W0->setPoint(0,0,1,5,2.6);
-        W0->setPoint(0,0,2,5,3.6);
-        W0->setPoint(0,1,0,5,4.6);
-        W0->setPoint(0,1,1,5,5.6);
-        W0->setPoint(0,1,2,5,6.6);
-        W0->setPoint(0,2,0,5,7.6);
-        W0->setPoint(0,2,1,5,8.6);
-        W0->setPoint(0,2,2,5,9.6);
-
-
-
-        X0->setPoint(0,0,0,0,1.1);
-        X0->setPoint(0,0,0,1,1.2);
-        X0->setPoint(0,0,0,2,1.3);
-        X0->setPoint(0,0,1,0,2.1);
-        X0->setPoint(0,0,1,1,2.2);
-        X0->setPoint(0,0,1,2,2.3);
-        X0->setPoint(0,2,0,0,0.1);
-        X0->setPoint(0,2,0,0,0.2);
-        X0->setPoint(0,2,0,0,0.3);
-    }
-    //W0->setPoint(1,0,0,0,7.7);
-
-    //X0->myPrint();
-
-    tens* Y0 = new tens(2, 3, 3, 2);
 
 
 
     // layer 1 CNN
     // Filter size:
-    int FSize = 2;
+    int FSize = 5;
     // Output channel:
-    int c1 = 3; //20 //
+    int c1 = 20; //20 //
     // output sizes:
     int h1 = h0-FSize+1;
     int w1 = w0-FSize+1;
-    tens* W1 = new tens(LEN, h0, w0, c0*c1 ); W1->rand(-1,1);
+    tens* W1 = new tens(LEN, FSize, FSize, c0*c1 ); W1->rand(-1,1);
     tens* Y1 = new tens(LEN, h1, w1, c1);
 
-    //std::cout<<"X1:"<<std::endl;
-    //XT->showShape();
-
-    //std::cout<<"W1:"<<std::endl;
-    //W1->showShape();
-
-    //std::cout<<"Y1:"<<std::endl;
-    //Y1->showShape();
-
-    //XT->myPrint();
-    X0->rand(-1,1);
-    W0->rand(-1,1);
-
-    W0->CNN( Y0, X0 );
-
-    //sY0->myPrint();
-
-    std::cout<<"Y0:"<<std::endl;
-    Y0->showShape();
-    Y0->myPrint();
+    int pool=2;
+    tens* dY1Pool = new tens(Y1);
+    tens*  Y1Pool = new tens(LEN, Y1->getH()/pool, Y1->getW()/pool, Y1->getC());
 
 
-    return 0;
-    tens* X1 = XT;
 
-    int In2 = (28*28*c0);
+
+    tens* X2 = Y1Pool ;// output od con layer1;
+
+    int In2 = (12*12*c0);
     int In3 = class_num;
 
     tens*    W2 = new tens(1, In3, In2 ,1); // <- H - output size, W input size (neuron number)
@@ -602,22 +504,33 @@ int main() {
     // -----
     tens*    Z2 = new tens(LEN,1,In3,1);
     tens*   dF2 = new tens(Z2);
-    tens* EOut2 = new tens(X1);
+    tens* EOut2 = new tens(X2);
     tens*   S_Z = new tens(LEN,1,class_num,1 );
 
 
 for (int e=0;e<epochs;e++) {
     // FORWARD
-    //F1->CNN( Y1, XT  );
-    //Y1->poolMax(Y1Pool, dY1Pool, pool1);
 
-    //Y1Pool->toFlat(); tens*  X21 = Y1Pool;
 
-    W2->WXSoftmax(Z2, XT);
+
+    W1->CNN( Y1, XT );
+    Y1->poolMax(Y1Pool, dY1Pool, 2);
+    Y1Pool->toFlat();
+
+    Y1Pool->myPrint();
+    break;
+
+    W2->WXSoftmax(Z2, X2);
+
+
+
     Z2->getAccuracy(ST);
     Z2->calculateGradientAtEndSoftmax(S_Z, ST);
 
     W2->BackSoftmax(EOut2, S_Z, XT);
+
+    EOut2->showShape();
+    EOut2->myPrint();
 
     //Ein1Pool->to3D(LEN,1,28*28,c1);
     //Ein1Pool->poolMaxRev(EIn1, dY1Pool, pool1);

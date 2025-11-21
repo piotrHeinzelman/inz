@@ -63,9 +63,8 @@ void tens::HamandMullAry(  tens* result, tens* Y ){
 };
 
 void tens::toFlat() {
-   N=1;
+   W=HWC;
    H=1;
-   W=NHWC;
    C=1;
    HWC=H*W*C;
    WC=W*C;
@@ -339,9 +338,11 @@ void tens::CNN( tens* result, tens* X  ) { // I am a FILTER ! // result = new te
    int W0= X->W -W + 1;
    int H0= X->H -H + 1;
 
-  // show info !
-   std::cout<<"res: (n:"<<Xn<<", h:"<<H0<<", w:"<<W0<<", c:" << ChannelOut << "); "<<std::endl;
-  //  result->showShape();
+// show info !  **********
+//
+// std::cout<<"res: (n:"<<Xn<<", h:"<<H0<<", w:"<<W0<<", c:" << ChannelOut << "); "<<std::endl;
+//  result->showShape();
+
    int W0Cin = W0*ChannelIn;
    double sum=0;
 
@@ -468,7 +469,7 @@ void tens::poolMaxRev(tens* result, tens* dF, int size) { // result = new tens(N
 
 void tens::F_updateFilter(tens* delta) { // F = F -u * delta
     for (int i=8;i<NHWC;i++) {
-        data[i]= data[i] + mu*delta->data[i];
+        data[i]= data[i] - mu*delta->data[i];
     }
 }
 
