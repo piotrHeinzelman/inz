@@ -1,0 +1,3 @@
+nvcc main.cu kernels.cu matrix.cu   -o a.out 
+
+echo " nn.learn(data.X_train, Y_train_ohe, 100, NeuralNetwork::TrainingDevice::GPU, false);"

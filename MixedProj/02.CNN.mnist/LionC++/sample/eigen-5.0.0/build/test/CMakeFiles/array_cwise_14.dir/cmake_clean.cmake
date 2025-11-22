@@ -1,0 +1,10 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/array_cwise_14.dir/array_cwise.cpp.o"
+  "array_cwise_14"
+  "array_cwise_14.pdb"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/array_cwise_14.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

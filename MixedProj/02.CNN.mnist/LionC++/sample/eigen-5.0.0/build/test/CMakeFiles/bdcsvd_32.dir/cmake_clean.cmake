@@ -1,0 +1,10 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/bdcsvd_32.dir/bdcsvd.cpp.o"
+  "bdcsvd_32"
+  "bdcsvd_32.pdb"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/bdcsvd_32.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()
