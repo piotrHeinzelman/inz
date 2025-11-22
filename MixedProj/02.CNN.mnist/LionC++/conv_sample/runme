@@ -1,0 +1,3 @@
+echo 'g++ main.cpp  -o MLP'
+nvcc main.cpp  -lcuda -lcublas -lcudnn -o MLP
+./MLP
