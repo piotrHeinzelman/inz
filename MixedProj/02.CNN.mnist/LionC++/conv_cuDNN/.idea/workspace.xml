@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="5435371c-dcfc-42af-9817-9414496c085c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Eig/a.out" beforeDir="false" afterPath="$PROJECT_DIR$/../Eig/a.out" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../conv_sample/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../conv_sample/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../projMLP/c++_cu_cuBlas/CNN" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../sample/eigen-5.0.0/blas/testing/runblastest.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../sample/eigen-5.0.0/blas/testing/runblastest.sh" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="35qVr0kk4olDzcMuWt16gLtwY2W" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.RadMigrateCodeStyle": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "last_opened_file_path": "/home/john/inz/MixedProj/02.CNN.mnist/LionC++/conv2",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5435371c-dcfc-42af-9817-9414496c085c" name="Changes" comment="" />
+      <created>1763837784227</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1763837784227</updated>
+      <workItem from="1763837785438" duration="2000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
