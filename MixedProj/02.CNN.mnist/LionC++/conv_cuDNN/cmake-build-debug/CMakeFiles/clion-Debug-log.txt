@@ -1,0 +1,1 @@
+CMakeLists.txt not found in /home/john/inz/MixedProj/02.CNN.mnist/LionC++/conv_cuDNN Select CMakeLists.txt

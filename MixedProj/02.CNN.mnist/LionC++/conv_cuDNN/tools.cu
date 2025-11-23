@@ -7,6 +7,9 @@
 #include <vector>
 #include <cuda_runtime.h>
 #include <cudnn.h>
+#include <cublas.h>
+#include <cuda.h>
+
 
 #define checkCUDNN(expression)                       \
 {                                                    \
@@ -14,9 +17,62 @@ cudnnStatus_t status = (expression);                 \
 if (status != CUDNN_STATUS_SUCCESS) {                \
 std::cerr << "Error on line " << __LINE__ << ": "    \
 << cudnnGetErrorString(status) << std::endl;         \
-std::exit(EXIT_FAILURE);                              \
-}                                                      \
+std::exit(EXIT_FAILURE);                             \
+}                                                    \
 }
+
+
+#define checkCUDA(expression)                       \
+{                                                   \
+cudaError_t status = (expression);                  \
+if (status != cudaSuccess) {                        \
+std::cerr << "Error on line " << __LINE__ << ": "   \
+<< status << std::endl;                             \
+std::exit(EXIT_FAILURE);                            \
+}                                                   \
+}
+
+
+
+
+
+
+
+
+cudnnHandle_t createHandle() {
+    checkCUDA(cudaSetDevice(0)); // use GPU0
+    int device;
+    struct cudaDeviceProp devProp;
+    checkCUDA(cudaGetDevice(&device));
+    checkCUDA(cudaGetDeviceProperties(&devProp, device));
+    if (false) std::cout << "Compute capability:" << devProp.major << "." << devProp.minor << std::endl;
+
+    cudnnHandle_t handle_;
+    checkCUDNN(cudnnCreate(&handle_));
+    if (false) std::cout << "Created cuDNN handle" << std::endl;
+    return handle_;
+}
+
+
+void destroyHandle(cudnnHandle_t handle) {
+    checkCUDNN(cudnnDestroy(handle));
+    if (false) std::cout << std::endl << "Destroyed cuDNN handle." << std::endl;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 void showImage(const double* ary, int h, int w){

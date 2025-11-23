@@ -15,6 +15,12 @@
 // https://gist.github.com/odashi/1c20ba90388cf02330e1b95963d78039
 //
 // https://www.goldsborough.me/cuda/ml/cudnn/c++/2017/10/01/14-37-23-convolutions_with_cudnn/
+//
+// PDF z adresu: https://images.nvidia.com/content/gtc-kr/part_2_vuno.pdf
+//
+// https://search.brave.com/search?q=cudnnConvolutionForward%28%29+example&summary=1&conversation=1011742db2ef7b775c69f1
+// https://gist.github.com/odashi/1c20ba90388cf02330e1b95963d78039
+// https://stackoverflow.com/questions/37302344/how-to-compute-a-full-convolution-with-nvidia-cudnn
 
 
 
@@ -26,7 +32,7 @@
 #include <vector>
 #include <cuda_runtime.h>
 #include <cudnn.h>
-//#include <cublas.h>
+#include <cublas.h>
 #include <cuda.h>
 #include "tools.cu"
 //using namespace std;
@@ -35,27 +41,40 @@
 int main() {
    int const percent = 1;
    int const class_num=10;
-   long const len = percent*100;
-   const long CYCLES = 5;
+   long const     LEN = percent*100*6;
+   long const TESTLEN = percent*100;
+   const long epochs = 5;
 
    if ( true ) { // load images from file
    std::cout << "#  --- C++ ---\n";
 
-   double* X = new double[ len*784*6 ];
-   double* Y = new double[ len* class_num*6 ];
+   double* X = new double[ LEN*784 ];
+   double* Y = new double[ LEN*class_num ];
 
-   load_images( X,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", len*6, 28, 28);
-   load_labels( Y,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", len, class_num);
+   load_images( X,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", LEN, 28, 28);
+   load_labels( Y,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", LEN, class_num);
 
    showImage(X,28,28);
    showImage(Y,28,10);
+
+
+
+   // MLP *****************
+   cudnnHandle_t handle = createHandle();
+
+
+
+
+   destroyHandle( handle );
+   // END OF MLP **********
+
 
    delete X;
    delete Y;
    }
 
 
-   if (true){ // *************
+   if (false){ // *************
 
     cudaSetDevice(0); // use GPU0
     int device;

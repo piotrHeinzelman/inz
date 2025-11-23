@@ -28,17 +28,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5435371c-dcfc-42af-9817-9414496c085c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/conv2.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cublas_copy_example_frontend.cu" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cublas_example.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cublas_utils.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cudnn_conv.cu" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cudnn_forward_OK" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/load_mnist.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.main.cpp.swp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main" beforeDir="false" afterPath="$PROJECT_DIR$/main" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runme" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/tools.cu" beforeDir="false" afterPath="$PROJECT_DIR$/tools.cu" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -124,13 +117,13 @@
     </key>
   </component>
   <component name="RunManager" selected="C/C++ File.main.cpp">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="conv_cuDNN" type="CMakeListConfigurationType" factoryName="CMakeListConfigurationFactory" temporary="true">
       <method v="2" />
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
     </configuration>
     <configuration name="main.cpp" type="CppFileRunConfiguration" factoryName="CppFileRunConfiguration" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="conv_cuDNN" TARGET_NAME="main.cpp" CONFIG_NAME="main.cpp">
       <option name="compilerFile" value="$x$" />
@@ -169,6 +162,7 @@
       <workItem from="1763842783724" duration="43000" />
       <workItem from="1763843005604" duration="164000" />
       <workItem from="1763843217852" duration="12523000" />
+      <workItem from="1763894040854" duration="4064000" />
     </task>
     <servers />
   </component>
