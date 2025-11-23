@@ -1,0 +1,24 @@
+
+mnist.cu
+git@github.com:SzymonOzog/GPU_Programming.git
+
+ASM
+https://www.youtube.com/watch?v=Zrbw0zajhJM&list=PL5XwKDZZlwaY7t0M5OLprpkJUIrF8Lc9j&index=7
+
+https://www.youtube.com/watch?v=IpHjDoW4ffw
+
+CUDA Matmull Naive !
+https://siboehm.com/articles/22/CUDA-MMM
+
+!!
+https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/
+
+!!!
+https://github.com/nvidia/cudalibrarysamples
+
+!!!!
+https://github.com/NVIDIA/CUDALibrarySamples/tree/main/cuBLAS/Level-3/gemm
+
+
+!!!!!  + python CuTensor ! << Convolution !
+https://github.com/NVIDIA/CUDALibrarySamples/tree/main/cuTENSOR

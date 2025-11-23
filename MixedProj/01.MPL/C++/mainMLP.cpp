@@ -67,7 +67,7 @@ int main() {
    int const percent = 80; //80
    long  LEN = percent*600;
    int const class_num=10;
-   const long epochs = 1;// *10 //500
+   const long epochs = 50;// *10 //500
 
     clock_t start_loadData, end_loadData, start_train, end_train, start_accu, end_accu;
     start_loadData = clock();
