@@ -8,6 +8,16 @@
 #include <cuda_runtime.h>
 #include <cudnn.h>
 
+#define checkCUDNN(expression)                       \
+{                                                    \
+cudnnStatus_t status = (expression);                 \
+if (status != CUDNN_STATUS_SUCCESS) {                \
+std::cerr << "Error on line " << __LINE__ << ": "    \
+<< cudnnGetErrorString(status) << std::endl;         \
+std::exit(EXIT_FAILURE);                              \
+}                                                      \
+}
+
 
 void showImage(const double* ary, int h, int w){
    for (int i=0;i<h;i++){
