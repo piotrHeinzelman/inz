@@ -21,7 +21,24 @@
 // https://search.brave.com/search?q=cudnnConvolutionForward%28%29+example&summary=1&conversation=1011742db2ef7b775c69f1
 // https://gist.github.com/odashi/1c20ba90388cf02330e1b95963d78039
 // https://stackoverflow.com/questions/37302344/how-to-compute-a-full-convolution-with-nvidia-cudnn
+// https://forums.developer.nvidia.com/t/fully-connected-layer-using-cudnn-library/66998
+// https://docs.nvidia.com/deeplearning/performance/index.html#optimizing-performance
+// https://forums.developer.nvidia.com/t/why-is-2-d-convolution-slower-than-the-matrix-product/35754/8
 
+// MLP
+// https://docs.nvidia.com/deeplearning/performance/dl-performance-fully-connected/index.html
+
+// MM https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/index.html#cublas-tile-dim
+// cuBlas GEMM:  C = alpha*AB + beta*C
+// Forward:  A- weight, X-(incoming activations)-B, alpha=1, beta=0
+
+// https://docs.nvidia.com/cuda/cutensor/latest/index.html
+// https://docs.nvidia.com/cuda/cutensor/latest/getting_started.html
+// https://github.com/NVIDIA/CUDALibrarySamples/tree/main/cuBLAS/Level-3/gemm
+
+
+// CNN
+// https://docs.nvidia.com/deeplearning/performance/dl-performance-convolutional/index.html
 
 
 #include <iostream>
@@ -32,148 +49,258 @@
 #include <vector>
 #include <cuda_runtime.h>
 #include <cudnn.h>
-#include <cublas.h>
+//#include <cublas.h>
+#include <cublas_v2.h>
 #include <cuda.h>
+#include "cublas_utils.h"
 #include "tools.cu"
+
+using data_type = double;
+
+
 //using namespace std;
 
 
 int main() {
-   int const percent = 1;
-   int const class_num=10;
-   long const     LEN = percent*100*6;
-   long const TESTLEN = percent*100;
-   const long epochs = 5;
+    int const percent = 1;
+    int const class_num=10;
+    long const     LEN = percent*100*6;
+    long const TESTLEN = percent*100;
+    const long epochs = 5;
 
-   if ( true ) { // load images from file
-   std::cout << "#  --- C++ ---\n";
+    if ( true ) { // load images from file
+        std::cout << "#  --- C++ ---\n";
 
-   double* X = new double[ LEN*784 ];
-   double* Y = new double[ LEN*class_num ];
+        double* X = new double[ LEN*784 ];
+        double* Y = new double[ LEN*class_num ];
 
-   load_images( X,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", LEN, 28, 28);
-   load_labels( Y,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", LEN, class_num);
+        load_images( X,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", LEN, 28, 28);
+        load_labels( Y,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", LEN, class_num);
 
-   showImage(X,28,28);
-   showImage(Y,28,10);
-
-
-
-   // MLP *****************
-   cudnnHandle_t handle = createHandle();
+        showImage(X,28,28);
+        showImage(Y,28,10);
 
 
 
-
-   destroyHandle( handle );
-   // END OF MLP **********
-
-
-   delete X;
-   delete Y;
-   }
+        // MLP *****************
+        cudnnHandle_t handle = createHandle();
 
 
-   if (false){ // *************
-
-    cudaSetDevice(0); // use GPU0
-    int device;
-    struct cudaDeviceProp devProp;
-    cudaGetDevice(&device);
-    cudaGetDeviceProperties(&devProp, device);
-    std::cout << "Compute capability:" << devProp.major << "." << devProp.minor << std::endl;
-
-    cudnnHandle_t handle_;
-    cudnnCreate(&handle_);
-    std::cout << "Created cuDNN handle" << std::endl;
-
-    // create the tensor descriptor
-    cudnnDataType_t dtype = CUDNN_DATA_FLOAT;
-    cudnnTensorFormat_t format = CUDNN_TENSOR_NHWC;
-    int n = 1, h = 1, w = 10, c = 1 ;
-    int NUM_ELEMENTS = n*h*w*c;
-    cudnnTensorDescriptor_t x_desc;
-    cudnnCreateTensorDescriptor(&x_desc);
-    cudnnSetTensor4dDescriptor(x_desc, format, dtype, n, h, w, c);
+        // ************ START MMULL
 
 
+    cublasHandle_t cublasH = NULL;
+    cudaStream_t stream = NULL;
 
+    const int m = 2;
+    const int n = 2;
+    const int k = 2;
+    const int lda = 2;
+    const int ldb = 2;
+    const int ldc = 2;
+    /*
+     *   A = | 1.0 | 2.0 |
+     *       | 3.0 | 4.0 |
+     *
+     *   B = | 5.0 | 6.0 |
+     *       | 7.0 | 8.0 |
+     */
 
-    // create the tensor
-    float *x;
-    cudaMallocManaged(&x, NUM_ELEMENTS * sizeof(float));
-    for(int i=0;i<NUM_ELEMENTS;i++) x[i] = i * 1.00f;
-    std::cout << "Original array: ";
-    for(int i=0;i<NUM_ELEMENTS;i++) std::cout << x[i] << " ";
+    const std::vector<data_type> A = {1.0, 3.0, 2.0, 4.0};
+    const std::vector<data_type> B = {5.0, 7.0, 6.0, 8.0};
+    std::vector<data_type> C(m * n);
+    const data_type alpha = 1.0;
+    const data_type beta = 0.0;
 
+    data_type *d_A = nullptr;
+    data_type *d_B = nullptr;
+    data_type *d_C = nullptr;
 
+    cublasOperation_t transa = CUBLAS_OP_N;
+    cublasOperation_t transb = CUBLAS_OP_N;
 
+    printf("A\n");
+    print_matrix(m, k, A.data(), lda);
+    printf("=====\n");
 
+    printf("B\n");
+    print_matrix(k, n, B.data(), ldb);
+    printf("=====\n");
 
+    /* step 1: create cublas handle, bind a stream */
+    checkCUBLAS(cublasCreate(&cublasH));
 
+    checkCUDA(cudaStreamCreateWithFlags(&stream, cudaStreamNonBlocking));
+    checkCUBLAS(cublasSetStream(cublasH, stream));
 
+    /* step 2: copy data to device */
+    checkCUDA(cudaMalloc(reinterpret_cast<void **>(&d_A), sizeof(data_type) * A.size()));
+    checkCUDA(cudaMalloc(reinterpret_cast<void **>(&d_B), sizeof(data_type) * B.size()));
+    checkCUDA(cudaMalloc(reinterpret_cast<void **>(&d_C), sizeof(data_type) * C.size()));
 
+    checkCUDA(cudaMemcpyAsync(d_A, A.data(), sizeof(data_type) * A.size(), cudaMemcpyHostToDevice,
+                               stream));
+    checkCUDA(cudaMemcpyAsync(d_B, B.data(), sizeof(data_type) * B.size(), cudaMemcpyHostToDevice,
+                               stream));
 
+    /* step 3: compute */
+    checkCUBLAS(
+        cublasDgemm(cublasH, transa, transb, m, n, k, &alpha, d_A, lda, d_B, ldb, &beta, d_C, ldc));
 
-    // create activation function descriptor
-    float alpha[1] = {1};
-    float beta[1] = {0.0};
-    cudnnActivationDescriptor_t sigmoid_activation;
-    cudnnActivationMode_t mode = CUDNN_ACTIVATION_SIGMOID;
-    cudnnNanPropagation_t prop = CUDNN_NOT_PROPAGATE_NAN;
-    cudnnCreateActivationDescriptor(&sigmoid_activation);
-    cudnnSetActivationDescriptor(sigmoid_activation, mode, prop, 0.0f);
+    /* step 4: copy data to host */
+    checkCUDA(cudaMemcpyAsync(C.data(), d_C, sizeof(data_type) * C.size(), cudaMemcpyDeviceToHost,
+                               stream));
 
+    checkCUDA(cudaStreamSynchronize(stream));
 
+    /*
+     *   C = | 23.0 | 31.0 |
+     *       | 34.0 | 46.0 |
+     */
 
+    printf("C\n");
+    print_matrix(m, n, C.data(), ldc);
+    printf("=====\n");
 
-    cudnnActivationForward(
-        handle_,
-        sigmoid_activation,
-        alpha,
-        x_desc,
-        x,
-        beta,
-        x_desc,
-        x
-    );
+    /* free resources */
+    checkCUDA(cudaFree(d_A));
+    checkCUDA(cudaFree(d_B));
+    checkCUDA(cudaFree(d_C));
 
+    checkCUBLAS(cublasDestroy(cublasH));
 
+    checkCUDA(cudaStreamDestroy(stream));
 
+    checkCUDA(cudaDeviceReset());
 
-    cudnnDestroy(handle_);
-    std::cout << std::endl << "Destroyed cuDNN handle." << std::endl;
-    std::cout << "New array: ";
-    for(int i=0;i<NUM_ELEMENTS;i++) std::cout << x[i] << " ";
-    std::cout << std::endl;
-
-
-    cudaFree(x);
-//    return 0;
-
-   }  // ***********
-
-
-   return 0;
+    return EXIT_SUCCESS;
 
 
 
 
-    // CNN
-    // https://www.goldsborough.me/cuda/ml/cudnn/c++/2017/10/01/14-37-23-convolutions_with_cudnn/
 
 
-    cudnnTensorDescriptor_t input_descriptor;
-    checkCUDNN(cudnnCreateTensorDescriptor(&input_descriptor));
-    checkCUDNN(cudnnSetTensor4dDescriptor(input_descriptor,
-                                          /*format=*/CUDNN_TENSOR_NHWC,
-                                          /*dataType=*/CUDNN_DATA_FLOAT,
-                                          /*batch_size=*/1,
-                                          /*channels=*/3,
-                                          /*image_height=*/28,
-                                          /*image_width=*/28));
 
 
-}
 
 
+
+
+
+
+        //END MMULL !!
+
+
+        destroyHandle( handle );
+        // END OF MLP **********
+
+
+        delete X;
+        delete Y;
+
+
+        return (0); // END
+
+
+        if (false){ // *************
+
+            cudaSetDevice(0); // use GPU0
+            int device;
+            struct cudaDeviceProp devProp;
+            cudaGetDevice(&device);
+            cudaGetDeviceProperties(&devProp, device);
+            std::cout << "Compute capability:" << devProp.major << "." << devProp.minor << std::endl;
+
+            cudnnHandle_t handle_;
+            cudnnCreate(&handle_);
+            std::cout << "Created cuDNN handle" << std::endl;
+
+            // create the tensor descriptor
+            cudnnDataType_t dtype = CUDNN_DATA_FLOAT;
+            cudnnTensorFormat_t format = CUDNN_TENSOR_NHWC;
+            int n = 1, h = 1, w = 10, c = 1 ;
+            int NUM_ELEMENTS = n*h*w*c;
+            cudnnTensorDescriptor_t x_desc;
+            cudnnCreateTensorDescriptor(&x_desc);
+            cudnnSetTensor4dDescriptor(x_desc, format, dtype, n, h, w, c);
+
+
+
+
+            // create the tensor
+            float *x;
+            cudaMallocManaged(&x, NUM_ELEMENTS * sizeof(float));
+            for(int i=0;i<NUM_ELEMENTS;i++) x[i] = i * 1.00f;
+            std::cout << "Original array: ";
+            for(int i=0;i<NUM_ELEMENTS;i++) std::cout << x[i] << " ";
+
+
+
+
+
+
+
+
+
+
+            // create activation function descriptor
+            float alpha[1] = {1};
+            float beta[1] = {0.0};
+            cudnnActivationDescriptor_t sigmoid_activation;
+            cudnnActivationMode_t mode = CUDNN_ACTIVATION_SIGMOID;
+            cudnnNanPropagation_t prop = CUDNN_NOT_PROPAGATE_NAN;
+            cudnnCreateActivationDescriptor(&sigmoid_activation);
+            cudnnSetActivationDescriptor(sigmoid_activation, mode, prop, 0.0f);
+
+
+
+
+            cudnnActivationForward(
+                handle_,
+                sigmoid_activation,
+                alpha,
+                x_desc,
+                x,
+                beta,
+                x_desc,
+                x
+            );
+
+
+
+
+            cudnnDestroy(handle_);
+            std::cout << std::endl << "Destroyed cuDNN handle." << std::endl;
+            std::cout << "New array: ";
+            for(int i=0;i<NUM_ELEMENTS;i++) std::cout << x[i] << " ";
+            std::cout << std::endl;
+
+
+            cudaFree(x);
+            //    return 0;
+
+        }  // ***********
+
+
+        return 0;
+
+
+
+
+        // CNN
+        // https://www.goldsborough.me/cuda/ml/cudnn/c++/2017/10/01/14-37-23-convolutions_with_cudnn/
+
+
+        cudnnTensorDescriptor_t input_descriptor;
+        checkCUDNN(cudnnCreateTensorDescriptor(&input_descriptor));
+        checkCUDNN(cudnnSetTensor4dDescriptor(input_descriptor,
+                                              /*format=*/CUDNN_TENSOR_NHWC,
+                                              /*dataType=*/CUDNN_DATA_FLOAT,
+                                              /*batch_size=*/1,
+                                              /*channels=*/3,
+                                              /*image_height=*/28,
+                                              /*image_width=*/28));
+
+
+    }
+};

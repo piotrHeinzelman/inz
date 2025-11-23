@@ -7,7 +7,7 @@
 #include <vector>
 #include <cuda_runtime.h>
 #include <cudnn.h>
-#include <cublas.h>
+//#include <cublas.h>
 #include <cuda.h>
 
 
@@ -32,7 +32,14 @@ std::exit(EXIT_FAILURE);                            \
 }                                                   \
 }
 
-
+#define checkCUBLAS(expression)                     \
+{                                                   \
+cublasStatus_t err_ = (expression);                 \
+if (expression != CUBLAS_STATUS_SUCCESS) {          \
+std::printf("cublas error %d at %s:%d\n", expression, __FILE__, __LINE__);    \
+std::exit(EXIT_FAILURE);                            \
+}                                                   \
+}
 
 
 
