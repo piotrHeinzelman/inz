@@ -46,7 +46,6 @@
 
 #include <iostream>
 #include <ctime>
-#include <random>
 #include <fstream>
 #include <stdio.h>
 #include <string.h>
@@ -73,23 +72,18 @@ int main() {
     long const TESTLEN = percent*100;
     const long epochs = 5;
     int imgW=28, imgH=28;
-    int Lay0Out=64;
 
     if ( true ) { // load images from file
         std::cout << "#  --- C++ ---\n";
 
         double* Xhost = new double[ LEN*784 ];
-        double* Shost = new double[ LEN*class_num ];
-        double* Whost = new double[ imgW*imgH * Lay0Out ];
-        double* YHost = new double[ LEN*Lay0Out];
-
+        double* Yhost = new double[ LEN*class_num ];
 
         load_images( Xhost,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", LEN, imgW, imgH);
-        load_labels( Shost,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", LEN, class_num);
-        rand(); for (int i=0;i<imgW*imgH*Lay0Out;i++){ Whost[i] =  -1+  ( rand()%2000 ) *0.001 ; }
+        load_labels( Yhost,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", LEN, class_num);
 
         showImage(Xhost,imgH,imgW);
-        showImage(Shost,imgH,10);
+        showImage(Yhost,imgH,10);
 
 
 
@@ -102,10 +96,6 @@ int main() {
 
     cublasHandle_t cublasH = NULL;
     cudaStream_t stream = NULL;
-
-    double *X0 = nullptr;
-    double *Y0 = nullptr;
-    double *W0 = nullptr;
 
     const int m = 2;
     const int n = 2;
@@ -120,8 +110,6 @@ int main() {
      *   B = | 5.0 | 6.0 |
      *       | 7.0 | 8.0 |
      */
-
-
 
     const std::vector<data_type> A = {-1.0, 3.0, -2.0, 4.0};
     const std::vector<data_type> B = {5.0, 7.0, 6.0, 8.0};
@@ -151,60 +139,14 @@ int main() {
     checkCUBLAS(cublasSetStream(cublasH, stream));
 
     /* step 2: copy data to device */
-    checkCUDA(cudaMalloc(reinterpret_cast<void **>(&X0), sizeof(double)*LEN*imgW*imgH ));
-    checkCUDA(cudaMemcpyAsync(X0, Xhost, sizeof(double)*LEN*imgH*imgW, cudaMemcpyHostToDevice, stream));
-
-    checkCUDA(cudaMalloc(reinterpret_cast<void **>(&W0), sizeof(double)*imgW*imgH*Lay0Out ));
-    checkCUDA(cudaMemcpyAsync(W0, Whost, sizeof(double)*imgW*imgH*Lay0Out, cudaMemcpyHostToDevice, stream));
-
-    checkCUDA(cudaMalloc(reinterpret_cast<void **>(&Y0), sizeof(double)*LEN*Lay0Out ));
-
-//    checkCUBLAS(cublasDgemm(cublasH, transa, transb, m, n, k, &alpha, d_A, lda, d_B, ldb, &beta, d_C, ldc));
-
-    // cublasSetMatrixAsync(int rows, int cols, int elemSize, const void *A, int lda, void *B, int ldb, cudaStream_t stream)
-//    checkCUBLAS( cublasSetMatrixAsync ( LEN, imgW*imgH, sizeof(double), Xhost, 1, X0, 1, stream));
-
-/*    checkCUDA(cudaMalloc(reinterpret_cast<void **>(&d_A), sizeof(data_type) * A.size()));
+    checkCUDA(cudaMalloc(reinterpret_cast<void **>(&d_A), sizeof(data_type) * A.size()));
     checkCUDA(cudaMalloc(reinterpret_cast<void **>(&d_B), sizeof(data_type) * B.size()));
     checkCUDA(cudaMalloc(reinterpret_cast<void **>(&d_C), sizeof(data_type) * C.size()));
 
     checkCUDA(cudaMemcpyAsync(d_A, A.data(), sizeof(data_type) * A.size(), cudaMemcpyHostToDevice, stream));
     checkCUDA(cudaMemcpyAsync(d_B, B.data(), sizeof(data_type) * B.size(), cudaMemcpyHostToDevice, stream));
-*/
 
-
-
-    // step 4: copy data to host
-    //checkCUDA(cudaMemcpyAsync(C.data(), d_C, sizeof(data_type) * C.size(), cudaMemcpyDeviceToHost, stream));
-
-    checkCUDA(cudaMemcpyAsync(YHost, Y0, sizeof(data_type) *LEN*Lay0Out , cudaMemcpyDeviceToHost, stream));
-    checkCUDA(cudaStreamSynchronize(stream));
-
-
-    for (int i=0;i<(LEN*Lay0Out);i++){ std::cout<<"  "<< Whost[i];}
-return 0;
-
-
-    printf("C\n");
-    print_matrix(m, n, C.data(), ldc);
-    printf("=====\n");
-
-    /* free resources */
-    checkCUDA(cudaFree(d_A));
-    checkCUDA(cudaFree(d_B));
-    checkCUDA(cudaFree(d_C));
-    checkCUDA(cudaFree(X0));
-    checkCUDA(cudaFree(W0));
-    checkCUDA(cudaFree(Y0));
-
-    checkCUBLAS(cublasDestroy(cublasH));
-
-    checkCUDA(cudaStreamDestroy(stream));
-
-    checkCUDA(cudaDeviceReset());
-
-
-        // https://docs.nvidia.com/cuda/cublas/index.html#cublassetmatrix
+// https://docs.nvidia.com/cuda/cublas/index.html#cublassetmatrix
         /*
 cublasSetMatrixAsync()
 cublasStatus_t
@@ -218,20 +160,52 @@ cublasSetMatrix(int rows, int cols, int elemSize,
          */
 
 
-        //matmul(a, b, epilog=Epilog.RELU)
-        /* step 3: compute */
-        /*
-         *https://docs.nvidia.com/cuda/cublas/index.html#cublas-t-gemm
+    //matmul(a, b, epilog=Epilog.RELU)
+    /* step 3: compute */
+/*
+ *https://docs.nvidia.com/cuda/cublas/index.html#cublas-t-gemm
 
-                cublasStatus_t cublasDgemm(cublasHandle_t handle,
-                                           cublasOperation_t transa, cublasOperation_t transb,
-                                           int m, int n, int k,
-                                           const double          *alpha,
-                                           const double          *A, int lda,
-                                           const double          *B, int ldb,
-                                           const double          *beta,
-                                           double          *C, int ldc)
-         */
+        cublasStatus_t cublasDgemm(cublasHandle_t handle,
+                                   cublasOperation_t transa, cublasOperation_t transb,
+                                   int m, int n, int k,
+                                   const double          *alpha,
+                                   const double          *A, int lda,
+                                   const double          *B, int ldb,
+                                   const double          *beta,
+                                   double          *C, int ldc)
+ */
+
+
+
+
+
+    checkCUBLAS(
+        cublasDgemm(cublasH, transa, transb, m, n, k, &alpha, d_A, lda, d_B, ldb, &beta, d_C, ldc));
+
+    /* step 4: copy data to host */
+    checkCUDA(cudaMemcpyAsync(C.data(), d_C, sizeof(data_type) * C.size(), cudaMemcpyDeviceToHost, stream));
+
+    checkCUDA(cudaStreamSynchronize(stream));
+
+    /*
+     *   C = | 23.0 | 31.0 |
+     *       | 34.0 | 46.0 |
+     */
+
+    printf("C\n");
+    print_matrix(m, n, C.data(), ldc);
+    printf("=====\n");
+
+    /* free resources */
+    checkCUDA(cudaFree(d_A));
+    checkCUDA(cudaFree(d_B));
+    checkCUDA(cudaFree(d_C));
+
+    checkCUBLAS(cublasDestroy(cublasH));
+
+    checkCUDA(cudaStreamDestroy(stream));
+
+    //checkCUDA(cudaDeviceReset());
 
 
 
@@ -256,7 +230,7 @@ cublasSetMatrix(int rows, int cols, int elemSize,
 
 
         delete Xhost;
-        delete Shost;
+        delete Yhost;
 
 
         return (0); // END
@@ -335,7 +309,8 @@ cublasSetMatrix(int rows, int cols, int elemSize,
             for(int i=0;i<NUM_ELEMENTS;i++) std::cout << x[i] << " ";
             std::cout << std::endl;
 
-        if (false) cudaFree(x);
+
+            cudaFree(x);
             //    return 0;
 
         }  // ***********

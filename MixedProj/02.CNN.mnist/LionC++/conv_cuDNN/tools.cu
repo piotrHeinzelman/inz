@@ -15,7 +15,7 @@
 {                                                    \
 cudnnStatus_t status = (expression);                 \
 if (status != CUDNN_STATUS_SUCCESS) {                \
-std::cerr << "Error on line " << __LINE__ << ": "    \
+std::cerr << "CUDNN :: Error on line " << __LINE__ << ": "    \
 << cudnnGetErrorString(status) << std::endl;         \
 std::exit(EXIT_FAILURE);                             \
 }                                                    \
@@ -26,7 +26,7 @@ std::exit(EXIT_FAILURE);                             \
 {                                                   \
 cudaError_t status = (expression);                  \
 if (status != cudaSuccess) {                        \
-std::cerr << "Error on line " << __LINE__ << ": "   \
+std::cerr << "CUDA :: Error on line " << __LINE__ << ": "   \
 << status << std::endl;                             \
 std::exit(EXIT_FAILURE);                            \
 }                                                   \
@@ -36,7 +36,7 @@ std::exit(EXIT_FAILURE);                            \
 {                                                   \
 cublasStatus_t err_ = (expression);                 \
 if (expression != CUBLAS_STATUS_SUCCESS) {          \
-std::printf("cublas error %d at %s:%d\n", expression, __FILE__, __LINE__);    \
+std::printf("CUBLAS ::  error %d at %s:%d\n", expression, __FILE__, __LINE__);    \
 std::exit(EXIT_FAILURE);                            \
 }                                                   \
 }
