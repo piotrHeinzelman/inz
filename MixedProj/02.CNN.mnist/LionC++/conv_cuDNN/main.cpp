@@ -81,13 +81,12 @@ int main() {
     if ( true ) { // load images from file
         std::cout << "#  --- C++ ---\n";
 
-        double* Xhost = new double[ LEN*784 ];
-        double* Shost = new double[ LEN*class_num ];
+        double* Xhost = new double[ LEN * Lay0In ];
+        double* Shost = new double[ LEN * class_num ];
         double* Whost = new double[ Lay0In * Lay0Out ];
         double* Yhost = new double[ LEN*Lay0Out];
 
         double* W1host = new double[ Lay1In * Lay1Out ];
-
 
         load_images( Xhost,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", LEN, imgW, imgH);
         load_labels( Shost,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", LEN, class_num);
@@ -116,12 +115,12 @@ int main() {
     const data_type alpha = 1.0;
     const data_type beta = 0.0;
 
-    const int m = 2;
-    const int n = 2;
-    const int k = 2;
-    const int lda = 2;
-    const int ldb = 2;
-    const int ldc = 2;
+    const int m = Lay0Out;
+    const int n = LEN;
+    const int k = Lay0In;
+    const int lda = Lay0In;  // LA - liczba wierszy
+    const int ldb = Lay0In;
+    const int ldc = Lay0Out;
     /*
      *   A = | 1.0 | 2.0 |
      *       | 3.0 | 4.0 |
@@ -158,11 +157,13 @@ int main() {
     //checkCUDA(cudaMemcpyAsync(X0, Xhost, sizeof(double)*LEN*imgH*imgW, cudaMemcpyHostToDevice, stream));
     // copy as vector !!!
     // cublasSetMatrixAsync(int rows, int cols, int elemSize, const void *A, int lda, void *B, int ldb, cudaStream_t stream)
-    cublasSetMatrixAsync(LEN, Lay0In, sizeof(double), Xhost, Lay0In, X0, LEN,  stream);
-
+   // cublasSetMatrixAsync(LEN, Lay0In, sizeof(double), Xhost, Lay0In, X0, LEN,  stream);
+    cublasSetMatrixAsync(Lay0In, LEN,    sizeof(double), Xhost, Lay0In, X0, Lay0In,  stream);
+                      // Pion   Poziom                       Pion A      Pion B
 
     checkCUDA(cudaMalloc(reinterpret_cast<void **>(&W0), sizeof(double)*imgW*imgH*Lay0Out ));
-    cublasSetMatrixAsync(Lay0Out, Lay0In, sizeof(double), Whost, Lay0In, W0, Lay0Out,  stream);
+    cublasSetMatrixAsync(Lay0In, Lay0Out, sizeof(double), Whost, Lay0In, W0, Lay0In,  stream);
+                        // Pion   Poziom                       Pion A      Pion B
     //checkCUDA(cudaMemcpyAsync(W0, Whost, sizeof(double)*imgW*imgH*Lay0Out, cudaMemcpyHostToDevice, stream));
 
     checkCUDA(cudaMalloc(reinterpret_cast<void **>(&Y0), sizeof(double)*LEN*Lay0Out ));
@@ -183,36 +184,19 @@ int main() {
         n - Number of columns of matrix op(B) and C.    LEN (images num)
         k - Number of columns of op(A) and rows of op(B).  Input (28*28)
 
+        array A(W) is [lda*k]
+        array B(X) is [ldb*n]
+        array C(Y) is [ldc*n]
+        lda - Leading dimension of two-dimensional array used to store the matrix A.
+        ldb - Leading dimension of two-dimensional array used to store matrix B.
+        ldc - Leading dimension of a two-dimensional array used to store the matrix C.
  */
-  //  checkCUBLAS(cublasDgemm(cublasH, CUBLAS_OP_T, transb, 200, 200, 200, &alpha, W0, 200, X0, 200, &beta, Y0, 200));
-
-
-/*
-        cublasStatus_t cublasLtMatmul(
-              cublasLtHandle_t               lightHandle,
-              cublasLtMatmulDesc_t           computeDesc,
-              const void                    *alpha,
-              const void                    *A,
-              cublasLtMatrixLayout_t         Adesc,
-              const void                    *B,
-              cublasLtMatrixLayout_t         Bdesc,
-              const void                    *beta,
-              const void                    *C,
-              cublasLtMatrixLayout_t         Cdesc,
-              void                          *D,
-              cublasLtMatrixLayout_t         Ddesc,
-              const cublasLtMatmulAlgo_t    *algo,
-              void                          *workspace,
-              size_t                         workspaceSizeInBytes,
-              cudaStream_t                   stream);
-
- */
+  checkCUBLAS(cublasDgemm(cublasH, CUBLAS_OP_T, transb, m, n, k, &alpha, W0, lda, X0, ldb, &beta, Y0, ldc));
 
 
 
 
 
-        checkCUBLAS(cublasLtMatmul());//
     // cublasSetMatrixAsync(int rows, int cols, int elemSize, const void *A, int lda, void *B, int ldb, cudaStream_t stream)
 //    checkCUBLAS( cublasSetMatrixAsync ( LEN, imgW*imgH, sizeof(double), Xhost, 1, X0, 1, stream));
 
@@ -233,7 +217,7 @@ int main() {
     checkCUDA(cudaStreamSynchronize(stream));
 
 
-    for (int i=0;i<(LEN*Lay0Out);i++){ std::cout<<"  "<< Yhost[i];}
+    for (int i=0;i<(LEN*Lay0Out);i++){if ( Yhost[i]>.1){ std::cout<<"#";} else {std::cout<<".";} ; if ( i%(28)==0) std::cout<<std::endl;}
 
 
 
@@ -283,7 +267,15 @@ cublasSetMatrix(int rows, int cols, int elemSize,
 
 
 
+/*
+        with the leading dimension of the source matrix A and destination matrix B given in lda and ldb, respectively
+        For a matrix A with dimensions M (rows) and N (columns), the leading dimension (often denoted as lda, ldx, or similar) must be at least as large as the number of rows M. This ensures that the routine can correctly access all elements of the matrix, even when the matrix is a submatrix of a larger array.
+        In column-major order (used by Fortran and CUBLAS), the leading dimension is the number of rows M. This is because each column is stored contiguously in memory, and the leading dimension defines the stride between elements in the same column across different rows.
 
+        z wymiarem wiodącym macierzy źródłowej A i macierzy docelowej B podanym odpowiednio w lda i ldb.
+        W przypadku macierzy A o wymiarach M (wiersze) i N (kolumny), wymiar wiodący (często oznaczany jako lda, ldx lub podobnie) musi być co najmniej tak duży, jak liczba wierszy M. Zapewnia to, że procedura może poprawnie uzyskać dostęp do wszystkich elementów macierzy, nawet gdy macierz jest podmacierzą większej tablicy.
+        W kolejności kolumn (używanej przez Fortran i CUBLAS), wymiar wiodący to liczba wierszy M. Dzieje się tak, ponieważ każda kolumna jest przechowywana w pamięci w sposób ciągły, a wymiar wiodący definiuje odstęp między elementami w tej samej kolumnie w różnych wierszach.
+ */
 
 
 
