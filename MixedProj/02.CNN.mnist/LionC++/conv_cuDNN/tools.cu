@@ -46,25 +46,6 @@ std::exit(EXIT_FAILURE);                            \
 
 
 
-cudnnHandle_t createHandle() {
-    checkCUDA(cudaSetDevice(0)); // use GPU0
-    int device;
-    struct cudaDeviceProp devProp;
-    checkCUDA(cudaGetDevice(&device));
-    checkCUDA(cudaGetDeviceProperties(&devProp, device));
-    if (false) std::cout << "Compute capability:" << devProp.major << "." << devProp.minor << std::endl;
-
-    cudnnHandle_t handle_;
-    checkCUDNN(cudnnCreate(&handle_));
-    if (false) std::cout << "Created cuDNN handle" << std::endl;
-    return handle_;
-}
-
-
-void destroyHandle(cudnnHandle_t handle) {
-    checkCUDNN(cudnnDestroy(handle));
-    if (false) std::cout << std::endl << "Destroyed cuDNN handle." << std::endl;
-}
 
 
 
@@ -80,9 +61,7 @@ void destroyHandle(cudnnHandle_t handle) {
 
 
 
-
-
-void showImage(const double* ary, int h, int w){
+void showImage(const float* ary, int h, int w){
    for (int i=0;i<h;i++){
      for (int j=0;j<w;j++){
         int ii=(int)0+16*ary[i*w+j];
@@ -100,7 +79,7 @@ void showImage(const double* ary, int h, int w){
    }
 }
 
-void load_images( double* out, const std::string& filename, int num_images, int rows, int cols) {
+void load_images( float* out, const std::string& filename, int num_images, int rows, int cols) {
     char* buff = new char[ num_images*rows*cols ];
     std::ifstream file(filename, std::ios::binary);
     if (!file.is_open()) { throw std::runtime_error("Cannot open image file!"); } else { std::cout << "file open" << std::endl;  }
@@ -118,7 +97,7 @@ void load_images( double* out, const std::string& filename, int num_images, int 
     file.close();
 }
 
-void load_labels( double* out, const std::string& filename, int num_images, int class_num ) {
+void load_labels( float* out, const std::string& filename, int num_images, int class_num ) {
     char* buff = new char[ num_images ];
     std::ifstream file(filename, std::ios::binary);
     if (!file.is_open()) { throw std::runtime_error("Cannot open image file!"); } else { std::cout << "file open" << std::endl;  }

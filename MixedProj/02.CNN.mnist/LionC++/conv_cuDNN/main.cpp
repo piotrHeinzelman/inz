@@ -60,17 +60,43 @@
 #include "cublas_utils.h"
 #include "tools.cu"
 
-using data_type = double;
+
+// https://forums.developer.nvidia.com/t/fully-connected-layer-using-cudnn-library/66998/2
+
+/*
+
+Hi there,
+I’m building a neural network with 2 convolution layers and 2 fully connected layer for one of my application. I would like to use cuDNN library API calls to perform
+these operations. I was able to find cuDNN APIs for convolution layers but I could not get any for fully connected layers. Is there any such APIs? Or should
+I manually convert outputs of conv layer to right format and feed them to SGEMM?
+Thanks in advance.
+
+post by KingDudman on Nov 10, 2018
+You don’t need to use another library. Although the performance might be better with another library.
+Just set up the convolution with the weights being the same size as the input parameters. So, if you had a 4d NCHW tensor of dims of [4,1,28,28].
+Then you would set the 2d convolution to have a slide of [1,1] dilation of [1,1] and a padding of [0,0].
+The filter dims will be [x,1,28,28]. The output of the convolution will be [4,x,1,1].
+The next convolution will have the same settings. This time though your filter will be [y,x,1,1].
+Then after that same convolution settings. Your filter will be [z,y,1,1]. So on and so forth.
+
+Convolution 2D settings will always be: slide [1,1], padding [0,0], dilation [1,1].
+PL == previous layer
+
+Filter NCHW dims will be: [ (# of channels), (# of channels PL), (H of PL), (W of PL)].
+*/
+
+
+using data_type = float;
 
 
 //using namespace std;
 
 
 int main() {
-    int const percent = 1;
+    int const percent = 80;
     int const class_num=10;
-    long const     LEN = percent*100*6;
-    long const TESTLEN = percent*100;
+    long const     LEN = 6 ;// percent*100*6;
+    long const TESTLEN = LEN *  percent*100;
     const long epochs = 5;
     int imgW=28, imgH=28;
     int Lay0In  = imgW * imgH;
@@ -78,15 +104,38 @@ int main() {
     int Lay1In  = Lay0Out;
     int Lay1Out = class_num;
 
+    // create the tensor descriptor
+    cudnnDataType_t dtype = CUDNN_DATA_FLOAT;
+    cudnnTensorFormat_t format = CUDNN_TENSOR_NHWC;
+    int n0 = LEN, h0 = imgH, w0 = imgW, c0 = 1 ;
+    int f0size=5, fnum=20;
+    int n1 = LEN, h1 = 24, w1 = 24, c1 = 20 ;
+    int NUM_ELEMENTS0 = n0*h0*w0*c0;
+    int alpha = 1;
+    int beta  = 2;
+
+
+    int requestedAlgoCount = 1000;
+    int* returnedAlgoCount  = new int;
+    float* perfResults = new float[1000];
+
+
     if ( true ) { // load images from file
         std::cout << "#  --- C++ ---\n";
 
-        double* Xhost = new double[ LEN * Lay0In ];
-        double* Shost = new double[ LEN * class_num ];
-        double* Whost = new double[ Lay0In * Lay0Out ];
-        double* Yhost = new double[ LEN*Lay0Out];
+        float* Xhost = new float[ LEN * Lay0In ];
+        float* Shost = new float[ LEN * class_num ];
+        float* Whost = new float[ Lay0In * Lay0Out ];
+        float* Yhost = new float[ LEN*Lay0Out];
 
-        double* W1host = new double[ Lay1In * Lay1Out ];
+        float* W1host = new float[ Lay1In * Lay1Out ];
+
+
+        float *x0_dev = nullptr;
+        float *Filter0_dev = nullptr;
+        float* workSpace_dev = nullptr;
+        float* z0_dev = nullptr;
+        float *W0 = nullptr;
 
         load_images( Xhost,  "/home/john/inz/MixedProj/01.MPL/data/train-images-idx3-ubyte", LEN, imgW, imgH);
         load_labels( Shost,  "/home/john/inz/MixedProj/01.MPL/data/train-labels-idx1-ubyte", LEN, class_num);
@@ -96,202 +145,89 @@ int main() {
         showImage(Xhost,imgH,imgW);
         showImage(Shost,imgH,10);
 
+//    checkCUDA(cudaMalloc(reinterpret_cast<void **>(&X0), sizeof(double)*LEN*imgW*imgH ));
+        //    cublasSetMatrixAsync(Lay0In, LEN,    sizeof(double), Xhost, Lay0In, X0, Lay0In,  stream);
+        // Pion   Poziom                       Pion A      Pion B
 
 
-        // MLP *****************
-        cudnnHandle_t handle = createHandle();
+        checkCUDA(cudaSetDevice(0)); // use GPU0
+        int device;
+        struct cudaDeviceProp devProp;
+        checkCUDA(cudaGetDevice(&device));
+        checkCUDA(cudaGetDeviceProperties(&devProp, device));
+        std::cout << "Compute capability:" << devProp.major << "." << devProp.minor << std::endl;
+        cudnnHandle_t handle_;
+        checkCUDNN(cudnnCreate(&handle_));
+        std::cout << "Created cuDNN handle" << std::endl;
 
 
-        // ************ START MMULL
+        checkCUDA(cudaMalloc(reinterpret_cast<void **>(&x0_dev), sizeof(double)*LEN*imgW*imgH ));
+        checkCUDA(cudaMalloc(reinterpret_cast<void **>(&Filter0_dev), sizeof(double)*LEN*imgW*imgH ));
+        checkCUDA(cudaMalloc(reinterpret_cast<void **>(&workSpace_dev), sizeof(double)*LEN*imgW*imgH ));
+        checkCUDA(cudaMalloc(reinterpret_cast<void **>(&z0_dev), sizeof(double)*LEN*h1*w1*c1 ));
 
 
-    cublasHandle_t cublasH = NULL;
-    cudaStream_t stream = NULL;
+        cudnnTensorDescriptor_t x0_desc;
+        checkCUDNN(cudnnCreateTensorDescriptor(&x0_desc));
+        checkCUDNN(cudnnSetTensor4dDescriptor(x0_desc, format, dtype, n0, c0, w0, h0));
 
-    double *X0 = nullptr;
-    double *Y0 = nullptr;
-    double *W0 = nullptr;
+        cudnnTensorDescriptor_t z0_desc;
+        checkCUDNN(cudnnCreateTensorDescriptor(&z0_desc));
+        checkCUDNN(cudnnSetTensor4dDescriptor(z0_desc, format, dtype, n0, c1, h1, w1));
 
-    const data_type alpha = 1.0;
-    const data_type beta = 0.0;
+        cudnnFilterDescriptor_t Filter0_desc;
+        checkCUDNN(cudnnCreateFilterDescriptor(&Filter0_desc));
+        checkCUDNN(cudnnSetFilter4dDescriptor(Filter0_desc, dtype, CUDNN_TENSOR_NCHW, c1, c0, f0size, f0size));
 
-    const int m = Lay0Out;
-    const int n = LEN;
-    const int k = Lay0In;
-    const int lda = Lay0In;  // LA - liczba wierszy
-    const int ldb = Lay0In;
-    const int ldc = Lay0Out;
-    /*
-     *   A = | 1.0 | 2.0 |
-     *       | 3.0 | 4.0 |
-     *
-     *   B = | 5.0 | 6.0 |
-     *       | 7.0 | 8.0 |
-     */
 
 
 
 
+   int* padA = new int[4]{1,5,5,20};
+   int* filterStrideA = new int[4]{1,1,1,1};
+   int* dilationA = new int[4]{1,1,1,1};
 
 
-    data_type *d_A = nullptr;
-    data_type *d_B = nullptr;
-    data_type *d_C = nullptr;
+        cudnnConvolutionDescriptor_t conv_desc;
+        checkCUDNN(cudnnCreateConvolutionDescriptor( &conv_desc));
+        checkCUDNN(cudnnSetConvolutionNdDescriptor(
+   /* cudnnConvolutionDescriptor_t */   conv_desc,
+   /* int                          */   4,
+   /* const int                    */   padA,
+   /* const int    filterStrideA   */   filterStrideA,
+   /* const int       dilationA    */   dilationA,
+   /* cudnnConvolutionMode_t       */   CUDNN_CONVOLUTION,
+   /* cudnnDataType_t              */   CUDNN_DATA_FLOAT));
 
-    cublasOperation_t transa = CUBLAS_OP_N;
-    cublasOperation_t transb = CUBLAS_OP_N;
 
 
+        checkCUDNN(cudnnConvolutionForward(
+           /* cudnnHandle_t                   */    handle_,
+           /* const void                      */    &alpha,
+           /* const cudnnTensorDescriptor_t   */    x0_desc,
+           /* const void                      */    x0_dev,
+           /* const cudnnFilterDescriptor_t   */    Filter0_desc,
+           /* const void                      */    Filter0_dev,
+           /* const cudnnConvolutionDescriptor_t */ conv_desc,
+           /* cudnnConvolutionFwdAlgo_t       */    CUDNN_CONVOLUTION_FWD_ALGO_GEMM,
+           /* void                            */    workSpace_dev,
+           /* size_t                          */    100,
+           /* const void                      */    &beta,
+           /* const cudnnTensorDescriptor_t   */    z0_desc,
+           /* void                            */    z0_dev));
 
 
 
-    /* step 1: create cublas handle, bind a stream */
-    checkCUBLAS(cublasCreate(&cublasH));
+        cudaFree(x0_dev);
+        return 0;
 
-    checkCUDA(cudaStreamCreateWithFlags(&stream, cudaStreamNonBlocking));
-    checkCUBLAS(cublasSetStream(cublasH, stream));
 
-    /* step 2: copy data to device */
-    // copy X
-    checkCUDA(cudaMalloc(reinterpret_cast<void **>(&X0), sizeof(double)*LEN*imgW*imgH ));
-    //checkCUDA(cudaMemcpyAsync(X0, Xhost, sizeof(double)*LEN*imgH*imgW, cudaMemcpyHostToDevice, stream));
-    // copy as vector !!!
-    // cublasSetMatrixAsync(int rows, int cols, int elemSize, const void *A, int lda, void *B, int ldb, cudaStream_t stream)
-   // cublasSetMatrixAsync(LEN, Lay0In, sizeof(double), Xhost, Lay0In, X0, LEN,  stream);
-    cublasSetMatrixAsync(Lay0In, LEN,    sizeof(double), Xhost, Lay0In, X0, Lay0In,  stream);
-                      // Pion   Poziom                       Pion A      Pion B
 
-    checkCUDA(cudaMalloc(reinterpret_cast<void **>(&W0), sizeof(double)*imgW*imgH*Lay0Out ));
-    cublasSetMatrixAsync(Lay0In, Lay0Out, sizeof(double), Whost, Lay0In, W0, Lay0In,  stream);
-                        // Pion   Poziom                       Pion A      Pion B
-    //checkCUDA(cudaMemcpyAsync(W0, Whost, sizeof(double)*imgW*imgH*Lay0Out, cudaMemcpyHostToDevice, stream));
 
-    checkCUDA(cudaMalloc(reinterpret_cast<void **>(&Y0), sizeof(double)*LEN*Lay0Out ));
 
 
-/*
-        cublasStatus_t cublasDgemm(cublasHandle_t handle,
-                                   cublasOperation_t transa, cublasOperation_t transb,
-                                   int m, int n, int k,
-                                   const double          *alpha,
-                                   const double          *A, int lda,
-                                   const double          *B, int ldb,
-                                   const double          *beta,
-                                   double          *C, int ldc)
 
-        C = alpha A * B + beta * C    |  forward  |  Y = alpha W * H + 0* C
-        m - Number of rows of matrix op(A) and C.    Output (neuron numbers)
-        n - Number of columns of matrix op(B) and C.    LEN (images num)
-        k - Number of columns of op(A) and rows of op(B).  Input (28*28)
-
-        array A(W) is [lda*k]
-        array B(X) is [ldb*n]
-        array C(Y) is [ldc*n]
-        lda - Leading dimension of two-dimensional array used to store the matrix A.
-        ldb - Leading dimension of two-dimensional array used to store matrix B.
-        ldc - Leading dimension of a two-dimensional array used to store the matrix C.
- */
-  checkCUBLAS(cublasDgemm(cublasH, CUBLAS_OP_T, transb, m, n, k, &alpha, W0, lda, X0, ldb, &beta, Y0, ldc));
-
-
-
-
-
-    // cublasSetMatrixAsync(int rows, int cols, int elemSize, const void *A, int lda, void *B, int ldb, cudaStream_t stream)
-//    checkCUBLAS( cublasSetMatrixAsync ( LEN, imgW*imgH, sizeof(double), Xhost, 1, X0, 1, stream));
-
-/*    checkCUDA(cudaMalloc(reinterpret_cast<void **>(&d_A), sizeof(data_type) * A.size()));
-    checkCUDA(cudaMalloc(reinterpret_cast<void **>(&d_B), sizeof(data_type) * B.size()));
-    checkCUDA(cudaMalloc(reinterpret_cast<void **>(&d_C), sizeof(data_type) * C.size()));
-
-    checkCUDA(cudaMemcpyAsync(d_A, A.data(), sizeof(data_type) * A.size(), cudaMemcpyHostToDevice, stream));
-    checkCUDA(cudaMemcpyAsync(d_B, B.data(), sizeof(data_type) * B.size(), cudaMemcpyHostToDevice, stream));
-*/
-
-
-
-    // step 4: copy data to host
-    //checkCUDA(cudaMemcpyAsync(C.data(), d_C, sizeof(data_type) * C.size(), cudaMemcpyDeviceToHost, stream));
-
-    checkCUDA(cudaMemcpyAsync(Yhost, Y0, sizeof(data_type) *LEN*Lay0Out , cudaMemcpyDeviceToHost, stream));
-    checkCUDA(cudaStreamSynchronize(stream));
-
-
-    for (int i=0;i<(LEN*Lay0Out);i++){if ( Yhost[i]>.1){ std::cout<<"#";} else {std::cout<<".";} ; if ( i%(28)==0) std::cout<<std::endl;}
-
-
-
-
-
-    /* free resources */
-    checkCUDA(cudaFree(X0));
-    checkCUDA(cudaFree(W0));
-    checkCUDA(cudaFree(Y0));
-
-return 0;
-    checkCUBLAS(cublasDestroy(cublasH));
-
-    checkCUDA(cudaStreamDestroy(stream));
-
-    checkCUDA(cudaDeviceReset());
-
-
-        // https://docs.nvidia.com/cuda/cublas/index.html#cublassetmatrix
-        /*
-cublasSetMatrixAsync()
-cublasStatus_t
-cublasSetMatrixAsync(int rows, int cols, int elemSize, const void *A,
-                     int lda, void *B, int ldb, cudaStream_t stream)
-
-cublasSetMatrix()
-cublasStatus_t
-cublasSetMatrix(int rows, int cols, int elemSize,
-                const void *A, int lda, void *B, int ldb)
-         */
-
-
-        //matmul(a, b, epilog=Epilog.RELU)
-        /* step 3: compute */
-        /*
-         *https://docs.nvidia.com/cuda/cublas/index.html#cublas-t-gemm
-
-                cublasStatus_t cublasDgemm(cublasHandle_t handle,
-                                           cublasOperation_t transa, cublasOperation_t transb,
-                                           int m, int n, int k,
-                                           const double          *alpha,
-                                           const double          *A, int lda,
-                                           const double          *B, int ldb,
-                                           const double          *beta,
-                                           double          *C, int ldc)
-         */
-
-
-
-/*
-        with the leading dimension of the source matrix A and destination matrix B given in lda and ldb, respectively
-        For a matrix A with dimensions M (rows) and N (columns), the leading dimension (often denoted as lda, ldx, or similar) must be at least as large as the number of rows M. This ensures that the routine can correctly access all elements of the matrix, even when the matrix is a submatrix of a larger array.
-        In column-major order (used by Fortran and CUBLAS), the leading dimension is the number of rows M. This is because each column is stored contiguously in memory, and the leading dimension defines the stride between elements in the same column across different rows.
-
-        z wymiarem wiodącym macierzy źródłowej A i macierzy docelowej B podanym odpowiednio w lda i ldb.
-        W przypadku macierzy A o wymiarach M (wiersze) i N (kolumny), wymiar wiodący (często oznaczany jako lda, ldx lub podobnie) musi być co najmniej tak duży, jak liczba wierszy M. Zapewnia to, że procedura może poprawnie uzyskać dostęp do wszystkich elementów macierzy, nawet gdy macierz jest podmacierzą większej tablicy.
-        W kolejności kolumn (używanej przez Fortran i CUBLAS), wymiar wiodący to liczba wierszy M. Dzieje się tak, ponieważ każda kolumna jest przechowywana w pamięci w sposób ciągły, a wymiar wiodący definiuje odstęp między elementami w tej samej kolumnie w różnych wierszach.
- */
-
-
-
-
-
-
-
-
-
-
-
-
-        //END MMULL !!
-
-
-        destroyHandle( handle );
+        checkCUDNN(cudnnDestroy( handle_ ));
         // END OF MLP **********
 
 
@@ -299,40 +235,21 @@ cublasSetMatrix(int rows, int cols, int elemSize,
         delete Shost;
 
 
-        return (0); // END
+     //   return (0); // END
 
 
-        if (false){ // *************
-
-            cudaSetDevice(0); // use GPU0
-            int device;
-            struct cudaDeviceProp devProp;
-            cudaGetDevice(&device);
-            cudaGetDeviceProperties(&devProp, device);
-            std::cout << "Compute capability:" << devProp.major << "." << devProp.minor << std::endl;
-
-            cudnnHandle_t handle_;
-            cudnnCreate(&handle_);
-            std::cout << "Created cuDNN handle" << std::endl;
-
-            // create the tensor descriptor
-            cudnnDataType_t dtype = CUDNN_DATA_FLOAT;
-            cudnnTensorFormat_t format = CUDNN_TENSOR_NHWC;
-            int n = 1, h = 1, w = 10, c = 1 ;
-            int NUM_ELEMENTS = n*h*w*c;
-            cudnnTensorDescriptor_t x_desc;
-            cudnnCreateTensorDescriptor(&x_desc);
-            cudnnSetTensor4dDescriptor(x_desc, format, dtype, n, h, w, c);
+        if (true){ // *************
 
 
 
 
-            // create the tensor
-            float *x;
-            cudaMallocManaged(&x, NUM_ELEMENTS * sizeof(float));
-            for(int i=0;i<NUM_ELEMENTS;i++) x[i] = i * 1.00f;
-            std::cout << "Original array: ";
-            for(int i=0;i<NUM_ELEMENTS;i++) std::cout << x[i] << " ";
+
+
+
+
+
+
+
 
 
 
@@ -353,29 +270,29 @@ cublasSetMatrix(int rows, int cols, int elemSize,
             cudnnSetActivationDescriptor(sigmoid_activation, mode, prop, 0.0f);
 
 
-
+/*
 
             cudnnActivationForward(
                 handle_,
                 sigmoid_activation,
                 alpha,
-                x_desc,
+                x0_desc,
                 x,
                 beta,
-                x_desc,
+                x0_desc,
                 x
             );
 
-
+*/
 
 
             cudnnDestroy(handle_);
             std::cout << std::endl << "Destroyed cuDNN handle." << std::endl;
             std::cout << "New array: ";
-            for(int i=0;i<NUM_ELEMENTS;i++) std::cout << x[i] << " ";
+      //      for(int i=0;i<NUM_ELEMENTS0;i++) std::cout << x[i] << " ";
             std::cout << std::endl;
 
-        if (false) cudaFree(x);
+   //     if (false) cudaFree(x);
             //    return 0;
 
         }  // ***********
