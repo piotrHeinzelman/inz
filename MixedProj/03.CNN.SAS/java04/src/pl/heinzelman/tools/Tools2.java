@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class Tools2 {
 
-    private static String path="../data/";
+    private static String path="/home/john/inz/MixedProj/03.CNN.SAS/java04/data/";
     private static String testXname="t10k-images-idx3-ubyte";
     private static String testYname="t10k-labels-idx1-ubyte";
     private static String trainXname="train-images-idx3-ubyte";

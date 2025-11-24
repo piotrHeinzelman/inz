@@ -3,7 +3,9 @@ package pl.heinzelman.tasks;
 import pl.heinzelman.LayerDeep.LayerConv;
 import pl.heinzelman.LayerDeep.LayerFlatten;
 import pl.heinzelman.LayerDeep.LayerPoolingMax;
+import pl.heinzelman.LayerDeep.LayerReLU;
 import pl.heinzelman.neu.LayerSoftmaxMultiClass;
+import pl.heinzelman.tools.Tools;
 import pl.heinzelman.tools.Tools2;
 
 import java.util.Random;
@@ -18,14 +20,19 @@ public class Task_4_CNN implements Task{
     private int[][] errors = new int [10][10];
 
 
-    private LayerConv conv = new LayerConv( 5 , 20, null, null  );
-    private LayerPoolingMax poolMax = new LayerPoolingMax(2,2);
+    private LayerConv conv1 = new LayerConv( 5 , 10, null, null  );
+    private LayerPoolingMax poolMax1 = new LayerPoolingMax(2,2);
+    private LayerReLU      relu1 = new LayerReLU();
+    private LayerConv conv2 = new LayerConv( 3 , 20, null, null  );
+    private LayerPoolingMax poolMax2 = new LayerPoolingMax(2,2);
+    private LayerReLU      relu2 = new LayerReLU();
+
     private LayerFlatten flatten = new LayerFlatten();
-    private LayerSoftmaxMultiClass softmax = new LayerSoftmaxMultiClass( 12*12*20, 10 );
+    private LayerSoftmaxMultiClass softmax = new LayerSoftmaxMultiClass( 5*5*20, 10 );
 
 
     public void prepare() {
-        int dataSize=80;
+        int dataSize=10;
         tools.prepareData( dataSize );
 
         testX = tools.getTestX();
@@ -35,18 +42,24 @@ public class Task_4_CNN implements Task{
 
         float[][][] oneX = new float[1][28][28];
         oneX[0] = tools.convertToSquare28x28( trainX[0] );
-        conv.setUpByX( oneX );
+        conv1.setUpByX( 1,28 ); // input 1 channer 28x28
+        //float[][][] some = relu1.Forward( poolMax1.Forward(  conv1.Forward( oneX )));
+        conv2.setUpByX(10,12);
+
+        //Tools.printTable2(    relu2.Forward ( poolMax2.Forward( conv2.Forward ( relu1.Forward ( poolMax1.Forward( conv1.Forward( oneX )))))));
+        //conv2.setUpByX(      relu1.Forward ( poolMax1.Forward( conv1.Forward( oneX )))          );
     }
 
 
     public float[] forward_( float[][] X ){
         float[][][] oneX = new float[1][][];
         oneX[0]=X;
-        return softmax.nForward( flatten.Forward( poolMax.Forward( conv.Forward( oneX ))));
+        //Tools.printTable2(  relu2.Forward ( poolMax2.Forward( conv2.Forward ( relu1.Forward ( poolMax1.Forward( conv1.Forward( oneX )))))));
+        return softmax.nForward( flatten.Forward(  relu2.Forward ( poolMax2.Forward( conv2.Forward ( relu1.Forward ( poolMax1.Forward( conv1.Forward( oneX ))))))));
     }
 
     public float[][][] backward_( float[] gradient ){
-        return conv.Backward(  poolMax.Backward( flatten.Backward(  softmax.nBackward( gradient ))));
+        return conv1.Backward(  poolMax1.Backward   ( relu1.Backward ( conv2.Backward ( poolMax2.Backward  ( relu2.Backward   ( flatten.Backward(  softmax.nBackward( gradient ))))))));
     }
 
 
@@ -59,7 +72,7 @@ public class Task_4_CNN implements Task{
 
 	for (int j=0;j<50;j++){
         for ( int i=0;i<1;i++) {
-            train(30000);
+            train(2000);
             System.out.println( "i: "+i+", j: "+j );
         }
         test( 100 );

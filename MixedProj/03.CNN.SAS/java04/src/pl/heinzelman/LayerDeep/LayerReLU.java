@@ -4,75 +4,64 @@ public class LayerReLU {
 
     protected String name;
 
-    protected float[][][] X;
-    protected float[][][] dX;
-    protected float[][][] Y;
-    protected int channels;
-    protected int xsize;
 
+    protected float[][][] dX;
+    protected int c;
+    protected int h;
+    protected int w;
 
 
     public LayerReLU() {}
 
-    public int getYSize(){
-        return  xsize;
-    }
 
-    protected void initAry(){
-        X  = new float[ channels ][ xsize ][ xsize ];
-        dX = new float[ channels ][ xsize ][ xsize ];
-    }
 
-    public void setX(float[][][] _x ) {
-        this.channels= _x.length;
-        this.xsize=_x[0].length;
-        initAry();
 
-        for (int n = 0; n < channels; n++) {
-            for (int i = 0; i < xsize; i++) {
-                for (int j = 0; j < xsize; j++) {
-                    X[n][i][j] = _x[n][i][j];
-                }
-            }
-        }
-    }
+
+
 
     public void setName( String name ) { this.name = name; }
-
-    public float[][][] Forward () {
+/*
+    public float[][][] Forward ( ) {
         float[][][] Z = new float[channels][xsize][xsize];
             for (int c=0;c<channels;c++){
                 Z[c] = forwardChannel( c );
             }
         return Z;
     }
+*/
 
-    public float[][] forwardChannel ( int channel ) {
-        float[][] Z = new float[xsize][xsize];
-            for (int i=0;i<xsize;i++){
-                for (int j=0;j<xsize;j++) {
-                    if ( X[channel][i][j]>0 ){
-                        Z[i][j]=X[channel][i][j];
-                        dX[channel][i][j]=1f;
-                    }
-                    else {
-                        Z[i][j]=0f;
-                        dX[channel][i][j]=0f;
-                    }
+
+    public float[][][] Forward( float[][][] _x  ) {
+        c = _x.length;
+        h = _x[0].length;
+        w = _x[0][0].length;
+
+        float[][][] X = new float[c][h][w];
+        float[][][] dX = new float[c][h][w];
+        for (int n = 0; n < c; n++) {
+            for (int x = 0; x < h; x++) {
+                for (int y = 0; y < w; y++) {
+                    if ( _x[n][x][y] > 0 ) {  X[n][x][y] = _x[n][x][y]; ; dX[n][x][y]=1.0f;  }
+                                      else {  X[n][x][y] = 0f; ; dX[n][x][y]=0f;   };
                 }
             }
-        return Z;
+        }
+        return X;
     }
 
 
 
-    public float[][][] Backward( float[][][] delta ){ // delta = (s-z)*d....
-        float[][][] OUT = new float[channels][xsize][xsize];
-        for (int c=0;c<channels;c++ ){
-            // every channel
 
-            for (int i=0;i<xsize;i++){
-                for (int j=0;j<xsize;j++) {
+
+
+
+
+    public float[][][] Backward( float[][][] delta ){ // delta = (s-z)*d....
+        float[][][] OUT = new float[c][h][w];
+        for (int c=0;c<c;c++ ){
+            // every channel
+            for (int i=0;i<h;i++){
+                for (int j=0;j<w;j++) {
 
                     OUT[c][i][j] = delta[c][i][j] * dX[c][i][j];
 

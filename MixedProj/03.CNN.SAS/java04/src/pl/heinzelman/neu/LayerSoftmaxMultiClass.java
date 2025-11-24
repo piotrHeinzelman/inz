@@ -1,6 +1,7 @@
 package pl.heinzelman.neu;
 
 import pl.heinzelman.LayerDeep._Mat;
+import pl.heinzelman.tools.Tools;
 import pl.heinzelman.tools.Tools2;
 
 import java.util.Arrays;

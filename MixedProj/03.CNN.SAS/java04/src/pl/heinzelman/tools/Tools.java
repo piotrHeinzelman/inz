@@ -397,4 +397,21 @@ public class Tools {
         return ( out );
     }
 
+
+
+
+    public static void printTable2( float[][][] tensor ){
+        System.out.println("Size:["+tensor.length+"]["+tensor[0].length+"]["+tensor[0][0].length+"]");
+        for (int c=0;c<tensor.length;c++){
+            for (int x=0;x<tensor[0].length;x++) {
+                StringBuffer out= new StringBuffer();
+                for (int y = 0; y < tensor[0][0].length; y++) {
+                    out.append( tensor[c][x][y] + " " );
+                }
+                System.out.println(out.toString());
+            }
+        }
+    }
+
+
 }

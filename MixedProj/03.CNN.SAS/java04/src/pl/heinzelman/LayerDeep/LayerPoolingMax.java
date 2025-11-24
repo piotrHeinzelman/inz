@@ -84,7 +84,6 @@ public class LayerPoolingMax {
     }
 
 
-
     public float[][][] Backward( float[][][] delta ){ // delta = (s-z)*d....
         float[][][] OUT = new float[channels][xsize][xsize];
         for (int c=0;c<channels;c++ ){
@@ -99,7 +98,9 @@ public class LayerPoolingMax {
                     for (int x=0;x<filterSize;x++){
                         for (int y=0;y<filterSize;y++){
                             //System.out.println("delta["+c+"]["+i+"]["+j+"]" + delta[c][i][j] + "dX["+c+"]["+i+"*"+filterSize+"+"+x+"][j*filterSize+y]:" + dX[c][i*filterSize+x][j*filterSize+y] );
-                            OUT[c][i*(filterSize) +x][j*(filterSize) +y] = delta[c][i][j] * dX[c][i*filterSize+x][j*filterSize+y];
+                            //System.out.println("C:" + c + ", i: " + i + ", j:" + j + ", x: " + x + ", y: " + y);
+
+                            OUT[c][i*(filterSize) +x][j*(filterSize) +y] = delta[c][i][j]  * dX[c][i*filterSize+x][j*filterSize+y];
                         }
                     }
                 }

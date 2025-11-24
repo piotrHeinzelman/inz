@@ -187,7 +187,7 @@ void tens::BackSoftmax( tens* Eout, tens* eIn, tens* X ) {
                //update
                // W[m] = W[m] - ( X[m] * Ein )  <-- over n
                // W[m] = W[i64 , 10neu] - ( X[i64 , n] * Ein[10neo , n] )
-               data[h*WC + w]=data[h*WC + w] + mu * eIn->data[n*H + h]* X->data[n*WC + w];
+               data[h*WC + w]=data[h*WC + w] - mu * eIn->data[n*H + h]* X->data[n*WC + w];
             }
              Eout->data[ n*WC + w ]=sum;
         }

@@ -86,6 +86,17 @@ public class LayerConv {
         Y = new float[ filterForChannel ][ ysize ][ ysize ];
     }
 
+
+    public void setUpByX( int inchannel, int inputSize ) {
+        //if ( padding!=0 ) { _x = Conv.extendAry( _x, padding ); }
+        this.channels = inchannel;
+        this.filterNum = filterForChannel*channels;
+        this.xsize = inputSize;
+        this.ysize = getYSize();
+        initAry();
+        initFilters();
+    }
+
     public void setUpByX(float[][][] _x ) {
         //if ( padding!=0 ) { _x = Conv.extendAry( _x, padding ); }
         this.channels = _x.length;
