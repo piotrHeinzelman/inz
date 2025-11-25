@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-plt.title('Zależność dokładności sieci od współczynnika uczenia') 
+plt.title('') 
 plt.style.use('_mpl-gallery')
 
 
@@ -85,7 +85,7 @@ plt.legend()
 #plt.xscale('log') # 'linear' 'symlog' 'logit' 
 #plt.yscale('log') # 'linear' 'symlog' 'logit' 
 plt.ylim( 0, 1 )
-plt.xticks(x,[ '5','10', '20', '30','50','75', '100', '125'    ])
+plt.xticks(x,[ '5','10', '15', '20','25','30', '35', '40'    ])
 
   
 plt.savefig( 'wyk.pdf',dpi=400 ) 
