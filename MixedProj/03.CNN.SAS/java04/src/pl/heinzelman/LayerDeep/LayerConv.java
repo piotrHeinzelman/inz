@@ -177,6 +177,7 @@ public class LayerConv {
     }
 
     public float[][][] Backward( float[][][] dLdO ) {
+
         float[][][] dOUT = new float[ channels ][xsize][xsize];
 
         for (int c=0;c<channels;c++){
@@ -203,7 +204,7 @@ public class LayerConv {
         }
 
         for (int f=0;f<filterForChannel;f++){
-            if (false ) biases[f].trainW( dLdO[f] );
+            if (true ) biases[f].trainW( dLdO[f] );
         }
 
         return dOUT;

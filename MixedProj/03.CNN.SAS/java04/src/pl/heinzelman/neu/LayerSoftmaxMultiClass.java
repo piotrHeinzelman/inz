@@ -60,6 +60,7 @@ public class LayerSoftmaxMultiClass implements LayerParent {
         for (int n = 0; n < neurons.length; n++) {
             Y[n] = neurons[n].Forward( X );
         }
+        //
         // Softmax
         int len=Y.length;
         sum = 0.0f;
@@ -67,12 +68,12 @@ public class LayerSoftmaxMultiClass implements LayerParent {
         for ( int i=0;i<len;i++ ){ // find MAX
             if (Y[i]>max) { max=Y[i]; }
         }
+
         for ( int i=0; i<len; i++ ) {  // Zi = e^Xi
-            Y[i] = (float) Math.exp( Y[i]/*-max*/ );
-            sum += Y[i];
+            sum += (float) Math.exp( Y[i]-max );
         }
         for ( int i = 0; i < len; i++ ) { // Yi = Yi/sum
-            Z[i] = Y[i] / sum;
+            Z[i] = (float) Math.exp((Y[i]-max) / sum);
         }
         return Z;
     }

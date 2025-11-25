@@ -59,6 +59,7 @@ public class Task_4_CNN implements Task{
     }
 
     public float[][][] backward_( float[] gradient ){
+        //Tools.printTable2( softmax.nBackward( gradient ));
         return conv1.Backward(  poolMax1.Backward   ( relu1.Backward ( conv2.Backward ( poolMax2.Backward  ( relu2.Backward   ( flatten.Backward(  softmax.nBackward( gradient ))))))));
     }
 
@@ -103,7 +104,7 @@ public class Task_4_CNN implements Task{
             float[] gradient = softmax.gradientCNN( Z, correct_label );
             backward_( gradient );
         }
-        //System.out.println( "Acc: " + ((100.0f*accuracy)/ test_size) + ", Loss: " + loss + ", of: " + test_size );
+        System.out.println( "Acc: " + ((100.0f*accuracy)/ test_size) + ", Loss: " + loss + ", of: " + test_size );
         loss=0.0f;
     }
 
