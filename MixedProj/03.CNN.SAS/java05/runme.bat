@@ -1,0 +1,17 @@
+
+cd src
+javac pl/heinzelman/Main.java -d ../out
+cd ../out
+
+echo " "
+echo "---"
+echo " "
+echo "start: "
+
+rem date +%k:%M:%S.%N
+
+java pl.heinzelman.Main
+
+echo "end:"
+rem date +%k:%M:%S.%Npwd is a shell builtin
+pause
