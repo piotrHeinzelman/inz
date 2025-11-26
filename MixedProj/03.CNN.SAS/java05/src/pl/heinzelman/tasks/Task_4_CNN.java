@@ -68,7 +68,7 @@ public class Task_4_CNN implements Task{
 
 
     private LayerFlatten flatten = new LayerFlatten();
-    private LayerSoftmaxMultiClass softmax = new LayerSoftmaxMultiClass( 5*5*20, 10 );
+    private LayerSoftmaxMultiClass softmax = new LayerSoftmaxMultiClass( 2, 10 );
 
 
     public void prepare() {
@@ -108,30 +108,42 @@ public class Task_4_CNN implements Task{
         float[][][]t1=relu1.Forward ( poolMax1.Forward( conv1.Forward( oneX )));
 
         float[][][]t2=relu2.Forward ( poolMax2.Forward( conv2.Forward ( t1  )));
-        Tools.printTable2(t2);
+      //  Tools.printTable2(t2);
         float[][][]t3=relu3.Forward ( poolMax3.Forward( conv3.Forward ( t2  )));
-        Tools.printTable2(t3);
+    //    Tools.printTable2(t3);
         float[][][]t4=relu4.Forward ( poolMax4.Forward( conv4.Forward ( t3  )));
-        Tools.printTable2(t4);
+     //   Tools.printTable2(t4);
         float[][][]t5=relu5.Forward ( poolMax5.Forward( conv5.Forward ( t4  )));
-        Tools.printTable2(t5);
+      //  Tools.printTable2(t5);
         float[][][]t6=relu6.Forward ( poolMax6.Forward( conv6.Forward ( t5  )));
-        Tools.printTable2(t6);
+      //  Tools.printTable2(t6);
         float[][][]t7=relu7.Forward ( poolMax7.Forward( conv7.Forward ( t6  )));
-        System.out.println("T7");
-        Tools.printTable2(t7);
+     //   System.out.println("T7");
+    //    Tools.printTable2(t7);
         float[][][]t8=relu8.Forward ( poolMax8.Forward( conv8.Forward ( t7  )));
-        System.out.println("T8");
-        Tools.printTable2(t8);
+     //   System.out.println("T8");
+    //    Tools.printTable2(t8);
         float[][][]t9=relu9.Forward ( poolMax9.Forward( conv9.Forward ( t8  )));
-        System.out.println("T9");
-        Tools.printTable2(t9);
+     //   System.out.println("T9");
+     //   Tools.printTable2(t9);
         return softmax.nForward( flatten.Forward( t9 ));
     }
 
     public float[][][] backward_( float[] gradient ){
         //Tools.printTable2( softmax.nBackward( gradient ));
-        return conv1.Backward(  poolMax1.Backward   ( relu1.Backward ( conv2.Backward ( poolMax2.Backward  ( relu2.Backward   ( flatten.Backward(  softmax.nBackward( gradient ))))))));
+
+        float[][][] t9 =flatten.Backward(  softmax.nBackward( gradient ));
+        float[][][] t8 = conv9.Backward ( poolMax9.Backward  ( relu9.Backward   ( t9 )));
+        float[][][] t7 = conv8.Backward ( poolMax8.Backward  ( relu8.Backward   ( t8 )));
+        float[][][] t6 = conv7.Backward ( poolMax7.Backward  ( relu7.Backward   ( t7 )));
+        float[][][] t5 = conv6.Backward ( poolMax6.Backward  ( relu6.Backward   ( t6 )));
+        float[][][] t4 = conv5.Backward ( poolMax5.Backward  ( relu5.Backward   ( t5 )));
+        float[][][] t3 = conv4.Backward ( poolMax4.Backward  ( relu4.Backward   ( t4 )));
+        float[][][] t2 = conv3.Backward ( poolMax3.Backward  ( relu3.Backward   ( t3 )));
+        float[][][] t1 = conv2.Backward ( poolMax2.Backward  ( relu2.Backward   ( t2 )));
+        float[][][] t0 = conv1.Backward ( poolMax1.Backward  ( relu1.Backward   ( t1 )));
+
+        return conv1.Backward(  poolMax1.Backward   ( relu1.Backward ( t0 )));
     }
 
 
@@ -141,13 +153,13 @@ public class Task_4_CNN implements Task{
     public void run() {
         prepare();
         // 20 X train(5000) + test(10000) = max 94% accuracy
-
-	for (int j=0;j<50;j++){
+    int epochs=1; //50;
+	for (int j=0;j<epochs;j++){
         for ( int i=0;i<1;i++) {
             train(30);
             System.out.println( "i: "+i+", j: "+j );
         }
-        test( 1 );
+        test( 30 );
     	}
     }
 
