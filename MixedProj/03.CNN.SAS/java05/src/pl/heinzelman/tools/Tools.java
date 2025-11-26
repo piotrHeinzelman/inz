@@ -10,6 +10,50 @@ import java.io.IOException;
 import static java.awt.image.BufferedImage.TYPE_BYTE_GRAY;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
+
+
+
+
+
+/*
+
+
+def readFileX ( fileName ):
+    file=open( fileName, 'rb' )
+    data=np.fromfile( fileName, np.uint8, percent*8*240*240*3, '')
+    data=data.reshape(percent*8, 240*240*3)
+    data=(data/255)
+    file.close()
+    return data
+
+def readFileY ( fileName ):
+    file=open( fileName, 'rb' )
+    len=percent*8
+    data=np.fromfile( fileName, np.uint8, len, '' )
+    file.close()
+    return data
+
+
+start1=time.time()
+
+trainX = readFileX ('../../../../inz_Hidden/SAS/out.bin' )
+trainY = readFileY ('../../../../inz_Hidden/SAS/out.class' )
+
+trainX = trainX.astype("float32")
+trainY = trainY.astype("int")
+
+trainX = trainX.reshape(percent*8, 3, 240,240).astype("float32") # / 255
+#trainY = trainY.reshape(percent*8)
+
+
+
+*/
+
+
+
+
+
+
 public class Tools {
 
     private static String path="../data/";

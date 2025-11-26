@@ -127,7 +127,7 @@ options = trainingOptions("sgdm", ...
 TIME_CREATE_MODEL = datetime('now');
 
 net = trainnet(imdsTrain,layers,"crossentropy",options);
- analyzeNetwork(net);
+ %analyzeNetwork(net);
 
 TIME_TRAIN_TIME = datetime('now');
 
