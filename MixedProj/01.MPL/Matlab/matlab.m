@@ -146,12 +146,13 @@ end
 
 neurons = 64;
 
-    net = feedforwardnet([ neurons,neurons ],'trainrp'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquard
+    net = feedforwardnet([ neurons,neurons ],'traingd'); % traingd - spadek gradientowy % trainlm - Levenberg-Marquard
     
     net.trainParam.mc = 0;
     net.trainParam.epochs = epoch;
     %net.traingd.InitialLearnRate =0.0100;
     net.trainParam.goal   = 0;
+    net.trainParam.lr=0.001;
     net.input.processFcns = {'mapminmax'}; % https://www.mathworks.com/matlabcentral/answers/278051-output-processing-function-removeconstantrows-is-not-supported-with-gpu
     net.output.processFcns = {'mapminmax'};%
 
