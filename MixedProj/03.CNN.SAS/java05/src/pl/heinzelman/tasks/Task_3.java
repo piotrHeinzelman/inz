@@ -32,7 +32,7 @@ public class  Task_3 implements Task{
         trainY = tools.getTrainY();
 
         float[][][] oneX = new float[1][28][28];
-        oneX[0] = tools.convertToSquare28x28( trainX[0] );
+        oneX[0] = tools.convertToSquare240x240( trainX[0] );
         conv.setUpByX( oneX );
     }
 
@@ -273,7 +273,7 @@ public class  Task_3 implements Task{
             int ind_ex =  (int) ( rand.nextFloat()*test_size );
             // System.out.println( ind_ex );
 
-            float[][] X = tools.convertToSquare28x28( trainX[ind_ex] );
+            float[][] X = tools.convertToSquare240x240( trainX[ind_ex] );
             int correct_label = tools.getIndexMaxFloat(trainY[ind_ex]);
 
             float[] Z = forward_(X);
@@ -308,7 +308,7 @@ public class  Task_3 implements Task{
 
             // importImage
             int correct_label=tools.getIndexMaxFloat( testY[i] );
-            float[][] pxl = tools.convertToSquare28x28( testX[i] );
+            float[][] pxl = tools.convertToSquare240x240( testX[i] );
 
             // perform convolution 28*28 --> 8x26x26
             out_l = forward_( pxl );

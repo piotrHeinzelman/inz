@@ -1,5 +1,7 @@
 package pl.heinzelman.LayerDeep;
 
+import pl.heinzelman.tools.Tools;
+
 public class LayerFlatten {
 
     protected String name;

@@ -11,7 +11,7 @@ from tensorflow.keras.utils import to_categorical
 
 # params
 epochs = 50 # 50
-percent = 0 # 30
+percent = 30 # 30
 num_classes = 2
 
 

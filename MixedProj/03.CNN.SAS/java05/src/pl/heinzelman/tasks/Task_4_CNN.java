@@ -20,19 +20,59 @@ public class Task_4_CNN implements Task{
     private int[][] errors = new int [10][10];
 
 
-    private LayerConv conv1 = new LayerConv( 5 , 10, null, null  );
+    private LayerConv conv1 = new LayerConv( 7 , 32, null, null  );
     private LayerPoolingMax poolMax1 = new LayerPoolingMax(2,2);
     private LayerReLU      relu1 = new LayerReLU();
-    private LayerConv conv2 = new LayerConv( 3 , 20, null, null  );
+
+
+    private LayerConv conv2 = new LayerConv( 5 , 64, null, null  );
     private LayerPoolingMax poolMax2 = new LayerPoolingMax(2,2);
     private LayerReLU      relu2 = new LayerReLU();
+
+
+    private LayerConv conv3 = new LayerConv( 3 , 128, null, null  );
+    private LayerPoolingMax poolMax3 = new LayerPoolingMax(2,2);
+    private LayerReLU      relu3 = new LayerReLU();
+
+    private LayerConv conv4 = new LayerConv( 3 , 256, null, null  );
+    private LayerPoolingMax poolMax4 = new LayerPoolingMax(2,2);
+    private LayerReLU      relu4 = new LayerReLU();
+
+
+    private LayerConv conv5 = new LayerConv( 1 , 256, null, null  );
+    private LayerPoolingMax poolMax5 = new LayerPoolingMax(2,2);
+    private LayerReLU      relu5 = new LayerReLU();
+
+
+    private LayerConv conv6 = new LayerConv( 1 , 18, null, null  );
+    private LayerPoolingMax poolMax6 = new LayerPoolingMax(2,2);
+    private LayerReLU      relu6 = new LayerReLU();
+
+
+
+    private LayerConv conv7 = new LayerConv( 1 , 8, null, null  );
+    private LayerPoolingMax poolMax7 = new LayerPoolingMax(1,1);
+    private LayerReLU      relu7 = new LayerReLU();
+
+
+
+    private LayerConv conv8 = new LayerConv( 1 , 6, null, null  );
+    private LayerPoolingMax poolMax8 = new LayerPoolingMax(1,1);
+    private LayerReLU      relu8 = new LayerReLU();
+
+
+    private LayerConv conv9 = new LayerConv( 1 , 2, null, null  );
+    private LayerPoolingMax poolMax9 = new LayerPoolingMax(1,1);
+    private LayerReLU      relu9 = new LayerReLU();
+
+
 
     private LayerFlatten flatten = new LayerFlatten();
     private LayerSoftmaxMultiClass softmax = new LayerSoftmaxMultiClass( 5*5*20, 10 );
 
 
     public void prepare() {
-        int dataSize=10;
+        int dataSize=30;
         tools.prepareData( dataSize );
 
         testX = tools.getTestX();
@@ -40,11 +80,21 @@ public class Task_4_CNN implements Task{
         trainX = tools.getTrainX();
         trainY = tools.getTrainY();
 
-        float[][][] oneX = new float[1][28][28];
-        oneX[0] = tools.convertToSquare28x28( trainX[0] );
-        conv1.setUpByX( 1,28 ); // input 1 channer 28x28
-        //float[][][] some = relu1.Forward( poolMax1.Forward(  conv1.Forward( oneX )));
-        conv2.setUpByX(10,12);
+        float[][] oneX = new float[240][240];
+        oneX = tools.convertToSquare240x240( trainX[0] );
+
+        conv1.setUpByX( 1,240 );
+        conv2.setUpByX(32,117);
+        conv3.setUpByX(64,56);
+        conv4.setUpByX(128,27);
+        conv5.setUpByX(256,12);
+        conv6.setUpByX(256,6);
+        conv7.setUpByX(18,3);
+        conv8.setUpByX(8,1);
+        conv9.setUpByX(6,1);
+
+
+
 
         //Tools.printTable2(    relu2.Forward ( poolMax2.Forward( conv2.Forward ( relu1.Forward ( poolMax1.Forward( conv1.Forward( oneX )))))));
         //conv2.setUpByX(      relu1.Forward ( poolMax1.Forward( conv1.Forward( oneX )))          );
@@ -55,7 +105,28 @@ public class Task_4_CNN implements Task{
         float[][][] oneX = new float[1][][];
         oneX[0]=X;
         //Tools.printTable2(  relu2.Forward ( poolMax2.Forward( conv2.Forward ( relu1.Forward ( poolMax1.Forward( conv1.Forward( oneX )))))));
-        return softmax.nForward( flatten.Forward(  relu2.Forward ( poolMax2.Forward( conv2.Forward ( relu1.Forward ( poolMax1.Forward( conv1.Forward( oneX ))))))));
+        float[][][]t1=relu1.Forward ( poolMax1.Forward( conv1.Forward( oneX )));
+
+        float[][][]t2=relu2.Forward ( poolMax2.Forward( conv2.Forward ( t1  )));
+        Tools.printTable2(t2);
+        float[][][]t3=relu3.Forward ( poolMax3.Forward( conv3.Forward ( t2  )));
+        Tools.printTable2(t3);
+        float[][][]t4=relu4.Forward ( poolMax4.Forward( conv4.Forward ( t3  )));
+        Tools.printTable2(t4);
+        float[][][]t5=relu5.Forward ( poolMax5.Forward( conv5.Forward ( t4  )));
+        Tools.printTable2(t5);
+        float[][][]t6=relu6.Forward ( poolMax6.Forward( conv6.Forward ( t5  )));
+        Tools.printTable2(t6);
+        float[][][]t7=relu7.Forward ( poolMax7.Forward( conv7.Forward ( t6  )));
+        System.out.println("T7");
+        Tools.printTable2(t7);
+        float[][][]t8=relu8.Forward ( poolMax8.Forward( conv8.Forward ( t7  )));
+        System.out.println("T8");
+        Tools.printTable2(t8);
+        float[][][]t9=relu9.Forward ( poolMax9.Forward( conv9.Forward ( t8  )));
+        System.out.println("T9");
+        Tools.printTable2(t9);
+        return softmax.nForward( flatten.Forward( t9 ));
     }
 
     public float[][][] backward_( float[] gradient ){
@@ -73,10 +144,10 @@ public class Task_4_CNN implements Task{
 
 	for (int j=0;j<50;j++){
         for ( int i=0;i<1;i++) {
-            train(2000);
+            train(30);
             System.out.println( "i: "+i+", j: "+j );
         }
-        test( 100 );
+        test( 1 );
     	}
     }
 
@@ -93,7 +164,7 @@ public class Task_4_CNN implements Task{
             int ind_ex =  (int) ( rand.nextFloat()*test_size );
             // System.out.println( ind_ex );
 
-            float[][] X = tools.convertToSquare28x28( trainX[ind_ex] );
+            float[][] X = tools.convertToSquare240x240( trainX[ind_ex] );
             int correct_label = tools.getIndexMaxFloat(trainY[ind_ex]);
 
             float[] Z = forward_(X);
@@ -128,7 +199,7 @@ public class Task_4_CNN implements Task{
 
             // importImage
             int correct_label=tools.getIndexMaxFloat( testY[i] );
-            float[][] pxl = tools.convertToSquare28x28( testX[i] );
+            float[][] pxl = tools.convertToSquare240x240( testX[i] );
 
             // perform convolution 28*28 --> 8x26x26
             out_l = forward_( pxl );

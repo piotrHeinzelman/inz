@@ -4,7 +4,6 @@ import pl.heinzelman.LayerDeep.LayerConv;
 import pl.heinzelman.LayerDeep.LayerFlatten;
 import pl.heinzelman.LayerDeep.LayerPoolingMax;
 import pl.heinzelman.neu.LayerSoftmaxMultiClass;
-import pl.heinzelman.neu.LayerSoftmaxMultiClassONLYFORWARD;
 import pl.heinzelman.tools.Tools2;
 
 public class Teacher   {
@@ -50,7 +49,7 @@ public class Teacher   {
         filters = init_filters( filterNum_ );
 
         float[][][] oneX = new float[1][][];
-        oneX[0] = tools.convertToSquare28x28( trainX[0] );
+        oneX[0] = tools.convertToSquare240x240( trainX[0] );
         myConv.setUpByX( oneX );
 
     }
@@ -96,7 +95,7 @@ public class Teacher   {
 
             // importImage
             int correct_label=tools.getIndexMaxFloat( trainY[i] );
-            float[][] pxl = tools.convertToSquare28x28( trainX[i] );
+            float[][] pxl = tools.convertToSquare240x240( trainX[i] );
 
             out_l = forward( pxl );
 
@@ -129,7 +128,7 @@ public class Teacher   {
 
             // importImage
             int correct_label=tools.getIndexMaxFloat( testY[i] );
-            float[][] pxl = tools.convertToSquare28x28( testX[i] );
+            float[][] pxl = tools.convertToSquare240x240( testX[i] );
 
             // perform convolution 28*28 --> 8x26x26
             out_l = forward( pxl );

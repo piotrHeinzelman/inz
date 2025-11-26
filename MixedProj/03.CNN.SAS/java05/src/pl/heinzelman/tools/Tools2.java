@@ -6,13 +6,51 @@ import java.io.IOException;
 import java.util.Arrays;
 
 
+
+/*
+
+
+def readFileX ( fileName ):
+    file=open( fileName, 'rb' )
+    data=np.fromfile( fileName, np.uint8, percent*8*240*240*3, '')
+    data=data.reshape(percent*8, 240*240*3)
+    data=(data/255)
+    file.close()
+    return data
+
+def readFileY ( fileName ):
+    file=open( fileName, 'rb' )
+    len=percent*8
+    data=np.fromfile( fileName, np.uint8, len, '' )
+    file.close()
+    return data
+
+
+start1=time.time()
+
+trainX = readFileX ('../../../../inz_Hidden/SAS/out.bin' )
+trainY = readFileY ('../../../../inz_Hidden/SAS/out.class' )
+
+trainX = trainX.astype("float32")
+trainY = trainY.astype("int")
+
+trainX = trainX.reshape(percent*8, 3, 240,240).astype("float32") # / 255
+#trainY = trainY.reshape(percent*8)
+
+
+
+*/
+
+
+
+
 public class Tools2 {
 
     private static String path="/home/john/inz/MixedProj/03.CNN.SAS/java04/data/";
-    private static String testXname="t10k-images-idx3-ubyte";
-    private static String testYname="t10k-labels-idx1-ubyte";
-    private static String trainXname="train-images-idx3-ubyte";
-    private static String trainYname="train-labels-idx1-ubyte";
+    private static String testXname="../../../../../inz_Hidden/SAS/out.bin";
+    private static String testYname="../../../../../inz_Hidden/SAS/out.class";
+    private static String trainXname="../../../../../inz_Hidden/SAS/out.bin";
+    private static String trainYname="../../../../../inz_Hidden/SAS/out.class";
 
     private byte[] trainYfile=null;
     private byte[] testYfile=null;
@@ -26,38 +64,38 @@ public class Tools2 {
     public  void prepareData( int percent ){
 
         try {
-            trainYfile =  loadBin( path + trainYname,  8, percent*600 ); // offset=8, size=percent*600  // OK
-            testYfile =  loadBin( path + testYname,   8, percent*100 );   // offset=8, size=percent*100 // OK
+            trainYfile =  loadBin( path + trainYname,  0, percent*8 ); // offset=8, size=percent*600  // OK
+            testYfile =  loadBin( path + testYname,   0, percent*8 );   // offset=8, size=percent*100 // OK
 
-            trainY = new float[percent*600][];
-            testY  = new float[percent*100][];
+            trainY = new float[percent*8][];
+            testY  = new float[percent*8][];
             //train Y
-            for (int i=0;i<percent*600;i++){
+            for (int i=0;i<percent*8;i++){
                 trainY[i] = new float[]{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
                 trainY[i][ trainYfile[i] ]=1.0f;
             }
             // test Y
-            for (int i=0;i<percent*100;i++){
+            for (int i=0;i<percent*8;i++){
                 testY[i] = new float[]{ 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
                 testY[i][ testYfile[i] ]=1.0f;
             }
 
 
-            byte[] trainXfile = loadBin(path + trainXname, 16, percent * 784 * 600);// offset=16 size=percent*784*600
-            trainX=new float[percent*600][784];
-            for (int i=0;i<percent*100;i++) {
-                int off=i*784;
-                for (int j=0;j<784;j++){
+            byte[] trainXfile = loadBin(path + trainXname, 16, percent * 240*240 * 8);// offset=16 size=percent*784*600
+            trainX=new float[percent*8][240*240*3];
+            for (int i=0;i<percent*8;i++) {
+                int off=i*240;
+                for (int j=0;j<240*3;j++){
                     trainX[i][j]=Byte.toUnsignedInt( trainXfile[off+j] )/254.0f;///256.0f; //0-1
                     //System.out.println( trainX[i][j] );
                 }
             }
 
-            byte[] testXfile =   loadBin( path + testXname,  16, percent*784*100 );   // offset=16, size=percent*784*100
-            testX=new float[percent*100][784];
-            for (int i=0;i<percent*100;i++) {
-                int off=i*784;
-                for (int j=0;j<784;j++){
+            byte[] testXfile =   loadBin( path + testXname,  16, percent*240*240*8 );   // offset=16, size=percent*784*100
+            testX=new float[percent*8][240*240];
+            for (int i=0;i<percent*8;i++) {
+                int off=i*240;
+                for (int j=0;j<240*3;j++){
                     testX[i][j]=Byte.toUnsignedInt( testXfile[off+j] )/254.0f;///256.0f;
                 }
             }
@@ -81,11 +119,11 @@ public class Tools2 {
         return bytesBuf;
     }
 
-    public float[][] convertToSquare28x28( float[] vector ){
-        float[][] square = new float[28][28];
-        for ( int y=0;y<28;y++ ){
-            for ( int x=0;x<28;x++ ) {
-                square[y][x]=vector[x+28*y];
+    public float[][] convertToSquare240x240(float[] vector ){
+        float[][] square = new float[240][240];
+        for ( int y=0;y<240;y++ ){
+            for ( int x=0;x<240;x++ ) {
+                square[y][x]=vector[x+240*y];
             }
         }
         return square;

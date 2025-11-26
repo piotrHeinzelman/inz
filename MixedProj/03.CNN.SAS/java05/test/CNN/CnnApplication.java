@@ -5,7 +5,6 @@ import pl.heinzelman.LayerDeep.LayerConv;
 import pl.heinzelman.LayerDeep.LayerFlatten;
 import pl.heinzelman.LayerDeep.LayerPoolingMax;
 import pl.heinzelman.neu.LayerSoftmaxMultiClass;
-import pl.heinzelman.neu.LayerSoftmaxMultiClassONLYFORWARD;
 import pl.heinzelman.tools.Tools2;
 
 public class CnnApplication {
@@ -31,7 +30,7 @@ public class CnnApplication {
 		float[] XX=tools.getTrainX()[0];
 		// System.out.println(XX.length + " : "  + Tools2.AryToString(  XX ));
 		float[][][] trainX = new float[1][][];
-		            trainX[0] = tools.convertToSquare28x28( XX );
+		            trainX[0] = tools.convertToSquare240x240( XX );
 		int trainY = tools.getIndexMaxFloat(  tools.getTrainY()[0] );
 		myConv.setUpByX( trainX );
 
