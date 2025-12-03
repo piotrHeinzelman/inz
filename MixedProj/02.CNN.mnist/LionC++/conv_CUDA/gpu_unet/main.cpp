@@ -214,8 +214,8 @@ static std::pair<Tensor<float, 4>, Tensor<float, 4>> testInput(int batch_size, i
 }
 
 static void bench_conv(int iterations) {
-	float learing_rate = 0.000001;
-	int batch_size = 5,
+	float learing_rate = 0.001;
+	int batch_size = 1024,
 	    image_size = 256;
 
 	ConvReLU conv1(1, 32, 3);

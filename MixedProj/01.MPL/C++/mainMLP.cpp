@@ -67,7 +67,7 @@ int main() {
    int const percent = 80; //80
    long  LEN = percent*600;
    int const class_num=10;
-   const long epochs = 50;// *10 //500
+   const long epochs = 5;// *10 //500
 
     clock_t start_loadData, end_loadData, start_train, end_train, start_accu, end_accu;
     start_loadData = clock();
@@ -125,16 +125,15 @@ int main() {
     start_train = clock();
 
 for (int e=0;e<epochs;e++) {
-	for (int x=0;x<10;x++) {
-        std::cout << "Epoch: " << x+ 10*e << std::endl;
+        std::cout << "Epoch: " << e << std::endl;
         W1->WX(Z1, dF1, XT); //W1->showShape();
         W2->WX(Z2, dF2, X2);
         W3->WXSoftmax(Z3, X3);
 
         //Z3->myPrint();
         //ST->myPrint();
-        Z3->getAccuracy(ST);
-        Z3->calculateGradientAtEndSoftmax(ST);
+//        Z3->getAccuracy(ST);
+        if (e%10==0) Z3->calculateGradientAtEndSoftmax(ST);
         tens*S_Z=Z3;
 
         //S_Z->myPrint();
@@ -142,7 +141,6 @@ for (int e=0;e<epochs;e++) {
         W3->BackSoftmax(Eout3, S_Z, X3);
         W2->BackWX(Eout2, dF2, Eout3, X2);
         W1->BackWX(Eout1, dF1, Eout2, X1);
-    }
 }
 
     end_train = clock();

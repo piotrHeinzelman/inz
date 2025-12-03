@@ -389,6 +389,8 @@ public class Tools {
         }
     }
 
+
+
     public static String printRow3( int[] row ){
         String out="";
         for (int x=0;x<row.length;x++){
@@ -396,5 +398,33 @@ public class Tools {
         }
         return ( out );
     }
+
+
+
+
+    public static void printTable2( float[] vec ){
+        float[][] out = new float[1][];
+        out[0]=vec;
+        printTable2(out);
+    }
+
+    public static void printTable2( float[][] tensor ){
+        float[][][] out = new float[1][][];
+        out[0]=tensor;
+        printTable2(out);
+    }
+    public static void printTable2( float[][][] tensor ){
+        System.out.println("Size:["+tensor.length+"]["+tensor[0].length+"]["+tensor[0][0].length+"]");
+        for (int c=0;c<tensor.length;c++){
+            for (int x=0;x<tensor[0].length;x++) {
+                StringBuffer out= new StringBuffer();
+                for (int y = 0; y < tensor[0][0].length; y++) {
+                    out.append( tensor[c][x][y] + " " );
+                }
+                System.out.println(out.toString());
+            }
+        }
+    }
+
 
 }

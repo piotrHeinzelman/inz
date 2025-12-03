@@ -121,13 +121,13 @@ options = trainingOptions("sgdm", ...
     MaxEpochs=epoch, ... 
     ValidationData=imdsValidation, ... 
     Metrics="accuracy", ... 
-    Verbose=false);
+    Verbose=true);
 
 
 TIME_CREATE_MODEL = datetime('now');
 
 net = trainnet(imdsTrain,layers,"crossentropy",options);
-% analyzeNetwork(net);
+ %analyzeNetwork(net);
 
 TIME_TRAIN_TIME = datetime('now');
 

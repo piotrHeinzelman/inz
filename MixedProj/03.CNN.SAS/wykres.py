@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-plt.title('Trening klasyfikatora CNN 50 epok')
+plt.title('Trening klasyfikatora Deep CNN 50 epok')
 plt.style.use('_mpl-gallery')
 
 
@@ -26,12 +26,8 @@ d5=[None,None,None]
 ### -- TRAIN klasyfikator CNN -- class="SAS" ###
 ## Epoch:50, GPU:True, loadData:1.317517, createLayers:1.308044, trainTime:315.703167, timeAccuracy:0.931454, accuracy: 1.000000
 library[0]="Matlab GPU"
-#d0[0]=1.317517
-#d1[0]=1.308044
-d2[0]=95.21/50
-d3[0]=3.4
-#d4[0]=0.097898
-#d5[0]=16.519
+d2[0]=0.92
+d3[0]=3.9
 
 
 ## ##
