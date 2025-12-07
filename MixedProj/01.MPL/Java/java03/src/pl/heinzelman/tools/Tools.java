@@ -12,7 +12,7 @@ import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
 public class Tools {
 
-    private static String path="../data/";
+    private static String path="../../data/";
     private static String testXname="t10k-images-idx3-ubyte";
     private static String testYname="t10k-labels-idx1-ubyte";
     private static String trainXname="train-images-idx3-ubyte";
@@ -51,7 +51,7 @@ public class Tools {
             for (int i=0;i<percent*100;i++) {
                 int off=i*784;
                 for (int j=0;j<784;j++){
-                    trainX[i][j]=Byte.toUnsignedInt( trainXfile[off+j] )/16;///256.0f; //0-1
+                    trainX[i][j]=Byte.toUnsignedInt( trainXfile[off+j] )/256;///256.0f; //0-1
                     //System.out.println( trainX[i][j] );
                 }
             }
@@ -61,7 +61,7 @@ public class Tools {
             for (int i=0;i<percent*100;i++) {
                 int off=i*784;
                 for (int j=0;j<784;j++){
-                    testX[i][j]=Byte.toUnsignedInt( testXfile[off+j] )/16;///256.0f;
+                    testX[i][j]=Byte.toUnsignedInt( testXfile[off+j] )/256;///256.0f;
                 }
             }
 

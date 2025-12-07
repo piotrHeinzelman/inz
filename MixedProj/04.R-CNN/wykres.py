@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-plt.title('Yolo in Matlab - Dog2.jpg')
+plt.title('Yolo w językach')
 plt.style.use('_mpl-gallery')
 
 
@@ -168,7 +168,7 @@ plt.xticks(x, library, size=5)
 plt.legend(title='Time[s]')
 #plt.title('Yolo in Matlab - Dog2.jpg')
 
-plt.savefig( '03_Yolo_MATLAB_dog2.pdf',dpi=400 )
+plt.savefig( 'yoloForwadrTime.pdf',dpi=400 )
 #plt.show()
 #plt.close()
 
@@ -187,7 +187,7 @@ plt.bar( x+offset         , f2, bar_width, label='detekcja F')
 # Adding labels and title
 #plt.xlabel('Yolo ')
 plt.ylabel('Time[s]')
-plt.xticks(x, library, size=5)
+plt.xticks(x, library)
 plt.legend(title='Time[s]')
 plt.title('Yolo in Matlab - Team.jpg')
 

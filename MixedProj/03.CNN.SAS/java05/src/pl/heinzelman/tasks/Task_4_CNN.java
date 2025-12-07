@@ -153,7 +153,7 @@ public class Task_4_CNN implements Task{
     public void run() {
         prepare();
         // 20 X train(5000) + test(10000) = max 94% accuracy
-    int epochs=1; //50;
+    int epochs=50; //50;
 	for (int j=0;j<epochs;j++){
         for ( int i=0;i<1;i++) {
             train(30);
