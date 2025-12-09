@@ -1,6 +1,11 @@
-% Sieci neuronowe do przetwarzania informacji Stanisław Osowski p.446  Alexnet 227x227x3 channel
-% https://www.mathworks.com/help/deeplearning/ug/introduction-to-convolutional-neural-networks.html
 
+% CNN face: Alexnet 250 cycles: (Linux GPU)
+% accuracy trainX: a:0.866667
+%
+%m[]=44.178701
+% accuracy testX: a:0.160000
+
+classNum=10; 
 function accuracy = accuracyCheck( first, second )
     goals=0;
     s=size(first);
@@ -16,87 +21,33 @@ function accuracy = accuracyCheck( first, second )
 end
 
 
-function index = indexOfMaxInVector( vec ) %
-    val=vec(1);
-    index=1;
-    s=size(vec);
-    s=s(1);
-    for i = (2:s)
-        if (val<vec(i))
-            index=i;
-            val=vec(i);
-        end
-    end
-end
-
-
-function aryOfInt = aryOfVectorToAryOfInt( aryOfVec )
-    s = size( aryOfVec );
-    h=s(1);
-    s=s(2);
-    aryOfInt=zeros(1,s);
-    for i=1:s
-      vec=aryOfVec(1:h,i);
-      index = indexOfMaxInVector(vec);
-      if index==10
-          index=0;
-      end
-      aryOfInt(i)=index;
-    end
-end
-
-
-function showx( arrayx , i )
-    img0=arrayx(1:784,i);
-    img0=img0*256;
-    image(img0);
-
-    img=zeros(28,28);
-        for i=(1:28)
-            row=img0((i-1)*28+1:(i)*28);
-           img(i,1:28)=row;
-        end
-    image(img)
-end
-
 if ( 1==1 )
-    percent=10*5; % 10*5; % 5 i 15
+    dataSize=50; % 5= 5test i 15train
 
     fileIMG=fopen( 'data/trainY','r');
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
     ytmp=fileData';
-    ysize=percent*3;
-    yyy=zeros(1,ysize);
-    for i=(1:ysize)
-        d=ytmp(i);
-        d=d+1;
-        yyy(i)=d ;
-    end
-    ytrain=categorical(yyy);
+    ysize=dataSize*3;
+    ytrain=categorical( ytmp(1:ysize));
 
     fileData=1;
+    ytmp=1;
 
-    fileIMG=fopen( 'data/testY','r');
+    fileIMG=fopen('data/testY','r');
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
 
     ytmp=fileData';
-    ysize=percent*1;
-    yyy=zeros(1,ysize);
-    for i=(1:ysize)
-        d=ytmp(i);
-        d=d+1;
-        yyy(i)=d ;
-    end
-    ytest=categorical(yyy);
+    ysize=dataSize*1;
+    ytest=categorical(ytmp(1:ysize));
 
     fileIMG=fopen( 'data/trainX','r');
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
     tmp=fileData;
 
-    for i=1:percent*3
+    for i=1:dataSize*3;
        onePic=tmp(1+(i-1)*227*227*3:i*227*227*3);
         for j=1:227
             for k=1:227
@@ -109,12 +60,12 @@ if ( 1==1 )
     end
     fileData=1;
 
-    fileIMG=fopen( 'data/testX','r');
+    fileIMG=fopen('data/testX','r');
     fileData=fread( fileIMG, 'uint8' );
     fclose(fileIMG);
     tmp=fileData;
 
-    for i=1:percent*1
+    for i=1:dataSize*1
         onePic=tmp(1+(i-1)*227*227*3:i*227*227*3);
         for j=1:227
             for k=1:227
@@ -130,7 +81,7 @@ if ( 1==1 )
     if(true)
        AAAA=xtest(:,:,:,1);
        imshow(AAAA);
-       BBBB=ytest(:,:,:,1)
+       BBBB=ytest(:,:,:,1);
        fileData=1;
    end
 
@@ -157,20 +108,16 @@ conv5 = convolution2dLayer([3 3], 256, 'Stride', [1 1], 'Padding', [1 1] );
 relu5 = reluLayer;
 max5 = maxPooling2dLayer([3 3], 'Stride',[2 2], 'Padding',[0 0]);
 
-fc6 = fullyConnectedLayer(4096);
+fc6 = fullyConnectedLayer(128);
 relu6 = reluLayer;
 drop6 = dropoutLayer(0.5);
-
-fc7 = fullyConnectedLayer(4096);
-relu7 = reluLayer;
-drop7 = dropoutLayer(0.5);
 
 fc8 = fullyConnectedLayer(10);
 sm = softmaxLayer;
 co = classificationLayer;
 
 
-epochs=100;
+epochs=250;
 
 layers = [ input
 conv1
@@ -197,16 +144,13 @@ fc6
 relu6
 drop6
 
-fc7
-relu7
-drop7
-
 fc8
 sm
 co];
 
 
-options=trainingOptions('adam', 'MaxEpochs',epochs, 'MiniBatchSize', 90 , 'ExecutionEnvironment','gpu','ValidationPatience',10 , 'Verbose',1);
+options=trainingOptions('adam',    'MaxEpochs',epochs,  'ExecutionEnvironment','gpu','ValidationPatience',10 , 'Verbose',1 );% ,'MiniBatchSize', 128
+
 
 
 ST = datetime('now');
@@ -222,17 +166,19 @@ weights_first=netTransfer.Layers(2,1).Weights(:,:,1,1);
 %image(weights_first*255)
 
 
-predictedLabels = classify(netTransfer, xtest);
-  accuracy = accuracyCheck( predictedLabels', ytest );
-
-    fprintf('# CNN face: Alexnet 500 cycles: (Linux GPU)\n' );
-    fprintf( '# accuracy testX: a:%f\n\n' , accuracy );
-    fprintf ('m[]=%f\n' , seconds(D)  );
-
 predictedLabels = classify(netTransfer, xtrain);
   accuracy = accuracyCheck( predictedLabels', ytrain );
 
+    fprintf('# CNN face: Alexnet 500 cycles: (Linux GPU)\n' );
     fprintf( '# accuracy trainX: a:%f\n\n' , accuracy );
     fprintf ('m[]=%f\n' , seconds(D)  );
+
+predictedLabels = classify(netTransfer, xtest);
+  accuracy = accuracyCheck( predictedLabels', ytest );
+
+    fprintf( '# accuracy testX: a:%f\n\n' , accuracy );
+    fprintf ('m[]=%f\n' , seconds(D)  );
+
+
 
 

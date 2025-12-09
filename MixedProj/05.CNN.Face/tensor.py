@@ -1,3 +1,4 @@
+# Epoch 50
 # Python Tensorflow Time:  408.2356917858124
 # Train loss: 2.3026888370513916
 # Train accuracy: 0.10000000149011612
@@ -29,8 +30,9 @@ if physical_devices:
       tf.config.experimental.set_memory_growth(gpu, True)
 
 # params
-epochs = 50
+epochs = 10
 num_classes = 10
+dataSize=5
 
 
 def readFileX ( fileName ,  multi ):
@@ -75,16 +77,14 @@ def AlexNet():
       keras.layers.MaxPool2D(pool_size=(3,3), strides=(2,2)),
 
       keras.layers.Flatten(),
-      keras.layers.Dense(4096, activation='relu'),
-      keras.layers.Dropout( .5 ),
-      keras.layers.Dense(4096, activation='relu'),
+      keras.layers.Dense(128, activation='relu'),
       keras.layers.Dense(10, activation='softmax')
 ])
 
-trainX = readFileX ('data/trainX', 15 )
-trainY = readFileY ('data/trainY', 15 )
-testX = readFileX ('data/testX', 5  )
-testY = readFileY ('data/testY', 5 )
+trainX = readFileX ('data/trainX', dataSize*3 )
+trainY = readFileY ('data/trainY', dataSize*3 )
+testX = readFileX ('data/testX', dataSize  )
+testY = readFileY ('data/testY', dataSize  )
 
 
 trainY = trainY.astype("int")
