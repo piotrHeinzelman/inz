@@ -1,11 +1,16 @@
-# Epoch 50
-# Python Tensorflow Time:  408.2356917858124
-# Train loss: 2.3026888370513916
-# Train accuracy: 0.10000000149011612
-# Test loss: 2.3026888370513916
-# Test accuracy: 0.10000000149011612
+#2025-12-09 05:31:05.621464: I tensorflow/core/platform/cpu_feature_guard.cc:143] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+#2025-12-09 05:31:05.651525: I tensorflow/core/platform/profile_utils/cpu_utils.cc:102] CPU Frequency: 3094220000 Hz
+#2025-12-09 05:31:05.651797: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x5567fe9a76a0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+#2025-12-09 05:31:05.651815: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+#2025-12-09 05:31:05.697300: I tensorflow/core/common_runtime/process_util.cc:147] Creating new thread pool with default inter op setting: 2. Tune using inter_op_parallelism_threads for best performance.
 
 
+# Time 40.32 / 5 epoch !
+# Python Tensorflow Time:  40.32212281227112
+#Train loss: 2.303210973739624
+#Train accuracy: 0.10000000149011612
+#Test loss: 2.303210973739624
+#Test accuracy: 0.10000000149011612
 
 
 import tensorflow as tf
@@ -30,7 +35,7 @@ if physical_devices:
       tf.config.experimental.set_memory_growth(gpu, True)
 
 # params
-epochs = 10
+epochs = 5
 num_classes = 10
 dataSize=5
 
@@ -73,11 +78,11 @@ def AlexNet():
 
       keras.layers.Conv2D(name='conv4', filters=256, kernel_size=(3,3), activation='relu', strides=(1,1), padding='valid' ),
 
-      keras.layers.Conv2D(name='conv5', filters=256, kernel_size=(3,3), activation='relu', strides=(1,1), padding='valid' ),
+      keras.layers.Conv2D(name='conv5', filters=16, kernel_size=(3,3), activation='relu', strides=(1,1), padding='valid' ),
       keras.layers.MaxPool2D(pool_size=(3,3), strides=(2,2)),
 
       keras.layers.Flatten(),
-      keras.layers.Dense(128, activation='relu'),
+      keras.layers.Dense(7744, activation='relu'),
       keras.layers.Dense(10, activation='softmax')
 ])
 

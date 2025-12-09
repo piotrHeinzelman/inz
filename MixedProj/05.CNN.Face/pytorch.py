@@ -1,9 +1,11 @@
-# Python Tensorflow Time:  408.2356917858124
-# Train loss: 2.3026888370513916
-# Train accuracy: 0.10000000149011612
-# Test loss: 2.3026888370513916
-# Test accuracy: 0.10000000149011612
 
+# CNN 48000 img, epoch: 250
+# timeDataTransfer:  0.2116236686706543
+# timeTrain:  37.22182083129883
+# Epoch:  249
+# Score[0]: tensor([-0.0397, -0.0397, -0.0397, -0.0397, -0.0397, -0.0397, -0.0397, -0.0397,        -0.0397, -0.0397], device='cuda:0', grad_fn=<SelectBackward0>)
+# timeForward:  0.0805213451385498
+# Test accuracy:  tensor(0.1000, device='cuda:0')
 
 
 
@@ -27,10 +29,11 @@ import os
 import time
 
 
-#os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:128"
-#os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "backend:cudaMallocAsync"
-#os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
-#os.environ["PYTORCH_NVML_BASED_CUDA_CHECK"]="1"
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "max_split_size_mb:128"
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "backend:cudaMallocAsync"
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
+os.environ["PYTORCH_NVML_BASED_CUDA_CHECK"]="1"
+os.environ["PYTORCH_CUDA_ALLOC_CONF"]="expandable_segments:True"
 
 if torch.cuda.is_available():
   print("CUDA available. Using GPU acceleration.")
@@ -43,9 +46,9 @@ else:
 
 
 # params
-epochs = 350
+epochs = 250
 num_classes = 10
-dataSize=5
+dataSize=1
 
 
 def readFileX ( fileName ,  multi ):
@@ -120,23 +123,23 @@ class CNN(nn.Module):
        super(CNN, self).__init__()
 
        # 1st convolutional layer
-       self.conv1 = nn.Conv2d(in_channels=in_channels, out_channels=96, kernel_size=11, padding=1) # , padding=1)
+       self.conv1 = nn.Conv2d(in_channels=in_channels, out_channels=96, kernel_size=11, padding=0) # , padding=1)
        self.norm1 = nn.BatchNorm2d(96)
        self.pool1 = nn.MaxPool2d(kernel_size=3, stride=2)
 
-       self.conv2 = nn.Conv2d(in_channels=96, out_channels=256, kernel_size=5, padding=1)
+       self.conv2 = nn.Conv2d(in_channels=96, out_channels=256, kernel_size=5, padding=0)
        self.norm2 = nn.BatchNorm2d(256)
        self.pool2 = nn.MaxPool2d(kernel_size=3, stride=2)
 
-       self.conv3 = nn.Conv2d(in_channels=256, out_channels=384, kernel_size=3, padding=1)
+       self.conv3 = nn.Conv2d(in_channels=256, out_channels=384, kernel_size=3, padding=0)
  
-       self.conv4 = nn.Conv2d(in_channels=384, out_channels=256, kernel_size=3, padding=1)
+       self.conv4 = nn.Conv2d(in_channels=384, out_channels=256, kernel_size=3, padding=0)
 
-       self.conv5 = nn.Conv2d(in_channels=256, out_channels=256, kernel_size=1)
+       self.conv5 = nn.Conv2d(in_channels=256, out_channels=16, kernel_size=3)
        self.pool5 = nn.MaxPool2d(kernel_size=3, stride=2)
 
 
-       self.fc1 = nn.Linear( 256 , 128 ) #  self.fc1 = nn.Linear( 64, num_classes) in, out
+       self.fc1 = nn.Linear( 7744 , 128 ) #  self.fc1 = nn.Linear( 64, num_classes) in, out
        self.fc2 = nn.Linear( 128 , num_classes )
  
 
@@ -205,7 +208,7 @@ timeTrain=end-start
 
 
 # Set up of multiclass accuracy metric
-acc = Accuracy(task="multiclass",num_classes=2).to(device)
+acc = Accuracy(task="multiclass",num_classes=num_classes).to(device)
 
 # Iterate over the dataset batches
 model.eval()
@@ -227,7 +230,6 @@ timeForward=end3-start3
 test_accuracy = acc.compute()
 
 print("# CNN 48000 img, epoch:",epochs)
-print("# timeLoadData: ",timeLoadData)
 print("# timeDataTransfer: ", timeDataTransfer)
 print("# timeTrain: ",timeTrain)
 print("# Epoch: " , epoch)
