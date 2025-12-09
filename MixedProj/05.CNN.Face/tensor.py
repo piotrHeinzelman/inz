@@ -1,3 +1,12 @@
+# Python Tensorflow Time:  408.2356917858124
+# Train loss: 2.3026888370513916
+# Train accuracy: 0.10000000149011612
+# Test loss: 2.3026888370513916
+# Test accuracy: 0.10000000149011612
+
+
+
+
 import tensorflow as tf
 import numpy as np
 from tensorflow import keras
@@ -126,4 +135,3 @@ print("Test accuracy:", score[1])
 #clear_session()
 
 
-# 1 FC 396 sec train: accuracy 1, test acc 0.04
