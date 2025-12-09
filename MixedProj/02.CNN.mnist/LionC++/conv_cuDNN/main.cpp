@@ -211,7 +211,7 @@ int main() {
            /* const cudnnConvolutionDescriptor_t */ conv_desc,
            /* cudnnConvolutionFwdAlgo_t       */    CUDNN_CONVOLUTION_FWD_ALGO_GEMM,
            /* void                            */    workSpace_dev,
-           /* size_t                          */    100,
+           /* size_t                          */    10000,
            /* const void                      */    &beta,
            /* const cudnnTensorDescriptor_t   */    z0_desc,
            /* void                            */    z0_dev));

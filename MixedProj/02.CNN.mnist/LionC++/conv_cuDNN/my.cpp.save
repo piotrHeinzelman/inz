@@ -1,0 +1,22 @@
+Conv_fprop_attributes&
+set_padding(std::vector<int64_t>)
+
+Conv_fprop_attributes&
+set_stride(std::vector<int64_t>)
+
+Conv_fprop_attributes&
+set_dilation(std::vector<int64_t>)
+
+Conv_fprop_attributes&
+set_name(std::string const&)
+
+Conv_fprop_attributes&
+set_compute_data_type(DataType_t value)
+
+Conv_fprop_attributes&
+set_convolution_mode(ConvolutionMode_t mode_)
+
+
+std::shared_ptr<Tensor_attributes> conv_fprop(std::shared_ptr<Tensor_attributes> image,
+                                                  std::shared_ptr<Tensor_attributes> filter,
+                                                  Conv_fprop_attributes);
